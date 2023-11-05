@@ -1,0 +1,7 @@
+- platform: universal
+  name: Living Room Media Center
+  unique_id: living_room_media_center
+  device_class: tv
+  children:
+    - media_player.living_room_tv
+    - media_player.living_room_chromecast

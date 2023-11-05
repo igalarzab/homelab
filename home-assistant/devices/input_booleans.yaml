@@ -1,0 +1,9 @@
+home_vacuumed:
+  name: Home vacuumed today
+  initial: 'off'
+  icon: mdi:robot-vacuum
+
+home_locked:
+  name: Home is locked
+  initial: 'off'
+  icon: mdi:shield-lock

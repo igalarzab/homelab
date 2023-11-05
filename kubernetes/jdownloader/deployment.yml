@@ -1,0 +1,70 @@
+---
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: jdownloader
+  namespace: jdownloader
+  labels:
+    app.kubernetes.io/name: jdownloader 
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: jdownloader 
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: jdownloader 
+    spec:
+      terminationGracePeriodSeconds: 30
+      containers:
+        - name: jdownloader
+          image: jlesage/jdownloader-2:v23.06.1
+          env:
+            - name: TZ
+              value: ${TZ}
+            - name: KEEP_APP_RUNNING
+              value: "1"
+            - name: USER_ID
+              value: "1000"
+            - name: GROUP_ID
+              value: "100"
+          ports:
+            - name: admin
+              protocol: TCP
+              containerPort: 5800
+          volumeMounts:
+            - name: config
+              mountPath: /config
+              readOnly: false
+            - name: downloads
+              mountPath: /output
+              readOnly: false
+          livenessProbe:
+            httpGet:
+              path: /
+              port: admin 
+            initialDelaySeconds: 5
+            periodSeconds: 10
+            timeoutSeconds: 2
+            successThreshold: 1
+            failureThreshold: 3
+          readinessProbe:
+            httpGet:
+              path: /
+              port: admin
+            initialDelaySeconds: 5
+            periodSeconds: 10
+            timeoutSeconds: 2
+            successThreshold: 1
+            failureThreshold: 3
+      volumes:
+        - name: config
+          hostPath:
+            path: ${VOLUMES_PATH}/jdownloader
+            type: DirectoryOrCreate
+        - name: downloads 
+          hostPath:
+            path: ${MULTIMEDIA_PATH}
+            type: Directory

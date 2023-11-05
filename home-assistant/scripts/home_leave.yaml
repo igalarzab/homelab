@@ -1,0 +1,14 @@
+home_leave:
+  alias: Home Leave 
+  icon: mdi:home-remove
+  mode: single
+  sequence:
+    - service: script.home_turn_off_everything
+    - service: script.home_enable_security_system
+      data:
+        send_notification: false
+    - choose:
+        - conditions:
+            - "{{ is_state('input_boolean.home_vacuumed', 'off') }}"
+          sequence:
+            - service: script.home_vacuum

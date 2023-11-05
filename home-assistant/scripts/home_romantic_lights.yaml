@@ -1,0 +1,38 @@
+home_romantic_lights:
+  alias: Home Romantic Lights
+  icon: mdi:home-heart
+  mode: single
+  sequence:
+    - service: light.turn_off
+      entity_id: light.kitchen_lights
+    - service: light.turn_off
+      entity_id: light.hall_lights
+    - service: light.turn_on
+      entity_id: light.living_room_lights_tv
+    - service: light.turn_on
+      entity_id: light.living_room_lights_ceiling
+      data:
+        brightness_pct: 40
+        transition: 5
+        rgb_color:
+          - 255
+          - 200
+          - 145
+    - service: light.turn_on
+      entity_id: light.living_room_lights_sofa
+      data:
+        brightness_pct: 80
+        transition: 5
+        rgb_color:
+          - 255
+          - 145
+          - 200
+    - service: light.turn_on
+      entity_id: light.bedroom_lights
+      data:
+        brightness_pct: 40
+        transition: 5
+        rgb_color:
+          - 255
+          - 72
+          - 163

@@ -1,0 +1,21 @@
+---
+
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: jdownloader
+  namespace: jdownloader
+  labels:
+    app.kubernetes.io/name: jdownloader
+spec:
+  rules:
+    - host: jd.${DOMAIN_ROOT}
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: jdownloader
+                port:
+                  name: admin

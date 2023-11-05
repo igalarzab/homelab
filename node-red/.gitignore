@@ -1,0 +1,8 @@
+node_modules
+flows_cred.json
+.npm
+.config.json
+.config.json.backup
+.sessions.json
+.flow.json.backup
+.flow_cred.json.backup

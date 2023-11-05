@@ -1,0 +1,8 @@
+exclude:
+  entities:
+    - automation.system_refresh_unavailable_entities
+    - script.ikea_lights_turn_on
+  entity_globs:
+    - sensor.weather_*
+    - group.*
+    - media_player.*

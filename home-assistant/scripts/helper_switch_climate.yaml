@@ -1,0 +1,28 @@
+helper_switch_climate:
+  alias: Helper Switch Climate
+  icon: mdi:air-conditioner
+  mode: single
+  fields:
+    climate_entity:
+      description: Entity ID of the climate unit
+      example: light.living_room
+      selector:
+        target:
+          entity:
+            domain: climate
+  variables:
+    climate_mode: "{% if now().month < 4 or now().month > 11 %}heat{% else %}cool{% endif %}"
+  sequence:
+    - choose:
+        - conditions:
+            - "{{ is_state(climate_entity, 'off') }}"
+          sequence:
+            - service: climate.set_hvac_mode
+              target:
+                entity_id: "{{ climate_entity }}"
+              data:
+                hvac_mode: "{{ climate_mode }}"
+      default:
+        - service: climate.turn_off
+          target:
+            entity_id: "{{ climate_entity }}"

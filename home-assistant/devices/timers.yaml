@@ -1,0 +1,4 @@
+bedroom_sleeping:
+  name: Sleeping
+  icon: mdi:bed
+  duration: '08:00:00'

@@ -1,0 +1,73 @@
+---
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: home-assistant
+  namespace: home-assistant
+  labels:
+    app.kubernetes.io/name: home-assistant
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: home-assistant
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: home-assistant
+      annotations:
+        # FIXME: I should find a better way than this
+        # Adding to allow Bluetooth to work inside of the container
+        container.apparmor.security.beta.kubernetes.io/home-assistant: unconfined
+    spec:
+      terminationGracePeriodSeconds: 30
+      containers:
+        - name: home-assistant
+          image: homeassistant/home-assistant:2023.11.1
+          env:
+            - name: TZ
+              value: ${TZ}
+          ports:
+            - name: admin
+              protocol: TCP
+              containerPort: 8123
+          volumeMounts:
+            - name: dbus
+              mountPath: /run/dbus
+              readOnly: true
+            - name: mdns
+              mountPath: /run/avahi-daemon/socket
+              readOnly: true
+            - name: config
+              mountPath: /config
+              readOnly: false
+          livenessProbe:
+            httpGet:
+              path: /
+              port: admin
+            initialDelaySeconds: 5
+            periodSeconds: 10
+            timeoutSeconds: 2
+            successThreshold: 1
+            failureThreshold: 3
+          readinessProbe:
+            httpGet:
+              path: /
+              port: admin
+            initialDelaySeconds: 5
+            periodSeconds: 10
+            timeoutSeconds: 2
+            successThreshold: 1
+            failureThreshold: 3
+      volumes:
+        - name: dbus
+          hostPath:
+            path: /var/run/dbus
+        - name: mdns
+          hostPath:
+            path: /run/avahi-daemon/socket
+        - name: config
+          hostPath:
+            path: ${VOLUMES_PATH}/home-assistant
+            type: DirectoryOrCreate

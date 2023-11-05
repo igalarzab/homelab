@@ -1,0 +1,32 @@
+# Ignore logs and DBs
+*.db
+*.db-wal
+*.db-shm
+*.log
+*.log.*
+
+# Ignore folders
+.storage
+.cloud
+.google.token
+
+# Ignore secret info
+ip_bans.yaml
+secrets.yaml
+known_devices.yaml
+
+# Ignore garbage
+.HA_VERSION
+aircast.xml
+govee_learning.yaml
+tts/
+image/
+www/floor_plan.png
+
+# Ignore default blueprints
+blueprints/automation/homeassistant/motion_light.yaml
+blueprints/automation/homeassistant/notify_leaving_zone.yaml
+blueprints/script/homeassistant/confirmable_notification.yaml
+
+# Ignore HACS
+custom_components/

@@ -1,0 +1,11 @@
+{
+    "name": "node-red-project",
+    "description": "A Node-RED Project",
+    "version": "0.0.1",
+    "private": true,
+    "dependencies": {
+        "@node-red-contrib-themes/theme-collection": "^3.0.6",
+        "node-red-contrib-home-assistant-websocket": "^0.49.0",
+        "node-red-contrib-light-scheduler": "^0.0.18"
+    }
+}

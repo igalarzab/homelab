@@ -1,0 +1,13 @@
+---
+
+apiVersion: storage.k8s.io/v1
+kind: StorageClass
+metadata:
+  name: volumes-hostpath
+  labels:
+    app.kubernetes.io/name: microk8s-config
+provisioner: microk8s.io/hostpath
+reclaimPolicy: Delete
+volumeBindingMode: WaitForFirstConsumer
+parameters:
+  pvDir: ${VOLUMES_PATH}

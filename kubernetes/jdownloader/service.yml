@@ -1,0 +1,17 @@
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: jdownloader
+  namespace: jdownloader
+  labels:
+    app.kubernetes.io/name: jdownloader 
+spec:
+  selector:
+    app.kubernetes.io/name: jdownloader 
+  ports:
+    - name: admin
+      protocol: TCP
+      port: 5800
+      targetPort: admin

@@ -1,0 +1,28 @@
+home_enable_security_system:
+  alias: Home Enable Security System
+  icon: mdi:lock
+  mode: single
+  fields:
+    send_notification:
+      description: Send a notification to a device
+      default: true
+      selector:
+        boolean:
+  sequence:
+    - variables:
+        send_notification: '{{ send_notification|default(true) }}'
+    - service: input_boolean.turn_on
+      entity_id: input_boolean.home_locked
+    - choose:
+        - conditions:
+            - '{{ send_notification|default(true) }}'
+          sequence:
+            - service: notify.home_owners
+              data:
+                title: Home Alarm
+                message: The security system has been enabled
+                data:
+                  url: /main-dashboard/
+                  actions:
+                    - action: 'DISABLE_SECURITY_SYSTEM'
+                      title: 'Disable Alarm'

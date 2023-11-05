@@ -1,0 +1,10 @@
+home_vacuum:
+  alias: Home Vacuum
+  icon: mdi:robot-vacuum
+  mode: single
+  sequence:
+    - service: input_boolean.turn_on
+      entity_id: input_boolean.home_vacuumed
+    - service: vacuum.start
+      target:
+        entity_id: vacuum.roborock_vacuum
