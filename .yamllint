@@ -1,0 +1,22 @@
+rules:
+  document-start:
+    present: false
+  empty-lines:
+    level: error
+    max: 2
+    max-start: 0
+    max-end: 1
+  hyphens:
+    level: error
+    max-spaces-after: 1
+  indentation:
+    level: error
+    spaces: 2
+    indent-sequences: true
+    check-multi-line-strings: false
+  key-duplicates:
+    level: error
+  line-length:
+    max: 120
+    allow-non-breakable-words: true
+    allow-non-breakable-inline-mappings: true

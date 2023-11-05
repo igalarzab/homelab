@@ -1,0 +1,59 @@
+---
+
+- name: Checking Operative System (only Debian compatible)
+  meta: end_play
+  when: ansible_os_family != 'Debian'
+
+- name: Set the main gid to the users group
+  become: true
+  user:
+    name: "{{ ansible_user_id }}"
+    group: users
+
+- name: Delete the default user group if it exists
+  become: true
+  group:
+    name: "{{ ansible_user_id }}"
+    state: absent
+
+- name: Re-run facts
+  setup:
+
+- name: Update apt repos
+  become: true
+  apt: update_cache=yes force_apt_get=yes cache_valid_time=3600
+
+- name: Upgrade all apt packages
+  become: true
+  apt: upgrade=full
+
+- name: Install base packages
+  become: true
+  package:
+    state: latest
+    name:
+      - locales
+      - lm-sensors
+      - nfs-common
+      - pigz
+      - snapd
+      - tree
+
+- name: Install en_GB locale
+  become: true
+  community.general.locale_gen:
+    name: "{{ locale }}"
+    state: present
+
+- name: Customize the motd message
+  become: true
+  file:
+    path: /etc/update-motd.d/{{ item.file }}
+    state: absent
+  loop:
+    - { file: 10-help-text }
+    - { file: 50-motd-news }
+
+- import_tasks: network.yml
+- import_tasks: multimedia.yml
+  when: mount_multimedia is true

@@ -1,0 +1,8 @@
+---
+
+locale: 'en_GB.UTF-8'
+
+multimedia_mount: true
+multimedia_credentials_path: '/root/.multimedia-creds.ini'
+multimedia_mount_path: '/media/Multimedia'
+multimedia_cifs_uri: '//nas.lan/Multimedia'

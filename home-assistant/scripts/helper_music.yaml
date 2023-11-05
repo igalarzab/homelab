@@ -1,0 +1,27 @@
+helper_music:
+  alias: Helper Music
+  icon: mdi:music
+  mode: single
+  fields:
+    player_id:
+      description: Player ID where to run the music
+      selector:
+        target:
+          entity:
+            domain: media_player
+    player_name:
+      description: Player name where to run the music
+      example: Living Room Speaker
+    playlist:
+      description: ID of the playlist to play
+      example: spotify:playlist:37i9dQZF1DX889U0CL85jj
+  sequence:
+    - service: media_player.volume_set
+      data:
+        entity_id: '{{ player_id }}'
+        volume_level: 0.2
+    - service: spotcast.start
+      data:
+        device_name: '{{ player_name }}'
+        uri: '{{ playlist|default("spotify:playlist:37i9dQZEVXbugIqiYDsIOW") }}'
+        random_song: true

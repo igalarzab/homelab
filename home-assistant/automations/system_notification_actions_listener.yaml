@@ -1,0 +1,21 @@
+- alias: System - Notification Actions Listener
+  initial_state: true
+  trigger:
+    - platform: event
+      event_type: mobile_app_notification_action
+  action:
+    - choose:
+        - alias: Enable Security System
+          conditions:
+            - "{{ trigger.event.data.action == 'ENABLE_SECURITY_SYSTEM' }}"
+          sequence:
+            - service: script.home_enable_security_system
+              data:
+                send_notification: false
+        - alias: Disable Security System
+          conditions:
+            - "{{ trigger.event.data.action == 'DISABLE_SECURITY_SYSTEM' }}"
+          sequence:
+            - service: script.home_disable_security_system
+              data:
+                send_notification: false

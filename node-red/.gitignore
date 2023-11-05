@@ -1,0 +1,9 @@
+node_modules
+flows_cred.json
+node-red-contrib-home-assistant-websocket.json
+.npm
+.config.*.json
+.config.*.json.backup
+.sessions.json
+.flows.json.backup
+.flow_cred.json.backup

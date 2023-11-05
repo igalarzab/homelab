@@ -1,0 +1,39 @@
+# Curtains
+cover.bedroom_curtains:
+  friendly_name: Bedroom Curtains
+sensor.bedroom_curtains_battery:
+  friendly_name: Bedroom Curtains Battery
+cover.living_room_right_curtains:
+  friendly_name: Living Room Right Curtains
+cover.living_room_right_curtains_battery:
+  friendly_name: Living Room Right Curtains Battery
+cover.living_room_left_curtains:
+  friendly_name: Living Room Left Curtains
+cover.living_room_left_curtains_battery:
+  friendly_name: Living Room Left Curtains Battery
+
+# Motion Sensors
+binary_sensor.bathroom_motion_occupancy:
+  friendly_name: Bathroom Motion
+binary_sensor.bedroom_motion_occupancy:
+  friendly_name: Bedroom Motion
+binary_sensor.hall_motion_occupancy:
+  friendly_name: Hall Motion
+binary_sensor.kitchen_motion_occupancy:
+  friendly_name: Kitchen Motion
+binary_sensor.living_room_motion_occupancy:
+  friendly_name: Living Room Motion
+
+# Doors
+binary_sensor.bathroom_door_entrance_contact:
+  friendly_name: Bathroom Door
+binary_sensor.bedroom_door_entrance_contact:
+  friendly_name: Bedroom Door
+binary_sensor.bedroom_door_terrace_contact:
+  friendly_name: Terrace Door (Bedroom)
+binary_sensor.hall_door_entrance_contact:
+  friendly_name: Home Door
+binary_sensor.living_room_door_entrance_contact:
+  friendly_name: Living Room Door
+binary_sensor.living_room_door_terrace_contact:
+  friendly_name: Terrace Door (Living Room)

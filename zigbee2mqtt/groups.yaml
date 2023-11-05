@@ -1,0 +1,67 @@
+'1':
+  friendly_name: bedroom/lights
+  homeassistant:
+    name: Bedroom Lights
+  devices:
+    - bedroom/lights_ceiling_one
+'2':
+  friendly_name: bathroom/lights
+  homeassistant:
+    name: Bathroom Lights
+  devices:
+    - bathroom/lights_ceiling_one
+    - bathroom/lights_ceiling_two
+    - bathroom/lights_ceiling_three
+    - bathroom/lights_ceiling_four
+'3':
+  friendly_name: kitchen/lights
+  homeassistant:
+    name: Kitchen Lights
+  devices:
+    - kitchen/lights_ceiling_one
+    - kitchen/lights_ceiling_two
+'4':
+  friendly_name: hall/lights
+  homeassistant:
+    name: Hall Lights
+  devices:
+    - hall/lights_ceiling_one
+'5':
+  friendly_name: living_room/lights_sofa
+  homeassistant:
+    name: Living Room Lights Sofa
+  devices:
+    - living_room/lights_sofa_left
+    - living_room/lights_sofa_right
+'6':
+  friendly_name: living_room/lights_ceiling
+  homeassistant:
+    name: Living Room Lights Ceiling
+  devices:
+    - 0x5c0272fffe4849be/1
+    - 0x5c0272fffe4847e1/1
+'7':
+  friendly_name: living_room/lights
+  homeassistant:
+    name: Living Room Lights
+  devices:
+    - living_room/lights_sofa_left
+    - living_room/lights_sofa_right
+    - 0x5c0272fffe4849be/1
+    - 0x5c0272fffe4847e1/1
+'8':
+  friendly_name: home/lights
+  homeassistant:
+    name: Home Lights
+  devices:
+    - living_room/lights_ceiling_left
+    - living_room/lights_ceiling_right
+    - living_room/lights_sofa_left
+    - living_room/lights_sofa_right
+    - kitchen/lights_ceiling_one
+    - kitchen/lights_ceiling_two
+    - bathroom/lights_ceiling_one
+    - bathroom/lights_ceiling_two
+    - bathroom/lights_ceiling_three
+    - bathroom/lights_ceiling_four
+    - bedroom/lights_ceiling_one

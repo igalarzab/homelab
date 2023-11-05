@@ -1,0 +1,29 @@
+---
+
+- name: Install network packages
+  become: true
+  package:
+    state: latest
+    name:
+      - avahi-daemon
+      - avahi-utils
+      - bluetooth
+      - bluez
+      - dbus-broker
+      - net-tools
+
+- name: Enable reflector in avahi-daemon
+  become: true
+  notify: Restart avahi-daemon
+  replace:
+    path: /etc/avahi/avahi-daemon.conf
+    regexp: '#enable-reflector=no'
+    replace: 'enable-reflector=yes'
+
+- name: Ensure avahi-daemon is started and enabled at boot.
+  become: true
+  service:
+    name: avahi-daemon
+    state: started
+    enabled: true
+

@@ -1,0 +1,41 @@
+---
+
+- name: Install microk8s
+  become: true
+  snap:
+    name: microk8s
+    classic: true
+    channel: "{{ microk8s_version }}"
+
+- name: Wait for microk8s to be ready
+  become: true
+  command: microk8s.status --wait-ready
+  changed_when: false
+  register: mk8s
+  failed_when:
+      - mk8s.rc > 0
+
+- name: Allow to expose ports >=80
+  become: true
+  notify: restart microk8s
+  lineinfile:
+    path: /var/snap/microk8s/current/args/kube-apiserver
+    regexp: '^--service-node-port-range='
+    line: --service-node-port-range=80-32767
+
+- name: Create kubectl alias
+  become: true
+  command: snap alias microk8s.kubectl kubectl
+  changed_when: false
+
+- name: Create helm3 alias
+  become: true
+  command: snap alias microk8s.helm3 helm
+  changed_when: false
+
+- name: Add user to microk8s group
+  become: true
+  user:
+    name: "{{ ansible_user }}"
+    groups: microk8s
+    append: true

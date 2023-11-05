@@ -1,0 +1,60 @@
+---
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: node-red
+  namespace: home-assistant
+  labels:
+    app.kubernetes.io/name: node-red
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: node-red
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: node-red
+    spec:
+      terminationGracePeriodSeconds: 30
+      containers:
+        - name: node-red
+          image: nodered/node-red:3.1.0
+          securityContext:
+            runAsUser: 0
+            runAsGroup: 0
+          env:
+            - name: TZ
+              value: ${TZ}
+          ports:
+            - name: admin
+              protocol: TCP
+              containerPort: 1880
+          volumeMounts:
+            - name: data
+              mountPath: /data
+              readOnly: false
+          livenessProbe:
+            httpGet:
+              path: /
+              port: admin
+            initialDelaySeconds: 5
+            periodSeconds: 10
+            timeoutSeconds: 2
+            successThreshold: 1
+            failureThreshold: 3
+          readinessProbe:
+            httpGet:
+              path: /
+              port: admin
+            initialDelaySeconds: 5
+            periodSeconds: 10
+            timeoutSeconds: 2
+            successThreshold: 1
+            failureThreshold: 3
+      volumes:
+        - name: data
+          hostPath:
+            path: ${VOLUMES_PATH}/node-red
+            type: DirectoryOrCreate

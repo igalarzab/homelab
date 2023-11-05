@@ -1,0 +1,17 @@
+mode: yaml
+dashboards:
+  lovelace-generated:
+    mode: yaml
+    title: Generated
+    icon: mdi:tools
+    show_in_sidebar: true
+    filename: dashboards/notexist.yaml
+  main-dashboard:
+    mode: yaml
+    title: Dashboard
+    icon: mdi:monitor-dashboard
+    show_in_sidebar: true
+    filename: dashboards/main.yaml
+resources:
+  - url: 'https://fonts.googleapis.com/css?family=Raleway'
+    type: css

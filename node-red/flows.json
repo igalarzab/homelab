@@ -1,0 +1,4859 @@
+[
+    {
+        "id": "c41ab6f93f6c103e",
+        "type": "tab",
+        "label": "Bathroom",
+        "disabled": false,
+        "info": "",
+        "env": []
+    },
+    {
+        "id": "fa6bb9cfa58677c8",
+        "type": "tab",
+        "label": "Bedroom",
+        "disabled": false,
+        "info": "",
+        "env": []
+    },
+    {
+        "id": "8f5e75d405c57d2f",
+        "type": "tab",
+        "label": "Hall",
+        "disabled": false,
+        "info": "",
+        "env": []
+    },
+    {
+        "id": "49a4960c42935211",
+        "type": "tab",
+        "label": "Home",
+        "disabled": false,
+        "info": "",
+        "env": []
+    },
+    {
+        "id": "95eb18db5e77ef4c",
+        "type": "tab",
+        "label": "Kitchen",
+        "disabled": false,
+        "info": "",
+        "env": []
+    },
+    {
+        "id": "751c2276bdb4df53",
+        "type": "tab",
+        "label": "Living Room",
+        "disabled": false,
+        "info": "",
+        "env": []
+    },
+    {
+        "id": "0ef8a234d4e5690c",
+        "type": "tab",
+        "label": "System",
+        "disabled": false,
+        "info": "",
+        "env": []
+    },
+    {
+        "id": "64b48be79869231a",
+        "type": "subflow",
+        "name": "Hue Remote",
+        "info": "",
+        "category": "",
+        "in": [],
+        "out": [
+            {
+                "x": 795,
+                "y": 475,
+                "wires": [
+                    {
+                        "id": "59a9989f23feb6ae",
+                        "port": 0
+                    }
+                ]
+            },
+            {
+                "x": 795,
+                "y": 525,
+                "wires": [
+                    {
+                        "id": "89579a6a4e4f99b9",
+                        "port": 0
+                    }
+                ]
+            }
+        ],
+        "env": [
+            {
+                "name": "LIGHT_ENTITY",
+                "type": "str",
+                "value": "",
+                "ui": {
+                    "icon": "font-awesome/fa-lightbulb-o",
+                    "label": {
+                        "en-US": "Light Entity"
+                    },
+                    "type": "input",
+                    "opts": {
+                        "types": [
+                            "str",
+                            "env"
+                        ]
+                    }
+                }
+            },
+            {
+                "name": "REMOTE_CTRL_TOPIC",
+                "type": "str",
+                "value": "",
+                "ui": {
+                    "icon": "font-awesome/fa-tv",
+                    "label": {
+                        "en-US": "Remote Controller Entity"
+                    },
+                    "type": "input",
+                    "opts": {
+                        "types": [
+                            "str",
+                            "env"
+                        ]
+                    }
+                }
+            },
+            {
+                "name": "PRIMARY_LIGHT_SCRIPT",
+                "type": "str",
+                "value": "",
+                "ui": {
+                    "icon": "font-awesome/fa-superscript",
+                    "label": {
+                        "en-US": "Primary Light Script"
+                    },
+                    "type": "input",
+                    "opts": {
+                        "types": [
+                            "str",
+                            "env"
+                        ]
+                    }
+                }
+            },
+            {
+                "name": "SECONDARY_LIGHT_SCRIPT",
+                "type": "str",
+                "value": "",
+                "ui": {
+                    "icon": "font-awesome/fa-superscript",
+                    "label": {
+                        "en-US": "Secondary Light Script"
+                    },
+                    "type": "input",
+                    "opts": {
+                        "types": [
+                            "str",
+                            "env"
+                        ]
+                    }
+                }
+            }
+        ],
+        "meta": {},
+        "color": "#DDAA99",
+        "status": {
+            "x": 1195,
+            "y": 500,
+            "wires": [
+                {
+                    "id": "32f72f6651fbaf20",
+                    "port": 0
+                },
+                {
+                    "id": "4ef6f3d0c7b85d05",
+                    "port": 0
+                },
+                {
+                    "id": "9362f6f49aefaa0c",
+                    "port": 0
+                },
+                {
+                    "id": "fe022aa6286515ce",
+                    "port": 0
+                },
+                {
+                    "id": "8a400f0e1110a72a",
+                    "port": 0
+                },
+                {
+                    "id": "a55d6f591fa9f4be",
+                    "port": 0
+                },
+                {
+                    "id": "a3aea1e27cc11f9b",
+                    "port": 0
+                },
+                {
+                    "id": "59a9989f23feb6ae",
+                    "port": 0
+                },
+                {
+                    "id": "89579a6a4e4f99b9",
+                    "port": 0
+                }
+            ]
+        }
+    },
+    {
+        "id": "9437c76dc0c1335d",
+        "type": "subflow",
+        "name": "Auto Lights",
+        "info": "",
+        "category": "",
+        "in": [],
+        "out": [
+            {
+                "x": 1045,
+                "y": 375,
+                "wires": [
+                    {
+                        "id": "c644c6d8abbaf61a",
+                        "port": 0
+                    }
+                ]
+            }
+        ],
+        "env": [
+            {
+                "name": "LIGHT_ENTITY",
+                "type": "str",
+                "value": "",
+                "ui": {
+                    "icon": "font-awesome/fa-lightbulb-o",
+                    "label": {
+                        "en-US": "Light Entity"
+                    },
+                    "type": "input",
+                    "opts": {
+                        "types": [
+                            "str",
+                            "env"
+                        ]
+                    }
+                }
+            },
+            {
+                "name": "BRIGHTNESS_SENSOR",
+                "type": "str",
+                "value": "",
+                "ui": {
+                    "icon": "font-awesome/fa-adjust",
+                    "label": {
+                        "en-US": "Brightness Sensor"
+                    },
+                    "type": "input",
+                    "opts": {
+                        "types": [
+                            "str",
+                            "env"
+                        ]
+                    }
+                }
+            },
+            {
+                "name": "DOOR_SENSOR",
+                "type": "str",
+                "value": "",
+                "ui": {
+                    "icon": "font-awesome/fa-adjust",
+                    "label": {
+                        "en-US": "Door Sensor"
+                    },
+                    "type": "input",
+                    "opts": {
+                        "types": [
+                            "str",
+                            "env"
+                        ]
+                    }
+                }
+            },
+            {
+                "name": "MOTION_SENSOR",
+                "type": "str",
+                "value": "",
+                "ui": {
+                    "icon": "font-awesome/fa-adjust",
+                    "label": {
+                        "en-US": "Motion Sensor"
+                    },
+                    "type": "input",
+                    "opts": {
+                        "types": [
+                            "str",
+                            "env"
+                        ]
+                    }
+                }
+            }
+        ],
+        "meta": {},
+        "color": "#DDAA99",
+        "status": {
+            "x": 175,
+            "y": 900,
+            "wires": [
+                {
+                    "id": "11417094154650b9",
+                    "port": 0
+                }
+            ]
+        }
+    },
+    {
+        "id": "a8888983d2635276",
+        "type": "subflow",
+        "name": "Aqara Remote",
+        "info": "",
+        "category": "",
+        "in": [],
+        "out": [
+            {
+                "x": 770,
+                "y": 75,
+                "wires": [
+                    {
+                        "id": "7c9494790a8259a9",
+                        "port": 0
+                    }
+                ]
+            },
+            {
+                "x": 770,
+                "y": 175,
+                "wires": [
+                    {
+                        "id": "12807b2d64a2a16f",
+                        "port": 0
+                    }
+                ]
+            }
+        ],
+        "env": [
+            {
+                "name": "REMOTE_CTRL_TOPIC",
+                "type": "str",
+                "value": "",
+                "ui": {
+                    "icon": "font-awesome/fa-adjust",
+                    "label": {
+                        "en-US": "Remote Controller Topic"
+                    },
+                    "type": "input",
+                    "opts": {
+                        "types": [
+                            "str",
+                            "env"
+                        ]
+                    }
+                }
+            }
+        ],
+        "meta": {},
+        "color": "#DDAA99",
+        "status": {
+            "x": 720,
+            "y": 125,
+            "wires": [
+                {
+                    "id": "7c9494790a8259a9",
+                    "port": 0
+                },
+                {
+                    "id": "12807b2d64a2a16f",
+                    "port": 0
+                }
+            ]
+        }
+    },
+    {
+        "id": "f88bb71a82464dcf",
+        "type": "server",
+        "name": "ha",
+        "version": 5,
+        "addon": false,
+        "rejectUnauthorizedCerts": true,
+        "ha_boolean": "y|yes|true|on|home|open",
+        "connectionDelay": true,
+        "cacheJson": true,
+        "heartbeat": true,
+        "heartbeatInterval": "30",
+        "areaSelector": "friendlyName",
+        "deviceSelector": "friendlyName",
+        "entitySelector": "friendlyName",
+        "statusSeparator": ": ",
+        "statusYear": "hidden",
+        "statusMonth": "short",
+        "statusDay": "numeric",
+        "statusHourCycle": "h23",
+        "statusTimeFormat": "h:m",
+        "enableGlobalContextStore": true
+    },
+    {
+        "id": "1031d59e41cceee8",
+        "type": "mqtt-broker",
+        "name": "mosquitto",
+        "broker": "mosquitto.home-assistant.svc.cluster.local",
+        "port": "1883",
+        "clientid": "",
+        "autoConnect": true,
+        "usetls": false,
+        "protocolVersion": "4",
+        "keepalive": "60",
+        "cleansession": true,
+        "autoUnsubscribe": true,
+        "birthTopic": "",
+        "birthQos": "0",
+        "birthPayload": "",
+        "birthMsg": {},
+        "closeTopic": "",
+        "closeQos": "0",
+        "closePayload": "",
+        "closeMsg": {},
+        "willTopic": "",
+        "willQos": "0",
+        "willPayload": "",
+        "willMsg": {},
+        "userProps": "",
+        "sessionExpiry": ""
+    },
+    {
+        "id": "b68f145e9b5f00ba",
+        "type": "light-scheduler-settings",
+        "name": "Shibuya",
+        "latitude": "35.6897",
+        "longitude": "139.6895"
+    },
+    {
+        "id": "8fd6e88d3848356d",
+        "type": "api-call-service",
+        "z": "64b48be79869231a",
+        "name": "Run Primary Script",
+        "server": "f88bb71a82464dcf",
+        "version": 5,
+        "debugenabled": false,
+        "domain": "script",
+        "service": "turn_on",
+        "areaId": [],
+        "deviceId": [],
+        "entityId": [
+            "${PRIMARY_LIGHT_SCRIPT}"
+        ],
+        "data": "",
+        "dataType": "jsonata",
+        "mergeContext": "",
+        "mustacheAltTags": false,
+        "outputProperties": [],
+        "queue": "none",
+        "x": 765,
+        "y": 75,
+        "wires": [
+            [
+                "32f72f6651fbaf20"
+            ]
+        ]
+    },
+    {
+        "id": "e4cf0b65bd6882d1",
+        "type": "mqtt in",
+        "z": "64b48be79869231a",
+        "name": "",
+        "topic": "${REMOTE_CTRL_TOPIC}",
+        "qos": "2",
+        "datatype": "json",
+        "broker": "1031d59e41cceee8",
+        "nl": false,
+        "rap": true,
+        "rh": 0,
+        "inputs": 0,
+        "x": 135,
+        "y": 350,
+        "wires": [
+            [
+                "157727b0a8108b71"
+            ]
+        ]
+    },
+    {
+        "id": "157727b0a8108b71",
+        "type": "switch",
+        "z": "64b48be79869231a",
+        "name": "Button",
+        "property": "payload.action",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "eq",
+                "v": "on_press_release",
+                "vt": "str"
+            },
+            {
+                "t": "eq",
+                "v": "on_hold_release",
+                "vt": "str"
+            },
+            {
+                "t": "eq",
+                "v": "up_press_release",
+                "vt": "str"
+            },
+            {
+                "t": "eq",
+                "v": "up_hold_release",
+                "vt": "str"
+            },
+            {
+                "t": "eq",
+                "v": "down_press_release",
+                "vt": "str"
+            },
+            {
+                "t": "eq",
+                "v": "down_hold_release",
+                "vt": "str"
+            },
+            {
+                "t": "eq",
+                "v": "off_press_release",
+                "vt": "str"
+            },
+            {
+                "t": "eq",
+                "v": "off_hold_release",
+                "vt": "str"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 8,
+        "x": 350,
+        "y": 350,
+        "wires": [
+            [
+                "b74f55d4c66c9434"
+            ],
+            [
+                "892c795e704a14f8"
+            ],
+            [
+                "f8bfa15b41f00dec"
+            ],
+            [
+                "7a1c3f772a539ae1"
+            ],
+            [
+                "30b3d4a8b76fef8e"
+            ],
+            [
+                "8f49fbcc4879c07d"
+            ],
+            [
+                "59a9989f23feb6ae"
+            ],
+            [
+                "89579a6a4e4f99b9"
+            ]
+        ]
+    },
+    {
+        "id": "f8bfa15b41f00dec",
+        "type": "api-call-service",
+        "z": "64b48be79869231a",
+        "name": "Increase Brightness",
+        "server": "f88bb71a82464dcf",
+        "version": 5,
+        "debugenabled": false,
+        "domain": "light",
+        "service": "turn_on",
+        "areaId": [],
+        "deviceId": [],
+        "entityId": [
+            "${LIGHT_ENTITY}"
+        ],
+        "data": "{\t   \"brightness_step_pct\": 25, transition: 1\t}",
+        "dataType": "jsonata",
+        "mergeContext": "",
+        "mustacheAltTags": false,
+        "outputProperties": [],
+        "queue": "none",
+        "x": 600,
+        "y": 275,
+        "wires": [
+            [
+                "fe022aa6286515ce"
+            ]
+        ]
+    },
+    {
+        "id": "30b3d4a8b76fef8e",
+        "type": "api-call-service",
+        "z": "64b48be79869231a",
+        "name": "Decrease Brightness",
+        "server": "f88bb71a82464dcf",
+        "version": 5,
+        "debugenabled": false,
+        "domain": "light",
+        "service": "turn_on",
+        "areaId": [],
+        "deviceId": [],
+        "entityId": [
+            "${LIGHT_ENTITY}"
+        ],
+        "data": "{\t   \"brightness_step_pct\": -25, transition: 1\t}",
+        "dataType": "jsonata",
+        "mergeContext": "",
+        "mustacheAltTags": false,
+        "outputProperties": [],
+        "queue": "none",
+        "x": 600,
+        "y": 375,
+        "wires": [
+            [
+                "a55d6f591fa9f4be"
+            ]
+        ]
+    },
+    {
+        "id": "b74f55d4c66c9434",
+        "type": "api-current-state",
+        "z": "64b48be79869231a",
+        "name": "Lights Off?",
+        "server": "f88bb71a82464dcf",
+        "version": 3,
+        "outputs": 2,
+        "halt_if": "off",
+        "halt_if_type": "str",
+        "halt_if_compare": "is",
+        "entity_id": "${LIGHT_ENTITY}",
+        "state_type": "str",
+        "blockInputOverrides": false,
+        "outputProperties": [
+            {
+                "property": "payload",
+                "propertyType": "msg",
+                "value": "",
+                "valueType": "entityState"
+            },
+            {
+                "property": "data",
+                "propertyType": "msg",
+                "value": "",
+                "valueType": "entity"
+            }
+        ],
+        "for": "0",
+        "forType": "num",
+        "forUnits": "minutes",
+        "override_topic": false,
+        "state_location": "payload",
+        "override_payload": "msg",
+        "entity_location": "data",
+        "override_data": "msg",
+        "x": 570,
+        "y": 125,
+        "wires": [
+            [
+                "8fd6e88d3848356d"
+            ],
+            [
+                "ebed317b22a3214e"
+            ]
+        ]
+    },
+    {
+        "id": "ebed317b22a3214e",
+        "type": "api-call-service",
+        "z": "64b48be79869231a",
+        "name": "Turn Off",
+        "server": "f88bb71a82464dcf",
+        "version": 5,
+        "debugenabled": false,
+        "domain": "light",
+        "service": "turn_off",
+        "areaId": [],
+        "deviceId": [],
+        "entityId": [
+            "${LIGHT_ENTITY}"
+        ],
+        "data": "",
+        "dataType": "jsonata",
+        "mergeContext": "",
+        "mustacheAltTags": false,
+        "outputProperties": [],
+        "queue": "none",
+        "x": 735,
+        "y": 155,
+        "wires": [
+            [
+                "4ef6f3d0c7b85d05"
+            ]
+        ]
+    },
+    {
+        "id": "892c795e704a14f8",
+        "type": "api-call-service",
+        "z": "64b48be79869231a",
+        "name": "Run Secondary Script",
+        "server": "f88bb71a82464dcf",
+        "version": 5,
+        "debugenabled": false,
+        "domain": "script",
+        "service": "turn_on",
+        "areaId": [],
+        "deviceId": [],
+        "entityId": [
+            "${SECONDARY_LIGHT_SCRIPT}"
+        ],
+        "data": "",
+        "dataType": "jsonata",
+        "mergeContext": "",
+        "mustacheAltTags": false,
+        "outputProperties": [],
+        "queue": "none",
+        "x": 600,
+        "y": 225,
+        "wires": [
+            [
+                "9362f6f49aefaa0c"
+            ]
+        ]
+    },
+    {
+        "id": "7a1c3f772a539ae1",
+        "type": "api-call-service",
+        "z": "64b48be79869231a",
+        "name": "Max Brightness",
+        "server": "f88bb71a82464dcf",
+        "version": 5,
+        "debugenabled": false,
+        "domain": "light",
+        "service": "turn_on",
+        "areaId": [],
+        "deviceId": [],
+        "entityId": [
+            "${LIGHT_ENTITY}"
+        ],
+        "data": "{\t   \"brightness_pct\": 100, transition: 1\t}",
+        "dataType": "jsonata",
+        "mergeContext": "",
+        "mustacheAltTags": false,
+        "outputProperties": [],
+        "queue": "none",
+        "x": 580,
+        "y": 325,
+        "wires": [
+            [
+                "8a400f0e1110a72a"
+            ]
+        ]
+    },
+    {
+        "id": "8f49fbcc4879c07d",
+        "type": "api-call-service",
+        "z": "64b48be79869231a",
+        "name": "Min Brightness",
+        "server": "f88bb71a82464dcf",
+        "version": 5,
+        "debugenabled": false,
+        "domain": "light",
+        "service": "turn_on",
+        "areaId": [],
+        "deviceId": [],
+        "entityId": [
+            "${LIGHT_ENTITY}"
+        ],
+        "data": "{\t   \"brightness_pct\": 5, transition: 1\t}",
+        "dataType": "jsonata",
+        "mergeContext": "",
+        "mustacheAltTags": false,
+        "outputProperties": [],
+        "queue": "none",
+        "x": 580,
+        "y": 425,
+        "wires": [
+            [
+                "a3aea1e27cc11f9b"
+            ]
+        ]
+    },
+    {
+        "id": "32f72f6651fbaf20",
+        "type": "change",
+        "z": "64b48be79869231a",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "{\"fill\":\"green\",\"text\":\"Primary Lights Turned On\"}",
+                "tot": "json"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 980,
+        "y": 75,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "4ef6f3d0c7b85d05",
+        "type": "change",
+        "z": "64b48be79869231a",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "{\"fill\":\"green\",\"text\":\"Light Turned Off\"}",
+                "tot": "json"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 980,
+        "y": 150,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "9362f6f49aefaa0c",
+        "type": "change",
+        "z": "64b48be79869231a",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "{\"fill\":\"green\",\"text\":\"Secondary Light Turned On\"}",
+                "tot": "json"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 855,
+        "y": 225,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "fe022aa6286515ce",
+        "type": "change",
+        "z": "64b48be79869231a",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "{\"fill\":\"green\",\"text\":\"Increased Brightness 25%\"}",
+                "tot": "json"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 855,
+        "y": 275,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "8a400f0e1110a72a",
+        "type": "change",
+        "z": "64b48be79869231a",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "{\"fill\":\"green\",\"text\":\"Increased Brightness to 100%\"}",
+                "tot": "json"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 855,
+        "y": 325,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "a55d6f591fa9f4be",
+        "type": "change",
+        "z": "64b48be79869231a",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "{\"fill\":\"green\",\"text\":\"Drecreased Brightness 25%\"}",
+                "tot": "json"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 855,
+        "y": 375,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "a3aea1e27cc11f9b",
+        "type": "change",
+        "z": "64b48be79869231a",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "{\"fill\":\"green\",\"text\":\"Decreased Brightness to 5%\"}",
+                "tot": "json"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 855,
+        "y": 425,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "59a9989f23feb6ae",
+        "type": "change",
+        "z": "64b48be79869231a",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "{\"fill\":\"green\",\"text\":\"Custom Action 1 Run\"}",
+                "tot": "json"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 580,
+        "y": 475,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "89579a6a4e4f99b9",
+        "type": "change",
+        "z": "64b48be79869231a",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "{\"fill\":\"green\",\"text\":\"Custom Action 2 Run\"}",
+                "tot": "json"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 580,
+        "y": 525,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "cd97d4c4f6c87fda",
+        "type": "server-state-changed",
+        "z": "9437c76dc0c1335d",
+        "name": "No Motion for 1.5m?",
+        "server": "f88bb71a82464dcf",
+        "version": 5,
+        "outputs": 2,
+        "exposeAsEntityConfig": "",
+        "entityId": "${MOTION_SENSOR}",
+        "entityIdType": "exact",
+        "outputInitially": false,
+        "stateType": "str",
+        "ifState": "off",
+        "ifStateType": "str",
+        "ifStateOperator": "is",
+        "outputOnlyOnStateChange": true,
+        "for": "150",
+        "forType": "num",
+        "forUnits": "seconds",
+        "ignorePrevStateNull": false,
+        "ignorePrevStateUnknown": false,
+        "ignorePrevStateUnavailable": false,
+        "ignoreCurrentStateUnknown": true,
+        "ignoreCurrentStateUnavailable": true,
+        "outputProperties": [
+            {
+                "property": "payload",
+                "propertyType": "msg",
+                "value": "",
+                "valueType": "entityState"
+            },
+            {
+                "property": "data",
+                "propertyType": "msg",
+                "value": "",
+                "valueType": "eventData"
+            },
+            {
+                "property": "topic",
+                "propertyType": "msg",
+                "value": "",
+                "valueType": "triggerId"
+            }
+        ],
+        "x": 165,
+        "y": 375,
+        "wires": [
+            [
+                "da5e6b120a2e3ece"
+            ],
+            [
+                "3fd984c57870f395"
+            ]
+        ]
+    },
+    {
+        "id": "dda2f95413306c49",
+        "type": "api-call-service",
+        "z": "9437c76dc0c1335d",
+        "name": "Lights Off",
+        "server": "f88bb71a82464dcf",
+        "version": 5,
+        "debugenabled": false,
+        "domain": "light",
+        "service": "turn_off",
+        "areaId": [],
+        "deviceId": [],
+        "entityId": [
+            "${LIGHT_ENTITY}"
+        ],
+        "data": "",
+        "dataType": "jsonata",
+        "mergeContext": "",
+        "mustacheAltTags": false,
+        "outputProperties": [],
+        "queue": "none",
+        "x": 1065,
+        "y": 175,
+        "wires": [
+            [
+                "03603656ab897da0"
+            ]
+        ]
+    },
+    {
+        "id": "4a4a7a59ac2c934b",
+        "type": "trigger",
+        "z": "9437c76dc0c1335d",
+        "name": "",
+        "op1": "",
+        "op2": "",
+        "op1type": "pay",
+        "op2type": "payl",
+        "duration": "30",
+        "extend": false,
+        "overrideDelay": false,
+        "units": "s",
+        "reset": "",
+        "bytopic": "all",
+        "topic": "topic",
+        "outputs": 2,
+        "x": 875,
+        "y": 150,
+        "wires": [
+            [
+                "c65c1bc1bf4a44d2"
+            ],
+            [
+                "dda2f95413306c49"
+            ]
+        ]
+    },
+    {
+        "id": "0320ec93c73aba13",
+        "type": "change",
+        "z": "9437c76dc0c1335d",
+        "name": "Reset the counter",
+        "rules": [
+            {
+                "t": "set",
+                "p": "reset",
+                "pt": "msg",
+                "to": "true",
+                "tot": "str"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 665,
+        "y": 300,
+        "wires": [
+            [
+                "4a4a7a59ac2c934b"
+            ]
+        ]
+    },
+    {
+        "id": "da5e6b120a2e3ece",
+        "type": "function",
+        "z": "9437c76dc0c1335d",
+        "name": "Door Open?",
+        "func": "const doorSensorName = env.get('DOOR_SENSOR');\n\nif (!doorSensorName) {\n    return msg;\n}\n\nconst ha = global.get('homeassistant.ha');\nconst doorState = ha.states[doorSensorName];\n\nif (!doorState || !('state' in doorState)) {\n    node.error(`No door state found in ${doorSensorName}`);\n    return;\n}\n\nif (doorState.state == 'on') {\n    return [msg, null];\n}\n\nreturn [null, msg];",
+        "outputs": 2,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 420,
+        "y": 200,
+        "wires": [
+            [
+                "4a4a7a59ac2c934b"
+            ],
+            [
+                "639626d6cfb192ba"
+            ]
+        ]
+    },
+    {
+        "id": "c65c1bc1bf4a44d2",
+        "type": "api-current-state",
+        "z": "9437c76dc0c1335d",
+        "name": "Light On?",
+        "server": "f88bb71a82464dcf",
+        "version": 3,
+        "outputs": 2,
+        "halt_if": "on",
+        "halt_if_type": "str",
+        "halt_if_compare": "is",
+        "entity_id": "${LIGHT_ENTITY}",
+        "state_type": "str",
+        "blockInputOverrides": false,
+        "outputProperties": [
+            {
+                "property": "payload",
+                "propertyType": "msg",
+                "value": "",
+                "valueType": "entityState"
+            },
+            {
+                "property": "data",
+                "propertyType": "msg",
+                "value": "",
+                "valueType": "entity"
+            }
+        ],
+        "for": "0",
+        "forType": "num",
+        "forUnits": "minutes",
+        "override_topic": false,
+        "state_location": "payload",
+        "override_payload": "msg",
+        "entity_location": "data",
+        "override_data": "msg",
+        "x": 1065,
+        "y": 100,
+        "wires": [
+            [
+                "e9b1debf281ed4e1"
+            ],
+            []
+        ]
+    },
+    {
+        "id": "68a204aaca4d906f",
+        "type": "server-state-changed",
+        "z": "9437c76dc0c1335d",
+        "name": "Lights On for 2h?",
+        "server": "f88bb71a82464dcf",
+        "version": 5,
+        "outputs": 2,
+        "exposeAsEntityConfig": "",
+        "entityId": "${LIGHT_ENTITY}",
+        "entityIdType": "exact",
+        "outputInitially": false,
+        "stateType": "str",
+        "ifState": "on",
+        "ifStateType": "str",
+        "ifStateOperator": "is",
+        "outputOnlyOnStateChange": true,
+        "for": "2",
+        "forType": "num",
+        "forUnits": "hours",
+        "ignorePrevStateNull": false,
+        "ignorePrevStateUnknown": false,
+        "ignorePrevStateUnavailable": false,
+        "ignoreCurrentStateUnknown": true,
+        "ignoreCurrentStateUnavailable": true,
+        "outputProperties": [
+            {
+                "property": "payload",
+                "propertyType": "msg",
+                "value": "",
+                "valueType": "entityState"
+            },
+            {
+                "property": "data",
+                "propertyType": "msg",
+                "value": "",
+                "valueType": "eventData"
+            },
+            {
+                "property": "topic",
+                "propertyType": "msg",
+                "value": "",
+                "valueType": "triggerId"
+            }
+        ],
+        "x": 155,
+        "y": 700,
+        "wires": [
+            [
+                "eab81267bf8a9ceb"
+            ],
+            []
+        ]
+    },
+    {
+        "id": "eab81267bf8a9ceb",
+        "type": "api-current-state",
+        "z": "9437c76dc0c1335d",
+        "name": "Motion Off for 20m?",
+        "server": "f88bb71a82464dcf",
+        "version": 3,
+        "outputs": 2,
+        "halt_if": "off",
+        "halt_if_type": "str",
+        "halt_if_compare": "is",
+        "entity_id": "${MOTION_SENSOR}",
+        "state_type": "str",
+        "blockInputOverrides": false,
+        "outputProperties": [
+            {
+                "property": "payload",
+                "propertyType": "msg",
+                "value": "",
+                "valueType": "entityState"
+            },
+            {
+                "property": "data",
+                "propertyType": "msg",
+                "value": "",
+                "valueType": "entity"
+            }
+        ],
+        "for": "20",
+        "forType": "num",
+        "forUnits": "minutes",
+        "override_topic": false,
+        "state_location": "payload",
+        "override_payload": "msg",
+        "entity_location": "data",
+        "override_data": "msg",
+        "x": 400,
+        "y": 700,
+        "wires": [
+            [
+                "f8ca136f525ea9d9"
+            ],
+            []
+        ]
+    },
+    {
+        "id": "875d7d01689666f5",
+        "type": "comment",
+        "z": "9437c76dc0c1335d",
+        "name": "Lights - Dead man's switch",
+        "info": "",
+        "x": 145,
+        "y": 625,
+        "wires": []
+    },
+    {
+        "id": "666b3ee321ee3efb",
+        "type": "comment",
+        "z": "9437c76dc0c1335d",
+        "name": "Lights - Motion",
+        "info": "",
+        "x": 105,
+        "y": 100,
+        "wires": []
+    },
+    {
+        "id": "a19b26586e9631cf",
+        "type": "debug",
+        "z": "9437c76dc0c1335d",
+        "name": "Lights On Too Long",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1215,
+        "y": 700,
+        "wires": []
+    },
+    {
+        "id": "f8ca136f525ea9d9",
+        "type": "api-call-service",
+        "z": "9437c76dc0c1335d",
+        "name": "Lights Off",
+        "server": "f88bb71a82464dcf",
+        "version": 5,
+        "debugenabled": false,
+        "domain": "light",
+        "service": "turn_off",
+        "areaId": [],
+        "deviceId": [],
+        "entityId": [
+            "${LIGHT_ENTITY}"
+        ],
+        "data": "",
+        "dataType": "jsonata",
+        "mergeContext": "",
+        "mustacheAltTags": false,
+        "outputProperties": [],
+        "queue": "none",
+        "x": 610,
+        "y": 700,
+        "wires": [
+            [
+                "10bfbd94e6f9510f"
+            ]
+        ]
+    },
+    {
+        "id": "6d24ca5755a07d36",
+        "type": "change",
+        "z": "9437c76dc0c1335d",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "{\"fill\":\"green\",\"text\":\"Light Turned On\"}",
+                "tot": "json"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 1105,
+        "y": 325,
+        "wires": [
+            [
+                "92bc101d0a19d91b"
+            ]
+        ]
+    },
+    {
+        "id": "03603656ab897da0",
+        "type": "change",
+        "z": "9437c76dc0c1335d",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "{\"fill\":\"green\",\"text\":\"Light Turned Off\"}",
+                "tot": "json"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 1260,
+        "y": 175,
+        "wires": [
+            [
+                "0e7cd5392e6cd5f1"
+            ]
+        ]
+    },
+    {
+        "id": "f3d22cfa10e9d27d",
+        "type": "change",
+        "z": "9437c76dc0c1335d",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "{\"fill\":\"green\",\"text\":\"Light Blinked\"}",
+                "tot": "json"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 1435,
+        "y": 75,
+        "wires": [
+            [
+                "a9194b6c0c9d79ba"
+            ]
+        ]
+    },
+    {
+        "id": "10bfbd94e6f9510f",
+        "type": "change",
+        "z": "9437c76dc0c1335d",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "{\"fill\":\"green\",\"text\":\"Dead man's switch triggered\"}",
+                "tot": "json"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 830,
+        "y": 700,
+        "wires": [
+            [
+                "a19b26586e9631cf",
+                "0b3383f4e9d1beaf"
+            ]
+        ]
+    },
+    {
+        "id": "38c2ac8502bf47d9",
+        "type": "api-current-state",
+        "z": "9437c76dc0c1335d",
+        "name": "Dark?",
+        "server": "f88bb71a82464dcf",
+        "version": 3,
+        "outputs": 2,
+        "halt_if": "30",
+        "halt_if_type": "num",
+        "halt_if_compare": "lt",
+        "entity_id": "${BRIGHTNESS_SENSOR}",
+        "state_type": "str",
+        "blockInputOverrides": false,
+        "outputProperties": [
+            {
+                "property": "payload",
+                "propertyType": "msg",
+                "value": "",
+                "valueType": "entityState"
+            },
+            {
+                "property": "data",
+                "propertyType": "msg",
+                "value": "",
+                "valueType": "entity"
+            }
+        ],
+        "for": "0",
+        "forType": "num",
+        "forUnits": "minutes",
+        "override_topic": false,
+        "state_location": "payload",
+        "override_payload": "msg",
+        "entity_location": "data",
+        "override_data": "msg",
+        "x": 625,
+        "y": 375,
+        "wires": [
+            [
+                "c644c6d8abbaf61a"
+            ],
+            []
+        ]
+    },
+    {
+        "id": "b6230a2c135228f9",
+        "type": "api-current-state",
+        "z": "9437c76dc0c1335d",
+        "name": "Sunset?",
+        "server": "f88bb71a82464dcf",
+        "version": 3,
+        "outputs": 2,
+        "halt_if": "below_horizon",
+        "halt_if_type": "str",
+        "halt_if_compare": "is",
+        "entity_id": "sun.sun",
+        "state_type": "str",
+        "blockInputOverrides": false,
+        "outputProperties": [
+            {
+                "property": "payload",
+                "propertyType": "msg",
+                "value": "",
+                "valueType": "entityState"
+            },
+            {
+                "property": "data",
+                "propertyType": "msg",
+                "value": "",
+                "valueType": "entity"
+            }
+        ],
+        "for": "0",
+        "forType": "num",
+        "forUnits": "minutes",
+        "override_topic": false,
+        "state_location": "payload",
+        "override_payload": "msg",
+        "entity_location": "data",
+        "override_data": "msg",
+        "x": 635,
+        "y": 425,
+        "wires": [
+            [
+                "c644c6d8abbaf61a"
+            ],
+            []
+        ]
+    },
+    {
+        "id": "c644c6d8abbaf61a",
+        "type": "api-current-state",
+        "z": "9437c76dc0c1335d",
+        "name": "Light Off?",
+        "server": "f88bb71a82464dcf",
+        "version": 3,
+        "outputs": 2,
+        "halt_if": "off",
+        "halt_if_type": "str",
+        "halt_if_compare": "is",
+        "entity_id": "${LIGHT_ENTITY}",
+        "state_type": "str",
+        "blockInputOverrides": false,
+        "outputProperties": [
+            {
+                "property": "payload",
+                "propertyType": "msg",
+                "value": "",
+                "valueType": "entityState"
+            },
+            {
+                "property": "data",
+                "propertyType": "msg",
+                "value": "",
+                "valueType": "entity"
+            }
+        ],
+        "for": "0",
+        "forType": "num",
+        "forUnits": "minutes",
+        "override_topic": false,
+        "state_location": "payload",
+        "override_payload": "msg",
+        "entity_location": "data",
+        "override_data": "msg",
+        "x": 885,
+        "y": 400,
+        "wires": [
+            [
+                "6d24ca5755a07d36"
+            ],
+            []
+        ]
+    },
+    {
+        "id": "e9b1debf281ed4e1",
+        "type": "api-call-service",
+        "z": "9437c76dc0c1335d",
+        "name": "Blink Lights",
+        "server": "f88bb71a82464dcf",
+        "version": 5,
+        "debugenabled": false,
+        "domain": "light",
+        "service": "turn_on",
+        "areaId": [],
+        "deviceId": [],
+        "entityId": [
+            "${LIGHT_ENTITY}"
+        ],
+        "data": "{\"effect\":\"blink\"}",
+        "dataType": "json",
+        "mergeContext": "",
+        "mustacheAltTags": false,
+        "outputProperties": [],
+        "queue": "none",
+        "x": 1250,
+        "y": 75,
+        "wires": [
+            [
+                "f3d22cfa10e9d27d"
+            ]
+        ]
+    },
+    {
+        "id": "3fd984c57870f395",
+        "type": "function",
+        "z": "9437c76dc0c1335d",
+        "name": "Door Open?",
+        "func": "const doorSensorName = env.get('DOOR_SENSOR');\n\nif (!doorSensorName) {\n    return msg;\n}\n\nconst ha = global.get('homeassistant.ha');\nconst doorState = ha.states[doorSensorName];\n\nif (!doorState || !('state' in doorState)) {\n    node.error(`No door state found in ${doorSensorName}`);\n    return;\n}\n\nif (doorState.state == 'on') {\n    return [msg, null];\n}\n\nreturn [null, msg];",
+        "outputs": 2,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 420,
+        "y": 400,
+        "wires": [
+            [
+                "0320ec93c73aba13",
+                "38c2ac8502bf47d9",
+                "b6230a2c135228f9"
+            ],
+            [
+                "d8fc4ea219d2a456"
+            ]
+        ]
+    },
+    {
+        "id": "11417094154650b9",
+        "type": "link in",
+        "z": "9437c76dc0c1335d",
+        "name": "Status In",
+        "links": [
+            "a9194b6c0c9d79ba",
+            "0e7cd5392e6cd5f1",
+            "92bc101d0a19d91b",
+            "0b3383f4e9d1beaf",
+            "cac0c010774a38c0",
+            "1c46e8fa39e9d555",
+            "178043ec809f25fc"
+        ],
+        "x": 90,
+        "y": 900,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "a9194b6c0c9d79ba",
+        "type": "link out",
+        "z": "9437c76dc0c1335d",
+        "name": "Status Out",
+        "mode": "link",
+        "links": [
+            "11417094154650b9"
+        ],
+        "x": 1585,
+        "y": 75,
+        "wires": []
+    },
+    {
+        "id": "0e7cd5392e6cd5f1",
+        "type": "link out",
+        "z": "9437c76dc0c1335d",
+        "name": "Status Out",
+        "mode": "link",
+        "links": [
+            "11417094154650b9"
+        ],
+        "x": 1390,
+        "y": 175,
+        "wires": []
+    },
+    {
+        "id": "92bc101d0a19d91b",
+        "type": "link out",
+        "z": "9437c76dc0c1335d",
+        "name": "Status Out",
+        "mode": "link",
+        "links": [
+            "11417094154650b9"
+        ],
+        "x": 1235,
+        "y": 325,
+        "wires": []
+    },
+    {
+        "id": "0b3383f4e9d1beaf",
+        "type": "link out",
+        "z": "9437c76dc0c1335d",
+        "name": "Status Out",
+        "mode": "link",
+        "links": [
+            "11417094154650b9"
+        ],
+        "x": 990,
+        "y": 650,
+        "wires": []
+    },
+    {
+        "id": "7facb3b46fce500a",
+        "type": "comment",
+        "z": "9437c76dc0c1335d",
+        "name": "Update Node Status",
+        "info": "",
+        "x": 115,
+        "y": 825,
+        "wires": []
+    },
+    {
+        "id": "d8fc4ea219d2a456",
+        "type": "change",
+        "z": "9437c76dc0c1335d",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "{\"fill\":\"green\",\"text\":\"No Action, Door Closed\"}",
+                "tot": "json"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 655,
+        "y": 500,
+        "wires": [
+            [
+                "cac0c010774a38c0"
+            ]
+        ]
+    },
+    {
+        "id": "cac0c010774a38c0",
+        "type": "link out",
+        "z": "9437c76dc0c1335d",
+        "name": "Status Out",
+        "mode": "link",
+        "links": [
+            "11417094154650b9"
+        ],
+        "x": 790,
+        "y": 500,
+        "wires": []
+    },
+    {
+        "id": "639626d6cfb192ba",
+        "type": "change",
+        "z": "9437c76dc0c1335d",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "{\"fill\":\"green\",\"text\":\"No Action, Door Closed\"}",
+                "tot": "json"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 605,
+        "y": 225,
+        "wires": [
+            [
+                "1c46e8fa39e9d555"
+            ]
+        ]
+    },
+    {
+        "id": "1c46e8fa39e9d555",
+        "type": "link out",
+        "z": "9437c76dc0c1335d",
+        "name": "Status Out",
+        "mode": "link",
+        "links": [
+            "11417094154650b9"
+        ],
+        "x": 740,
+        "y": 225,
+        "wires": []
+    },
+    {
+        "id": "6fbb1c9573720178",
+        "type": "mqtt in",
+        "z": "a8888983d2635276",
+        "name": "",
+        "topic": "${REMOTE_CTRL_TOPIC}",
+        "qos": "2",
+        "datatype": "json",
+        "broker": "1031d59e41cceee8",
+        "nl": false,
+        "rap": true,
+        "rh": 0,
+        "inputs": 0,
+        "x": 135,
+        "y": 125,
+        "wires": [
+            [
+                "ebe72b7ab8711118"
+            ]
+        ]
+    },
+    {
+        "id": "ebe72b7ab8711118",
+        "type": "switch",
+        "z": "a8888983d2635276",
+        "name": "Button",
+        "property": "payload.action",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "eq",
+                "v": "single",
+                "vt": "str"
+            },
+            {
+                "t": "eq",
+                "v": "hold",
+                "vt": "str"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 2,
+        "x": 350,
+        "y": 125,
+        "wires": [
+            [
+                "7c9494790a8259a9"
+            ],
+            [
+                "12807b2d64a2a16f"
+            ]
+        ]
+    },
+    {
+        "id": "7c9494790a8259a9",
+        "type": "change",
+        "z": "a8888983d2635276",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "{\"fill\":\"green\",\"text\":\"Custom Action 1 Run\"}",
+                "tot": "json"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 530,
+        "y": 75,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "12807b2d64a2a16f",
+        "type": "change",
+        "z": "a8888983d2635276",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "{\"fill\":\"green\",\"text\":\"Custom Action 2 Run\"}",
+                "tot": "json"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 530,
+        "y": 175,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "c11ace53940dd770",
+        "type": "subflow:64b48be79869231a",
+        "z": "c41ab6f93f6c103e",
+        "name": "Remote - Entrance",
+        "env": [
+            {
+                "name": "LIGHT_ENTITY",
+                "value": "light.bathroom_lights",
+                "type": "str"
+            },
+            {
+                "name": "REMOTE_CTRL_TOPIC",
+                "value": "zigbee2mqtt/bathroom/remote_entrance",
+                "type": "str"
+            },
+            {
+                "name": "PRIMARY_LIGHT_SCRIPT",
+                "value": "script.bathroom_normal_lights",
+                "type": "str"
+            },
+            {
+                "name": "SECONDARY_LIGHT_SCRIPT",
+                "value": "script.bathroom_normal_lights",
+                "type": "str"
+            },
+            {
+                "name": "PRIMARY_SCRIPT",
+                "value": "script.bathroom_normal_lights",
+                "type": "str"
+            },
+            {
+                "name": "TURN_ON_PRIMARY_SCRIPT",
+                "value": "script.bathroom_normal_lights",
+                "type": "str"
+            },
+            {
+                "name": "TURN_ON_NORMAL_SCRIPT",
+                "value": "script.bedroom_normal_lights",
+                "type": "str"
+            },
+            {
+                "name": "SHORT_ON_SCRIPT",
+                "value": "script.bedroom_normal_lights",
+                "type": "str"
+            },
+            {
+                "name": "LONG_ON_SCRIPT",
+                "value": "script.bedroom_chill_lights",
+                "type": "str"
+            },
+            {
+                "name": "LIGHTS_ENTITY",
+                "value": "light.bedroom_lights",
+                "type": "str"
+            },
+            {
+                "name": "CONTROLLER_TOPIC",
+                "value": "zigbee2mqtt/bedroom/controller_bed",
+                "type": "str"
+            },
+            {
+                "name": "CONTROLLER_ID",
+                "value": "0x001788010968e691",
+                "type": "str"
+            },
+            {
+                "name": "LIGHTS",
+                "value": "light.bedroom_lights",
+                "type": "str"
+            }
+        ],
+        "x": 165,
+        "y": 125,
+        "wires": [
+            [],
+            [
+                "ec5d8aef27bfb697"
+            ]
+        ]
+    },
+    {
+        "id": "d5f3ae243950a1b9",
+        "type": "comment",
+        "z": "c41ab6f93f6c103e",
+        "name": "Lights - Motion",
+        "info": "",
+        "x": 105,
+        "y": 300,
+        "wires": []
+    },
+    {
+        "id": "e2188df882ae570c",
+        "type": "comment",
+        "z": "c41ab6f93f6c103e",
+        "name": "Remote Controller",
+        "info": "",
+        "x": 115,
+        "y": 50,
+        "wires": []
+    },
+    {
+        "id": "91a8cd69329b0d4b",
+        "type": "subflow:9437c76dc0c1335d",
+        "z": "c41ab6f93f6c103e",
+        "name": "Automatic Bathroom Lights",
+        "env": [
+            {
+                "name": "LIGHT_ENTITY",
+                "value": "light.bathroom_lights",
+                "type": "str"
+            },
+            {
+                "name": "LIGHTS_SCRIPT",
+                "value": "script.bathroom_normal_lights",
+                "type": "str"
+            },
+            {
+                "name": "BRIGHTNESS_SENSOR",
+                "value": "sensor.bathroom_motion_illuminance_lux",
+                "type": "str"
+            },
+            {
+                "name": "DOOR_SENSOR",
+                "value": "binary_sensor.bathroom_door_entrance_contact",
+                "type": "str"
+            },
+            {
+                "name": "MOTION_SENSOR",
+                "value": "binary_sensor.bathroom_motion_occupancy",
+                "type": "str"
+            }
+        ],
+        "x": 195,
+        "y": 375,
+        "wires": [
+            [
+                "5780a94634545d7a"
+            ]
+        ]
+    },
+    {
+        "id": "ec5d8aef27bfb697",
+        "type": "api-call-service",
+        "z": "c41ab6f93f6c103e",
+        "name": "Play Music",
+        "server": "f88bb71a82464dcf",
+        "version": 5,
+        "debugenabled": false,
+        "domain": "script",
+        "service": "home_music",
+        "areaId": [],
+        "deviceId": [],
+        "entityId": [],
+        "data": "{\t   \"player_id\": \"media_player.bathroom_speaker\",\t   \"player_name\": \"Bathroom speaker\" \t}",
+        "dataType": "json",
+        "mergeContext": "",
+        "mustacheAltTags": false,
+        "outputProperties": [],
+        "queue": "none",
+        "x": 395,
+        "y": 150,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "5780a94634545d7a",
+        "type": "api-call-service",
+        "z": "c41ab6f93f6c103e",
+        "name": "Bathroom Normal Lights",
+        "server": "f88bb71a82464dcf",
+        "version": 5,
+        "debugenabled": false,
+        "domain": "script",
+        "service": "turn_on",
+        "areaId": [],
+        "deviceId": [],
+        "entityId": [
+            "script.bathroom_normal_lights"
+        ],
+        "data": "",
+        "dataType": "jsonata",
+        "mergeContext": "",
+        "mustacheAltTags": false,
+        "outputProperties": [],
+        "queue": "none",
+        "x": 485,
+        "y": 375,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "2050e29977a8505b",
+        "type": "subflow:64b48be79869231a",
+        "z": "fa6bb9cfa58677c8",
+        "name": "Remote - Bed",
+        "env": [
+            {
+                "name": "LIGHT_ENTITY",
+                "value": "light.bedroom_lights",
+                "type": "str"
+            },
+            {
+                "name": "REMOTE_CTRL_TOPIC",
+                "value": "zigbee2mqtt/bedroom/remote_bed",
+                "type": "str"
+            },
+            {
+                "name": "PRIMARY_LIGHT_SCRIPT",
+                "value": "script.bedroom_normal_lights",
+                "type": "str"
+            },
+            {
+                "name": "SECONDARY_LIGHT_SCRIPT",
+                "value": "script.bedroom_chill_lights",
+                "type": "str"
+            },
+            {
+                "name": "TURN_ON_PRIMARY_SCRIPT",
+                "value": "script.bedroom_normal_lights",
+                "type": "str"
+            },
+            {
+                "name": "TURN_ON_SECONDARY_SCRIPT",
+                "value": "script.bedroom_chill_lights",
+                "type": "str"
+            },
+            {
+                "name": "TURN_OFF_SECONDARY_SCRIPT",
+                "value": "script.bedroom_chill_atmosphere",
+                "type": "str"
+            },
+            {
+                "name": "TURN_ON_NORMAL_SCRIPT",
+                "value": "script.bedroom_normal_lights",
+                "type": "str"
+            },
+            {
+                "name": "SHORT_ON_SCRIPT",
+                "value": "script.bedroom_normal_lights",
+                "type": "str"
+            },
+            {
+                "name": "LONG_ON_SCRIPT",
+                "value": "script.bedroom_chill_lights",
+                "type": "str"
+            },
+            {
+                "name": "LIGHTS_ENTITY",
+                "value": "light.bedroom_lights",
+                "type": "str"
+            },
+            {
+                "name": "CONTROLLER_TOPIC",
+                "value": "zigbee2mqtt/bedroom/controller_bed",
+                "type": "str"
+            },
+            {
+                "name": "CONTROLLER_ID",
+                "value": "0x001788010968e691",
+                "type": "str"
+            },
+            {
+                "name": "LIGHTS",
+                "value": "light.bedroom_lights",
+                "type": "str"
+            }
+        ],
+        "x": 145,
+        "y": 150,
+        "wires": [
+            [
+                "d17b6a27e0b005b8"
+            ],
+            [
+                "259a7e2ffb275a92"
+            ]
+        ]
+    },
+    {
+        "id": "297e40ac212f1fea",
+        "type": "comment",
+        "z": "fa6bb9cfa58677c8",
+        "name": "Remote Controllers",
+        "info": "",
+        "x": 115,
+        "y": 50,
+        "wires": []
+    },
+    {
+        "id": "259a7e2ffb275a92",
+        "type": "api-call-service",
+        "z": "fa6bb9cfa58677c8",
+        "name": "Chill Atmosphere",
+        "server": "f88bb71a82464dcf",
+        "version": 5,
+        "debugenabled": false,
+        "domain": "script",
+        "service": "bedroom_chill_atmosphere",
+        "areaId": [],
+        "deviceId": [],
+        "entityId": [],
+        "data": "",
+        "dataType": "jsonata",
+        "mergeContext": "",
+        "mustacheAltTags": false,
+        "outputProperties": [],
+        "queue": "none",
+        "x": 440,
+        "y": 250,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "d17b6a27e0b005b8",
+        "type": "api-call-service",
+        "z": "fa6bb9cfa58677c8",
+        "name": "Toggle AC",
+        "server": "f88bb71a82464dcf",
+        "version": 5,
+        "debugenabled": false,
+        "domain": "script",
+        "service": "helper_switch_climate",
+        "areaId": [],
+        "deviceId": [],
+        "entityId": [],
+        "data": "{\"climate_entity\":\"climate.bedroom_ac\"}",
+        "dataType": "json",
+        "mergeContext": "",
+        "mustacheAltTags": false,
+        "outputProperties": [],
+        "queue": "none",
+        "x": 420,
+        "y": 150,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "a699775350c15c6c",
+        "type": "subflow:64b48be79869231a",
+        "z": "fa6bb9cfa58677c8",
+        "name": "Remote - Entrance",
+        "env": [
+            {
+                "name": "LIGHT_ENTITY",
+                "value": "light.bedroom_lights",
+                "type": "str"
+            },
+            {
+                "name": "REMOTE_CTRL_TOPIC",
+                "value": "zigbee2mqtt/bedroom/remote_entrance",
+                "type": "str"
+            },
+            {
+                "name": "PRIMARY_LIGHT_SCRIPT",
+                "value": "script.bedroom_normal_lights",
+                "type": "str"
+            },
+            {
+                "name": "SECONDARY_LIGHT_SCRIPT",
+                "value": "script.bedroom_chill_lights",
+                "type": "str"
+            },
+            {
+                "name": "TURN_ON_PRIMARY_SCRIPT",
+                "value": "script.bedroom_normal_lights",
+                "type": "str"
+            },
+            {
+                "name": "TURN_ON_SECONDARY_SCRIPT",
+                "value": "script.bedroom_chill_lights",
+                "type": "str"
+            },
+            {
+                "name": "TURN_OFF_SECONDARY_SCRIPT",
+                "value": "script.bedroom_chill_atmosphere",
+                "type": "str"
+            },
+            {
+                "name": "TURN_ON_NORMAL_SCRIPT",
+                "value": "script.bedroom_normal_lights",
+                "type": "str"
+            },
+            {
+                "name": "SHORT_ON_SCRIPT",
+                "value": "script.bedroom_normal_lights",
+                "type": "str"
+            },
+            {
+                "name": "LONG_ON_SCRIPT",
+                "value": "script.bedroom_chill_lights",
+                "type": "str"
+            },
+            {
+                "name": "LIGHTS_ENTITY",
+                "value": "light.bedroom_lights",
+                "type": "str"
+            },
+            {
+                "name": "CONTROLLER_TOPIC",
+                "value": "zigbee2mqtt/bedroom/controller_bed",
+                "type": "str"
+            },
+            {
+                "name": "CONTROLLER_ID",
+                "value": "0x001788010968e691",
+                "type": "str"
+            },
+            {
+                "name": "LIGHTS",
+                "value": "light.bedroom_lights",
+                "type": "str"
+            }
+        ],
+        "x": 165,
+        "y": 250,
+        "wires": [
+            [
+                "d17b6a27e0b005b8"
+            ],
+            [
+                "259a7e2ffb275a92"
+            ]
+        ]
+    },
+    {
+        "id": "21a21c921ce7a64f",
+        "type": "comment",
+        "z": "fa6bb9cfa58677c8",
+        "name": "Sleep Mode",
+        "info": "",
+        "x": 95,
+        "y": 550,
+        "wires": []
+    },
+    {
+        "id": "a48dcada2a38d841",
+        "type": "server-state-changed",
+        "z": "fa6bb9cfa58677c8",
+        "name": "Door Closed?",
+        "server": "f88bb71a82464dcf",
+        "version": 5,
+        "outputs": 2,
+        "exposeAsEntityConfig": "",
+        "entityId": "binary_sensor.bedroom_door_entrance_contact",
+        "entityIdType": "exact",
+        "outputInitially": false,
+        "stateType": "str",
+        "ifState": "off",
+        "ifStateType": "str",
+        "ifStateOperator": "is",
+        "outputOnlyOnStateChange": true,
+        "for": "15",
+        "forType": "num",
+        "forUnits": "seconds",
+        "ignorePrevStateNull": false,
+        "ignorePrevStateUnknown": false,
+        "ignorePrevStateUnavailable": false,
+        "ignoreCurrentStateUnknown": true,
+        "ignoreCurrentStateUnavailable": true,
+        "outputProperties": [
+            {
+                "property": "payload",
+                "propertyType": "msg",
+                "value": "",
+                "valueType": "entityState"
+            },
+            {
+                "property": "data",
+                "propertyType": "msg",
+                "value": "",
+                "valueType": "eventData"
+            },
+            {
+                "property": "topic",
+                "propertyType": "msg",
+                "value": "",
+                "valueType": "triggerId"
+            }
+        ],
+        "x": 145,
+        "y": 625,
+        "wires": [
+            [
+                "33a13bfcc32ef764"
+            ],
+            []
+        ]
+    },
+    {
+        "id": "33a13bfcc32ef764",
+        "type": "light-scheduler-filter",
+        "z": "fa6bb9cfa58677c8",
+        "settings": "b68f145e9b5f00ba",
+        "events": "[{\"start\":{\"dow\":1,\"mod\":0},\"end\":{\"dow\":1,\"mod\":360}},{\"start\":{\"dow\":2,\"mod\":0},\"end\":{\"dow\":2,\"mod\":360}},{\"start\":{\"dow\":3,\"mod\":0},\"end\":{\"dow\":3,\"mod\":360}},{\"start\":{\"dow\":4,\"mod\":0},\"end\":{\"dow\":4,\"mod\":360}},{\"start\":{\"dow\":5,\"mod\":0},\"end\":{\"dow\":5,\"mod\":360}},{\"start\":{\"dow\":6,\"mod\":0},\"end\":{\"dow\":6,\"mod\":360}},{\"start\":{\"dow\":0,\"mod\":0},\"end\":{\"dow\":0,\"mod\":360}},{\"start\":{\"dow\":1,\"mod\":1380},\"end\":{\"dow\":2,\"mod\":0}},{\"start\":{\"dow\":2,\"mod\":1380},\"end\":{\"dow\":3,\"mod\":0}},{\"start\":{\"dow\":3,\"mod\":1380},\"end\":{\"dow\":4,\"mod\":0}},{\"start\":{\"dow\":4,\"mod\":1380},\"end\":{\"dow\":5,\"mod\":0}},{\"start\":{\"dow\":5,\"mod\":1380},\"end\":{\"dow\":6,\"mod\":0}},{\"start\":{\"dow\":6,\"mod\":1380},\"end\":{\"dow\":0,\"mod\":0}},{\"start\":{\"dow\":0,\"mod\":1380},\"end\":{\"dow\":1,\"mod\":0}}]",
+        "name": "Night Time?",
+        "onlyWhenDark": false,
+        "scheduleRndMax": 0,
+        "sunElevationThreshold": 6,
+        "sunShowElevationInStatus": false,
+        "x": 345,
+        "y": 625,
+        "wires": [
+            [
+                "02cade31805b9fec"
+            ],
+            []
+        ]
+    },
+    {
+        "id": "02cade31805b9fec",
+        "type": "api-current-state",
+        "z": "fa6bb9cfa58677c8",
+        "name": "Already Sleeping?",
+        "server": "f88bb71a82464dcf",
+        "version": 3,
+        "outputs": 2,
+        "halt_if": "idle",
+        "halt_if_type": "str",
+        "halt_if_compare": "is_not",
+        "entity_id": "timer.bedroom_sleeping",
+        "state_type": "str",
+        "blockInputOverrides": false,
+        "outputProperties": [
+            {
+                "property": "payload",
+                "propertyType": "msg",
+                "value": "",
+                "valueType": "entityState"
+            },
+            {
+                "property": "data",
+                "propertyType": "msg",
+                "value": "",
+                "valueType": "entity"
+            }
+        ],
+        "for": "0",
+        "forType": "num",
+        "forUnits": "minutes",
+        "override_topic": false,
+        "state_location": "payload",
+        "override_payload": "msg",
+        "entity_location": "data",
+        "override_data": "msg",
+        "x": 580,
+        "y": 625,
+        "wires": [
+            [],
+            [
+                "9019d74dd955c42c"
+            ]
+        ]
+    },
+    {
+        "id": "9019d74dd955c42c",
+        "type": "api-call-service",
+        "z": "fa6bb9cfa58677c8",
+        "name": "Go to Sleep",
+        "server": "f88bb71a82464dcf",
+        "version": 5,
+        "debugenabled": false,
+        "domain": "script",
+        "service": "home_sleeping_mode",
+        "areaId": [],
+        "deviceId": [],
+        "entityId": [],
+        "data": "",
+        "dataType": "jsonata",
+        "mergeContext": "",
+        "mustacheAltTags": false,
+        "outputProperties": [],
+        "queue": "none",
+        "x": 805,
+        "y": 625,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "f3b9ffb9adbba82c",
+        "type": "subflow:a8888983d2635276",
+        "z": "fa6bb9cfa58677c8",
+        "name": "Remote - Desk",
+        "env": [
+            {
+                "name": "REMOTE_CTRL_TOPIC",
+                "value": "zigbee2mqtt/bedroom/remote_desk",
+                "type": "str"
+            }
+        ],
+        "x": 155,
+        "y": 400,
+        "wires": [
+            [
+                "61d275e5040ee530"
+            ],
+            [
+                "f90e52f43873674d"
+            ]
+        ]
+    },
+    {
+        "id": "f90e52f43873674d",
+        "type": "api-call-service",
+        "z": "fa6bb9cfa58677c8",
+        "name": "Go to Sleep",
+        "server": "f88bb71a82464dcf",
+        "version": 5,
+        "debugenabled": false,
+        "domain": "script",
+        "service": "home_sleeping_mode",
+        "areaId": [],
+        "deviceId": [],
+        "entityId": [],
+        "data": "",
+        "dataType": "jsonata",
+        "mergeContext": "",
+        "mustacheAltTags": false,
+        "outputProperties": [],
+        "queue": "none",
+        "x": 420,
+        "y": 425,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "61d275e5040ee530",
+        "type": "api-call-service",
+        "z": "fa6bb9cfa58677c8",
+        "name": "Wake Up",
+        "server": "f88bb71a82464dcf",
+        "version": 5,
+        "debugenabled": false,
+        "domain": "script",
+        "service": "home_wakeup",
+        "areaId": [],
+        "deviceId": [],
+        "entityId": [],
+        "data": "",
+        "dataType": "jsonata",
+        "mergeContext": "",
+        "mustacheAltTags": false,
+        "outputProperties": [],
+        "queue": "none",
+        "x": 410,
+        "y": 350,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "095a869c72667350",
+        "type": "comment",
+        "z": "fa6bb9cfa58677c8",
+        "name": "AC",
+        "info": "",
+        "x": 75,
+        "y": 775,
+        "wires": []
+    },
+    {
+        "id": "9da6d3118bc04433",
+        "type": "server-state-changed",
+        "z": "fa6bb9cfa58677c8",
+        "name": "Door Opened 5m?",
+        "server": "f88bb71a82464dcf",
+        "version": 5,
+        "outputs": 2,
+        "exposeAsEntityConfig": "",
+        "entityId": "binary_sensor.bedroom_door_entrance_contact",
+        "entityIdType": "exact",
+        "outputInitially": false,
+        "stateType": "str",
+        "ifState": "on",
+        "ifStateType": "str",
+        "ifStateOperator": "is",
+        "outputOnlyOnStateChange": true,
+        "for": "5",
+        "forType": "num",
+        "forUnits": "minutes",
+        "ignorePrevStateNull": false,
+        "ignorePrevStateUnknown": false,
+        "ignorePrevStateUnavailable": false,
+        "ignoreCurrentStateUnknown": true,
+        "ignoreCurrentStateUnavailable": true,
+        "outputProperties": [
+            {
+                "property": "payload",
+                "propertyType": "msg",
+                "value": "",
+                "valueType": "entityState"
+            },
+            {
+                "property": "data",
+                "propertyType": "msg",
+                "value": "",
+                "valueType": "eventData"
+            },
+            {
+                "property": "topic",
+                "propertyType": "msg",
+                "value": "",
+                "valueType": "triggerId"
+            }
+        ],
+        "x": 165,
+        "y": 875,
+        "wires": [
+            [
+                "5bfbcc15a80e8945"
+            ],
+            []
+        ]
+    },
+    {
+        "id": "5bfbcc15a80e8945",
+        "type": "api-current-state",
+        "z": "fa6bb9cfa58677c8",
+        "name": "Bedroom AC running?",
+        "server": "f88bb71a82464dcf",
+        "version": 3,
+        "outputs": 2,
+        "halt_if": "off",
+        "halt_if_type": "str",
+        "halt_if_compare": "is_not",
+        "entity_id": "climate.bedroom_ac",
+        "state_type": "str",
+        "blockInputOverrides": false,
+        "outputProperties": [
+            {
+                "property": "payload",
+                "propertyType": "msg",
+                "value": "",
+                "valueType": "entityState"
+            },
+            {
+                "property": "data",
+                "propertyType": "msg",
+                "value": "",
+                "valueType": "entity"
+            }
+        ],
+        "for": "0",
+        "forType": "num",
+        "forUnits": "minutes",
+        "override_topic": false,
+        "state_location": "payload",
+        "override_payload": "msg",
+        "entity_location": "data",
+        "override_data": "msg",
+        "x": 425,
+        "y": 875,
+        "wires": [
+            [
+                "c03a59b5b2299844",
+                "437537ae768e0333"
+            ],
+            []
+        ]
+    },
+    {
+        "id": "c03a59b5b2299844",
+        "type": "api-call-service",
+        "z": "fa6bb9cfa58677c8",
+        "name": "Turn Off Bedroom AC",
+        "server": "f88bb71a82464dcf",
+        "version": 5,
+        "debugenabled": false,
+        "domain": "climate",
+        "service": "turn_off",
+        "areaId": [],
+        "deviceId": [],
+        "entityId": [
+            "climate.bedroom_ac"
+        ],
+        "data": "",
+        "dataType": "jsonata",
+        "mergeContext": "",
+        "mustacheAltTags": false,
+        "outputProperties": [],
+        "queue": "none",
+        "x": 700,
+        "y": 825,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "437537ae768e0333",
+        "type": "api-call-service",
+        "z": "fa6bb9cfa58677c8",
+        "name": "Turn On Living Room AC",
+        "server": "f88bb71a82464dcf",
+        "version": 5,
+        "debugenabled": false,
+        "domain": "climate",
+        "service": "turn_on",
+        "areaId": [],
+        "deviceId": [],
+        "entityId": [
+            "climate.living_room_ac"
+        ],
+        "data": "",
+        "dataType": "jsonata",
+        "mergeContext": "",
+        "mustacheAltTags": false,
+        "outputProperties": [],
+        "queue": "none",
+        "x": 710,
+        "y": 900,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "cf86ccd225dbd4eb",
+        "type": "api-current-state",
+        "z": "fa6bb9cfa58677c8",
+        "name": "Living Room AC running?",
+        "server": "f88bb71a82464dcf",
+        "version": 3,
+        "outputs": 2,
+        "halt_if": "off",
+        "halt_if_type": "str",
+        "halt_if_compare": "is_not",
+        "entity_id": "climate.living_room_ac",
+        "state_type": "str",
+        "blockInputOverrides": false,
+        "outputProperties": [
+            {
+                "property": "payload",
+                "propertyType": "msg",
+                "value": "",
+                "valueType": "entityState"
+            },
+            {
+                "property": "data",
+                "propertyType": "msg",
+                "value": "",
+                "valueType": "entity"
+            }
+        ],
+        "for": "0",
+        "forType": "num",
+        "forUnits": "minutes",
+        "override_topic": false,
+        "state_location": "payload",
+        "override_payload": "msg",
+        "entity_location": "data",
+        "override_data": "msg",
+        "x": 640,
+        "y": 1075,
+        "wires": [
+            [
+                "4b4ac090d63de69c"
+            ],
+            []
+        ]
+    },
+    {
+        "id": "fce951f1ac71d4a5",
+        "type": "api-call-service",
+        "z": "fa6bb9cfa58677c8",
+        "name": "Turn On Bedroom AC",
+        "server": "f88bb71a82464dcf",
+        "version": 5,
+        "debugenabled": false,
+        "domain": "climate",
+        "service": "turn_on",
+        "areaId": [],
+        "deviceId": [],
+        "entityId": [
+            "climate.bedroom_ac"
+        ],
+        "data": "",
+        "dataType": "jsonata",
+        "mergeContext": "",
+        "mustacheAltTags": false,
+        "outputProperties": [],
+        "queue": "none",
+        "x": 1155,
+        "y": 1050,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "5d34a25b5d40b360",
+        "type": "api-call-service",
+        "z": "fa6bb9cfa58677c8",
+        "name": "Turn Off Living Room AC",
+        "server": "f88bb71a82464dcf",
+        "version": 5,
+        "debugenabled": false,
+        "domain": "climate",
+        "service": "turn_off",
+        "areaId": [],
+        "deviceId": [],
+        "entityId": [
+            "climate.living_room_ac"
+        ],
+        "data": "",
+        "dataType": "jsonata",
+        "mergeContext": "",
+        "mustacheAltTags": false,
+        "outputProperties": [],
+        "queue": "none",
+        "x": 1170,
+        "y": 1125,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "6c6dfdc256db7217",
+        "type": "api-current-state",
+        "z": "fa6bb9cfa58677c8",
+        "name": "Is Sleeping?",
+        "server": "f88bb71a82464dcf",
+        "version": 3,
+        "outputs": 2,
+        "halt_if": "idle",
+        "halt_if_type": "str",
+        "halt_if_compare": "is_not",
+        "entity_id": "timer.bedroom_sleeping",
+        "state_type": "str",
+        "blockInputOverrides": false,
+        "outputProperties": [
+            {
+                "property": "payload",
+                "propertyType": "msg",
+                "value": "",
+                "valueType": "entityState"
+            },
+            {
+                "property": "data",
+                "propertyType": "msg",
+                "value": "",
+                "valueType": "entity"
+            }
+        ],
+        "for": "0",
+        "forType": "num",
+        "forUnits": "minutes",
+        "override_topic": false,
+        "state_location": "payload",
+        "override_payload": "msg",
+        "entity_location": "data",
+        "override_data": "msg",
+        "x": 390,
+        "y": 1075,
+        "wires": [
+            [
+                "cf86ccd225dbd4eb"
+            ],
+            []
+        ]
+    },
+    {
+        "id": "d1a676cc309a4be9",
+        "type": "server-state-changed",
+        "z": "fa6bb9cfa58677c8",
+        "name": "Door Closed 30s?",
+        "server": "f88bb71a82464dcf",
+        "version": 5,
+        "outputs": 2,
+        "exposeAsEntityConfig": "",
+        "entityId": "binary_sensor.bedroom_door_entrance_contact",
+        "entityIdType": "exact",
+        "outputInitially": false,
+        "stateType": "str",
+        "ifState": "off",
+        "ifStateType": "str",
+        "ifStateOperator": "is",
+        "outputOnlyOnStateChange": true,
+        "for": "30",
+        "forType": "num",
+        "forUnits": "seconds",
+        "ignorePrevStateNull": false,
+        "ignorePrevStateUnknown": false,
+        "ignorePrevStateUnavailable": false,
+        "ignoreCurrentStateUnknown": true,
+        "ignoreCurrentStateUnavailable": true,
+        "outputProperties": [
+            {
+                "property": "payload",
+                "propertyType": "msg",
+                "value": "",
+                "valueType": "entityState"
+            },
+            {
+                "property": "data",
+                "propertyType": "msg",
+                "value": "",
+                "valueType": "eventData"
+            },
+            {
+                "property": "topic",
+                "propertyType": "msg",
+                "value": "",
+                "valueType": "triggerId"
+            }
+        ],
+        "x": 165,
+        "y": 1075,
+        "wires": [
+            [
+                "6c6dfdc256db7217"
+            ],
+            []
+        ]
+    },
+    {
+        "id": "7a2fb59092fa674b",
+        "type": "comment",
+        "z": "fa6bb9cfa58677c8",
+        "name": "Lights - Motion",
+        "info": "",
+        "x": 105,
+        "y": 1250,
+        "wires": []
+    },
+    {
+        "id": "5e658bb0144c093f",
+        "type": "subflow:9437c76dc0c1335d",
+        "z": "fa6bb9cfa58677c8",
+        "name": "Automatic Bedroom Lights",
+        "env": [
+            {
+                "name": "LIGHT_ENTITY",
+                "value": "light.bedroom_lights",
+                "type": "str"
+            },
+            {
+                "name": "BRIGHTNESS_SENSOR",
+                "value": "sensor.bedroom_motion_illuminance_lux",
+                "type": "str"
+            },
+            {
+                "name": "DOOR_SENSOR",
+                "value": "binary_sensor.bedroom_door_entrance_contact",
+                "type": "str"
+            },
+            {
+                "name": "MOTION_SENSOR",
+                "value": "binary_sensor.bedroom_motion_occupancy",
+                "type": "str"
+            },
+            {
+                "name": "LIGHTS_SCRIPT",
+                "value": "script.bedroom_normal_lights",
+                "type": "str"
+            }
+        ],
+        "x": 185,
+        "y": 1400,
+        "wires": [
+            [
+                "376c53065eb0b772"
+            ]
+        ]
+    },
+    {
+        "id": "4b4ac090d63de69c",
+        "type": "api-current-state",
+        "z": "fa6bb9cfa58677c8",
+        "name": "Bedroom AC running?",
+        "server": "f88bb71a82464dcf",
+        "version": 3,
+        "outputs": 2,
+        "halt_if": "off",
+        "halt_if_type": "str",
+        "halt_if_compare": "is_not",
+        "entity_id": "climate.bedroom_ac",
+        "state_type": "str",
+        "blockInputOverrides": false,
+        "outputProperties": [
+            {
+                "property": "payload",
+                "propertyType": "msg",
+                "value": "",
+                "valueType": "entityState"
+            },
+            {
+                "property": "data",
+                "propertyType": "msg",
+                "value": "",
+                "valueType": "entity"
+            }
+        ],
+        "for": "0",
+        "forType": "num",
+        "forUnits": "minutes",
+        "override_topic": false,
+        "state_location": "payload",
+        "override_payload": "msg",
+        "entity_location": "data",
+        "override_data": "msg",
+        "x": 905,
+        "y": 1050,
+        "wires": [
+            [],
+            [
+                "fce951f1ac71d4a5",
+                "5d34a25b5d40b360"
+            ]
+        ]
+    },
+    {
+        "id": "376c53065eb0b772",
+        "type": "api-current-state",
+        "z": "fa6bb9cfa58677c8",
+        "name": "Is Sleeping?",
+        "server": "f88bb71a82464dcf",
+        "version": 3,
+        "outputs": 2,
+        "halt_if": "idle",
+        "halt_if_type": "str",
+        "halt_if_compare": "is_not",
+        "entity_id": "timer.bedroom_sleeping",
+        "state_type": "str",
+        "blockInputOverrides": false,
+        "outputProperties": [
+            {
+                "property": "payload",
+                "propertyType": "msg",
+                "value": "",
+                "valueType": "entityState"
+            },
+            {
+                "property": "data",
+                "propertyType": "msg",
+                "value": "",
+                "valueType": "entity"
+            }
+        ],
+        "for": "0",
+        "forType": "num",
+        "forUnits": "minutes",
+        "override_topic": false,
+        "state_location": "payload",
+        "override_payload": "msg",
+        "entity_location": "data",
+        "override_data": "msg",
+        "x": 430,
+        "y": 1400,
+        "wires": [
+            [],
+            [
+                "203d6f3700e35a61",
+                "31ce3bedf6042df1"
+            ]
+        ]
+    },
+    {
+        "id": "52e9f4a45bceb4bd",
+        "type": "api-call-service",
+        "z": "fa6bb9cfa58677c8",
+        "name": "Bedroom Normal Lights",
+        "server": "f88bb71a82464dcf",
+        "version": 5,
+        "debugenabled": false,
+        "domain": "script",
+        "service": "turn_on",
+        "areaId": [],
+        "deviceId": [],
+        "entityId": [
+            "script.bedroom_normal_lights"
+        ],
+        "data": "",
+        "dataType": "jsonata",
+        "mergeContext": "",
+        "mustacheAltTags": false,
+        "outputProperties": [],
+        "queue": "none",
+        "x": 1215,
+        "y": 1425,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "31ce3bedf6042df1",
+        "type": "light-scheduler-filter",
+        "z": "fa6bb9cfa58677c8",
+        "settings": "b68f145e9b5f00ba",
+        "events": "[{\"start\":{\"dow\":1,\"mod\":120},\"end\":{\"dow\":1,\"mod\":360}},{\"start\":{\"dow\":2,\"mod\":120},\"end\":{\"dow\":2,\"mod\":360}},{\"start\":{\"dow\":3,\"mod\":120},\"end\":{\"dow\":3,\"mod\":360}},{\"start\":{\"dow\":4,\"mod\":120},\"end\":{\"dow\":4,\"mod\":360}},{\"start\":{\"dow\":5,\"mod\":120},\"end\":{\"dow\":5,\"mod\":360}},{\"start\":{\"dow\":6,\"mod\":120},\"end\":{\"dow\":6,\"mod\":360}},{\"start\":{\"dow\":0,\"mod\":120},\"end\":{\"dow\":0,\"mod\":360}}]",
+        "name": "Dawn?",
+        "onlyWhenDark": false,
+        "scheduleRndMax": 0,
+        "sunElevationThreshold": 6,
+        "sunShowElevationInStatus": false,
+        "x": 635,
+        "y": 1450,
+        "wires": [
+            [],
+            [
+                "52e9f4a45bceb4bd"
+            ]
+        ]
+    },
+    {
+        "id": "0b3c5002e692b96e",
+        "type": "api-current-state",
+        "z": "fa6bb9cfa58677c8",
+        "name": "Bedroom Curtains Closed?",
+        "server": "f88bb71a82464dcf",
+        "version": 3,
+        "outputs": 2,
+        "halt_if": "closed",
+        "halt_if_type": "str",
+        "halt_if_compare": "is",
+        "entity_id": "cover.bedroom_curtains",
+        "state_type": "str",
+        "blockInputOverrides": false,
+        "outputProperties": [
+            {
+                "property": "payload",
+                "propertyType": "msg",
+                "value": "",
+                "valueType": "entityState"
+            },
+            {
+                "property": "data",
+                "propertyType": "msg",
+                "value": "",
+                "valueType": "entity"
+            }
+        ],
+        "for": "0",
+        "forType": "num",
+        "forUnits": "minutes",
+        "override_topic": false,
+        "state_location": "payload",
+        "override_payload": "msg",
+        "entity_location": "data",
+        "override_data": "msg",
+        "x": 920,
+        "y": 1325,
+        "wires": [
+            [],
+            [
+                "52e9f4a45bceb4bd"
+            ]
+        ]
+    },
+    {
+        "id": "203d6f3700e35a61",
+        "type": "light-scheduler-filter",
+        "z": "fa6bb9cfa58677c8",
+        "settings": "b68f145e9b5f00ba",
+        "events": "[{\"start\":{\"dow\":1,\"mod\":480},\"end\":{\"dow\":1,\"mod\":720}},{\"start\":{\"dow\":2,\"mod\":480},\"end\":{\"dow\":2,\"mod\":720}},{\"start\":{\"dow\":3,\"mod\":480},\"end\":{\"dow\":3,\"mod\":720}},{\"start\":{\"dow\":4,\"mod\":480},\"end\":{\"dow\":4,\"mod\":720}},{\"start\":{\"dow\":5,\"mod\":480},\"end\":{\"dow\":5,\"mod\":720}},{\"start\":{\"dow\":6,\"mod\":480},\"end\":{\"dow\":6,\"mod\":720}},{\"start\":{\"dow\":0,\"mod\":480},\"end\":{\"dow\":0,\"mod\":720}}]",
+        "name": "Morning?",
+        "onlyWhenDark": false,
+        "scheduleRndMax": 0,
+        "sunElevationThreshold": 6,
+        "sunShowElevationInStatus": false,
+        "x": 635,
+        "y": 1375,
+        "wires": [
+            [
+                "0b3c5002e692b96e"
+            ],
+            [
+                "52e9f4a45bceb4bd"
+            ]
+        ]
+    },
+    {
+        "id": "bb88714631db4348",
+        "type": "subflow:64b48be79869231a",
+        "z": "8f5e75d405c57d2f",
+        "name": "Remote - Entrance",
+        "env": [
+            {
+                "name": "LIGHT_ENTITY",
+                "value": "light.hall_lights",
+                "type": "str"
+            },
+            {
+                "name": "REMOTE_CTRL_TOPIC",
+                "value": "zigbee2mqtt/hall/remote_entrance",
+                "type": "str"
+            },
+            {
+                "name": "PRIMARY_LIGHT_SCRIPT",
+                "value": "script.hall_normal_lights",
+                "type": "str"
+            },
+            {
+                "name": "SECONDARY_LIGHT_SCRIPT",
+                "value": "script.hall_normal_lights",
+                "type": "str"
+            },
+            {
+                "name": "TURN_ON_PRIMARY_SCRIPT",
+                "value": "script.hall_normal_lights",
+                "type": "str"
+            },
+            {
+                "name": "TURN_OFF_PRIMARY_SCRIPT",
+                "value": "script.home_disable_security_system",
+                "type": "str"
+            },
+            {
+                "name": "TURN_OFF_SECONDARY_SCRIPT",
+                "value": "script.home_leave",
+                "type": "str"
+            },
+            {
+                "name": "TURN_ON_NORMAL_SCRIPT",
+                "value": "script.bedroom_normal_lights",
+                "type": "str"
+            },
+            {
+                "name": "SHORT_ON_SCRIPT",
+                "value": "script.bedroom_normal_lights",
+                "type": "str"
+            },
+            {
+                "name": "LONG_ON_SCRIPT",
+                "value": "script.bedroom_chill_lights",
+                "type": "str"
+            },
+            {
+                "name": "LIGHTS_ENTITY",
+                "value": "light.bedroom_lights",
+                "type": "str"
+            },
+            {
+                "name": "CONTROLLER_TOPIC",
+                "value": "zigbee2mqtt/bedroom/controller_bed",
+                "type": "str"
+            },
+            {
+                "name": "CONTROLLER_ID",
+                "value": "0x001788010968e691",
+                "type": "str"
+            },
+            {
+                "name": "LIGHTS",
+                "value": "light.bedroom_lights",
+                "type": "str"
+            }
+        ],
+        "x": 165,
+        "y": 175,
+        "wires": [
+            [
+                "daeb7a083eab1a42"
+            ],
+            [
+                "c862e906b090f449"
+            ]
+        ]
+    },
+    {
+        "id": "c4719387bceda56f",
+        "type": "comment",
+        "z": "8f5e75d405c57d2f",
+        "name": "Lights - Motion",
+        "info": "",
+        "x": 105,
+        "y": 375,
+        "wires": []
+    },
+    {
+        "id": "08b0ebdf4c51a650",
+        "type": "comment",
+        "z": "8f5e75d405c57d2f",
+        "name": "Remote Controller",
+        "info": "",
+        "x": 115,
+        "y": 50,
+        "wires": []
+    },
+    {
+        "id": "10aa769b7a334ff6",
+        "type": "subflow:9437c76dc0c1335d",
+        "z": "8f5e75d405c57d2f",
+        "name": "Automatic Hall Lights",
+        "env": [
+            {
+                "name": "LIGHT_ENTITY",
+                "value": "light.hall_lights",
+                "type": "str"
+            },
+            {
+                "name": "LIGHTS_SCRIPT",
+                "value": "script.hall_normal_lights",
+                "type": "str"
+            },
+            {
+                "name": "BRIGHTNESS_SENSOR",
+                "value": "sensor.hall_motion_illuminance_lux",
+                "type": "str"
+            },
+            {
+                "name": "MOTION_SENSOR",
+                "value": "binary_sensor.hall_motion_occupancy",
+                "type": "str"
+            }
+        ],
+        "x": 175,
+        "y": 450,
+        "wires": [
+            [
+                "bd8eaecbdc2f958b"
+            ]
+        ]
+    },
+    {
+        "id": "c862e906b090f449",
+        "type": "api-call-service",
+        "z": "8f5e75d405c57d2f",
+        "name": "Leave Home",
+        "server": "f88bb71a82464dcf",
+        "version": 5,
+        "debugenabled": false,
+        "domain": "script",
+        "service": "home_leave",
+        "areaId": [],
+        "deviceId": [],
+        "entityId": [],
+        "data": "",
+        "dataType": "jsonata",
+        "mergeContext": "",
+        "mustacheAltTags": false,
+        "outputProperties": [],
+        "queue": "none",
+        "x": 395,
+        "y": 225,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "daeb7a083eab1a42",
+        "type": "api-call-service",
+        "z": "8f5e75d405c57d2f",
+        "name": "Disable Home Security",
+        "server": "f88bb71a82464dcf",
+        "version": 5,
+        "debugenabled": false,
+        "domain": "script",
+        "service": "home_disable_security_system",
+        "areaId": [],
+        "deviceId": [],
+        "entityId": [],
+        "data": "{ \"send_notification\": false }",
+        "dataType": "json",
+        "mergeContext": "",
+        "mustacheAltTags": false,
+        "outputProperties": [],
+        "queue": "none",
+        "x": 425,
+        "y": 125,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "bd8eaecbdc2f958b",
+        "type": "api-call-service",
+        "z": "8f5e75d405c57d2f",
+        "name": "Hall Normal Lights",
+        "server": "f88bb71a82464dcf",
+        "version": 5,
+        "debugenabled": false,
+        "domain": "script",
+        "service": "turn_on",
+        "areaId": [],
+        "deviceId": [],
+        "entityId": [
+            "script.hall_normal_lights"
+        ],
+        "data": "",
+        "dataType": "jsonata",
+        "mergeContext": "",
+        "mustacheAltTags": false,
+        "outputProperties": [],
+        "queue": "none",
+        "x": 420,
+        "y": 450,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "499439f14f4a03de",
+        "type": "comment",
+        "z": "49a4960c42935211",
+        "name": "Curtains",
+        "info": "",
+        "x": 85,
+        "y": 50,
+        "wires": []
+    },
+    {
+        "id": "7aa3a001a71495c6",
+        "type": "inject",
+        "z": "49a4960c42935211",
+        "name": "At 12:30",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "30 12 * * *",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 160,
+        "y": 125,
+        "wires": [
+            [
+                "452e1c29f99147b6"
+            ]
+        ]
+    },
+    {
+        "id": "452e1c29f99147b6",
+        "type": "api-call-service",
+        "z": "49a4960c42935211",
+        "name": "Open Curtains",
+        "server": "f88bb71a82464dcf",
+        "version": 5,
+        "debugenabled": false,
+        "domain": "cover",
+        "service": "open_cover",
+        "areaId": [],
+        "deviceId": [],
+        "entityId": [
+            "cover.bedroom_curtains",
+            "cover.living_room_left_curtains",
+            "cover.living_room_right_curtains"
+        ],
+        "data": "",
+        "dataType": "jsonata",
+        "mergeContext": "",
+        "mustacheAltTags": false,
+        "outputProperties": [],
+        "queue": "none",
+        "x": 355,
+        "y": 125,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "dd174c42c172453c",
+        "type": "api-call-service",
+        "z": "49a4960c42935211",
+        "name": "Close Curtains",
+        "server": "f88bb71a82464dcf",
+        "version": 5,
+        "debugenabled": false,
+        "domain": "cover",
+        "service": "close_cover",
+        "areaId": [],
+        "deviceId": [],
+        "entityId": [
+            "cover.bedroom_curtains",
+            "cover.living_room_left_curtains",
+            "cover.living_room_right_curtains"
+        ],
+        "data": "",
+        "dataType": "jsonata",
+        "mergeContext": "",
+        "mustacheAltTags": false,
+        "outputProperties": [],
+        "queue": "none",
+        "x": 355,
+        "y": 250,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "9a2e70aa690a4fa4",
+        "type": "server-state-changed",
+        "z": "49a4960c42935211",
+        "name": "Sunset",
+        "server": "f88bb71a82464dcf",
+        "version": 5,
+        "outputs": 2,
+        "exposeAsEntityConfig": "",
+        "entityId": "sun.sun",
+        "entityIdType": "exact",
+        "outputInitially": false,
+        "stateType": "str",
+        "ifState": "below_horizon",
+        "ifStateType": "str",
+        "ifStateOperator": "is",
+        "outputOnlyOnStateChange": true,
+        "for": "0",
+        "forType": "num",
+        "forUnits": "minutes",
+        "ignorePrevStateNull": false,
+        "ignorePrevStateUnknown": false,
+        "ignorePrevStateUnavailable": false,
+        "ignoreCurrentStateUnknown": true,
+        "ignoreCurrentStateUnavailable": true,
+        "outputProperties": [
+            {
+                "property": "payload",
+                "propertyType": "msg",
+                "value": "",
+                "valueType": "entityState"
+            },
+            {
+                "property": "data",
+                "propertyType": "msg",
+                "value": "",
+                "valueType": "eventData"
+            },
+            {
+                "property": "topic",
+                "propertyType": "msg",
+                "value": "",
+                "valueType": "triggerId"
+            }
+        ],
+        "x": 125,
+        "y": 250,
+        "wires": [
+            [
+                "dd174c42c172453c"
+            ],
+            []
+        ]
+    },
+    {
+        "id": "98230a5297da044e",
+        "type": "subflow:64b48be79869231a",
+        "z": "95eb18db5e77ef4c",
+        "name": "Remote - Entrance",
+        "env": [
+            {
+                "name": "LIGHT_ENTITY",
+                "value": "light.kitchen_lights",
+                "type": "str"
+            },
+            {
+                "name": "REMOTE_CTRL_TOPIC",
+                "value": "zigbee2mqtt/kitchen/remote_entrance",
+                "type": "str"
+            },
+            {
+                "name": "PRIMARY_LIGHT_SCRIPT",
+                "value": "script.kitchen_normal_lights",
+                "type": "str"
+            },
+            {
+                "name": "SECONDARY_LIGHT_SCRIPT",
+                "value": "script.kitchen_normal_lights",
+                "type": "str"
+            },
+            {
+                "name": "TURN_ON_PRIMARY_SCRIPT",
+                "value": "script.kitchen_normal_lights",
+                "type": "str"
+            },
+            {
+                "name": "TURN_ON_NORMAL_SCRIPT",
+                "value": "script.bedroom_normal_lights",
+                "type": "str"
+            },
+            {
+                "name": "SHORT_ON_SCRIPT",
+                "value": "script.bedroom_normal_lights",
+                "type": "str"
+            },
+            {
+                "name": "LONG_ON_SCRIPT",
+                "value": "script.bedroom_chill_lights",
+                "type": "str"
+            },
+            {
+                "name": "LIGHTS_ENTITY",
+                "value": "light.bedroom_lights",
+                "type": "str"
+            },
+            {
+                "name": "CONTROLLER_TOPIC",
+                "value": "zigbee2mqtt/bedroom/controller_bed",
+                "type": "str"
+            },
+            {
+                "name": "CONTROLLER_ID",
+                "value": "0x001788010968e691",
+                "type": "str"
+            },
+            {
+                "name": "LIGHTS",
+                "value": "light.bedroom_lights",
+                "type": "str"
+            }
+        ],
+        "x": 165,
+        "y": 125,
+        "wires": [
+            [],
+            [
+                "9db725a10fb636c5"
+            ]
+        ]
+    },
+    {
+        "id": "6f7d12efe93cdc58",
+        "type": "comment",
+        "z": "95eb18db5e77ef4c",
+        "name": "Lights - Motion",
+        "info": "",
+        "x": 105,
+        "y": 300,
+        "wires": []
+    },
+    {
+        "id": "c806e665776c7614",
+        "type": "comment",
+        "z": "95eb18db5e77ef4c",
+        "name": "Remote Controller",
+        "info": "",
+        "x": 115,
+        "y": 50,
+        "wires": []
+    },
+    {
+        "id": "5b2f0532ca94feed",
+        "type": "subflow:9437c76dc0c1335d",
+        "z": "95eb18db5e77ef4c",
+        "name": "Automatic Kitchen Lights",
+        "env": [
+            {
+                "name": "LIGHT_ENTITY",
+                "value": "light.kitchen_lights",
+                "type": "str"
+            },
+            {
+                "name": "LIGHTS_SCRIPT",
+                "value": "script.kitchen_normal_lights",
+                "type": "str"
+            },
+            {
+                "name": "BRIGHTNESS_SENSOR",
+                "value": "sensor.kitchen_motion_illuminance_lux",
+                "type": "str"
+            },
+            {
+                "name": "MOTION_SENSOR",
+                "value": "binary_sensor.kitchen_motion_occupancy",
+                "type": "str"
+            }
+        ],
+        "x": 185,
+        "y": 375,
+        "wires": [
+            [
+                "043473843fd6b8ae"
+            ]
+        ]
+    },
+    {
+        "id": "9db725a10fb636c5",
+        "type": "api-call-service",
+        "z": "95eb18db5e77ef4c",
+        "name": "Play Music",
+        "server": "f88bb71a82464dcf",
+        "version": 5,
+        "debugenabled": false,
+        "domain": "script",
+        "service": "home_music",
+        "areaId": [],
+        "deviceId": [],
+        "entityId": [],
+        "data": "{\t   \"player_id\": \"media_player.kitchen_speaker\",\t   \"player_name\": \"Kitchen speaker\" \t}",
+        "dataType": "json",
+        "mergeContext": "",
+        "mustacheAltTags": false,
+        "outputProperties": [],
+        "queue": "none",
+        "x": 395,
+        "y": 150,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "043473843fd6b8ae",
+        "type": "api-call-service",
+        "z": "95eb18db5e77ef4c",
+        "name": "Kitchen Normal Lights",
+        "server": "f88bb71a82464dcf",
+        "version": 5,
+        "debugenabled": false,
+        "domain": "script",
+        "service": "turn_on",
+        "areaId": [],
+        "deviceId": [],
+        "entityId": [
+            "script.kitchen_normal_lights"
+        ],
+        "data": "",
+        "dataType": "jsonata",
+        "mergeContext": "",
+        "mustacheAltTags": false,
+        "outputProperties": [],
+        "queue": "none",
+        "x": 480,
+        "y": 375,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "09456e566d40fb67",
+        "type": "subflow:64b48be79869231a",
+        "z": "751c2276bdb4df53",
+        "name": "Remote - Desk",
+        "env": [
+            {
+                "name": "LIGHT_ENTITY",
+                "value": "light.living_room_lights",
+                "type": "str"
+            },
+            {
+                "name": "REMOTE_CTRL_TOPIC",
+                "value": "zigbee2mqtt/living_room/remote_desk",
+                "type": "str"
+            },
+            {
+                "name": "PRIMARY_LIGHT_SCRIPT",
+                "value": "script.living_room_chill_lights",
+                "type": "str"
+            },
+            {
+                "name": "SECONDARY_LIGHT_SCRIPT",
+                "value": "script.living_room_normal_lights",
+                "type": "str"
+            },
+            {
+                "name": "TURN_ON_PRIMARY_SCRIPT",
+                "value": "script.bedroom_normal_lights",
+                "type": "str"
+            },
+            {
+                "name": "TURN_ON_SECONDARY_SCRIPT",
+                "value": "script.bedroom_chill_lights",
+                "type": "str"
+            },
+            {
+                "name": "TURN_OFF_SECONDARY_SCRIPT",
+                "value": "script.bedroom_chill_atmosphere",
+                "type": "str"
+            },
+            {
+                "name": "TURN_ON_NORMAL_SCRIPT",
+                "value": "script.bedroom_normal_lights",
+                "type": "str"
+            },
+            {
+                "name": "SHORT_ON_SCRIPT",
+                "value": "script.bedroom_normal_lights",
+                "type": "str"
+            },
+            {
+                "name": "LONG_ON_SCRIPT",
+                "value": "script.bedroom_chill_lights",
+                "type": "str"
+            },
+            {
+                "name": "LIGHTS_ENTITY",
+                "value": "light.bedroom_lights",
+                "type": "str"
+            },
+            {
+                "name": "CONTROLLER_TOPIC",
+                "value": "zigbee2mqtt/bedroom/controller_bed",
+                "type": "str"
+            },
+            {
+                "name": "CONTROLLER_ID",
+                "value": "0x001788010968e691",
+                "type": "str"
+            },
+            {
+                "name": "LIGHTS",
+                "value": "light.bedroom_lights",
+                "type": "str"
+            }
+        ],
+        "x": 155,
+        "y": 125,
+        "wires": [
+            [
+                "5f3334c569a538fa"
+            ],
+            [
+                "63ed827836d4d565"
+            ]
+        ]
+    },
+    {
+        "id": "371af45a050f436a",
+        "type": "comment",
+        "z": "751c2276bdb4df53",
+        "name": "Remote Controllers",
+        "info": "",
+        "x": 115,
+        "y": 50,
+        "wires": []
+    },
+    {
+        "id": "63ed827836d4d565",
+        "type": "api-call-service",
+        "z": "751c2276bdb4df53",
+        "name": "Chill Atmosphere",
+        "server": "f88bb71a82464dcf",
+        "version": 5,
+        "debugenabled": false,
+        "domain": "script",
+        "service": "living_room_chill_atmosphere",
+        "areaId": [],
+        "deviceId": [],
+        "entityId": [],
+        "data": "",
+        "dataType": "jsonata",
+        "mergeContext": "",
+        "mustacheAltTags": false,
+        "outputProperties": [],
+        "queue": "none",
+        "x": 490,
+        "y": 275,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "5f3334c569a538fa",
+        "type": "api-call-service",
+        "z": "751c2276bdb4df53",
+        "name": "Toggle AC",
+        "server": "f88bb71a82464dcf",
+        "version": 5,
+        "debugenabled": false,
+        "domain": "script",
+        "service": "helper_switch_climate",
+        "areaId": [],
+        "deviceId": [],
+        "entityId": [],
+        "data": "{\"climate_entity\":\"climate.living_room_ac\"}",
+        "dataType": "json",
+        "mergeContext": "",
+        "mustacheAltTags": false,
+        "outputProperties": [],
+        "queue": "none",
+        "x": 470,
+        "y": 175,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "ac1bd3c46a17797f",
+        "type": "subflow:64b48be79869231a",
+        "z": "751c2276bdb4df53",
+        "name": "Remote - Entrance",
+        "env": [
+            {
+                "name": "LIGHT_ENTITY",
+                "value": "light.living_room_lights",
+                "type": "str"
+            },
+            {
+                "name": "REMOTE_CTRL_TOPIC",
+                "value": "zigbee2mqtt/living_room/remote_entrance",
+                "type": "str"
+            },
+            {
+                "name": "PRIMARY_LIGHT_SCRIPT",
+                "value": "script.living_room_chill_lights",
+                "type": "str"
+            },
+            {
+                "name": "SECONDARY_LIGHT_SCRIPT",
+                "value": "script.living_room_normal_lights",
+                "type": "str"
+            },
+            {
+                "name": "TURN_ON_PRIMARY_SCRIPT",
+                "value": "script.bedroom_normal_lights",
+                "type": "str"
+            },
+            {
+                "name": "TURN_ON_SECONDARY_SCRIPT",
+                "value": "script.bedroom_chill_lights",
+                "type": "str"
+            },
+            {
+                "name": "TURN_OFF_SECONDARY_SCRIPT",
+                "value": "script.bedroom_chill_atmosphere",
+                "type": "str"
+            },
+            {
+                "name": "TURN_ON_NORMAL_SCRIPT",
+                "value": "script.bedroom_normal_lights",
+                "type": "str"
+            },
+            {
+                "name": "SHORT_ON_SCRIPT",
+                "value": "script.bedroom_normal_lights",
+                "type": "str"
+            },
+            {
+                "name": "LONG_ON_SCRIPT",
+                "value": "script.bedroom_chill_lights",
+                "type": "str"
+            },
+            {
+                "name": "LIGHTS_ENTITY",
+                "value": "light.bedroom_lights",
+                "type": "str"
+            },
+            {
+                "name": "CONTROLLER_TOPIC",
+                "value": "zigbee2mqtt/bedroom/controller_bed",
+                "type": "str"
+            },
+            {
+                "name": "CONTROLLER_ID",
+                "value": "0x001788010968e691",
+                "type": "str"
+            },
+            {
+                "name": "LIGHTS",
+                "value": "light.bedroom_lights",
+                "type": "str"
+            }
+        ],
+        "x": 165,
+        "y": 225,
+        "wires": [
+            [
+                "5f3334c569a538fa"
+            ],
+            [
+                "63ed827836d4d565"
+            ]
+        ]
+    },
+    {
+        "id": "ddaae18e654a6ba1",
+        "type": "subflow:64b48be79869231a",
+        "z": "751c2276bdb4df53",
+        "name": "Remote - Sofa",
+        "env": [
+            {
+                "name": "LIGHT_ENTITY",
+                "value": "light.living_room_lights",
+                "type": "str"
+            },
+            {
+                "name": "REMOTE_CTRL_TOPIC",
+                "value": "zigbee2mqtt/living_room/remote_sofa",
+                "type": "str"
+            },
+            {
+                "name": "PRIMARY_LIGHT_SCRIPT",
+                "value": "script.living_room_chill_lights",
+                "type": "str"
+            },
+            {
+                "name": "SECONDARY_LIGHT_SCRIPT",
+                "value": "script.living_room_normal_lights",
+                "type": "str"
+            },
+            {
+                "name": "TURN_ON_PRIMARY_SCRIPT",
+                "value": "script.bedroom_normal_lights",
+                "type": "str"
+            },
+            {
+                "name": "TURN_ON_SECONDARY_SCRIPT",
+                "value": "script.bedroom_chill_lights",
+                "type": "str"
+            },
+            {
+                "name": "TURN_OFF_SECONDARY_SCRIPT",
+                "value": "script.bedroom_chill_atmosphere",
+                "type": "str"
+            },
+            {
+                "name": "TURN_ON_NORMAL_SCRIPT",
+                "value": "script.bedroom_normal_lights",
+                "type": "str"
+            },
+            {
+                "name": "SHORT_ON_SCRIPT",
+                "value": "script.bedroom_normal_lights",
+                "type": "str"
+            },
+            {
+                "name": "LONG_ON_SCRIPT",
+                "value": "script.bedroom_chill_lights",
+                "type": "str"
+            },
+            {
+                "name": "LIGHTS_ENTITY",
+                "value": "light.bedroom_lights",
+                "type": "str"
+            },
+            {
+                "name": "CONTROLLER_TOPIC",
+                "value": "zigbee2mqtt/bedroom/controller_bed",
+                "type": "str"
+            },
+            {
+                "name": "CONTROLLER_ID",
+                "value": "0x001788010968e691",
+                "type": "str"
+            },
+            {
+                "name": "LIGHTS",
+                "value": "light.bedroom_lights",
+                "type": "str"
+            }
+        ],
+        "x": 155,
+        "y": 325,
+        "wires": [
+            [
+                "5f3334c569a538fa"
+            ],
+            [
+                "63ed827836d4d565"
+            ]
+        ]
+    },
+    {
+        "id": "64f52d03bd37dfeb",
+        "type": "comment",
+        "z": "751c2276bdb4df53",
+        "name": "TV Lights",
+        "info": "",
+        "x": 85,
+        "y": 525,
+        "wires": []
+    },
+    {
+        "id": "0e844f3af9cc9eeb",
+        "type": "server-state-changed",
+        "z": "751c2276bdb4df53",
+        "name": "TV playing?",
+        "server": "f88bb71a82464dcf",
+        "version": 5,
+        "outputs": 2,
+        "exposeAsEntityConfig": "",
+        "entityId": "media_player.living_room_media_center",
+        "entityIdType": "exact",
+        "outputInitially": false,
+        "stateType": "str",
+        "ifState": "playing",
+        "ifStateType": "str",
+        "ifStateOperator": "is",
+        "outputOnlyOnStateChange": true,
+        "for": "5",
+        "forType": "num",
+        "forUnits": "seconds",
+        "ignorePrevStateNull": false,
+        "ignorePrevStateUnknown": false,
+        "ignorePrevStateUnavailable": false,
+        "ignoreCurrentStateUnknown": true,
+        "ignoreCurrentStateUnavailable": true,
+        "outputProperties": [
+            {
+                "property": "payload",
+                "propertyType": "msg",
+                "value": "",
+                "valueType": "entityState"
+            },
+            {
+                "property": "data",
+                "propertyType": "msg",
+                "value": "",
+                "valueType": "eventData"
+            },
+            {
+                "property": "topic",
+                "propertyType": "msg",
+                "value": "",
+                "valueType": "triggerId"
+            }
+        ],
+        "x": 145,
+        "y": 625,
+        "wires": [
+            [
+                "da0de2f531c36dd8"
+            ],
+            [
+                "077e71016bbb08c3"
+            ]
+        ]
+    },
+    {
+        "id": "da0de2f531c36dd8",
+        "type": "api-call-service",
+        "z": "751c2276bdb4df53",
+        "name": "Turn On TV Lights",
+        "server": "f88bb71a82464dcf",
+        "version": 5,
+        "debugenabled": false,
+        "domain": "light",
+        "service": "turn_on",
+        "areaId": [],
+        "deviceId": [],
+        "entityId": [
+            "light.living_room_lights_tv"
+        ],
+        "data": "",
+        "dataType": "jsonata",
+        "mergeContext": "",
+        "mustacheAltTags": false,
+        "outputProperties": [],
+        "queue": "none",
+        "x": 390,
+        "y": 575,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "077e71016bbb08c3",
+        "type": "api-call-service",
+        "z": "751c2276bdb4df53",
+        "name": "Turn Off TV Lights",
+        "server": "f88bb71a82464dcf",
+        "version": 5,
+        "debugenabled": false,
+        "domain": "light",
+        "service": "turn_off",
+        "areaId": [],
+        "deviceId": [],
+        "entityId": [
+            "light.living_room_lights_tv"
+        ],
+        "data": "",
+        "dataType": "jsonata",
+        "mergeContext": "",
+        "mustacheAltTags": false,
+        "outputProperties": [],
+        "queue": "none",
+        "x": 390,
+        "y": 675,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "0e5d9f1de0e99dc5",
+        "type": "comment",
+        "z": "751c2276bdb4df53",
+        "name": "Someone Arrived Home",
+        "info": "",
+        "x": 125,
+        "y": 825,
+        "wires": []
+    },
+    {
+        "id": "1ea712cdaeb603c3",
+        "type": "server-state-changed",
+        "z": "751c2276bdb4df53",
+        "name": "Home Door Opened?",
+        "server": "f88bb71a82464dcf",
+        "version": 5,
+        "outputs": 2,
+        "exposeAsEntityConfig": "",
+        "entityId": "binary_sensor.hall_door_entrance_contact",
+        "entityIdType": "exact",
+        "outputInitially": false,
+        "stateType": "str",
+        "ifState": "off",
+        "ifStateType": "str",
+        "ifStateOperator": "is",
+        "outputOnlyOnStateChange": true,
+        "for": "0",
+        "forType": "num",
+        "forUnits": "minutes",
+        "ignorePrevStateNull": false,
+        "ignorePrevStateUnknown": false,
+        "ignorePrevStateUnavailable": false,
+        "ignoreCurrentStateUnknown": false,
+        "ignoreCurrentStateUnavailable": false,
+        "outputProperties": [
+            {
+                "property": "payload",
+                "propertyType": "msg",
+                "value": "",
+                "valueType": "entityState"
+            },
+            {
+                "property": "data",
+                "propertyType": "msg",
+                "value": "",
+                "valueType": "eventData"
+            },
+            {
+                "property": "topic",
+                "propertyType": "msg",
+                "value": "",
+                "valueType": "triggerId"
+            }
+        ],
+        "x": 175,
+        "y": 925,
+        "wires": [
+            [
+                "5d8acc2a4dbda04d"
+            ],
+            []
+        ]
+    },
+    {
+        "id": "5ecd178b63f9bf4c",
+        "type": "ha-wait-until",
+        "z": "751c2276bdb4df53",
+        "name": "Wait for Motion in Living Room",
+        "server": "f88bb71a82464dcf",
+        "version": 2,
+        "outputs": 2,
+        "entityId": "binary_sensor.living_room_motion_occupancy",
+        "entityIdFilterType": "exact",
+        "property": "state",
+        "comparator": "is",
+        "value": "on",
+        "valueType": "str",
+        "timeout": "60",
+        "timeoutType": "num",
+        "timeoutUnits": "seconds",
+        "checkCurrentState": true,
+        "blockInputOverrides": true,
+        "outputProperties": [],
+        "entityLocation": "data",
+        "entityLocationType": "none",
+        "x": 330,
+        "y": 1125,
+        "wires": [
+            [
+                "020451519cb86e13",
+                "8389024e8846269f"
+            ],
+            []
+        ]
+    },
+    {
+        "id": "020451519cb86e13",
+        "type": "api-current-state",
+        "z": "751c2276bdb4df53",
+        "name": "Sleeping?",
+        "server": "f88bb71a82464dcf",
+        "version": 3,
+        "outputs": 2,
+        "halt_if": "idle",
+        "halt_if_type": "str",
+        "halt_if_compare": "is_not",
+        "entity_id": "timer.bedroom_sleeping",
+        "state_type": "str",
+        "blockInputOverrides": false,
+        "outputProperties": [
+            {
+                "property": "payload",
+                "propertyType": "msg",
+                "value": "",
+                "valueType": "entityState"
+            },
+            {
+                "property": "data",
+                "propertyType": "msg",
+                "value": "",
+                "valueType": "entity"
+            }
+        ],
+        "for": "0",
+        "forType": "num",
+        "forUnits": "minutes",
+        "override_topic": false,
+        "state_location": "payload",
+        "override_payload": "msg",
+        "entity_location": "data",
+        "override_data": "msg",
+        "x": 565,
+        "y": 1150,
+        "wires": [
+            [],
+            [
+                "bd0c2c63af0933cf"
+            ]
+        ]
+    },
+    {
+        "id": "53061a08d5a76b4e",
+        "type": "api-call-service",
+        "z": "751c2276bdb4df53",
+        "name": "Turn On Music",
+        "server": "f88bb71a82464dcf",
+        "version": 5,
+        "debugenabled": false,
+        "domain": "script",
+        "service": "helper_music",
+        "areaId": [],
+        "deviceId": [],
+        "entityId": [],
+        "data": "{\"player_id\":\"media_player.home_speakers\",\"player_name\":\"Home Speakers\"}",
+        "dataType": "json",
+        "mergeContext": "",
+        "mustacheAltTags": false,
+        "outputProperties": [],
+        "queue": "none",
+        "x": 1030,
+        "y": 1175,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "8389024e8846269f",
+        "type": "api-current-state",
+        "z": "751c2276bdb4df53",
+        "name": "Lights On?",
+        "server": "f88bb71a82464dcf",
+        "version": 3,
+        "outputs": 2,
+        "halt_if": "on",
+        "halt_if_type": "str",
+        "halt_if_compare": "is",
+        "entity_id": "light.living_room_lights",
+        "state_type": "str",
+        "blockInputOverrides": false,
+        "outputProperties": [
+            {
+                "property": "payload",
+                "propertyType": "msg",
+                "value": "",
+                "valueType": "entityState"
+            },
+            {
+                "property": "data",
+                "propertyType": "msg",
+                "value": "",
+                "valueType": "entity"
+            }
+        ],
+        "for": "0",
+        "forType": "num",
+        "forUnits": "minutes",
+        "override_topic": false,
+        "state_location": "payload",
+        "override_payload": "msg",
+        "entity_location": "data",
+        "override_data": "msg",
+        "x": 580,
+        "y": 1075,
+        "wires": [
+            [],
+            [
+                "75dfc45b532be4a9",
+                "90a3a374d007f76e"
+            ]
+        ]
+    },
+    {
+        "id": "e85104d55b0259b9",
+        "type": "api-call-service",
+        "z": "751c2276bdb4df53",
+        "name": "Turn On Lights",
+        "server": "f88bb71a82464dcf",
+        "version": 5,
+        "debugenabled": false,
+        "domain": "script",
+        "service": "living_room_chill_lights",
+        "areaId": [],
+        "deviceId": [],
+        "entityId": [],
+        "data": "",
+        "dataType": "jsonata",
+        "mergeContext": "",
+        "mustacheAltTags": false,
+        "outputProperties": [],
+        "queue": "none",
+        "x": 1030,
+        "y": 1075,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "75dfc45b532be4a9",
+        "type": "api-current-state",
+        "z": "751c2276bdb4df53",
+        "name": "Dark?",
+        "server": "f88bb71a82464dcf",
+        "version": 3,
+        "outputs": 2,
+        "halt_if": "30",
+        "halt_if_type": "num",
+        "halt_if_compare": "lt",
+        "entity_id": "sensor.living_room_motion_illuminance_lux",
+        "state_type": "str",
+        "blockInputOverrides": false,
+        "outputProperties": [
+            {
+                "property": "payload",
+                "propertyType": "msg",
+                "value": "",
+                "valueType": "entityState"
+            },
+            {
+                "property": "data",
+                "propertyType": "msg",
+                "value": "",
+                "valueType": "entity"
+            }
+        ],
+        "for": "0",
+        "forType": "num",
+        "forUnits": "minutes",
+        "override_topic": false,
+        "state_location": "payload",
+        "override_payload": "msg",
+        "entity_location": "data",
+        "override_data": "msg",
+        "x": 775,
+        "y": 1050,
+        "wires": [
+            [
+                "e85104d55b0259b9"
+            ],
+            []
+        ]
+    },
+    {
+        "id": "90a3a374d007f76e",
+        "type": "api-current-state",
+        "z": "751c2276bdb4df53",
+        "name": "Sunset?",
+        "server": "f88bb71a82464dcf",
+        "version": 3,
+        "outputs": 2,
+        "halt_if": "below_horizon",
+        "halt_if_type": "str",
+        "halt_if_compare": "is",
+        "entity_id": "sun.sun",
+        "state_type": "str",
+        "blockInputOverrides": false,
+        "outputProperties": [
+            {
+                "property": "payload",
+                "propertyType": "msg",
+                "value": "",
+                "valueType": "entityState"
+            },
+            {
+                "property": "data",
+                "propertyType": "msg",
+                "value": "",
+                "valueType": "entity"
+            }
+        ],
+        "for": "0",
+        "forType": "num",
+        "forUnits": "minutes",
+        "override_topic": false,
+        "state_location": "payload",
+        "override_payload": "msg",
+        "entity_location": "data",
+        "override_data": "msg",
+        "x": 785,
+        "y": 1100,
+        "wires": [
+            [
+                "e85104d55b0259b9"
+            ],
+            []
+        ]
+    },
+    {
+        "id": "bd0c2c63af0933cf",
+        "type": "api-current-state",
+        "z": "751c2276bdb4df53",
+        "name": "Spotify Playing?",
+        "server": "f88bb71a82464dcf",
+        "version": 3,
+        "outputs": 2,
+        "halt_if": "playing",
+        "halt_if_type": "str",
+        "halt_if_compare": "is",
+        "entity_id": "media_player.spotify",
+        "state_type": "str",
+        "blockInputOverrides": false,
+        "outputProperties": [
+            {
+                "property": "payload",
+                "propertyType": "msg",
+                "value": "",
+                "valueType": "entityState"
+            },
+            {
+                "property": "data",
+                "propertyType": "msg",
+                "value": "",
+                "valueType": "entity"
+            }
+        ],
+        "for": "0",
+        "forType": "num",
+        "forUnits": "minutes",
+        "override_topic": false,
+        "state_location": "payload",
+        "override_payload": "msg",
+        "entity_location": "data",
+        "override_data": "msg",
+        "x": 805,
+        "y": 1175,
+        "wires": [
+            [],
+            [
+                "53061a08d5a76b4e"
+            ]
+        ]
+    },
+    {
+        "id": "5d8acc2a4dbda04d",
+        "type": "api-current-state",
+        "z": "751c2276bdb4df53",
+        "name": "Home Lights Off?",
+        "server": "f88bb71a82464dcf",
+        "version": 3,
+        "outputs": 2,
+        "halt_if": "off",
+        "halt_if_type": "str",
+        "halt_if_compare": "is",
+        "entity_id": "light.home_lights",
+        "state_type": "str",
+        "blockInputOverrides": false,
+        "outputProperties": [
+            {
+                "property": "payload",
+                "propertyType": "msg",
+                "value": "",
+                "valueType": "entityState"
+            },
+            {
+                "property": "data",
+                "propertyType": "msg",
+                "value": "",
+                "valueType": "entity"
+            }
+        ],
+        "for": "10",
+        "forType": "num",
+        "forUnits": "minutes",
+        "override_topic": false,
+        "state_location": "payload",
+        "override_payload": "msg",
+        "entity_location": "data",
+        "override_data": "msg",
+        "x": 415,
+        "y": 925,
+        "wires": [
+            [
+                "5cd9a54c92608749"
+            ],
+            []
+        ]
+    },
+    {
+        "id": "5cd9a54c92608749",
+        "type": "api-current-state",
+        "z": "751c2276bdb4df53",
+        "name": "No movement?",
+        "server": "f88bb71a82464dcf",
+        "version": 3,
+        "outputs": 2,
+        "halt_if": "off",
+        "halt_if_type": "str",
+        "halt_if_compare": "is",
+        "entity_id": "group.home_motion_inside",
+        "state_type": "str",
+        "blockInputOverrides": false,
+        "outputProperties": [
+            {
+                "property": "payload",
+                "propertyType": "msg",
+                "value": "",
+                "valueType": "entityState"
+            },
+            {
+                "property": "data",
+                "propertyType": "msg",
+                "value": "",
+                "valueType": "entity"
+            }
+        ],
+        "for": "10",
+        "forType": "num",
+        "forUnits": "minutes",
+        "override_topic": false,
+        "state_location": "payload",
+        "override_payload": "msg",
+        "entity_location": "data",
+        "override_data": "msg",
+        "x": 630,
+        "y": 925,
+        "wires": [
+            [
+                "feabc689e90917b2"
+            ],
+            []
+        ]
+    },
+    {
+        "id": "feabc689e90917b2",
+        "type": "api-current-state",
+        "z": "751c2276bdb4df53",
+        "name": "No movies?",
+        "server": "f88bb71a82464dcf",
+        "version": 3,
+        "outputs": 2,
+        "halt_if": "off",
+        "halt_if_type": "str",
+        "halt_if_compare": "is",
+        "entity_id": "media_player.living_room_media_center",
+        "state_type": "str",
+        "blockInputOverrides": false,
+        "outputProperties": [
+            {
+                "property": "payload",
+                "propertyType": "msg",
+                "value": "",
+                "valueType": "entityState"
+            },
+            {
+                "property": "data",
+                "propertyType": "msg",
+                "value": "",
+                "valueType": "entity"
+            }
+        ],
+        "for": "10",
+        "forType": "num",
+        "forUnits": "minutes",
+        "override_topic": false,
+        "state_location": "payload",
+        "override_payload": "msg",
+        "entity_location": "data",
+        "override_data": "msg",
+        "x": 820,
+        "y": 925,
+        "wires": [
+            [
+                "5ecd178b63f9bf4c"
+            ],
+            []
+        ]
+    },
+    {
+        "id": "eb74dfd93c0348ee",
+        "type": "comment",
+        "z": "0ef8a234d4e5690c",
+        "name": "Refresh Unavailable Entities",
+        "info": "",
+        "x": 145,
+        "y": 50,
+        "wires": []
+    },
+    {
+        "id": "a143099122f1bb24",
+        "type": "inject",
+        "z": "0ef8a234d4e5690c",
+        "name": "Every 15m",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "900",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 170,
+        "y": 125,
+        "wires": [
+            [
+                "a33c7801620fa279"
+            ]
+        ]
+    },
+    {
+        "id": "a33c7801620fa279",
+        "type": "api-call-service",
+        "z": "0ef8a234d4e5690c",
+        "name": "Update Counter",
+        "server": "f88bb71a82464dcf",
+        "version": 5,
+        "debugenabled": false,
+        "domain": "homeassistant",
+        "service": "update_entity",
+        "areaId": [],
+        "deviceId": [],
+        "entityId": [
+            "sensor.unavailable_entities"
+        ],
+        "data": "",
+        "dataType": "jsonata",
+        "mergeContext": "",
+        "mustacheAltTags": false,
+        "outputProperties": [],
+        "queue": "none",
+        "x": 380,
+        "y": 125,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "51618521485788e4",
+        "type": "comment",
+        "z": "0ef8a234d4e5690c",
+        "name": "Restart Toggles",
+        "info": "",
+        "x": 105,
+        "y": 275,
+        "wires": []
+    },
+    {
+        "id": "79ad674e5d7d124f",
+        "type": "inject",
+        "z": "0ef8a234d4e5690c",
+        "name": "At 4AM",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "00 04 * * *",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 160,
+        "y": 350,
+        "wires": [
+            [
+                "7a9c47f5a947e1cd"
+            ]
+        ]
+    },
+    {
+        "id": "7a9c47f5a947e1cd",
+        "type": "api-call-service",
+        "z": "0ef8a234d4e5690c",
+        "name": "Turn Off Toggles",
+        "server": "f88bb71a82464dcf",
+        "version": 5,
+        "debugenabled": false,
+        "domain": "input_boolean",
+        "service": "turn_off",
+        "areaId": [],
+        "deviceId": [],
+        "entityId": [
+            "input_boolean.home_vacuumed"
+        ],
+        "data": "",
+        "dataType": "jsonata",
+        "mergeContext": "",
+        "mustacheAltTags": false,
+        "outputProperties": [],
+        "queue": "none",
+        "x": 380,
+        "y": 350,
+        "wires": [
+            []
+        ]
+    }
+]

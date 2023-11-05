@@ -1,0 +1,31 @@
+availability: true
+groups: groups.yaml
+devices: devices.yaml
+device_options:
+  legacy: false
+advanced:
+  channel: 25
+  homeassistant_legacy_entity_attributes: false
+  last_seen: ISO_8601
+  legacy_api: false
+  legacy_availability_payload: false
+  log_directory: data/logs/
+  log_file: zigbee2mqtt.log
+  log_level: info
+  log_output: ['console', 'file']
+  network_key: '!secrets.yaml network_key'
+  pan_id: 3776
+  timestamp_format: YYYY-MM-DDTHH:mm:ssZ
+frontend:
+  port: 8080
+homeassistant:
+  legacy_entity_attributes: false
+  legacy_triggers: false
+mqtt:
+  base_topic: zigbee2mqtt
+  server: '!secrets.yaml server'
+  user: '!secrets.yaml user'
+  password: '!secrets.yaml password'
+serial:
+  adapter: ezsp
+  port: /dev/ttyACM0

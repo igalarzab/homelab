@@ -1,0 +1,18 @@
+---
+
+microk8s_version: 1.28/stable
+microk8s_plugins:
+  ha-cluster: true
+  rbac: true
+  dns: true
+  helm3: true
+  hostpath-storage: true
+  metrics-server: true
+  cert-manager: true
+  observability: true
+
+traefik_version: v25.0.0
+
+homelab_repo_git: https://github.com/igalarzab/homelab
+homelab_repo_dir: /opt/homelab
+k8s_volumes_dir: /opt/k8s-volumes

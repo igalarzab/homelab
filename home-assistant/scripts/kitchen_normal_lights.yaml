@@ -1,0 +1,17 @@
+kitchen_normal_lights:
+  alias: Kitchen Normal Lights
+  icon: mdi:lightbulb-on
+  mode: single
+  fields:
+    brightness_pct:
+      description: Brightness percentage (value from 0 to 100)
+      selector:
+        number:
+          min: 0
+          max: 100
+  sequence:
+    - service: light.turn_on
+      entity_id: light.kitchen_lights
+      data:
+        brightness_pct: '{% if now().hour < 8 %}5{% else %}{{ brightness_pct|default(100) }}{% endif %}'
+        color_temp: 350

@@ -1,0 +1,25 @@
+- alias: Home - Trigger Security Alarm
+  initial_state: false 
+  trigger:
+    - platform: state
+      entity_id: group.motion_home
+    - platform: state
+      entity_id: group.doors_all
+  condition:
+    - condition: state
+      entity_id: input_boolean.home_locked
+      state: 'on'
+    - condition: template
+      value_template: "{{ states('vacuum.roborock_vacuum') not in ['cleaning', 'returning'] }}"
+  action:
+    - service: notify.home_owners
+      data:
+        title: Home Alarm
+        message: Motion has been detected
+        data:
+          url: /main-dashboard/
+          apns_headers:
+            apns-collapse-id: triggered-alarm
+          actions:
+            - action: "DISABLE_SECURITY_SYSTEM"
+              title: "Disable Alarm"

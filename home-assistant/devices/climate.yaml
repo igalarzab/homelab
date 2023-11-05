@@ -1,0 +1,15 @@
+- platform: smartir
+  name: Living Room AC
+  unique_id: living_room_ac
+  device_code: 1101
+  controller_data: remote.living_room_rm4c
+  temperature_sensor: sensor.living_room_thermometer_temperature
+  humidity_sensor: sensor.living_room_thermometer_humidity
+
+- platform: smartir
+  name: Bedroom AC
+  unique_id: bedroom_ac
+  device_code: 1101
+  controller_data: remote.bedroom_rm4c
+  temperature_sensor: sensor.bedroom_thermometer_temperature
+  humidity_sensor: sensor.bedroom_thermometer_humidity

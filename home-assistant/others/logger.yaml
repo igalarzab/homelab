@@ -1,0 +1,5 @@
+default: info
+logs:
+  homeassistant.components: warning
+  homeassistant.loader: warning
+  homeassistant.setup: warning
