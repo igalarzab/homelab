@@ -1,5 +1,5 @@
 - alias: Home - Trigger Security Alarm
-  initial_state: false 
+  initial_state: false
   trigger:
     - platform: state
       entity_id: group.motion_home
@@ -10,7 +10,7 @@
       entity_id: input_boolean.home_locked
       state: 'on'
     - condition: template
-      value_template: "{{ states('vacuum.roborock_vacuum') not in ['cleaning', 'returning'] }}"
+      value_template: "{{ states('vacuum.roborock_s5_max') not in ['cleaning', 'returning'] }}"
   action:
     - service: notify.home_owners
       data:

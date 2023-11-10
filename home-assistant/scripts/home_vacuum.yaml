@@ -7,4 +7,4 @@ home_vacuum:
       entity_id: input_boolean.home_vacuumed
     - service: vacuum.start
       target:
-        entity_id: vacuum.roborock_vacuum
+        entity_id: vacuum.roborock_s5_max

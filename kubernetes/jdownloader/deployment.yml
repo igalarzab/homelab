@@ -6,21 +6,26 @@ metadata:
   name: jdownloader
   namespace: jdownloader
   labels:
-    app.kubernetes.io/name: jdownloader 
+    app.kubernetes.io/name: jdownloader
+  annotations:
+    keel.sh/policy: minor
+    keel.sh/trigger: poll
+    keel.sh/pollSchedule: "@midnight"
+    keel.sh/pollSchedule: "0 0 4 * * 5" # 4am Fri
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app.kubernetes.io/name: jdownloader 
+      app.kubernetes.io/name: jdownloader
   template:
     metadata:
       labels:
-        app.kubernetes.io/name: jdownloader 
+        app.kubernetes.io/name: jdownloader
     spec:
       terminationGracePeriodSeconds: 30
       containers:
         - name: jdownloader
-          image: jlesage/jdownloader-2:v23.06.1
+          image: jlesage/jdownloader-2:v23.11.1
           env:
             - name: TZ
               value: ${TZ}
@@ -44,7 +49,7 @@ spec:
           livenessProbe:
             httpGet:
               path: /
-              port: admin 
+              port: admin
             initialDelaySeconds: 5
             periodSeconds: 10
             timeoutSeconds: 2
@@ -64,7 +69,7 @@ spec:
           hostPath:
             path: ${VOLUMES_PATH}/jdownloader
             type: DirectoryOrCreate
-        - name: downloads 
+        - name: downloads
           hostPath:
             path: ${MULTIMEDIA_PATH}
             type: Directory

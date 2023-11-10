@@ -7,6 +7,10 @@ metadata:
   namespace: home-assistant
   labels:
     app.kubernetes.io/name: mosquitto
+  annotations:
+    keel.sh/policy: minor
+    keel.sh/trigger: poll
+    keel.sh/pollSchedule: "0 0 4 * * 5" # 4am Fri
 spec:
   replicas: 1
   selector:
@@ -20,7 +24,7 @@ spec:
       terminationGracePeriodSeconds: 30
       containers:
         - name: mosquitto
-          image: eclipse-mosquitto:2.0.17
+          image: eclipse-mosquitto:2.0.18
           env:
             - name: TZ
               value: ${TZ}

@@ -7,6 +7,10 @@ metadata:
   namespace: home-assistant
   labels:
     app.kubernetes.io/name: home-assistant
+  annotations:
+    keel.sh/policy: minor
+    keel.sh/trigger: poll
+    keel.sh/pollSchedule: "0 0 4 * * 5" # 4am Fri
 spec:
   replicas: 1
   selector:
@@ -24,7 +28,7 @@ spec:
       terminationGracePeriodSeconds: 30
       containers:
         - name: home-assistant
-          image: homeassistant/home-assistant:2023.11.1
+          image: homeassistant/home-assistant:2023.11.2
           env:
             - name: TZ
               value: ${TZ}
