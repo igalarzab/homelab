@@ -1,0 +1,22 @@
+---
+
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: keel
+  namespace: keel
+  labels:
+    app.kubernetes.io/name: keel
+spec:
+  rules:
+    - host: keel.${DOMAIN_ROOT}
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: keel
+                port:
+                  name: dashboard
+
