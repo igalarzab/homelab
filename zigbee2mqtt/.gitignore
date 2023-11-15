@@ -1,3 +1,5 @@
+logs/
+
 coordinator_backup.json
 database.db
 secrets.yaml

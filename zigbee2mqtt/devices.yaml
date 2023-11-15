@@ -123,7 +123,6 @@
   occupancy_timeout: 90
   homeassistant:
     name: Living Room Motion
-  illuminance_calibration: ''
 '0x00158d0005053085':
   friendly_name: living_room/door_entrance
   homeassistant:

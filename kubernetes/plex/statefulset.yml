@@ -1,0 +1,70 @@
+---
+
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: plex
+  namespace: plex
+  labels:
+    app.kubernetes.io/name: plex
+  annotations:
+    keel.sh/policy: minor
+    keel.sh/trigger: poll
+    keel.sh/pollSchedule: "0 0 4 * * 5" # 4am Fri
+spec:
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: plex
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: plex
+    spec:
+      serviceAccountName: plex
+      terminationGracePeriodSeconds: 30
+      containers:
+        - name: plex
+          image: plexinc/pms-docker:1.32.7.7621-871adbd44
+          securityContext:
+            privileged: true # TODO: Needed for quicksync
+          ports:
+            - name: admin
+              containerPort: 32400
+              protocol: TCP
+          env:
+            - name: ADVERTISE_IP
+              value: https://plex.${DOMAIN_ROOT}
+            - name: PLEX_CLAIM
+              value: ${PLEX_CLAIM}
+            - name: TZ
+              value: ${TZ}
+          volumeMounts:
+            - name: transcode
+              mountPath: /transcode
+            - name: quicksync 
+              mountPath: /dev/dri
+            - name: config
+              mountPath: /config
+            - name: library
+              mountPath: /media/Multimedia
+          livenessProbe:
+            initialDelaySeconds: 30
+            timeoutSeconds: 10
+            httpGet:
+              path: /identity
+              port: admin
+      volumes:
+        - name: transcode
+          emptyDir: {}
+        - name: quicksync 
+          hostPath:
+            path: /dev/dri
+            type: Directory
+        - name: config
+          hostPath:
+            path: ${VOLUMES_PATH}/plex/
+            type: DirectoryOrCreate
+        - name: library
+          hostPath:
+            path: ${MULTIMEDIA_PATH}
+            type: DirectoryOrCreate
