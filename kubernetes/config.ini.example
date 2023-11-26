@@ -1,0 +1,21 @@
+[default]
+VOLUMES_PATH=/opt/k8s-volumes
+MULTIMEDIA_PATH=/media/Multimedia
+DOMAIN_ROOT=WRITEME
+TZ=WRITEME
+
+[cert-manager]
+CLOUDFLARE_EMAIL=WRITEME
+CLOUDFLARE_TOKEN=WRITEME
+CERT_NAME=cluster-wildcard
+CERT_SECRET_NAME=${CERT_NAME}-tls
+
+[jdownloader]
+DOWNLOADS_PATH=${default:MULTIMEDIA_PATH}/Downloads
+
+[keel]
+ADMIN_PASS=WRITEME
+
+[plex]
+# Get this from https://www.plex.tv/claim/
+PLEX_CLAIM=WRITEME

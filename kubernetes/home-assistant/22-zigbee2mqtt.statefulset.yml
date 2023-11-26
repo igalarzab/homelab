@@ -1,12 +1,12 @@
 ---
 
 apiVersion: apps/v1
-kind: Deployment
+kind: StatefulSet
 metadata:
-  name: node-red
+  name: zigbee2mqtt
   namespace: home-assistant
   labels:
-    app.kubernetes.io/name: node-red
+    app.kubernetes.io/name: zigbee2mqtt
   annotations:
     keel.sh/policy: minor
     keel.sh/trigger: poll
@@ -15,29 +15,34 @@ spec:
   replicas: 1
   selector:
     matchLabels:
-      app.kubernetes.io/name: node-red
+      app.kubernetes.io/name: zigbee2mqtt
   template:
     metadata:
       labels:
-        app.kubernetes.io/name: node-red
+        app.kubernetes.io/name: zigbee2mqtt
     spec:
       terminationGracePeriodSeconds: 30
       containers:
-        - name: node-red
-          image: nodered/node-red:3.1.0
+        - name: zigbee2mqtt
+          image: koenkk/zigbee2mqtt:${IMGTAG_HOME__ASSISTANT_STS_ZIGBEE2MQTT}
           securityContext:
-            runAsUser: 0
-            runAsGroup: 0
+            privileged: true
           env:
             - name: TZ
               value: ${TZ}
           ports:
             - name: admin
               protocol: TCP
-              containerPort: 1880
+              containerPort: 8080
           volumeMounts:
-            - name: data
-              mountPath: /data
+            - name: zigbee
+              mountPath: /dev/ttyACM0
+              readOnly: false
+            - name: udev
+              mountPath: /run/udev
+              readOnly: true
+            - name: zigbee2mqtt-data
+              mountPath: /app/data
               readOnly: false
           livenessProbe:
             httpGet:
@@ -47,7 +52,7 @@ spec:
             periodSeconds: 10
             timeoutSeconds: 2
             successThreshold: 1
-            failureThreshold: 3
+            failureThreshold: 5
           readinessProbe:
             httpGet:
               path: /
@@ -56,9 +61,16 @@ spec:
             periodSeconds: 10
             timeoutSeconds: 2
             successThreshold: 1
-            failureThreshold: 3
+            failureThreshold: 5
       volumes:
-        - name: data
+        - name: zigbee
           hostPath:
-            path: ${VOLUMES_PATH}/node-red
+            path: /dev/serial/by-id/usb-ITEAD_SONOFF_Zigbee_3.0_USB_Dongle_Plus_V2_20221201153336-if00
+        - name: udev
+          hostPath:
+            path: /run/udev
+            type: Directory
+        - name: zigbee2mqtt-data
+          hostPath:
+            path: ${VOLUMES_PATH}/zigbee2mqtt
             type: DirectoryOrCreate

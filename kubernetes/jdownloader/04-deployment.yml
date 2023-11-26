@@ -1,48 +1,49 @@
 ---
 
 apiVersion: apps/v1
-kind: StatefulSet
+kind: Deployment
 metadata:
-  name: zigbee2mqtt
-  namespace: home-assistant
+  name: jdownloader
+  namespace: jdownloader
   labels:
-    app.kubernetes.io/name: zigbee2mqtt
+    app.kubernetes.io/name: jdownloader
   annotations:
     keel.sh/policy: minor
     keel.sh/trigger: poll
-    keel.sh/pollSchedule: "0 0 4 * * 5" # 4am Fri
+    keel.sh/pollSchedule: "@midnight"
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app.kubernetes.io/name: zigbee2mqtt
+      app.kubernetes.io/name: jdownloader
   template:
     metadata:
       labels:
-        app.kubernetes.io/name: zigbee2mqtt
+        app.kubernetes.io/name: jdownloader
     spec:
       terminationGracePeriodSeconds: 30
       containers:
-        - name: zigbee2mqtt
-          image: koenkk/zigbee2mqtt:1.33.2
-          securityContext:
-            privileged: true
+        - name: jdownloader
+          image: jlesage/jdownloader-2:${IMGTAG_JDOWNLOADER_DEPLOY}
           env:
             - name: TZ
               value: ${TZ}
+            - name: KEEP_APP_RUNNING
+              value: "1"
+            - name: USER_ID
+              value: "1000"
+            - name: GROUP_ID
+              value: "100"
           ports:
             - name: admin
               protocol: TCP
-              containerPort: 8080
+              containerPort: 5800
           volumeMounts:
-            - name: zigbee
-              mountPath: /dev/ttyACM0
+            - name: config
+              mountPath: /config
               readOnly: false
-            - name: udev
-              mountPath: /run/udev
-              readOnly: true
-            - name: zigbee2mqtt-data
-              mountPath: /app/data
+            - name: downloads
+              mountPath: /output
               readOnly: false
           livenessProbe:
             httpGet:
@@ -52,7 +53,7 @@ spec:
             periodSeconds: 10
             timeoutSeconds: 2
             successThreshold: 1
-            failureThreshold: 5
+            failureThreshold: 3
           readinessProbe:
             httpGet:
               path: /
@@ -61,16 +62,13 @@ spec:
             periodSeconds: 10
             timeoutSeconds: 2
             successThreshold: 1
-            failureThreshold: 5
+            failureThreshold: 3
       volumes:
-        - name: zigbee
+        - name: config
           hostPath:
-            path: /dev/serial/by-id/usb-ITEAD_SONOFF_Zigbee_3.0_USB_Dongle_Plus_V2_20221201153336-if00
-        - name: udev
-          hostPath:
-            path: /run/udev
-            type: Directory
-        - name: zigbee2mqtt-data
-          hostPath:
-            path: ${VOLUMES_PATH}/zigbee2mqtt
+            path: ${VOLUMES_PATH}/jdownloader
             type: DirectoryOrCreate
+        - name: downloads
+          hostPath:
+            path: ${DOWNLOADS_PATH}
+            type: Directory

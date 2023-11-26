@@ -3,10 +3,10 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: home-assistant
+  name: mosquitto
   namespace: home-assistant
   labels:
-    app.kubernetes.io/name: home-assistant
+    app.kubernetes.io/name: mosquitto
   annotations:
     keel.sh/policy: minor
     keel.sh/trigger: poll
@@ -15,56 +15,50 @@ spec:
   replicas: 1
   selector:
     matchLabels:
-      app.kubernetes.io/name: home-assistant
+      app.kubernetes.io/name: mosquitto
   template:
     metadata:
       labels:
-        app.kubernetes.io/name: home-assistant
-      annotations:
-        # FIXME: Adding to allow Bluetooth to work inside of the container
-        # I should find a better way than this
-        container.apparmor.security.beta.kubernetes.io/home-assistant: unconfined
+        app.kubernetes.io/name: mosquitto
     spec:
       terminationGracePeriodSeconds: 30
       containers:
-        - name: home-assistant
-          image: homeassistant/home-assistant:2023.11.2
+        - name: mosquitto
+          image: eclipse-mosquitto:${IMGTAG_HOME__ASSISTANT_DEPLOY_MOSQUITTO}
           env:
             - name: TZ
               value: ${TZ}
           ports:
-            - name: admin
+            - name: mqtt
+              containerPort: 1883
               protocol: TCP
-              containerPort: 8123
           volumeMounts:
-            - name: dbus
-              mountPath: /run/dbus
-            - name: config
-              mountPath: /config
+            - name: mosquitto-data
+              mountPath: /mosquitto/data
+            - name: mosquitto-config
+              mountPath: /mosquitto/config
           livenessProbe:
-            httpGet:
-              path: /
-              port: admin
+            tcpSocket:
+              port: mqtt
             initialDelaySeconds: 5
             periodSeconds: 10
             timeoutSeconds: 2
             successThreshold: 1
             failureThreshold: 3
           readinessProbe:
-            httpGet:
-              path: /
-              port: admin
+            tcpSocket:
+              port: mqtt
             initialDelaySeconds: 5
             periodSeconds: 10
             timeoutSeconds: 2
             successThreshold: 1
             failureThreshold: 3
       volumes:
-        - name: dbus
+        - name: mosquitto-config
           hostPath:
-            path: /var/run/dbus
-            type: Directory
-        - name: config
+            path: ${VOLUMES_PATH}/mosquitto/config
+            type: DirectoryOrCreate
+        - name: mosquitto-data
           hostPath:
-            path: ${VOLUMES_PATH}/home-assistant
+            path: ${VOLUMES_PATH}/mosquitto/data
             type: DirectoryOrCreate

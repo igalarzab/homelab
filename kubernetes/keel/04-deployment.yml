@@ -25,7 +25,7 @@ spec:
       terminationGracePeriodSeconds: 30
       containers:
         - name: keel
-          image: keelhq/keel:0.19.1
+          image: keelhq/keel:${IMGTAG_KEEL_DEPLOY}
           command: ["/bin/keel"]
           env:
             - name: NAMESPACE
