@@ -1,0 +1,92 @@
+---
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: transmission
+  namespace: transmission
+  labels:
+    app.kubernetes.io/name: transmission
+  annotations:
+    keel.sh/policy: minor
+    keel.sh/trigger: poll
+    keel.sh/pollSchedule: "@midnight"
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: transmission
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: transmission
+    spec:
+      terminationGracePeriodSeconds: 30
+      containers:
+        - name: transmission
+          image: haugene/transmission-openvpn:${IMGTAG_TRANSMISSION_DEPLOY}
+          securityContext:
+            privileged: true
+          env:
+            - name: TZ
+              value: ${TZ}
+            - name: OPENVPN_PROVIDER
+              value: '${OPENVPN_PROVIDER}'
+            - name: OPENVPN_CONFIG
+              value: '${OPENVPN_REGION}'
+            - name: OPENVPN_USERNAME
+              value: '${OPENVPN_USERNAME}'
+            - name: OPENVPN_PASSWORD
+              value: '${OPENVPN_PASSWORD}'
+            - name: LOCAL_NETWORK
+              value: '${LOCAL_NETWORK}'
+            - name: OPENVPN_OPTS
+              value: '--inactive 3600 --ping 10 --ping-exit 60'
+            - name: TRANSMISSION_WEB_UI
+              value: 'combustion'
+            - name: TRANSMISSION_DOWNLOAD_QUEUE_SIZE
+              value: '4'
+            - name: TRANSMISSION_RATIO_LIMIT
+              value: '2'
+            - name: TRANSMISSION_RATIO_LIMIT_ENABLED
+              value: 'true'
+            - name: TRANSMISSION_SPEED_LIMIT_DOWN
+              value: '5000'
+            - name: TRANSMISSION_SPEED_LIMIT_DOWN_ENABLED
+              value: 'true'
+            - name: TRANSMISSION_SPEED_LIMIT_UP
+              value: '0'
+            - name: TRANSMISSION_SPEED_LIMIT_UP_ENABLED
+              value: '${SPEED_UPLOAD_LIMIT}'
+            - name: WEBPROXY_ENABLED
+              value: 'false'
+          ports:
+            - name: admin
+              protocol: TCP
+              containerPort: 9091
+          volumeMounts:
+            - name: data
+              mountPath: /data
+          livenessProbe:
+            httpGet:
+              path: /
+              port: admin
+            initialDelaySeconds: 10
+            periodSeconds: 2
+            timeoutSeconds: 2
+            successThreshold: 1
+            failureThreshold: 3
+          readinessProbe:
+            httpGet:
+              path: /
+              port: admin
+            initialDelaySeconds: 10
+            periodSeconds: 2
+            timeoutSeconds: 2
+            successThreshold: 2
+            failureThreshold: 3
+      volumes:
+        - name: data
+          hostPath:
+            path: ${DOWNLOADS_PATH}
+            type: DirectoryOrCreate

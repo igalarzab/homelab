@@ -19,3 +19,11 @@ ADMIN_PASS=WRITEME
 [plex]
 # Get this from https://www.plex.tv/claim/
 PLEX_CLAIM=WRITEME
+
+[transmission]
+SPEED_UPLOAD_LIMIT=1000
+DOWNLOADS_PATH=${default:MULTIMEDIA_PATH}/Downloads/transmission/
+OPENVPN_PROVIDER=SURFSHARK
+OPENVPN_REGION=jp-tok-st014.prod.surfshark.com_tcp
+OPENVPN_USERNAME=WRITEME
+OPENVPN_PASSWORD=WRITEME
