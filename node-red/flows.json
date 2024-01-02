@@ -56,6 +56,14 @@
         "env": []
     },
     {
+        "id": "8be9915c7bb918ab",
+        "type": "tab",
+        "label": "PS1",
+        "disabled": false,
+        "info": "",
+        "env": []
+    },
+    {
         "id": "64b48be79869231a",
         "type": "subflow",
         "name": "Hue Remote",
@@ -212,11 +220,11 @@
         "in": [],
         "out": [
             {
-                "x": 1045,
-                "y": 375,
+                "x": 1080,
+                "y": 100,
                 "wires": [
                     {
-                        "id": "c644c6d8abbaf61a",
+                        "id": "704d229175dab141",
                         "port": 0
                     }
                 ]
@@ -294,13 +302,21 @@
                         ]
                     }
                 }
+            },
+            {
+                "name": "LIGHTS_DELAY",
+                "type": "str",
+                "value": "90",
+                "ui": {
+                    "icon": "font-awesome/fa-cogs"
+                }
             }
         ],
         "meta": {},
         "color": "#DDAA99",
         "status": {
-            "x": 175,
-            "y": 900,
+            "x": 170,
+            "y": 755,
             "wires": [
                 {
                     "id": "11417094154650b9",
@@ -374,6 +390,18 @@
                 }
             ]
         }
+    },
+    {
+        "id": "8253b7c3dbda4b64",
+        "type": "subflow",
+        "name": "Not Used",
+        "info": "",
+        "category": "",
+        "in": [],
+        "out": [],
+        "env": [],
+        "meta": {},
+        "color": "#DDAA99"
     },
     {
         "id": "f88bb71a82464dcf",
@@ -1011,217 +1039,10 @@
         ]
     },
     {
-        "id": "cd97d4c4f6c87fda",
-        "type": "server-state-changed",
-        "z": "9437c76dc0c1335d",
-        "name": "No Motion for 1.5m?",
-        "server": "f88bb71a82464dcf",
-        "version": 5,
-        "outputs": 2,
-        "exposeAsEntityConfig": "",
-        "entityId": "${MOTION_SENSOR}",
-        "entityIdType": "exact",
-        "outputInitially": false,
-        "stateType": "str",
-        "ifState": "off",
-        "ifStateType": "str",
-        "ifStateOperator": "is",
-        "outputOnlyOnStateChange": true,
-        "for": "150",
-        "forType": "num",
-        "forUnits": "seconds",
-        "ignorePrevStateNull": false,
-        "ignorePrevStateUnknown": false,
-        "ignorePrevStateUnavailable": false,
-        "ignoreCurrentStateUnknown": true,
-        "ignoreCurrentStateUnavailable": true,
-        "outputProperties": [
-            {
-                "property": "payload",
-                "propertyType": "msg",
-                "value": "",
-                "valueType": "entityState"
-            },
-            {
-                "property": "data",
-                "propertyType": "msg",
-                "value": "",
-                "valueType": "eventData"
-            },
-            {
-                "property": "topic",
-                "propertyType": "msg",
-                "value": "",
-                "valueType": "triggerId"
-            }
-        ],
-        "x": 165,
-        "y": 375,
-        "wires": [
-            [
-                "da5e6b120a2e3ece"
-            ],
-            [
-                "3fd984c57870f395"
-            ]
-        ]
-    },
-    {
-        "id": "dda2f95413306c49",
-        "type": "api-call-service",
-        "z": "9437c76dc0c1335d",
-        "name": "Lights Off",
-        "server": "f88bb71a82464dcf",
-        "version": 5,
-        "debugenabled": false,
-        "domain": "light",
-        "service": "turn_off",
-        "areaId": [],
-        "deviceId": [],
-        "entityId": [
-            "${LIGHT_ENTITY}"
-        ],
-        "data": "",
-        "dataType": "jsonata",
-        "mergeContext": "",
-        "mustacheAltTags": false,
-        "outputProperties": [],
-        "queue": "none",
-        "x": 1065,
-        "y": 175,
-        "wires": [
-            [
-                "03603656ab897da0"
-            ]
-        ]
-    },
-    {
-        "id": "4a4a7a59ac2c934b",
-        "type": "trigger",
-        "z": "9437c76dc0c1335d",
-        "name": "",
-        "op1": "",
-        "op2": "",
-        "op1type": "pay",
-        "op2type": "payl",
-        "duration": "30",
-        "extend": false,
-        "overrideDelay": false,
-        "units": "s",
-        "reset": "",
-        "bytopic": "all",
-        "topic": "topic",
-        "outputs": 2,
-        "x": 875,
-        "y": 150,
-        "wires": [
-            [
-                "c65c1bc1bf4a44d2"
-            ],
-            [
-                "dda2f95413306c49"
-            ]
-        ]
-    },
-    {
-        "id": "0320ec93c73aba13",
-        "type": "change",
-        "z": "9437c76dc0c1335d",
-        "name": "Reset the counter",
-        "rules": [
-            {
-                "t": "set",
-                "p": "reset",
-                "pt": "msg",
-                "to": "true",
-                "tot": "str"
-            }
-        ],
-        "action": "",
-        "property": "",
-        "from": "",
-        "to": "",
-        "reg": false,
-        "x": 665,
-        "y": 300,
-        "wires": [
-            [
-                "4a4a7a59ac2c934b"
-            ]
-        ]
-    },
-    {
-        "id": "da5e6b120a2e3ece",
-        "type": "function",
-        "z": "9437c76dc0c1335d",
-        "name": "Door Open?",
-        "func": "const doorSensorName = env.get('DOOR_SENSOR');\n\nif (!doorSensorName) {\n    return msg;\n}\n\nconst ha = global.get('homeassistant.ha');\nconst doorState = ha.states[doorSensorName];\n\nif (!doorState || !('state' in doorState)) {\n    node.error(`No door state found in ${doorSensorName}`);\n    return;\n}\n\nif (doorState.state == 'on') {\n    return [msg, null];\n}\n\nreturn [null, msg];",
-        "outputs": 2,
-        "noerr": 0,
-        "initialize": "",
-        "finalize": "",
-        "libs": [],
-        "x": 420,
-        "y": 200,
-        "wires": [
-            [
-                "4a4a7a59ac2c934b"
-            ],
-            [
-                "639626d6cfb192ba"
-            ]
-        ]
-    },
-    {
-        "id": "c65c1bc1bf4a44d2",
-        "type": "api-current-state",
-        "z": "9437c76dc0c1335d",
-        "name": "Light On?",
-        "server": "f88bb71a82464dcf",
-        "version": 3,
-        "outputs": 2,
-        "halt_if": "on",
-        "halt_if_type": "str",
-        "halt_if_compare": "is",
-        "entity_id": "${LIGHT_ENTITY}",
-        "state_type": "str",
-        "blockInputOverrides": false,
-        "outputProperties": [
-            {
-                "property": "payload",
-                "propertyType": "msg",
-                "value": "",
-                "valueType": "entityState"
-            },
-            {
-                "property": "data",
-                "propertyType": "msg",
-                "value": "",
-                "valueType": "entity"
-            }
-        ],
-        "for": "0",
-        "forType": "num",
-        "forUnits": "minutes",
-        "override_topic": false,
-        "state_location": "payload",
-        "override_payload": "msg",
-        "entity_location": "data",
-        "override_data": "msg",
-        "x": 1065,
-        "y": 100,
-        "wires": [
-            [
-                "e9b1debf281ed4e1"
-            ],
-            []
-        ]
-    },
-    {
         "id": "68a204aaca4d906f",
         "type": "server-state-changed",
         "z": "9437c76dc0c1335d",
-        "name": "Lights On for 2h?",
+        "name": "Lights On for 1h?",
         "server": "f88bb71a82464dcf",
         "version": 5,
         "outputs": 2,
@@ -1234,7 +1055,7 @@
         "ifStateType": "str",
         "ifStateOperator": "is",
         "outputOnlyOnStateChange": true,
-        "for": "2",
+        "for": "1",
         "forType": "num",
         "forUnits": "hours",
         "ignorePrevStateNull": false,
@@ -1262,8 +1083,8 @@
                 "valueType": "triggerId"
             }
         ],
-        "x": 155,
-        "y": 700,
+        "x": 150,
+        "y": 515,
         "wires": [
             [
                 "eab81267bf8a9ceb"
@@ -1275,7 +1096,7 @@
         "id": "eab81267bf8a9ceb",
         "type": "api-current-state",
         "z": "9437c76dc0c1335d",
-        "name": "Motion Off for 20m?",
+        "name": "Motion Off for 30m?",
         "server": "f88bb71a82464dcf",
         "version": 3,
         "outputs": 2,
@@ -1299,7 +1120,7 @@
                 "valueType": "entity"
             }
         ],
-        "for": "20",
+        "for": "30",
         "forType": "num",
         "forUnits": "minutes",
         "override_topic": false,
@@ -1307,8 +1128,8 @@
         "override_payload": "msg",
         "entity_location": "data",
         "override_data": "msg",
-        "x": 400,
-        "y": 700,
+        "x": 395,
+        "y": 515,
         "wires": [
             [
                 "f8ca136f525ea9d9"
@@ -1322,18 +1143,8 @@
         "z": "9437c76dc0c1335d",
         "name": "Lights - Dead man's switch",
         "info": "",
-        "x": 145,
-        "y": 625,
-        "wires": []
-    },
-    {
-        "id": "666b3ee321ee3efb",
-        "type": "comment",
-        "z": "9437c76dc0c1335d",
-        "name": "Lights - Motion",
-        "info": "",
-        "x": 105,
-        "y": 100,
+        "x": 140,
+        "y": 440,
         "wires": []
     },
     {
@@ -1349,8 +1160,8 @@
         "targetType": "msg",
         "statusVal": "",
         "statusType": "auto",
-        "x": 1215,
-        "y": 700,
+        "x": 1050,
+        "y": 520,
         "wires": []
     },
     {
@@ -1374,92 +1185,11 @@
         "mustacheAltTags": false,
         "outputProperties": [],
         "queue": "none",
-        "x": 610,
-        "y": 700,
+        "x": 605,
+        "y": 515,
         "wires": [
             [
                 "10bfbd94e6f9510f"
-            ]
-        ]
-    },
-    {
-        "id": "6d24ca5755a07d36",
-        "type": "change",
-        "z": "9437c76dc0c1335d",
-        "name": "",
-        "rules": [
-            {
-                "t": "set",
-                "p": "payload",
-                "pt": "msg",
-                "to": "{\"fill\":\"green\",\"text\":\"Light Turned On\"}",
-                "tot": "json"
-            }
-        ],
-        "action": "",
-        "property": "",
-        "from": "",
-        "to": "",
-        "reg": false,
-        "x": 1105,
-        "y": 325,
-        "wires": [
-            [
-                "92bc101d0a19d91b"
-            ]
-        ]
-    },
-    {
-        "id": "03603656ab897da0",
-        "type": "change",
-        "z": "9437c76dc0c1335d",
-        "name": "",
-        "rules": [
-            {
-                "t": "set",
-                "p": "payload",
-                "pt": "msg",
-                "to": "{\"fill\":\"green\",\"text\":\"Light Turned Off\"}",
-                "tot": "json"
-            }
-        ],
-        "action": "",
-        "property": "",
-        "from": "",
-        "to": "",
-        "reg": false,
-        "x": 1260,
-        "y": 175,
-        "wires": [
-            [
-                "0e7cd5392e6cd5f1"
-            ]
-        ]
-    },
-    {
-        "id": "f3d22cfa10e9d27d",
-        "type": "change",
-        "z": "9437c76dc0c1335d",
-        "name": "",
-        "rules": [
-            {
-                "t": "set",
-                "p": "payload",
-                "pt": "msg",
-                "to": "{\"fill\":\"green\",\"text\":\"Light Blinked\"}",
-                "tot": "json"
-            }
-        ],
-        "action": "",
-        "property": "",
-        "from": "",
-        "to": "",
-        "reg": false,
-        "x": 1435,
-        "y": 75,
-        "wires": [
-            [
-                "a9194b6c0c9d79ba"
             ]
         ]
     },
@@ -1482,8 +1212,8 @@
         "from": "",
         "to": "",
         "reg": false,
-        "x": 830,
-        "y": 700,
+        "x": 825,
+        "y": 515,
         "wires": [
             [
                 "a19b26586e9631cf",
@@ -1492,7 +1222,143 @@
         ]
     },
     {
-        "id": "38c2ac8502bf47d9",
+        "id": "11417094154650b9",
+        "type": "link in",
+        "z": "9437c76dc0c1335d",
+        "name": "Status In",
+        "links": [
+            "a9194b6c0c9d79ba",
+            "0e7cd5392e6cd5f1",
+            "92bc101d0a19d91b",
+            "0b3383f4e9d1beaf",
+            "cac0c010774a38c0",
+            "1c46e8fa39e9d555",
+            "178043ec809f25fc",
+            "906ba48f22324101",
+            "93b77fe38d0af726"
+        ],
+        "x": 85,
+        "y": 755,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "0b3383f4e9d1beaf",
+        "type": "link out",
+        "z": "9437c76dc0c1335d",
+        "name": "Status Out",
+        "mode": "link",
+        "links": [
+            "11417094154650b9"
+        ],
+        "x": 975,
+        "y": 480,
+        "wires": []
+    },
+    {
+        "id": "7facb3b46fce500a",
+        "type": "comment",
+        "z": "9437c76dc0c1335d",
+        "name": "Update Node Status",
+        "info": "",
+        "x": 110,
+        "y": 680,
+        "wires": []
+    },
+    {
+        "id": "ad0a1d0af7450e18",
+        "type": "comment",
+        "z": "9437c76dc0c1335d",
+        "name": "Lights - Motion",
+        "info": "",
+        "x": 100,
+        "y": 60,
+        "wires": []
+    },
+    {
+        "id": "8137ca5cdbde7de6",
+        "type": "server-state-changed",
+        "z": "9437c76dc0c1335d",
+        "name": "Motion Detected",
+        "server": "f88bb71a82464dcf",
+        "version": 5,
+        "outputs": 2,
+        "exposeAsEntityConfig": "",
+        "entityId": "${MOTION_SENSOR}",
+        "entityIdType": "exact",
+        "outputInitially": false,
+        "stateType": "str",
+        "ifState": "on",
+        "ifStateType": "str",
+        "ifStateOperator": "is",
+        "outputOnlyOnStateChange": true,
+        "for": "0",
+        "forType": "num",
+        "forUnits": "seconds",
+        "ignorePrevStateNull": false,
+        "ignorePrevStateUnknown": false,
+        "ignorePrevStateUnavailable": false,
+        "ignoreCurrentStateUnknown": true,
+        "ignoreCurrentStateUnavailable": true,
+        "outputProperties": [
+            {
+                "property": "payload",
+                "propertyType": "msg",
+                "value": "",
+                "valueType": "entityState"
+            },
+            {
+                "property": "data",
+                "propertyType": "msg",
+                "value": "",
+                "valueType": "eventData"
+            },
+            {
+                "property": "topic",
+                "propertyType": "msg",
+                "value": "",
+                "valueType": "triggerId"
+            }
+        ],
+        "x": 120,
+        "y": 200,
+        "wires": [
+            [
+                "8939691f53244254"
+            ],
+            []
+        ]
+    },
+    {
+        "id": "704d229175dab141",
+        "type": "change",
+        "z": "9437c76dc0c1335d",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "{\"fill\":\"green\",\"text\":\"Light Turned On\"}",
+                "tot": "json"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 920,
+        "y": 160,
+        "wires": [
+            [
+                "906ba48f22324101"
+            ]
+        ]
+    },
+    {
+        "id": "45a6f28106fdd36c",
         "type": "api-current-state",
         "z": "9437c76dc0c1335d",
         "name": "Dark?",
@@ -1527,17 +1393,17 @@
         "override_payload": "msg",
         "entity_location": "data",
         "override_data": "msg",
-        "x": 625,
-        "y": 375,
+        "x": 510,
+        "y": 160,
         "wires": [
             [
-                "c644c6d8abbaf61a"
+                "7c48ea4c2b606677"
             ],
             []
         ]
     },
     {
-        "id": "b6230a2c135228f9",
+        "id": "66e887e65681d733",
         "type": "api-current-state",
         "z": "9437c76dc0c1335d",
         "name": "Sunset?",
@@ -1572,17 +1438,17 @@
         "override_payload": "msg",
         "entity_location": "data",
         "override_data": "msg",
-        "x": 635,
-        "y": 425,
+        "x": 520,
+        "y": 210,
         "wires": [
             [
-                "c644c6d8abbaf61a"
+                "7c48ea4c2b606677"
             ],
             []
         ]
     },
     {
-        "id": "c644c6d8abbaf61a",
+        "id": "7c48ea4c2b606677",
         "type": "api-current-state",
         "z": "9437c76dc0c1335d",
         "name": "Light Off?",
@@ -1617,46 +1483,90 @@
         "override_payload": "msg",
         "entity_location": "data",
         "override_data": "msg",
-        "x": 885,
-        "y": 400,
+        "x": 700,
+        "y": 180,
         "wires": [
             [
-                "6d24ca5755a07d36"
+                "704d229175dab141",
+                "40eff425930fde47"
             ],
             []
         ]
     },
     {
-        "id": "e9b1debf281ed4e1",
+        "id": "906ba48f22324101",
+        "type": "link out",
+        "z": "9437c76dc0c1335d",
+        "name": "Status Out",
+        "mode": "link",
+        "links": [
+            "11417094154650b9"
+        ],
+        "x": 1075,
+        "y": 160,
+        "wires": []
+    },
+    {
+        "id": "40eff425930fde47",
+        "type": "ha-wait-until",
+        "z": "9437c76dc0c1335d",
+        "name": "Wait until no motion",
+        "server": "f88bb71a82464dcf",
+        "version": 2,
+        "outputs": 1,
+        "entityId": "${MOTION_SENSOR}",
+        "entityIdFilterType": "exact",
+        "property": "state",
+        "comparator": "is",
+        "value": "off",
+        "valueType": "str",
+        "timeout": "0",
+        "timeoutType": "num",
+        "timeoutUnits": "seconds",
+        "checkCurrentState": true,
+        "blockInputOverrides": true,
+        "outputProperties": [],
+        "entityLocation": "data",
+        "entityLocationType": "none",
+        "x": 940,
+        "y": 240,
+        "wires": [
+            [
+                "6390d356c73e09fe"
+            ]
+        ]
+    },
+    {
+        "id": "05a8fbd060d7481c",
         "type": "api-call-service",
         "z": "9437c76dc0c1335d",
-        "name": "Blink Lights",
+        "name": "Lights Off",
         "server": "f88bb71a82464dcf",
         "version": 5,
         "debugenabled": false,
         "domain": "light",
-        "service": "turn_on",
+        "service": "turn_off",
         "areaId": [],
         "deviceId": [],
         "entityId": [
             "${LIGHT_ENTITY}"
         ],
-        "data": "{\"effect\":\"blink\"}",
-        "dataType": "json",
+        "data": "",
+        "dataType": "jsonata",
         "mergeContext": "",
         "mustacheAltTags": false,
         "outputProperties": [],
         "queue": "none",
-        "x": 1250,
-        "y": 75,
+        "x": 1740,
+        "y": 120,
         "wires": [
             [
-                "f3d22cfa10e9d27d"
+                "14f2e0d01cf2e6a4"
             ]
         ]
     },
     {
-        "id": "3fd984c57870f395",
+        "id": "8939691f53244254",
         "type": "function",
         "z": "9437c76dc0c1335d",
         "name": "Door Open?",
@@ -1666,103 +1576,18 @@
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 420,
-        "y": 400,
+        "x": 310,
+        "y": 200,
         "wires": [
             [
-                "0320ec93c73aba13",
-                "38c2ac8502bf47d9",
-                "b6230a2c135228f9"
+                "45a6f28106fdd36c",
+                "66e887e65681d733"
             ],
-            [
-                "d8fc4ea219d2a456"
-            ]
-        ]
-    },
-    {
-        "id": "11417094154650b9",
-        "type": "link in",
-        "z": "9437c76dc0c1335d",
-        "name": "Status In",
-        "links": [
-            "a9194b6c0c9d79ba",
-            "0e7cd5392e6cd5f1",
-            "92bc101d0a19d91b",
-            "0b3383f4e9d1beaf",
-            "cac0c010774a38c0",
-            "1c46e8fa39e9d555",
-            "178043ec809f25fc"
-        ],
-        "x": 90,
-        "y": 900,
-        "wires": [
             []
         ]
     },
     {
-        "id": "a9194b6c0c9d79ba",
-        "type": "link out",
-        "z": "9437c76dc0c1335d",
-        "name": "Status Out",
-        "mode": "link",
-        "links": [
-            "11417094154650b9"
-        ],
-        "x": 1585,
-        "y": 75,
-        "wires": []
-    },
-    {
-        "id": "0e7cd5392e6cd5f1",
-        "type": "link out",
-        "z": "9437c76dc0c1335d",
-        "name": "Status Out",
-        "mode": "link",
-        "links": [
-            "11417094154650b9"
-        ],
-        "x": 1390,
-        "y": 175,
-        "wires": []
-    },
-    {
-        "id": "92bc101d0a19d91b",
-        "type": "link out",
-        "z": "9437c76dc0c1335d",
-        "name": "Status Out",
-        "mode": "link",
-        "links": [
-            "11417094154650b9"
-        ],
-        "x": 1235,
-        "y": 325,
-        "wires": []
-    },
-    {
-        "id": "0b3383f4e9d1beaf",
-        "type": "link out",
-        "z": "9437c76dc0c1335d",
-        "name": "Status Out",
-        "mode": "link",
-        "links": [
-            "11417094154650b9"
-        ],
-        "x": 990,
-        "y": 650,
-        "wires": []
-    },
-    {
-        "id": "7facb3b46fce500a",
-        "type": "comment",
-        "z": "9437c76dc0c1335d",
-        "name": "Update Node Status",
-        "info": "",
-        "x": 115,
-        "y": 825,
-        "wires": []
-    },
-    {
-        "id": "d8fc4ea219d2a456",
+        "id": "14f2e0d01cf2e6a4",
         "type": "change",
         "z": "9437c76dc0c1335d",
         "name": "",
@@ -1771,7 +1596,7 @@
                 "t": "set",
                 "p": "payload",
                 "pt": "msg",
-                "to": "{\"fill\":\"green\",\"text\":\"No Action, Door Closed\"}",
+                "to": "{\"fill\":\"green\",\"text\":\"Light Turned Off\"}",
                 "tot": "json"
             }
         ],
@@ -1780,16 +1605,16 @@
         "from": "",
         "to": "",
         "reg": false,
-        "x": 655,
-        "y": 500,
+        "x": 1920,
+        "y": 120,
         "wires": [
             [
-                "cac0c010774a38c0"
+                "93b77fe38d0af726"
             ]
         ]
     },
     {
-        "id": "cac0c010774a38c0",
+        "id": "93b77fe38d0af726",
         "type": "link out",
         "z": "9437c76dc0c1335d",
         "name": "Status Out",
@@ -1797,49 +1622,133 @@
         "links": [
             "11417094154650b9"
         ],
-        "x": 790,
-        "y": 500,
+        "x": 2055,
+        "y": 120,
         "wires": []
     },
     {
-        "id": "639626d6cfb192ba",
-        "type": "change",
+        "id": "c32cf4a134b13727",
+        "type": "api-current-state",
+        "z": "9437c76dc0c1335d",
+        "name": "Motion still off?",
+        "server": "f88bb71a82464dcf",
+        "version": 3,
+        "outputs": 2,
+        "halt_if": "off",
+        "halt_if_type": "str",
+        "halt_if_compare": "is",
+        "entity_id": "${MOTION_SENSOR}",
+        "state_type": "str",
+        "blockInputOverrides": false,
+        "outputProperties": [
+            {
+                "property": "payload",
+                "propertyType": "msg",
+                "value": "",
+                "valueType": "entityState"
+            },
+            {
+                "property": "data",
+                "propertyType": "msg",
+                "value": "",
+                "valueType": "entity"
+            }
+        ],
+        "for": "${LIGHTS_DELAY}",
+        "forType": "num",
+        "forUnits": "seconds",
+        "override_topic": false,
+        "state_location": "payload",
+        "override_payload": "msg",
+        "entity_location": "data",
+        "override_data": "msg",
+        "x": 1340,
+        "y": 160,
+        "wires": [
+            [
+                "0234a70e3c0af25e"
+            ],
+            [
+                "40eff425930fde47"
+            ]
+        ]
+    },
+    {
+        "id": "6390d356c73e09fe",
+        "type": "delay",
         "z": "9437c76dc0c1335d",
         "name": "",
-        "rules": [
-            {
-                "t": "set",
-                "p": "payload",
-                "pt": "msg",
-                "to": "{\"fill\":\"green\",\"text\":\"No Action, Door Closed\"}",
-                "tot": "json"
-            }
-        ],
-        "action": "",
-        "property": "",
-        "from": "",
-        "to": "",
-        "reg": false,
-        "x": 605,
-        "y": 225,
+        "pauseType": "delay",
+        "timeout": "${LIGHTS_DELAY}",
+        "timeoutUnits": "seconds",
+        "rate": "1",
+        "nbRateUnits": "1",
+        "rateUnits": "second",
+        "randomFirst": "1",
+        "randomLast": "5",
+        "randomUnits": "seconds",
+        "drop": false,
+        "allowrate": false,
+        "outputs": 1,
+        "x": 1190,
+        "y": 240,
         "wires": [
             [
-                "1c46e8fa39e9d555"
+                "c32cf4a134b13727"
             ]
         ]
     },
     {
-        "id": "1c46e8fa39e9d555",
-        "type": "link out",
+        "id": "0234a70e3c0af25e",
+        "type": "function",
         "z": "9437c76dc0c1335d",
-        "name": "Status Out",
-        "mode": "link",
-        "links": [
-            "11417094154650b9"
-        ],
-        "x": 740,
-        "y": 225,
-        "wires": []
+        "name": "Door Open?",
+        "func": "const doorSensorName = env.get('DOOR_SENSOR');\n\nif (!doorSensorName) {\n    return msg;\n}\n\nconst ha = global.get('homeassistant.ha');\nconst doorState = ha.states[doorSensorName];\n\nif (!doorState || !('state' in doorState)) {\n    node.error(`No door state found in ${doorSensorName}`);\n    return;\n}\n\nif (doorState.state == 'on') {\n    return [msg, null];\n}\n\nreturn [null, msg];",
+        "outputs": 2,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1550,
+        "y": 140,
+        "wires": [
+            [
+                "05a8fbd060d7481c"
+            ],
+            [
+                "4485596ed6dea303"
+            ]
+        ]
+    },
+    {
+        "id": "4485596ed6dea303",
+        "type": "ha-wait-until",
+        "z": "9437c76dc0c1335d",
+        "name": "Wait until door open",
+        "server": "f88bb71a82464dcf",
+        "version": 2,
+        "outputs": 1,
+        "entityId": "${MOTION_SENSOR}",
+        "entityIdFilterType": "exact",
+        "property": "state",
+        "comparator": "is",
+        "value": "on",
+        "valueType": "str",
+        "timeout": "0",
+        "timeoutType": "num",
+        "timeoutUnits": "seconds",
+        "checkCurrentState": true,
+        "blockInputOverrides": true,
+        "outputProperties": [],
+        "entityLocation": "data",
+        "entityLocationType": "none",
+        "x": 1780,
+        "y": 240,
+        "wires": [
+            [
+                "6390d356c73e09fe"
+            ]
+        ]
     },
     {
         "id": "6fbb1c9573720178",
@@ -1944,6 +1853,602 @@
         "wires": [
             []
         ]
+    },
+    {
+        "id": "083e18c99647d182",
+        "type": "server-state-changed",
+        "z": "8253b7c3dbda4b64",
+        "d": true,
+        "name": "No Motion for 1.5m?",
+        "server": "f88bb71a82464dcf",
+        "version": 5,
+        "outputs": 2,
+        "exposeAsEntityConfig": "",
+        "entityId": "${MOTION_SENSOR}",
+        "entityIdType": "exact",
+        "outputInitially": false,
+        "stateType": "str",
+        "ifState": "off",
+        "ifStateType": "str",
+        "ifStateOperator": "is",
+        "outputOnlyOnStateChange": true,
+        "for": "150",
+        "forType": "num",
+        "forUnits": "seconds",
+        "ignorePrevStateNull": false,
+        "ignorePrevStateUnknown": false,
+        "ignorePrevStateUnavailable": false,
+        "ignoreCurrentStateUnknown": true,
+        "ignoreCurrentStateUnavailable": true,
+        "outputProperties": [
+            {
+                "property": "payload",
+                "propertyType": "msg",
+                "value": "",
+                "valueType": "entityState"
+            },
+            {
+                "property": "data",
+                "propertyType": "msg",
+                "value": "",
+                "valueType": "eventData"
+            },
+            {
+                "property": "topic",
+                "propertyType": "msg",
+                "value": "",
+                "valueType": "triggerId"
+            }
+        ],
+        "x": 210,
+        "y": 380,
+        "wires": [
+            [
+                "b942dd71cb2ec053"
+            ],
+            [
+                "611e1a2033f2bd99"
+            ]
+        ]
+    },
+    {
+        "id": "5c94bfc760cc3c10",
+        "type": "api-call-service",
+        "z": "8253b7c3dbda4b64",
+        "name": "Lights Off",
+        "server": "f88bb71a82464dcf",
+        "version": 5,
+        "debugenabled": false,
+        "domain": "light",
+        "service": "turn_off",
+        "areaId": [],
+        "deviceId": [],
+        "entityId": [
+            "${LIGHT_ENTITY}"
+        ],
+        "data": "",
+        "dataType": "jsonata",
+        "mergeContext": "",
+        "mustacheAltTags": false,
+        "outputProperties": [],
+        "queue": "none",
+        "x": 1110,
+        "y": 180,
+        "wires": [
+            [
+                "6b5d19eb05d489cf"
+            ]
+        ]
+    },
+    {
+        "id": "0e071564c69106ba",
+        "type": "trigger",
+        "z": "8253b7c3dbda4b64",
+        "name": "",
+        "op1": "",
+        "op2": "",
+        "op1type": "pay",
+        "op2type": "payl",
+        "duration": "30",
+        "extend": false,
+        "overrideDelay": false,
+        "units": "s",
+        "reset": "",
+        "bytopic": "all",
+        "topic": "topic",
+        "outputs": 2,
+        "x": 920,
+        "y": 155,
+        "wires": [
+            [
+                "42bc03a065c9afd2"
+            ],
+            [
+                "5c94bfc760cc3c10"
+            ]
+        ]
+    },
+    {
+        "id": "f56177cfdf179568",
+        "type": "change",
+        "z": "8253b7c3dbda4b64",
+        "name": "Reset the counter",
+        "rules": [
+            {
+                "t": "set",
+                "p": "reset",
+                "pt": "msg",
+                "to": "true",
+                "tot": "str"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 710,
+        "y": 305,
+        "wires": [
+            [
+                "0e071564c69106ba"
+            ]
+        ]
+    },
+    {
+        "id": "b942dd71cb2ec053",
+        "type": "function",
+        "z": "8253b7c3dbda4b64",
+        "name": "Door Open?",
+        "func": "const doorSensorName = env.get('DOOR_SENSOR');\n\nif (!doorSensorName) {\n    return msg;\n}\n\nconst ha = global.get('homeassistant.ha');\nconst doorState = ha.states[doorSensorName];\n\nif (!doorState || !('state' in doorState)) {\n    node.error(`No door state found in ${doorSensorName}`);\n    return;\n}\n\nif (doorState.state == 'on') {\n    return [msg, null];\n}\n\nreturn [null, msg];",
+        "outputs": 2,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 465,
+        "y": 205,
+        "wires": [
+            [
+                "0e071564c69106ba"
+            ],
+            [
+                "4f8159c54cf175a7"
+            ]
+        ]
+    },
+    {
+        "id": "42bc03a065c9afd2",
+        "type": "api-current-state",
+        "z": "8253b7c3dbda4b64",
+        "name": "Light On?",
+        "server": "f88bb71a82464dcf",
+        "version": 3,
+        "outputs": 2,
+        "halt_if": "on",
+        "halt_if_type": "str",
+        "halt_if_compare": "is",
+        "entity_id": "${LIGHT_ENTITY}",
+        "state_type": "str",
+        "blockInputOverrides": false,
+        "outputProperties": [
+            {
+                "property": "payload",
+                "propertyType": "msg",
+                "value": "",
+                "valueType": "entityState"
+            },
+            {
+                "property": "data",
+                "propertyType": "msg",
+                "value": "",
+                "valueType": "entity"
+            }
+        ],
+        "for": "0",
+        "forType": "num",
+        "forUnits": "minutes",
+        "override_topic": false,
+        "state_location": "payload",
+        "override_payload": "msg",
+        "entity_location": "data",
+        "override_data": "msg",
+        "x": 1110,
+        "y": 105,
+        "wires": [
+            [
+                "f00683aa1b924170"
+            ],
+            []
+        ]
+    },
+    {
+        "id": "751862d7889ef963",
+        "type": "comment",
+        "z": "8253b7c3dbda4b64",
+        "name": "Lights - Motion",
+        "info": "",
+        "x": 150,
+        "y": 105,
+        "wires": []
+    },
+    {
+        "id": "2f417a6fca5d238e",
+        "type": "change",
+        "z": "8253b7c3dbda4b64",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "{\"fill\":\"green\",\"text\":\"Light Turned On\"}",
+                "tot": "json"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 1150,
+        "y": 330,
+        "wires": [
+            [
+                "f3702b797eefa61e"
+            ]
+        ]
+    },
+    {
+        "id": "6b5d19eb05d489cf",
+        "type": "change",
+        "z": "8253b7c3dbda4b64",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "{\"fill\":\"green\",\"text\":\"Light Turned Off\"}",
+                "tot": "json"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 1305,
+        "y": 180,
+        "wires": [
+            [
+                "b351570b38a0a917"
+            ]
+        ]
+    },
+    {
+        "id": "239c68985f7a9707",
+        "type": "change",
+        "z": "8253b7c3dbda4b64",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "{\"fill\":\"green\",\"text\":\"Light Blinked\"}",
+                "tot": "json"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 1480,
+        "y": 80,
+        "wires": [
+            [
+                "d8ab5e36011fd4ed"
+            ]
+        ]
+    },
+    {
+        "id": "09c1c20336858ce2",
+        "type": "api-current-state",
+        "z": "8253b7c3dbda4b64",
+        "name": "Dark?",
+        "server": "f88bb71a82464dcf",
+        "version": 3,
+        "outputs": 2,
+        "halt_if": "30",
+        "halt_if_type": "num",
+        "halt_if_compare": "lt",
+        "entity_id": "${BRIGHTNESS_SENSOR}",
+        "state_type": "str",
+        "blockInputOverrides": false,
+        "outputProperties": [
+            {
+                "property": "payload",
+                "propertyType": "msg",
+                "value": "",
+                "valueType": "entityState"
+            },
+            {
+                "property": "data",
+                "propertyType": "msg",
+                "value": "",
+                "valueType": "entity"
+            }
+        ],
+        "for": "0",
+        "forType": "num",
+        "forUnits": "minutes",
+        "override_topic": false,
+        "state_location": "payload",
+        "override_payload": "msg",
+        "entity_location": "data",
+        "override_data": "msg",
+        "x": 670,
+        "y": 380,
+        "wires": [
+            [
+                "be1a5f1270c9fd2e"
+            ],
+            []
+        ]
+    },
+    {
+        "id": "31d288bcabee53d3",
+        "type": "api-current-state",
+        "z": "8253b7c3dbda4b64",
+        "name": "Sunset?",
+        "server": "f88bb71a82464dcf",
+        "version": 3,
+        "outputs": 2,
+        "halt_if": "below_horizon",
+        "halt_if_type": "str",
+        "halt_if_compare": "is",
+        "entity_id": "sun.sun",
+        "state_type": "str",
+        "blockInputOverrides": false,
+        "outputProperties": [
+            {
+                "property": "payload",
+                "propertyType": "msg",
+                "value": "",
+                "valueType": "entityState"
+            },
+            {
+                "property": "data",
+                "propertyType": "msg",
+                "value": "",
+                "valueType": "entity"
+            }
+        ],
+        "for": "0",
+        "forType": "num",
+        "forUnits": "minutes",
+        "override_topic": false,
+        "state_location": "payload",
+        "override_payload": "msg",
+        "entity_location": "data",
+        "override_data": "msg",
+        "x": 680,
+        "y": 430,
+        "wires": [
+            [
+                "be1a5f1270c9fd2e"
+            ],
+            []
+        ]
+    },
+    {
+        "id": "be1a5f1270c9fd2e",
+        "type": "api-current-state",
+        "z": "8253b7c3dbda4b64",
+        "name": "Light Off?",
+        "server": "f88bb71a82464dcf",
+        "version": 3,
+        "outputs": 2,
+        "halt_if": "off",
+        "halt_if_type": "str",
+        "halt_if_compare": "is",
+        "entity_id": "${LIGHT_ENTITY}",
+        "state_type": "str",
+        "blockInputOverrides": false,
+        "outputProperties": [
+            {
+                "property": "payload",
+                "propertyType": "msg",
+                "value": "",
+                "valueType": "entityState"
+            },
+            {
+                "property": "data",
+                "propertyType": "msg",
+                "value": "",
+                "valueType": "entity"
+            }
+        ],
+        "for": "0",
+        "forType": "num",
+        "forUnits": "minutes",
+        "override_topic": false,
+        "state_location": "payload",
+        "override_payload": "msg",
+        "entity_location": "data",
+        "override_data": "msg",
+        "x": 930,
+        "y": 405,
+        "wires": [
+            [
+                "2f417a6fca5d238e"
+            ],
+            []
+        ]
+    },
+    {
+        "id": "f00683aa1b924170",
+        "type": "api-call-service",
+        "z": "8253b7c3dbda4b64",
+        "name": "Blink Lights",
+        "server": "f88bb71a82464dcf",
+        "version": 5,
+        "debugenabled": false,
+        "domain": "light",
+        "service": "turn_on",
+        "areaId": [],
+        "deviceId": [],
+        "entityId": [
+            "${LIGHT_ENTITY}"
+        ],
+        "data": "{\"effect\":\"blink\"}",
+        "dataType": "json",
+        "mergeContext": "",
+        "mustacheAltTags": false,
+        "outputProperties": [],
+        "queue": "none",
+        "x": 1295,
+        "y": 80,
+        "wires": [
+            [
+                "239c68985f7a9707"
+            ]
+        ]
+    },
+    {
+        "id": "611e1a2033f2bd99",
+        "type": "function",
+        "z": "8253b7c3dbda4b64",
+        "name": "Door Open?",
+        "func": "const doorSensorName = env.get('DOOR_SENSOR');\n\nif (!doorSensorName) {\n    return msg;\n}\n\nconst ha = global.get('homeassistant.ha');\nconst doorState = ha.states[doorSensorName];\n\nif (!doorState || !('state' in doorState)) {\n    node.error(`No door state found in ${doorSensorName}`);\n    return;\n}\n\nif (doorState.state == 'on') {\n    return [msg, null];\n}\n\nreturn [null, msg];",
+        "outputs": 2,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 465,
+        "y": 405,
+        "wires": [
+            [
+                "f56177cfdf179568",
+                "09c1c20336858ce2",
+                "31d288bcabee53d3"
+            ],
+            [
+                "e78436c66c344640"
+            ]
+        ]
+    },
+    {
+        "id": "d8ab5e36011fd4ed",
+        "type": "link out",
+        "z": "8253b7c3dbda4b64",
+        "name": "Status Out",
+        "mode": "link",
+        "links": [],
+        "x": 1630,
+        "y": 80,
+        "wires": []
+    },
+    {
+        "id": "b351570b38a0a917",
+        "type": "link out",
+        "z": "8253b7c3dbda4b64",
+        "name": "Status Out",
+        "mode": "link",
+        "links": [],
+        "x": 1435,
+        "y": 180,
+        "wires": []
+    },
+    {
+        "id": "f3702b797eefa61e",
+        "type": "link out",
+        "z": "8253b7c3dbda4b64",
+        "name": "Status Out",
+        "mode": "link",
+        "links": [],
+        "x": 1280,
+        "y": 330,
+        "wires": []
+    },
+    {
+        "id": "e78436c66c344640",
+        "type": "change",
+        "z": "8253b7c3dbda4b64",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "{\"fill\":\"green\",\"text\":\"No Action, Door Closed\"}",
+                "tot": "json"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 700,
+        "y": 505,
+        "wires": [
+            [
+                "d2d5a185a1fd34d2"
+            ]
+        ]
+    },
+    {
+        "id": "d2d5a185a1fd34d2",
+        "type": "link out",
+        "z": "8253b7c3dbda4b64",
+        "name": "Status Out",
+        "mode": "link",
+        "links": [],
+        "x": 835,
+        "y": 505,
+        "wires": []
+    },
+    {
+        "id": "4f8159c54cf175a7",
+        "type": "change",
+        "z": "8253b7c3dbda4b64",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "{\"fill\":\"green\",\"text\":\"No Action, Door Closed\"}",
+                "tot": "json"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 650,
+        "y": 230,
+        "wires": [
+            [
+                "570edfbe2caf42ec"
+            ]
+        ]
+    },
+    {
+        "id": "570edfbe2caf42ec",
+        "type": "link out",
+        "z": "8253b7c3dbda4b64",
+        "name": "Status Out",
+        "mode": "link",
+        "links": [],
+        "x": 785,
+        "y": 230,
+        "wires": []
     },
     {
         "id": "c11ace53940dd770",
@@ -2058,11 +2563,6 @@
                 "type": "str"
             },
             {
-                "name": "LIGHTS_SCRIPT",
-                "value": "script.bathroom_normal_lights",
-                "type": "str"
-            },
-            {
                 "name": "BRIGHTNESS_SENSOR",
                 "value": "sensor.bathroom_motion_illuminance_lux",
                 "type": "str"
@@ -2075,6 +2575,11 @@
             {
                 "name": "MOTION_SENSOR",
                 "value": "binary_sensor.bathroom_motion_occupancy",
+                "type": "str"
+            },
+            {
+                "name": "LIGHTS_SCRIPT",
+                "value": "script.bathroom_normal_lights",
                 "type": "str"
             }
         ],
@@ -2215,8 +2720,8 @@
                 "type": "str"
             }
         ],
-        "x": 145,
-        "y": 150,
+        "x": 130,
+        "y": 120,
         "wires": [
             [
                 "d17b6a27e0b005b8"
@@ -2255,8 +2760,8 @@
         "mustacheAltTags": false,
         "outputProperties": [],
         "queue": "none",
-        "x": 440,
-        "y": 250,
+        "x": 425,
+        "y": 220,
         "wires": [
             []
         ]
@@ -2280,8 +2785,8 @@
         "mustacheAltTags": false,
         "outputProperties": [],
         "queue": "none",
-        "x": 420,
-        "y": 150,
+        "x": 405,
+        "y": 120,
         "wires": [
             []
         ]
@@ -2363,8 +2868,8 @@
                 "type": "str"
             }
         ],
-        "x": 165,
-        "y": 250,
+        "x": 150,
+        "y": 220,
         "wires": [
             [
                 "d17b6a27e0b005b8"
@@ -2388,7 +2893,7 @@
         "id": "a48dcada2a38d841",
         "type": "server-state-changed",
         "z": "fa6bb9cfa58677c8",
-        "name": "Door Closed?",
+        "name": "Door Closed 30s?",
         "server": "f88bb71a82464dcf",
         "version": 5,
         "outputs": 2,
@@ -2401,7 +2906,7 @@
         "ifStateType": "str",
         "ifStateOperator": "is",
         "outputOnlyOnStateChange": true,
-        "for": "15",
+        "for": "30",
         "forType": "num",
         "forUnits": "seconds",
         "ignorePrevStateNull": false,
@@ -2429,8 +2934,8 @@
                 "valueType": "triggerId"
             }
         ],
-        "x": 145,
-        "y": 625,
+        "x": 150,
+        "y": 620,
         "wires": [
             [
                 "33a13bfcc32ef764"
@@ -2449,8 +2954,8 @@
         "scheduleRndMax": 0,
         "sunElevationThreshold": 6,
         "sunShowElevationInStatus": false,
-        "x": 345,
-        "y": 625,
+        "x": 375,
+        "y": 615,
         "wires": [
             [
                 "02cade31805b9fec"
@@ -2494,8 +2999,8 @@
         "override_payload": "msg",
         "entity_location": "data",
         "override_data": "msg",
-        "x": 580,
-        "y": 625,
+        "x": 610,
+        "y": 615,
         "wires": [
             [],
             [
@@ -2522,8 +3027,8 @@
         "mustacheAltTags": false,
         "outputProperties": [],
         "queue": "none",
-        "x": 805,
-        "y": 625,
+        "x": 835,
+        "y": 615,
         "wires": [
             []
         ]
@@ -2540,8 +3045,8 @@
                 "type": "str"
             }
         ],
-        "x": 155,
-        "y": 400,
+        "x": 140,
+        "y": 370,
         "wires": [
             [
                 "61d275e5040ee530"
@@ -2570,8 +3075,8 @@
         "mustacheAltTags": false,
         "outputProperties": [],
         "queue": "none",
-        "x": 420,
-        "y": 425,
+        "x": 405,
+        "y": 395,
         "wires": [
             []
         ]
@@ -2595,8 +3100,8 @@
         "mustacheAltTags": false,
         "outputProperties": [],
         "queue": "none",
-        "x": 410,
-        "y": 350,
+        "x": 395,
+        "y": 320,
         "wires": [
             []
         ]
@@ -2656,8 +3161,8 @@
                 "valueType": "triggerId"
             }
         ],
-        "x": 165,
-        "y": 875,
+        "x": 150,
+        "y": 860,
         "wires": [
             [
                 "5bfbcc15a80e8945"
@@ -2701,8 +3206,8 @@
         "override_payload": "msg",
         "entity_location": "data",
         "override_data": "msg",
-        "x": 425,
-        "y": 875,
+        "x": 410,
+        "y": 860,
         "wires": [
             [
                 "c03a59b5b2299844",
@@ -2732,8 +3237,8 @@
         "mustacheAltTags": false,
         "outputProperties": [],
         "queue": "none",
-        "x": 700,
-        "y": 825,
+        "x": 685,
+        "y": 810,
         "wires": [
             []
         ]
@@ -2759,8 +3264,8 @@
         "mustacheAltTags": false,
         "outputProperties": [],
         "queue": "none",
-        "x": 710,
-        "y": 900,
+        "x": 695,
+        "y": 885,
         "wires": [
             []
         ]
@@ -2801,8 +3306,8 @@
         "override_payload": "msg",
         "entity_location": "data",
         "override_data": "msg",
-        "x": 640,
-        "y": 1075,
+        "x": 625,
+        "y": 1060,
         "wires": [
             [
                 "4b4ac090d63de69c"
@@ -2831,8 +3336,8 @@
         "mustacheAltTags": false,
         "outputProperties": [],
         "queue": "none",
-        "x": 1155,
-        "y": 1050,
+        "x": 1140,
+        "y": 1035,
         "wires": [
             []
         ]
@@ -2858,8 +3363,8 @@
         "mustacheAltTags": false,
         "outputProperties": [],
         "queue": "none",
-        "x": 1170,
-        "y": 1125,
+        "x": 1155,
+        "y": 1110,
         "wires": [
             []
         ]
@@ -2900,8 +3405,8 @@
         "override_payload": "msg",
         "entity_location": "data",
         "override_data": "msg",
-        "x": 390,
-        "y": 1075,
+        "x": 375,
+        "y": 1060,
         "wires": [
             [
                 "cf86ccd225dbd4eb"
@@ -2913,7 +3418,7 @@
         "id": "d1a676cc309a4be9",
         "type": "server-state-changed",
         "z": "fa6bb9cfa58677c8",
-        "name": "Door Closed 30s?",
+        "name": "Door Closed 45s?",
         "server": "f88bb71a82464dcf",
         "version": 5,
         "outputs": 2,
@@ -2926,7 +3431,7 @@
         "ifStateType": "str",
         "ifStateOperator": "is",
         "outputOnlyOnStateChange": true,
-        "for": "30",
+        "for": "45",
         "forType": "num",
         "forUnits": "seconds",
         "ignorePrevStateNull": false,
@@ -2954,8 +3459,8 @@
                 "valueType": "triggerId"
             }
         ],
-        "x": 165,
-        "y": 1075,
+        "x": 150,
+        "y": 1060,
         "wires": [
             [
                 "6c6dfdc256db7217"
@@ -3005,8 +3510,8 @@
                 "type": "str"
             }
         ],
-        "x": 185,
-        "y": 1400,
+        "x": 170,
+        "y": 1340,
         "wires": [
             [
                 "376c53065eb0b772"
@@ -3049,8 +3554,8 @@
         "override_payload": "msg",
         "entity_location": "data",
         "override_data": "msg",
-        "x": 905,
-        "y": 1050,
+        "x": 890,
+        "y": 1035,
         "wires": [
             [],
             [
@@ -3095,12 +3600,11 @@
         "override_payload": "msg",
         "entity_location": "data",
         "override_data": "msg",
-        "x": 430,
-        "y": 1400,
+        "x": 415,
+        "y": 1340,
         "wires": [
             [],
             [
-                "203d6f3700e35a61",
                 "31ce3bedf6042df1"
             ]
         ]
@@ -3126,8 +3630,8 @@
         "mustacheAltTags": false,
         "outputProperties": [],
         "queue": "none",
-        "x": 1215,
-        "y": 1425,
+        "x": 875,
+        "y": 1340,
         "wires": [
             []
         ]
@@ -3143,77 +3647,10 @@
         "scheduleRndMax": 0,
         "sunElevationThreshold": 6,
         "sunShowElevationInStatus": false,
-        "x": 635,
-        "y": 1450,
+        "x": 625,
+        "y": 1340,
         "wires": [
             [],
-            [
-                "52e9f4a45bceb4bd"
-            ]
-        ]
-    },
-    {
-        "id": "0b3c5002e692b96e",
-        "type": "api-current-state",
-        "z": "fa6bb9cfa58677c8",
-        "name": "Bedroom Curtains Closed?",
-        "server": "f88bb71a82464dcf",
-        "version": 3,
-        "outputs": 2,
-        "halt_if": "closed",
-        "halt_if_type": "str",
-        "halt_if_compare": "is",
-        "entity_id": "cover.bedroom_curtains",
-        "state_type": "str",
-        "blockInputOverrides": false,
-        "outputProperties": [
-            {
-                "property": "payload",
-                "propertyType": "msg",
-                "value": "",
-                "valueType": "entityState"
-            },
-            {
-                "property": "data",
-                "propertyType": "msg",
-                "value": "",
-                "valueType": "entity"
-            }
-        ],
-        "for": "0",
-        "forType": "num",
-        "forUnits": "minutes",
-        "override_topic": false,
-        "state_location": "payload",
-        "override_payload": "msg",
-        "entity_location": "data",
-        "override_data": "msg",
-        "x": 920,
-        "y": 1325,
-        "wires": [
-            [],
-            [
-                "52e9f4a45bceb4bd"
-            ]
-        ]
-    },
-    {
-        "id": "203d6f3700e35a61",
-        "type": "light-scheduler-filter",
-        "z": "fa6bb9cfa58677c8",
-        "settings": "b68f145e9b5f00ba",
-        "events": "[{\"start\":{\"dow\":1,\"mod\":480},\"end\":{\"dow\":1,\"mod\":720}},{\"start\":{\"dow\":2,\"mod\":480},\"end\":{\"dow\":2,\"mod\":720}},{\"start\":{\"dow\":3,\"mod\":480},\"end\":{\"dow\":3,\"mod\":720}},{\"start\":{\"dow\":4,\"mod\":480},\"end\":{\"dow\":4,\"mod\":720}},{\"start\":{\"dow\":5,\"mod\":480},\"end\":{\"dow\":5,\"mod\":720}},{\"start\":{\"dow\":6,\"mod\":480},\"end\":{\"dow\":6,\"mod\":720}},{\"start\":{\"dow\":0,\"mod\":480},\"end\":{\"dow\":0,\"mod\":720}}]",
-        "name": "Morning?",
-        "onlyWhenDark": false,
-        "scheduleRndMax": 0,
-        "sunElevationThreshold": 6,
-        "sunShowElevationInStatus": false,
-        "x": 635,
-        "y": 1375,
-        "wires": [
-            [
-                "0b3c5002e692b96e"
-            ],
             [
                 "52e9f4a45bceb4bd"
             ]
@@ -4855,5 +5292,125 @@
         "wires": [
             []
         ]
+    },
+    {
+        "id": "cbc6dbf41014ae49",
+        "type": "server-state-changed",
+        "z": "8be9915c7bb918ab",
+        "name": "Is print idle?",
+        "server": "f88bb71a82464dcf",
+        "version": 5,
+        "outputs": 2,
+        "exposeAsEntityConfig": "",
+        "entityId": "sensor.p1s_current_stage",
+        "entityIdType": "exact",
+        "outputInitially": false,
+        "stateType": "str",
+        "ifState": "offline, idle, finish",
+        "ifStateType": "str",
+        "ifStateOperator": "includes",
+        "outputOnlyOnStateChange": true,
+        "for": "0",
+        "forType": "num",
+        "forUnits": "minutes",
+        "ignorePrevStateNull": true,
+        "ignorePrevStateUnknown": true,
+        "ignorePrevStateUnavailable": true,
+        "ignoreCurrentStateUnknown": true,
+        "ignoreCurrentStateUnavailable": true,
+        "outputProperties": [
+            {
+                "property": "payload",
+                "propertyType": "msg",
+                "value": "",
+                "valueType": "entityState"
+            },
+            {
+                "property": "data",
+                "propertyType": "msg",
+                "value": "",
+                "valueType": "eventData"
+            },
+            {
+                "property": "topic",
+                "propertyType": "msg",
+                "value": "",
+                "valueType": "triggerId"
+            }
+        ],
+        "x": 130,
+        "y": 200,
+        "wires": [
+            [
+                "88a7fd51c8310cac"
+            ],
+            [
+                "b8c077bb1ac915d4"
+            ]
+        ]
+    },
+    {
+        "id": "b8c077bb1ac915d4",
+        "type": "api-call-service",
+        "z": "8be9915c7bb918ab",
+        "name": "Turn On Led",
+        "server": "f88bb71a82464dcf",
+        "version": 5,
+        "debugenabled": false,
+        "domain": "light",
+        "service": "turn_on",
+        "areaId": [],
+        "deviceId": [],
+        "entityId": [
+            "light.p1s_chamber_light"
+        ],
+        "data": "{}",
+        "dataType": "jsonata",
+        "mergeContext": "",
+        "mustacheAltTags": false,
+        "outputProperties": [],
+        "queue": "none",
+        "x": 390,
+        "y": 240,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "88a7fd51c8310cac",
+        "type": "api-call-service",
+        "z": "8be9915c7bb918ab",
+        "name": "Turn Off Led",
+        "server": "f88bb71a82464dcf",
+        "version": 5,
+        "debugenabled": false,
+        "domain": "light",
+        "service": "turn_off",
+        "areaId": [],
+        "deviceId": [],
+        "entityId": [
+            "light.p1s_chamber_light"
+        ],
+        "data": "{}",
+        "dataType": "jsonata",
+        "mergeContext": "",
+        "mustacheAltTags": false,
+        "outputProperties": [],
+        "queue": "none",
+        "x": 390,
+        "y": 180,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "41c32769c8ad8354",
+        "type": "comment",
+        "z": "8be9915c7bb918ab",
+        "name": "Printer Leds",
+        "info": "",
+        "x": 110,
+        "y": 80,
+        "wires": []
     }
 ]
