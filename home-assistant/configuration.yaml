@@ -1,8 +1,8 @@
 # General Config
 homeassistant:
-  name: Home 
+  name: Home
   country: JP
-  currency: GBP
+  currency: JPY
   customize: !include others/customize.yaml
   elevation: !secret ha_elevation
   external_url: !secret ha_external_url
