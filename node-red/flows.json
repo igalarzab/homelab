@@ -5162,79 +5162,13 @@
         ]
     },
     {
-        "id": "eb74dfd93c0348ee",
-        "type": "comment",
-        "z": "0ef8a234d4e5690c",
-        "name": "Refresh Unavailable Entities",
-        "info": "",
-        "x": 145,
-        "y": 50,
-        "wires": []
-    },
-    {
-        "id": "a143099122f1bb24",
-        "type": "inject",
-        "z": "0ef8a234d4e5690c",
-        "name": "Every 15m",
-        "props": [
-            {
-                "p": "payload"
-            },
-            {
-                "p": "topic",
-                "vt": "str"
-            }
-        ],
-        "repeat": "900",
-        "crontab": "",
-        "once": false,
-        "onceDelay": 0.1,
-        "topic": "",
-        "payload": "",
-        "payloadType": "date",
-        "x": 170,
-        "y": 125,
-        "wires": [
-            [
-                "a33c7801620fa279"
-            ]
-        ]
-    },
-    {
-        "id": "a33c7801620fa279",
-        "type": "api-call-service",
-        "z": "0ef8a234d4e5690c",
-        "name": "Update Counter",
-        "server": "f88bb71a82464dcf",
-        "version": 5,
-        "debugenabled": false,
-        "domain": "homeassistant",
-        "service": "update_entity",
-        "areaId": [],
-        "deviceId": [],
-        "entityId": [
-            "sensor.unavailable_entities"
-        ],
-        "data": "",
-        "dataType": "jsonata",
-        "mergeContext": "",
-        "mustacheAltTags": false,
-        "outputProperties": [],
-        "queue": "none",
-        "x": 380,
-        "y": 125,
-        "wires": [
-            []
-        ]
-    },
-    {
         "id": "51618521485788e4",
         "type": "comment",
         "z": "0ef8a234d4e5690c",
         "name": "Restart Toggles",
         "info": "",
-        "x": 105,
-        "y": 275,
+        "x": 100,
+        "y": 60,
         "wires": []
     },
     {
@@ -5258,8 +5192,8 @@
         "topic": "",
         "payload": "",
         "payloadType": "date",
-        "x": 160,
-        "y": 350,
+        "x": 155,
+        "y": 135,
         "wires": [
             [
                 "7a9c47f5a947e1cd"
@@ -5287,8 +5221,8 @@
         "mustacheAltTags": false,
         "outputProperties": [],
         "queue": "none",
-        "x": 380,
-        "y": 350,
+        "x": 375,
+        "y": 135,
         "wires": [
             []
         ]
