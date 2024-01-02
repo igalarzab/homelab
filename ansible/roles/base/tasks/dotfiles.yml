@@ -1,0 +1,9 @@
+---
+
+- name: Clone dotfiles repo
+  become: true
+  git:
+    repo: "{{ dotfiles_repo_git }}"
+    dest: "{{ dotfiles_repo_dir }}"
+    version: main
+

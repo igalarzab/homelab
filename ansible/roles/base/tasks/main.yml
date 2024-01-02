@@ -55,5 +55,8 @@
     - { file: 50-motd-news }
 
 - import_tasks: network.yml
+
+- import_tasks: dotfiles.yml
+
 - import_tasks: multimedia.yml
   when: mount_multimedia is true
