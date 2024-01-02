@@ -139,3 +139,7 @@
   friendly_name: living_room/remote_entrance
   homeassistant:
     name: Living Room Remote Controller Entrance
+'0xa49e69fffe909562':
+  friendly_name: 'Test'
+  homeassistant:
+    name: Test

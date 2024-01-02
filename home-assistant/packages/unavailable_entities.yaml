@@ -1,0 +1,33 @@
+###################################################################################################
+## Package - Unavailable Entities Sensor
+## Count and list entities with a state of unknown or unavailable
+## Home Assistant v2022.5 required. See README for customization options.
+## https://github.com/jazzyisj/unavailable-entities-sensor/blob/main/README.md
+###################################################################################################
+
+template:
+  - sensor:
+      - name: "Unavailable Entities"
+        unique_id: unavailable_entities
+        icon: "{{ iif(states(this.entity_id)|int(-1) > 0,'mdi:alert-circle','mdi:check-circle') }}"
+        state_class: measurement
+        unit_of_measurement: entities
+        state: >
+          {% set entities = state_attr(this.entity_id,'entities') %}
+          {{ entities|count if entities != none else none }}
+        attributes:
+          entities: >
+            {% set ignore_seconds = 60 %}
+            {% set ignored = state_attr('group.ignored_unavailable_entities','entity_id') %}
+            {% set ignore_ts = (now().timestamp() - ignore_seconds)|as_datetime %}
+            {% set entities = states
+                |rejectattr('domain','in',['button','event','group','input_button','input_text','scene'])
+                |rejectattr('last_changed','ge',ignore_ts) %}
+            {% set entities =  entities|rejectattr('entity_id','in',ignored) if ignored != none else entities %}
+            {{ entities|map(attribute='entity_id')|reject('has_value')|list|sort }}
+
+group:
+  ignored_unavailable_entities:
+    entities:
+      - select.p1s_printing_speed
+      - sensor.p1s_start_time
