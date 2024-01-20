@@ -1,6 +1,6 @@
 ---
 
-microk8s_version: 1.28/stable
+microk8s_version: 1.29/stable
 microk8s_plugins:
   ha-cluster: true
   rbac: true
