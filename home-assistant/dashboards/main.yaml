@@ -294,6 +294,39 @@ views:
         entity: climate.bedroom_ac
       - type: media-control
         entity: media_player.bedroom_speaker
+  - path: printers
+    icon: mdi:printer-3d-nozzle
+    badges: []
+    cards:
+      - type: entities
+        title: Telesto (P1S)
+        entities:
+          - entity: light.p1s_chamber_light
+          - entity: sensor.p1s_power
+          - entity: sensor.p1s_current_stage
+          - entity: sensor.p1s_task_name
+          - entity: sensor.p1s_print_progress
+          - entity: sensor.p1s_remaining_time
+          - entity: sensor.p1s_bed_temperature
+          - entity: sensor.p1s_nozzle_temperature
+        show_header_toggle: false
+        state_color: true
+      - type: entities
+        title: Filament
+        entities:
+          - entity: sensor.filament_thermometer_temperature
+          - entity: sensor.filament_thermometer_humidity
+        show_header_toggle: false
+        state_color: true
+      - type: picture-entity
+        entity: image.p1s_camera
+        camera_view: live
+      - type: entities
+        title: Switches
+        entities:
+          - entity: switch.p1s_power_switch
+        show_header_toggle: false
+        state_color: true
   - path: switches
     icon: mdi:video-input-svideo
     badges: []
