@@ -1,0 +1,13 @@
+- platform: integration
+  unique_id: energy_spent_home
+  name: Home Energy Spent
+  source: sensor.home_smart_meter
+  unit_prefix: k
+  round: 2
+
+- platform: integration
+  unique_id: energy_spent_p1s
+  name: P1S Energy Spent
+  source: sensor.p1s_power
+  unit_prefix: k
+  round: 2
