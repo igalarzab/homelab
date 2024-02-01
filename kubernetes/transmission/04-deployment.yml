@@ -8,7 +8,7 @@ metadata:
   labels:
     app.kubernetes.io/name: transmission
   annotations:
-    keel.sh/policy: minor
+    keel.sh/policy: major
     keel.sh/trigger: poll
     keel.sh/pollSchedule: "@midnight"
 spec:
