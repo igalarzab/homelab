@@ -139,7 +139,7 @@
   friendly_name: living_room/remote_entrance
   homeassistant:
     name: Living Room Remote Controller Entrance
-'0xa49e69fffe909562':
-  friendly_name: 'Test'
+'0x00158d0006bec2e2':
+  friendly_name: living_room/thermometer_p1s
   homeassistant:
-    name: Test
+    name: P1S Thermometer
