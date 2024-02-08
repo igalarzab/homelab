@@ -309,6 +309,8 @@ views:
           - entity: sensor.p1s_remaining_time
           - entity: sensor.p1s_bed_temperature
           - entity: sensor.p1s_nozzle_temperature
+          - entity: sensor.living_room_thermometer_p1s_temperature
+          - entity: sensor.living_room_thermometer_p1s_humidity
         show_header_toggle: false
         state_color: true
       - type: entities
