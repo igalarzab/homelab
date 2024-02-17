@@ -5244,7 +5244,7 @@
         "ifStateType": "str",
         "ifStateOperator": "includes",
         "outputOnlyOnStateChange": true,
-        "for": "0",
+        "for": "2",
         "forType": "num",
         "forUnits": "minutes",
         "ignorePrevStateNull": true,
