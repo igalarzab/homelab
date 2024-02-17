@@ -9,5 +9,6 @@ home_wakeup:
       data:
         player_id: media_player.home_speakers
         player_name: Home Speakers
+        playlist: spotify:playlist:37i9dQZF1EIdJI2xV2PSSs
     - service: cover.open_cover
       entity_id: group.home_curtains
