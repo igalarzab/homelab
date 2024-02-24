@@ -12,6 +12,9 @@ helper_music:
     player_name:
       description: Player name where to run the music
       example: Living Room Speaker
+    volume_level:
+      description: Volume of the speakers
+      example: 0.2
     playlist:
       description: ID of the playlist to play
       example: spotify:playlist:37i9dQZF1DX889U0CL85jj
@@ -19,7 +22,7 @@ helper_music:
     - service: media_player.volume_set
       data:
         entity_id: '{{ player_id }}'
-        volume_level: 0.2
+        volume_level: '{{ volume_level|default("0.2") }}'
     - service: spotcast.start
       data:
         device_name: '{{ player_name }}'
