@@ -6,3 +6,4 @@ exclude:
     - sensor.weather_*
     - group.*
     - media_player.*
+    - image.*
