@@ -346,3 +346,11 @@ views:
           - entity: sensor.docker_hub
           - entity: sensor.unavailable_entities
         title: Sensors
+      - type: entities
+        entities:
+          - entity: timer.bathroom_automatic_lights_timer
+          - entity: timer.bedroom_automatic_lights_timer
+          - entity: timer.hall_automatic_lights_timer
+          - entity: timer.kitchen_automatic_lights_timer
+          - entity: timer.living_room_automatic_lights_timer
+        title: Light Timers

@@ -35,6 +35,7 @@ home_automatic_lights_timers:
     - timer.bedroom_automatic_lights_timer
     - timer.hall_automatic_lights_timer
     - timer.kitchen_automatic_lights_timer
+    - timer.living_room_automatic_lights_timer
 
 living_room_curtains:
   name: Living Room Curtains

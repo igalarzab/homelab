@@ -22,3 +22,8 @@ kitchen_automatic_lights_timer:
   name: Kitchen Automatic Lights Timer
   icon: mdi:lamps
   duration: '03:00:00'
+
+living_room_automatic_lights_timer:
+  name: Living Room Automatic Lights Timer
+  icon: mdi:lamps
+  duration: '03:00:00'
