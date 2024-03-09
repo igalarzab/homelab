@@ -11,6 +11,8 @@ home_turn_off_everything:
       entity_id: group.home_climate
     - service: timer.cancel
       entity_id: timer.bedroom_sleeping
+    - service: timer.cancel
+      entity_id: group.home_automatic_lights_timers
     - service: media_player.turn_off
       entity_id: media_player.home_speakers
     - service: media_player.turn_off

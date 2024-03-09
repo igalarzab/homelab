@@ -27,6 +27,15 @@ home_motion:
     - group.home_motion_inside
     - binary_sensor.hall_motion_occupancy
 
+home_automatic_lights_timers:
+  name: Home Automatic Lights Timers
+  icon: mdi:lamps
+  entities:
+    - timer.bathroom_automatic_lights_timer
+    - timer.bedroom_automatic_lights_timer
+    - timer.hall_automatic_lights_timer
+    - timer.kitchen_automatic_lights_timer
+
 living_room_curtains:
   name: Living Room Curtains
   icon: mdi:blinds

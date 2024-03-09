@@ -2,3 +2,23 @@ bedroom_sleeping:
   name: Sleeping
   icon: mdi:bed
   duration: '08:00:00'
+
+bathroom_automatic_lights_timer:
+  name: Bathroom Automatic Lights Timer
+  icon: mdi:lamps
+  duration: '03:00:00'
+
+bedroom_automatic_lights_timer:
+  name: Bedroom Automatic Lights Timer
+  icon: mdi:lamps
+  duration: '03:00:00'
+
+hall_automatic_lights_timer:
+  name: Hall Automatic Lights Timer
+  icon: mdi:lamps
+  duration: '03:00:00'
+
+kitchen_automatic_lights_timer:
+  name: Kitchen Automatic Lights Timer
+  icon: mdi:lamps
+  duration: '03:00:00'
