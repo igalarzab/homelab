@@ -31,3 +31,5 @@ group:
   ignored_unavailable_entities:
     entities:
       - sensor.zigbee2mqtt_bridge_permit_join_timeout
+      - stt.home_assistant_cloud
+      - tts.home_assistant_cloud
