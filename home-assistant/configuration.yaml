@@ -32,6 +32,11 @@ panel_iframe:
     url: !secret iframe_zigbee2mqtt_url
     icon: mdi:zigbee
     require_admin: true
+  esphome:
+    title: ESPHome
+    url: !secret iframe_esphome_url
+    icon: mdi:car-esp
+    require_admin: true
 
 
 # Proxy Config
