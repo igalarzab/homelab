@@ -21,8 +21,7 @@ spec:
       labels:
         app.kubernetes.io/name: home-assistant
       annotations:
-        # FIXME: Adding to allow Bluetooth to work inside of the container
-        # I should find a better way than this
+        # TODO: Adding to allow Bluetooth to work inside of the container
         container.apparmor.security.beta.kubernetes.io/home-assistant: unconfined
     spec:
       terminationGracePeriodSeconds: 30
@@ -62,7 +61,7 @@ spec:
       volumes:
         - name: dbus
           hostPath:
-            path: /var/run/dbus
+            path: /run/dbus
             type: Directory
         - name: config
           hostPath:

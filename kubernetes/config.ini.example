@@ -16,6 +16,9 @@ DOWNLOADS_PATH=${default:MULTIMEDIA_PATH}/Downloads
 [keel]
 ADMIN_PASS=WRITEME
 
+[home-assistant]
+ZIGBEE_DEVICE=/dev/serial/by-id/usb-ITEAD_SONOFF_Zigbee_3.0_USB_Dongle_Plus_V2_20221201153336-if00
+
 [plex]
 # Get this from https://www.plex.tv/claim/
 PLEX_CLAIM=WRITEME

@@ -25,6 +25,7 @@ spec:
       containers:
         - name: node-red
           image: nodered/node-red:${IMGTAG_HOME__ASSISTANT_DEPLOY_NODE__RED}
+          # TODO: Move so it doesn't run as root
           securityContext:
             runAsUser: 0
             runAsGroup: 0
