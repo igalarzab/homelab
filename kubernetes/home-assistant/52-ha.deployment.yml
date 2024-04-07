@@ -23,6 +23,7 @@ spec:
       annotations:
         # TODO: Adding to allow Bluetooth to work inside of the container
         container.apparmor.security.beta.kubernetes.io/home-assistant: unconfined
+        k8s.v1.cni.cncf.io/networks: kube-system/macvlan-conf
     spec:
       terminationGracePeriodSeconds: 30
       containers:
@@ -38,6 +39,8 @@ spec:
           volumeMounts:
             - name: dbus
               mountPath: /run/dbus
+            - name: avahi-socket
+              mountPath: /run/avahi-daemon/socket
             - name: config
               mountPath: /config
           livenessProbe:
@@ -63,6 +66,9 @@ spec:
           hostPath:
             path: /run/dbus
             type: Directory
+        - name: avahi-socket
+          hostPath:
+            path: /run/avahi-daemon/socket
         - name: config
           hostPath:
             path: ${VOLUMES_PATH}/home-assistant

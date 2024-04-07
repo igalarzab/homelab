@@ -1,0 +1,24 @@
+---
+
+apiVersion: k8s.cni.cncf.io/v1
+kind: NetworkAttachmentDefinition
+metadata:
+  name: macvlan-conf
+  namespace: kube-system
+  labels:
+    app.kubernetes.io/name: microk8s-config
+spec:
+  config: |
+    {
+      "cniVersion": "0.4.0",
+      "type": "macvlan",
+      "master": "enp0s31f6",
+      "hairpinMode": true,
+      "ipam": {
+        "type": "host-local",
+        "subnet": "10.0.1.192/26",
+        "rangeStart": "10.0.1.192",
+        "rangeEnd": "10.0.1.255",
+        "gateway": "10.0.1.1"
+      }
+    }

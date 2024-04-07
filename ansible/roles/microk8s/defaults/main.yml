@@ -8,8 +8,8 @@ microk8s_plugins:
   helm3: true
   hostpath-storage: true
   metrics-server: true
+  multus: true
   cert-manager: true
-  observability: true
 
 traefik_version: v25.0.0
 

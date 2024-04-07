@@ -20,6 +20,8 @@ spec:
     metadata:
       labels:
         app.kubernetes.io/name: esphome
+      annotations:
+        k8s.v1.cni.cncf.io/networks: kube-system/macvlan-conf
     spec:
       terminationGracePeriodSeconds: 30
       containers:
@@ -28,8 +30,8 @@ spec:
           env:
             - name: TZ
               value: ${TZ}
-            - name: ESPHOME_DASHBOARD_USE_PING
-              value: "true"
+          #  - name: ESPHOME_DASHBOARD_USE_PING
+          #    value: "true"
           ports:
             - name: http
               protocol: TCP
