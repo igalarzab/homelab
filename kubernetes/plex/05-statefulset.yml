@@ -38,6 +38,10 @@ spec:
               value: ${PLEX_CLAIM}
             - name: TZ
               value: ${TZ}
+            - name: PLEX_UID
+              value: "1000"
+            - name: PLEX_GID
+              value: "100"
           volumeMounts:
             - name: transcode
               mountPath: /transcode
