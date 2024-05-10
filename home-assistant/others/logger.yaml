@@ -3,3 +3,4 @@ logs:
   homeassistant.components: warning
   homeassistant.loader: warning
   homeassistant.setup: warning
+  custom_components.bambu_lab.pybambu: error
