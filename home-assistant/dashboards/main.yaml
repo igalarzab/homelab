@@ -302,7 +302,6 @@ views:
         title: Telesto (P1S)
         entities:
           - entity: light.p1s_chamber_light
-          - entity: sensor.p1s_power
           - entity: sensor.p1s_current_stage
           - entity: sensor.p1s_task_name
           - entity: sensor.p1s_print_progress
@@ -323,12 +322,6 @@ views:
       - type: picture-entity
         entity: image.p1s_camera
         camera_view: live
-      - type: entities
-        title: Switches
-        entities:
-          - entity: switch.p1s_power_switch
-        show_header_toggle: false
-        state_color: true
   - path: switches
     icon: mdi:video-input-svideo
     badges: []
