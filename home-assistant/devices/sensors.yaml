@@ -6,8 +6,8 @@
   round: 2
 
 - platform: integration
-  unique_id: energy_spent_p1s
-  name: P1S Energy Spent
-  source: sensor.p1s_power
+  unique_id: energy_spent_homelab
+  name: HomeLab Energy Spent
+  source: sensor.homelab_power
   unit_prefix: k
   round: 2
