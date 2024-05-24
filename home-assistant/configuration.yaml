@@ -52,5 +52,3 @@ sensor: !include devices/sensors.yaml
 
 # Third party plugins
 smartir:
-nature_remo:
-  access_token: !secret nature_remo_at

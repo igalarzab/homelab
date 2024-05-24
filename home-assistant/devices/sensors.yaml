@@ -1,11 +1,4 @@
 - platform: integration
-  unique_id: energy_spent_home
-  name: Home Energy Spent
-  source: sensor.home_smart_meter
-  unit_prefix: k
-  round: 2
-
-- platform: integration
   unique_id: energy_spent_homelab
   name: HomeLab Energy Spent
   source: sensor.homelab_power
