@@ -1,18 +1,6 @@
 ---
 
-- name: Configure sysctl for k8s
-  become: true
-  ansible.posix.sysctl:
-    name: "{{ item.name }}"
-    value: "{{ item.value }}"
-    state: present
-    sysctl_set: true
-    reload: true
-  with_items:
-    - { name: 'net.ipv4.ip_forward', value: '1' }
-    - { name: 'net.ipv4.conf.all.rp_filter', value: '1' }
-
-- name: Install network packages
+- name: Install basic network packages
   become: true
   package:
     state: latest

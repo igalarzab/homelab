@@ -1,0 +1,4 @@
+---
+
+- name: Running networking tasks
+  import_tasks: network.yml
