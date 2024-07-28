@@ -7,4 +7,3 @@
       prompt: Enter the SAMBA3 Multimedia volume password (omit to skip)
   roles:
     - role: base
-    - role: microk8s

@@ -1,5 +1,17 @@
 ---
 
+- name: Configure sysctl for k8s
+  become: true
+  ansible.posix.sysctl:
+    name: "{{ item.name }}"
+    value: "{{ item.value }}"
+    state: present
+    sysctl_set: true
+    reload: true
+  with_items:
+    - { name: 'net.ipv4.ip_forward', value: '1' }
+    - { name: 'net.ipv4.conf.all.rp_filter', value: '1' }
+
 - name: Install network packages
   become: true
   package:
@@ -7,8 +19,6 @@
     name:
       - avahi-daemon
       - avahi-utils
-      - bluetooth
-      - bluez
       - dbus-broker
       - net-tools
 
@@ -26,22 +36,3 @@
     name: avahi-daemon
     state: started
     enabled: true
-
-- name: Foward IPv4 traffic
-  become: true
-  ansible.posix.sysctl:
-    name: net.ipv4.ip_forward
-    value: '1'
-    sysctl_set: true
-    state: present
-    reload: true
-
-- name: Enable RP Filter
-  become: true
-  ansible.posix.sysctl:
-    name: net.ipv4.conf.all.rp_filter
-    value: '1'
-    sysctl_set: true
-    state: present
-    reload: true
-
