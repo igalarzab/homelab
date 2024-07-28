@@ -6,6 +6,3 @@ multimedia_mount: true
 multimedia_credentials_path: '/root/.multimedia-creds.ini'
 multimedia_mount_path: '/media/Multimedia'
 multimedia_cifs_uri: '//nas.lan/Multimedia'
-
-dotfiles_repo_git: https://github.com/igalarzab/dotfiles
-dotfiles_repo_dir: /opt/dotfiles

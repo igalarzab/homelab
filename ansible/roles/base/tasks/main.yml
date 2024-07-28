@@ -32,10 +32,12 @@
   package:
     state: latest
     name:
-      - dnsutils
-      - locales
+      - apt-transport-https
+      - ca-certificates
+      - curl
+      - gpg
       - lm-sensors
-      - nfs-common
+      - locales
       - pigz
       - qemu-guest-agent
       - tree
@@ -56,6 +58,10 @@
   loop:
     - { file: 10-help-text }
     - { file: 50-motd-news }
+
+- name: Disable swap
+  command: swapoff -a
+  when: ansible_memory_mb['swap']['total'] > 0
 
 - name: Disable swap permanently
   become: true
