@@ -1,0 +1,19 @@
+---
+
+apiVersion: kubeadm.k8s.io/v1beta3
+kind: InitConfiguration
+
+---
+
+apiVersion: kubeadm.k8s.io/v1beta3
+kind: ClusterConfiguration
+kubernetesVersion: {{ k8s_version }}
+clusterName: kubernetes
+apiServer:
+  timeoutForControlPlane: 4m0s
+  extraArgs:
+    service-node-port-range: 80-32767
+networking:
+  dnsDomain: cluster.local
+  podSubnet: 10.92.0.0/16
+  serviceSubnet: 10.96.0.0/16

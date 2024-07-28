@@ -1,0 +1,39 @@
+---
+
+- name: Get k8s apt key
+  become: yes
+  shell: "curl -fsSL {{ k8s_apt_key_url }} | gpg --dearmor -o {{ k8s_apt_key_path }}"
+  args:
+    creates: "{{ k8s_apt_key_path }}"
+
+- name: Add k8s repository
+  become: yes
+  apt_repository:
+    repo: "deb [signed-by={{ k8s_apt_key_path }}] {{ k8s_apt_repo_url }} /"
+    state: present
+    update_cache: true
+
+- name: Install k8s packages
+  become: true
+  notify: restart kubelet
+  package:
+    state: latest
+    name:
+      - kubeadm
+      - kubectl
+      - kubelet
+      - kubernetes-cni
+
+- name: Pin k8s packages
+  become: true
+  template:
+    src: apt-pin.j2
+    dest: /etc/apt/preferences.d/k8s
+    mode: 0644
+
+- name: Enable the kubelet service
+  become: true
+  service:
+    name: kubelet
+    state: started
+    enabled: yes

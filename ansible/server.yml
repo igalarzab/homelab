@@ -6,5 +6,5 @@
     - name: cifs_multimedia_password
       prompt: Enter the SAMBA3 Multimedia volume password (omit to skip)
   roles:
-    - role: base
-    - role: kubeadm
+    #- role: base
+    - role: containerd

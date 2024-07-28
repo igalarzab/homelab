@@ -33,15 +33,20 @@
     state: latest
     name:
       - apt-transport-https
+      - btrfs-tools
       - ca-certificates
       - curl
       - gpg
+      - libseccomp2
       - lm-sensors
       - locales
       - pigz
       - qemu-guest-agent
+      - tar
       - tree
       - unattended-upgrades
+      - unzip
+      - util-linux
       - vim
 
 - name: Install en_GB locale

@@ -1,0 +1,7 @@
+---
+
+k8s_version: "1.30"
+
+k8s_apt_key_url: "https://pkgs.k8s.io/core:/stable:/v{{ k8s_version }}/deb/Release.key"
+k8s_apt_key_path: /usr/share/keyrings/kubernetes-apt-keyring.gpg
+k8s_apt_repo_url: "https://pkgs.k8s.io/core:/stable:/v{{ k8s_version }}/deb/"
