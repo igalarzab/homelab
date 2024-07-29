@@ -1,0 +1,42 @@
+---
+
+- name: Get docker apt key
+  become: yes
+  shell: "curl -fsSL {{ docker_apt_key_url }} | gpg --dearmor -o {{ docker_apt_key_path }}"
+  args:
+    creates: "{{ docker_apt_key_path }}"
+
+- name: Add docker repository
+  become: yes
+  apt_repository:
+    repo: "deb [signed-by={{ docker_apt_key_path }}] {{ docker_apt_repo_url }}"
+    state: present
+    update_cache: true
+
+- name: Install containerd packages
+  become: true
+  notify: restart containerd
+  package:
+    state: latest
+    name:
+      - containerd.io
+
+- name: Store containerd config
+  become: true
+  notify: restart containerd
+  template:
+    src: templates/containerd-config.toml.j2
+    dest: /etc/containerd/config.toml
+    owner: root
+    group: root
+    mode: '0644'
+  vars:
+    username: "{{ ansible_user_id }}"
+    password: "{{ cifs_multimedia_password }}"
+
+- name: Enable containerd service
+  service:
+    name: containerd
+    state: started
+    enabled: yes
+
