@@ -34,3 +34,10 @@
     src: /etc/kubernetes/admin.conf
     dest: ~/.kube/config
     flat: yes
+
+- name: Set .kube/config permissions
+  delegate_to: localhost
+  file:
+    path: ~/.kube/config
+    state: file
+    mode: "0600"
