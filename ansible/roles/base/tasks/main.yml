@@ -77,7 +77,3 @@
 
 - name: Running networking tasks
   import_tasks: network.yml
-
-- name: Mounting Samba Multimedia directory
-  import_tasks: multimedia.yml
-  when: mount_multimedia is true
