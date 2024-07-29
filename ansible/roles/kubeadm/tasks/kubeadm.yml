@@ -1,31 +1,29 @@
 ---
 
-- name: Copy config files for kubeadm and kubelet
+- name: Copy config file for kubeadm
   become: true
   template:
-    src: "{{ item }}.j2"
-    dest: "/etc/kubernetes/{{ item }}"
-  with_list:
-    - kubeadm-config.yml
-    - kubelet.yml
+    src: kubeadm-config.yml.j2
+    dest: /etc/kubernetes/kubeadm-config.yml
+    owner: root
+    group: root
+    mode: "0644"
   notify:
     - restart kubelet
 
 - name: Check if the cluster has been already initialised
   become: true
-  register: kubelet_cfg
+  register: k8s_already_installed
   stat:
     path: /etc/kubernetes/admin.conf
 
 - name: Initialize k8s control plane
   become: true
   register: kubeadm_init
-  when: not kubelet_cfg.stat.exists
+  when: not k8s_already_installed.stat.exists
   command: kubeadm init --config /etc/kubernetes/kubeadm-config.yml
 
 - name: Control plane output
-  when: not kubelet_cfg.stat.exists
+  when: not k8s_already_installed.stat.exists
   debug:
     var: kubeadm_init.stdout
-    verbosity: 2
-

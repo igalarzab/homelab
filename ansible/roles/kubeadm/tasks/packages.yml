@@ -29,7 +29,9 @@
   template:
     src: apt-pin.j2
     dest: /etc/apt/preferences.d/k8s
-    mode: 0644
+    owner: root
+    group: root
+    mode: "0644"
 
 - name: Enable the kubelet service
   become: true

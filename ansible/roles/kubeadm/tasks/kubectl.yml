@@ -1,0 +1,15 @@
+---
+
+- name: Ensure .kube directory exists
+  file:
+    path: ~/.kube
+    state: directory
+    mode: "0755"
+
+- name: Copy the kubectl config
+  become: true
+  copy:
+    src: /etc/kubernetes/admin.conf
+    dest: "{{ ansible_env.HOME }}/.kube/config"
+    mode: "0644"
+    remote_src: true

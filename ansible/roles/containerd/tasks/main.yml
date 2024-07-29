@@ -29,7 +29,7 @@
     dest: /etc/containerd/config.toml
     owner: root
     group: root
-    mode: '0644'
+    mode: "0644"
 
 - name: Store crictl config
   become: true
@@ -38,7 +38,7 @@
     dest: /etc/crictl.yaml
     owner: root
     group: root
-    mode: '0644'
+    mode: "0644"
 
 - name: Enable containerd service
   service:

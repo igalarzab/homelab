@@ -10,5 +10,11 @@
 - name: Installing packages
   import_tasks: packages.yml
 
-#- name: Installing cluster
-#  import_tasks: kubeadm.yml
+- name: Installing cluster
+  import_tasks: kubeadm.yml
+
+- name: Configuring kubectl
+  import_tasks: kubectl.yml
+
+- name: Load CNI plugin
+  import_tasks: cni.yml
