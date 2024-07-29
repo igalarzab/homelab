@@ -33,7 +33,7 @@
     state: latest
     name:
       - apt-transport-https
-      - btrfs-tools
+      - btrfs-progs
       - ca-certificates
       - curl
       - gpg

@@ -1,5 +1,15 @@
 ---
 
+- name: Load network kernel modules
+  become: true
+  community.general.modprobe:
+    name: "{{ item }}"
+    state: present
+    persistent: present
+  with_list:
+    - overlay
+    - br_netfilter
+
 - name: Configure sysctl for k8s
   become: true
   ansible.posix.sysctl:
@@ -11,4 +21,6 @@
   with_items:
     - { name: 'net.ipv4.ip_forward', value: '1' }
     - { name: 'net.ipv4.conf.all.rp_filter', value: '1' }
+    - { name: 'net.bridge.bridge-nf-call-iptables', value: '1' }
+    - { name: 'net.bridge.bridge-nf-call-ip6tables', value: '1' }
 

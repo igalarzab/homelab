@@ -30,9 +30,15 @@
     owner: root
     group: root
     mode: '0644'
-  vars:
-    username: "{{ ansible_user_id }}"
-    password: "{{ cifs_multimedia_password }}"
+
+- name: Store crictl config
+  become: true
+  template:
+    src: templates/crictl.yaml.j2
+    dest: /etc/crictl.yaml
+    owner: root
+    group: root
+    mode: '0644'
 
 - name: Enable containerd service
   service:
