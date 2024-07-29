@@ -1,8 +1,0 @@
----
-
-- name: restart microk8s
-  become: true
-  command: "microk8s {{ item }}"
-  loop:
-    - stop
-    - start

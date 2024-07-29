@@ -1,5 +1,15 @@
 ---
 
+
+- name: Ensure CNI folder exists
+  become: true
+  file:
+    path: /etc/cni/net.d
+    state: directory
+    owner: root
+    group: root
+    mode: "0755"
+
 - name: Copy CNI plugin
   become: true
   template:
@@ -14,7 +24,7 @@
   register: taint_result
   changed_when: "'untainted' in taint_result.stdout"
   failed_when: >
-    (taint_result.rc not in [0, 1] and (taint_result.rc == 1 and 'not found' not in taint_result.stdout))
+    (taint_result.rc not in [0, 1] and not (taint_result.rc == 1 and 'not found' in taint_result.stdout))
   until: taint_result is not failed
   retries: 12
   delay: 5

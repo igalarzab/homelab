@@ -1,5 +1,14 @@
 ---
 
+- name: Ensure kubernetes directory exists
+  become: true
+  file:
+    path: /etc/kubernetes
+    state: directory
+    owner: root
+    group: root
+    mode: "0755"
+
 - name: Copy config file for kubeadm
   become: true
   template:
