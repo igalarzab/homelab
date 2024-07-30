@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 
 import configparser
+import subprocess
 import kubernetes
 import os
 import sys
@@ -20,6 +21,17 @@ def list_manifests(app: str) -> list[str]:
   "List all the manifests from an existing app in the order they should be applied"
   manis = [m for m in os.listdir(app) if path.isfile(path.join(app, m)) and m.endswith('.yml')]
   return sorted(manis) # Sort alfaphetically
+
+
+def apply_app(rendered_app: str) -> bool:
+  "Applies a rendered app into the active k8s cluster"
+  subprocess.run(
+    ["kubectl", "apply", "-f", "-"],
+    input=rendered_app,
+    encoding='utf-8',
+  )
+
+  return True
 
 
 def render_app(app: str) -> str:
@@ -120,23 +132,34 @@ def get_image_tag(img_var: str) -> str:
 
 
 if __name__ == '__main__':
-  if len(sys.argv) != 2:
-    print(f'Usage: {sys.argv[0]} [app_name|ALL]')
+  if len(sys.argv) != 3:
+    print(f'Usage: {sys.argv[0]} (render|apply) (app_name|ALL)')
     sys.exit(1)
 
-  app = sys.argv[1]
+  operation = sys.argv[1]
+  app_name = sys.argv[2]
+
+  if operation not in ('render', 'apply'):
+    print(f'Invalid operation {operation}')
+    sys.exit(1)
+
+  if app_name != 'ALL' and app_name not in list_apps():
+    print(f'Invalid app, "{app_name}" does not exist')
+    sys.exit(2)
+
+  apps = list_apps() if app_name == 'ALL' else [app_name]
 
   # Load k8s config
   kubernetes.config.load_kube_config() # type: ignore
 
-  if app == 'ALL':
-    for app in list_apps():
-      rendered_app = render_app(app)
-      print(rendered_app)
-  elif app in list_apps():
+  for app in sorted(apps):
     rendered_app = render_app(app)
-    print(rendered_app)
-    sys.exit(0)
-  else:
-    print(f'Invalid app, "{app}" does not exist')
-    sys.exit(2)
+
+    print(f'### {app}')
+    if operation == 'render':
+      print(rendered_app)
+    elif operation == 'apply':
+      apply_app(rendered_app)
+    else:
+      print(f'Operation not implemented: {operation}')
+      sys.exit(3)
