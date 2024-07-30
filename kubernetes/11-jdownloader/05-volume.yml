@@ -1,0 +1,45 @@
+---
+
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: downloads-smb
+  namespace: jdownloader
+  labels:
+    app.kubernetes.io/name: jdownloader
+  annotations:
+    pv.kubernetes.io/provisioned-by: smb.csi.k8s.io
+spec:
+  persistentVolumeReclaimPolicy: Retain
+  storageClassName: smb
+  mountOptions:
+    - dir_mode=0755
+    - file_mode=0644
+  capacity:
+    storage: ${SMB_NAS_SIZE}
+  accessModes:
+    - ReadWriteMany
+  csi:
+    driver: smb.csi.k8s.io
+    volumeHandle: nas#root#downloads
+    volumeAttributes:
+      source: ${JDOWNLOADER_SMB_DOWNLOADS_SOURCE}
+    nodeStageSecretRef:
+      name: downloads-smb
+      namespace: jdownloader
+
+---
+
+kind: PersistentVolumeClaim
+apiVersion: v1
+metadata:
+  name: downloads-smb
+  namespace: jdownloader
+spec:
+  volumeName: downloads-smb
+  storageClassName: smb
+  accessModes:
+    - ReadWriteMany
+  resources:
+    requests:
+      storage: ${SMB_NAS_SIZE}

@@ -5,4 +5,4 @@ kind: Namespace
 metadata:
   name: jdownloader
   labels:
-    app.kubernetes.io/name: jdownloader 
+    app.kubernetes.io/name: jdownloader

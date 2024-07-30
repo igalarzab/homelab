@@ -1,0 +1,45 @@
+---
+
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: library-smb
+  namespace: plex
+  labels:
+    app.kubernetes.io/name: plex
+  annotations:
+    pv.kubernetes.io/provisioned-by: smb.csi.k8s.io
+spec:
+  persistentVolumeReclaimPolicy: Retain
+  storageClassName: smb
+  mountOptions:
+    - dir_mode=0755
+    - file_mode=0644
+  capacity:
+    storage: ${SMB_NAS_SIZE}
+  accessModes:
+    - ReadWriteMany
+  csi:
+    driver: smb.csi.k8s.io
+    volumeHandle: nas#root#library
+    volumeAttributes:
+      source: ${PLEX_SMB_MULTIMEDIA_SOURCE}
+    nodeStageSecretRef:
+      name: library-smb
+      namespace: plex
+
+---
+
+kind: PersistentVolumeClaim
+apiVersion: v1
+metadata:
+  name: library-smb
+  namespace: plex
+spec:
+  volumeName: library-smb
+  storageClassName: smb
+  accessModes:
+    - ReadWriteMany
+  resources:
+    requests:
+      storage: ${SMB_NAS_SIZE}

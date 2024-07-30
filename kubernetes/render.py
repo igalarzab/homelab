@@ -46,8 +46,11 @@ def render_manifest(app: str, manifest: str, app_config: dict) -> str:
   for img_tag in img_tags:
     manifest_config[img_tag] = get_image_tag(img_tag)
 
-  return template.substitute(**app_config, **manifest_config)
-
+  try:
+    return template.substitute(**app_config, **manifest_config)
+  except Exception as e:
+    print(f'Error rendering {app}, {manifest}')
+    raise e
 
 def parse_config(app: str) -> dict:
   "Load from an INI file the config vars that will be interpolated in the manifests"

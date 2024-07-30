@@ -79,19 +79,3 @@ subjects:
   - kind: ServiceAccount
     name: keel
     namespace: keel
-
-
----
-
-apiVersion: policy/v1
-kind: PodDisruptionBudget
-metadata:
-  name: keel
-  namespace: keel
-  labels:
-    app.kubernetes.io/name: keel
-spec:
-  maxUnavailable: 1
-  selector:
-    matchLabels:
-      app.kubernetes.io/name: keel

@@ -7,6 +7,10 @@ metadata:
   namespace: traefik
   labels:
     app.kubernetes.io/name: traefik
+  annotations:
+    keel.sh/policy: minor
+    keel.sh/trigger: poll
+    keel.sh/pollSchedule: "0 0 4 * * 5" # 4am Fri
 spec:
   replicas: 1
   selector:

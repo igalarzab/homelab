@@ -6,10 +6,10 @@ metadata:
   name: jdownloader
   namespace: jdownloader
   labels:
-    app.kubernetes.io/name: jdownloader 
+    app.kubernetes.io/name: jdownloader
 spec:
   selector:
-    app.kubernetes.io/name: jdownloader 
+    app.kubernetes.io/name: jdownloader
   ports:
     - name: admin
       protocol: TCP

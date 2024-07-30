@@ -69,6 +69,5 @@ spec:
             path: ${VOLUMES_PATH}/plex/
             type: DirectoryOrCreate
         - name: library
-          hostPath:
-            path: ${MULTIMEDIA_PATH}
-            type: DirectoryOrCreate
+          persistentVolumeClaim:
+            claimName: library-smb

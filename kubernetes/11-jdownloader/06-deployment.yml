@@ -69,6 +69,5 @@ spec:
             path: ${VOLUMES_PATH}/jdownloader
             type: DirectoryOrCreate
         - name: downloads
-          hostPath:
-            path: ${DOWNLOADS_PATH}
-            type: Directory
+          persistentVolumeClaim:
+            claimName: downloads-smb
