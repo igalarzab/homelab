@@ -11,12 +11,10 @@
       "ipam": {
         "type": "host-local",
         "ranges": [
-          [{ "subnet": "{{ pod_cidr_ipv4 }}" }],
-          [{ "subnet": "{{ pod_cidr_ipv6 }}" }]
+          [{ "subnet": "{{ pod_cidr_ipv4 }}" }]
         ],
         "routes": [
-          { "dst": "0.0.0.0/0" },
-          { "dst": "::/0" }
+          { "dst": "0.0.0.0/0" }
         ]
       }
     },

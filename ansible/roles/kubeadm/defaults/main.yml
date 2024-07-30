@@ -8,5 +8,4 @@ k8s_apt_repo_url: "https://pkgs.k8s.io/core:/stable:/v{{ k8s_version }}/deb"
 k8s_apt_key_url: "{{ k8s_apt_repo_url }}/Release.key"
 
 pod_cidr_ipv4: 10.92.0.0/16
-pod_cidr_ipv6: 2001:4860:4860::/64
 services_cidr_ipv4: 10.96.0.0/16
