@@ -87,6 +87,5 @@ spec:
             failureThreshold: 3
       volumes:
         - name: data
-          hostPath:
-            path: ${DOWNLOADS_PATH}
-            type: DirectoryOrCreate
+          persistentVolumeClaim:
+            claimName: smb-transmission-downloads

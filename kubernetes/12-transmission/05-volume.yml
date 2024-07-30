@@ -3,9 +3,10 @@
 apiVersion: v1
 kind: PersistentVolume
 metadata:
-  name: smb-jdownloader-downloads
+  name: smb-transmission-downloads
+  namespace: transmission
   labels:
-    app.kubernetes.io/name: jdownloader
+    app.kubernetes.io/name: transmission
   annotations:
     pv.kubernetes.io/provisioned-by: smb.csi.k8s.io
 spec:
@@ -20,22 +21,22 @@ spec:
     - ReadWriteMany
   csi:
     driver: smb.csi.k8s.io
-    volumeHandle: nas#jdownloader#downloads
+    volumeHandle: nas#transmission#downloads
     volumeAttributes:
       source: ${SMB_NAS_SOURCE_DOWNLOADS}
     nodeStageSecretRef:
-      name: smb-jdownloader-downloads-credentials
-      namespace: jdownloader
+      name: smb-transmission-downloads-credentials
+      namespace: transmission
 
 ---
 
 kind: PersistentVolumeClaim
 apiVersion: v1
 metadata:
-  name: smb-jdownloader-downloads
-  namespace: jdownloader
+  name: smb-transmission-downloads
+  namespace: transmission
 spec:
-  volumeName: smb-jdownloader-downloads
+  volumeName: smb-transmission-downloads
   storageClassName: smb
   accessModes:
     - ReadWriteMany

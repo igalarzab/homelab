@@ -70,4 +70,4 @@ spec:
             type: DirectoryOrCreate
         - name: downloads
           persistentVolumeClaim:
-            claimName: downloads-smb
+            claimName: smb-jdownloader-downloads

@@ -3,7 +3,7 @@
 apiVersion: v1
 kind: PersistentVolume
 metadata:
-  name: library-smb
+  name: smb-plex-multimedia
   namespace: plex
   labels:
     app.kubernetes.io/name: plex
@@ -21,11 +21,11 @@ spec:
     - ReadWriteMany
   csi:
     driver: smb.csi.k8s.io
-    volumeHandle: nas#root#library
+    volumeHandle: nas#plex#multimedia
     volumeAttributes:
-      source: ${PLEX_SMB_MULTIMEDIA_SOURCE}
+      source: ${SMB_NAS_SOURCE_MULTIMEDIA}
     nodeStageSecretRef:
-      name: library-smb
+      name: smb-plex-multimedia-credentials
       namespace: plex
 
 ---
@@ -33,10 +33,10 @@ spec:
 kind: PersistentVolumeClaim
 apiVersion: v1
 metadata:
-  name: library-smb
+  name: smb-plex-multimedia
   namespace: plex
 spec:
-  volumeName: library-smb
+  volumeName: smb-plex-multimedia
   storageClassName: smb
   accessModes:
     - ReadWriteMany

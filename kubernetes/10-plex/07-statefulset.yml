@@ -70,4 +70,4 @@ spec:
             type: DirectoryOrCreate
         - name: library
           persistentVolumeClaim:
-            claimName: library-smb
+            claimName: smb-plex-multimedia
