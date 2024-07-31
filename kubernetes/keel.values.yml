@@ -1,0 +1,3 @@
+insecureRegistry: true
+helmProvider:
+  enabled: false

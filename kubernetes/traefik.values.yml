@@ -1,0 +1,36 @@
+ingressClass:
+  enabled: true
+  isDefaultClass: true
+
+ingressRoute:
+  dashboard:
+    enabled: true
+
+globalArguments:
+  - "--global.checknewversion"
+
+metrics:
+  prometheus: null
+
+ports:
+  web:
+    nodePort: 80
+    redirectTo:
+      port: websecure
+      permanent: true
+  websecure:
+    nodePort: 443
+
+service:
+  type: NodePort
+
+extraObjects:
+  - |
+    apiVersion: traefik.io/v1alpha1
+    kind: TLSStore
+    metadata:
+      name: default
+      namespace: traefik
+    spec:
+      defaultCertificate:
+        secretName: ${CERTMANAGER_CERT_SECRET_NAME}
