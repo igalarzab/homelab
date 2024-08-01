@@ -1,0 +1,77 @@
+transmission:
+  tz: Asia/Singapore
+  speedLimitUpEnabled: false
+  speedLimitUp: 10000
+  speedLimitDownEnabled: false
+  speedLimitDown: 10000
+  opts: --inactive 3600 --ping 10 --ping-exit 60
+  webUI: combustion
+  downloadQueueSize: 4
+  ratioLimitEnabled: true
+  ratioLimit: 1
+  webProxyEnabled: false
+
+openvpn:
+  provider:
+  region:
+  username:
+  password:
+  network:
+
+replicaCount: 1
+
+image:
+  repository: haugene/transmission-openvpn
+  pullPolicy: IfNotPresent
+  tag: ""
+
+annotations: {}
+  # key: value 
+
+service:
+  type: ClusterIP
+  port: 9091
+
+ingress:
+  enabled: false
+  tls: []
+  #  - secretName: chart-example-tls
+  #    hosts:
+  #      - chart-example.local
+  hosts: []
+  #  - chart-example.local
+
+livenessProbe:
+  initialDelaySeconds: 45
+  periodSeconds: 2
+  timeoutSeconds: 2
+  successThreshold: 1
+  failureThreshold: 3
+
+readinessProbe:
+  initialDelaySeconds: 10
+  periodSeconds: 2
+  timeoutSeconds: 2
+  successThreshold: 2
+  failureThreshold: 3
+
+resources:
+  limits:
+    cpu: 100m
+    memory: 128Mi
+  requests:
+    cpu: 100m
+    memory: 128Mi
+
+volumes: []
+# - name: foo
+#   secret:
+#     secretName: mysecret
+#     optional: false
+
+volumeMounts: []
+# - name: foo
+#   mountPath: "/etc/foo"
+#   readOnly: true
+
+extraObjects: []

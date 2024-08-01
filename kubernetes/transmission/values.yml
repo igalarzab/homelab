@@ -1,0 +1,82 @@
+transmission:
+  speedLimitUpEnabled: true
+  speedLimitUp: ${TRANSMISSION_SPEED_LIMIT_UP}
+
+openvpn:
+  provider: ${TRANSMISSION_OPENVPN_PROVIDER}
+  region: ${TRANSMISSION_OPENVPN_REGION}
+  username: ${TRANSMISSION_OPENVPN_USERNAME}
+  password: ${TRANSMISSION_OPENVPN_PASSWORD}
+  network: ${TRANSMISSION_LOCAL_NETWORK}
+
+ingress:
+  enabled: true
+  hosts:
+    - host: transmission.${COMMON_DOMAIN_ROOT}
+      paths:
+        - /
+
+volumes:
+  - name: data
+    persistentVolumeClaim:
+      claimName: smb-transmission-downloads
+
+volumeMounts:
+  - name: data
+    mountPath: /data
+
+extraObjects:
+  - |
+    apiVersion: v1
+    kind: Secret
+    metadata:
+      name: smb-transmission-downloads-credentials
+      namespace: transmission
+      labels:
+        app.kubernetes.io/name: transmission
+    type: Opaque
+    stringData:
+      username: ${NAS_SMB_USERNAME}
+      password: ${NAS_SMB_PASSWORD}
+  - |
+    apiVersion: v1
+    kind: PersistentVolume
+    metadata:
+      name: smb-transmission-downloads
+      namespace: transmission
+      labels:
+        app.kubernetes.io/name: transmission
+      annotations:
+        pv.kubernetes.io/provisioned-by: smb.csi.k8s.io
+    spec:
+      persistentVolumeReclaimPolicy: Retain
+      storageClassName: smb
+      mountOptions:
+        - dir_mode=0755
+        - file_mode=0644
+      capacity:
+        storage: ${NAS_SMB_SIZE}
+      accessModes:
+        - ReadWriteMany
+      csi:
+        driver: smb.csi.k8s.io
+        volumeHandle: nas#transmission#downloads
+        volumeAttributes:
+          source: ${NAS_SMB_SOURCE_DOWNLOADS}
+        nodeStageSecretRef:
+          name: smb-transmission-downloads-credentials
+          namespace: transmission
+  - |
+    kind: PersistentVolumeClaim
+    apiVersion: v1
+    metadata:
+      name: smb-transmission-downloads
+      namespace: transmission
+    spec:
+      volumeName: smb-transmission-downloads
+      storageClassName: smb
+      accessModes:
+        - ReadWriteMany
+      resources:
+        requests:
+          storage: ${NAS_SMB_SIZE}

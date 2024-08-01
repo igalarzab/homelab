@@ -6,6 +6,7 @@ namespaces:
   kube-system:
   cert-manager:
   traefik:
+  transmission:
   keel:
   plex:
 
@@ -59,4 +60,12 @@ apps:
     valuesFile: plex/values.yml
     priority: -79
     enabled: false # TODO
+  transmission:
+    <<: *default
+    chart: ./transmission/chart
+    version: 0.1.0
+    namespace: transmission
+    valuesFile: transmission/values.yml
+    priority: -78
+    enabled: true
 
