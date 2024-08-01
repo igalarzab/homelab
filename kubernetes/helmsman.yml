@@ -35,29 +35,28 @@ apps:
     chart: jetstack/cert-manager
     version: v1.15.2
     namespace: cert-manager
-    valuesFile: cert-manager.values.yml
+    valuesFile: cert-manager/values.yml
     priority: -99
-    enabled: false # TODO
   traefik:
     <<: *default
     chart: traefik/traefik
     version: v30.0.2
     namespace: traefik
-    valuesFile: traefik.values.yml
+    valuesFile: traefik/values.yml
     priority: -98
   keel:
     <<: *default
     chart: keel/keel
     version: 1.0.3
     namespace: keel
-    valuesFile: keel.values.yml
+    valuesFile: keel/values.yml
     priority: -89
   plex:
     <<: *default
     chart: plex/plex-media-server
     version: 0.4.0
     namespace: keel
-    valuesFile: plex.values.yml
-    priority: -89
+    valuesFile: plex/values.yml
+    priority: -79
     enabled: false # TODO
 

@@ -1,0 +1,20 @@
+basicauth:
+  enabled: true
+  user: ${KEEL_USERNAME}
+  password: "${KEEL_PASSWORD}"
+
+helmProvider:
+  enabled: false
+
+insecureRegistry: true
+
+ingress:
+  enabled: true
+  hosts:
+    - host: keel.${COMMON_DOMAIN_ROOT}
+      paths:
+        - /
+
+service:
+  enabled: true
+  type: LoadBalancer
