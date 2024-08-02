@@ -1,0 +1,72 @@
+---
+# yaml-language-server: $schema=https://raw.githubusercontent.com/bjw-s/helm-charts/app-template-3.2.0/charts/other/app-template/values.schema.json
+
+defaultPodOptions:
+  terminationGracePeriodSeconds: 30
+
+controllers:
+  zigbee2mqtt:
+    type: statefulset
+    containers:
+      zigbee2mqtt:
+        image:
+          repository: koenkk/zigbee2mqtt
+          tag: "1.39.1"
+        env:
+          TZ: ${COMMON_TZ}
+        ports:
+          - name: http
+            protocol: TCP
+            containerPort: 8080
+        probes:
+          liveness:
+            enabled: true
+            custom: true
+            spec:
+              initialDelaySeconds: 5
+              periodSeconds: 10
+              timeoutSeconds: 2
+              successThreshold: 1
+              failureThreshold: 5
+              httpGet:
+                path: /
+                port: http
+          readiness:
+            enabled: true
+            custom: true
+            spec:
+              initialDelaySeconds: 5
+              periodSeconds: 10
+              timeoutSeconds: 2
+              successThreshold: 1
+              failureThreshold: 5
+              httpGet:
+                path: /
+                port: http
+
+service:
+  zigbee2mqtt:
+    controller: zigbee2mqtt
+    ports:
+      http:
+        port: 8080
+        targetPort: http
+
+ingress:
+  main:
+    hosts:
+      - host: &host "zigbee.${COMMON_DOMAIN_ROOT}"
+        paths:
+          - path: /
+            pathType: Prefix
+            service:
+              identifier: zigbee2mqtt
+              port: http
+
+persistence:
+  zigbee2mqtt-data:
+    type: hostPath
+    hostPath: ${COMMON_VOLUMES_PATH}/zigbee2mqtt
+    hostPathType: DirectoryOrCreate
+    globalMounts:
+      - path: /app/data

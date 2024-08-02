@@ -1,0 +1,72 @@
+---
+# yaml-language-server: $schema=https://raw.githubusercontent.com/bjw-s/helm-charts/app-template-3.2.0/charts/other/app-template/values.schema.json
+
+defaultPodOptions:
+  terminationGracePeriodSeconds: 30
+
+controllers:
+  node-red:
+    type: deployment
+    containers:
+      node-red:
+        image:
+          repository: nodered/node-red
+          tag: "4.0.2"
+        env:
+          TZ: ${COMMON_TZ}
+        ports:
+          - name: http
+            protocol: TCP
+            containerPort: 1880
+        probes:
+          liveness:
+            enabled: true
+            custom: true
+            spec:
+              initialDelaySeconds: 5
+              periodSeconds: 10
+              timeoutSeconds: 2
+              successThreshold: 1
+              failureThreshold: 5
+              httpGet:
+                path: /
+                port: http
+          readiness:
+            enabled: true
+            custom: true
+            spec:
+              initialDelaySeconds: 5
+              periodSeconds: 10
+              timeoutSeconds: 2
+              successThreshold: 1
+              failureThreshold: 5
+              httpGet:
+                path: /
+                port: http
+
+service:
+  node-red:
+    controller: node-red
+    ports:
+      http:
+        port: 1880
+        targetPort: http
+
+ingress:
+  main:
+    hosts:
+      - host: &host "nodered.${COMMON_DOMAIN_ROOT}"
+        paths:
+          - path: /
+            pathType: Prefix
+            service:
+              identifier: node-red
+              port: http
+
+persistence:
+  data:
+    type: hostPath
+    hostPath: ${COMMON_VOLUMES_PATH}/node-red
+    hostPathType: DirectoryOrCreate
+    globalMounts:
+      - path: /data

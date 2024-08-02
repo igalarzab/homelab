@@ -5,6 +5,7 @@ metadata:
 namespaces:
   kube-system:
   cert-manager:
+  home-assistant:
   jdownloader:
   traefik:
   transmission:
@@ -12,6 +13,7 @@ namespaces:
   plex:
 
 helmRepos:
+  bjw-s: https://bjw-s.github.io/helm-charts
   csi-driver-smb: https://raw.githubusercontent.com/kubernetes-csi/csi-driver-smb/master/charts
   jetstack: https://charts.jetstack.io
   keel: https://charts.keel.sh
@@ -73,3 +75,38 @@ apps:
     namespace: plex
     valuesFile: plex/values.yml
     priority: -69
+  mosquitto:
+    <<: *default
+    chart: bjw-s/app-template
+    version: 3.3.2
+    namespace: home-assistant
+    valuesFile: home-assistant/mosquitto.values.yml
+    priority: -59
+  zigbee2mqtt:
+    <<: *default
+    chart: bjw-s/app-template
+    version: 3.3.2
+    namespace: home-assistant
+    valuesFile: home-assistant/zigbee2mqtt.values.yml
+    priority: -58
+  node-red:
+    <<: *default
+    chart: bjw-s/app-template
+    version: 3.3.2
+    namespace: home-assistant
+    valuesFile: home-assistant/nodered.values.yml
+    priority: -57
+  esphome:
+    <<: *default
+    chart: bjw-s/app-template
+    version: 3.3.2
+    namespace: home-assistant
+    valuesFile: home-assistant/esphome.values.yml
+    priority: -56
+  home-assistant:
+    <<: *default
+    chart: bjw-s/app-template
+    version: 3.3.2
+    namespace: home-assistant
+    valuesFile: home-assistant/home-assistant.values.yml
+    priority: -55

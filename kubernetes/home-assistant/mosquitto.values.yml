@@ -1,0 +1,65 @@
+---
+# yaml-language-server: $schema=https://raw.githubusercontent.com/bjw-s/helm-charts/app-template-3.2.0/charts/other/app-template/values.schema.json
+
+defaultPodOptions:
+  terminationGracePeriodSeconds: 30
+
+controllers:
+  mosquitto:
+    type: deployment
+    containers:
+      mosquitto:
+        image:
+          repository: eclipse-mosquitto
+          tag: "2.0.18"
+        env:
+          TZ: ${COMMON_TZ}
+        ports:
+          - name: mqtt
+            protocol: TCP
+            containerPort: 1883
+        probes:
+          liveness:
+            enabled: true
+            custom: true
+            spec:
+              initialDelaySeconds: 5
+              periodSeconds: 10
+              timeoutSeconds: 2
+              successThreshold: 1
+              failureThreshold: 3
+              tcpSocket:
+                port: mqtt
+          readiness:
+            enabled: true
+            custom: true
+            spec:
+              initialDelaySeconds: 5
+              periodSeconds: 10
+              timeoutSeconds: 2
+              successThreshold: 1
+              failureThreshold: 3
+              tcpSocket:
+                port: mqtt
+
+service:
+  mosquitto:
+    controller: mosquitto
+    ports:
+      mqtt:
+        port: 1883
+        targetPort: mqtt
+
+persistence:
+  mosquitto-config:
+    type: hostPath
+    hostPath: ${COMMON_VOLUMES_PATH}/mosquitto/config
+    hostPathType: DirectoryOrCreate
+    globalMounts:
+      - path: /mosquitto/config
+  mosquitto-data:
+    type: hostPath
+    hostPath: ${COMMON_VOLUMES_PATH}/mosquitto/data
+    hostPathType: DirectoryOrCreate
+    globalMounts:
+      - path: /mosquitto/data
