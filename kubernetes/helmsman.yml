@@ -15,7 +15,6 @@ helmRepos:
   csi-driver-smb: https://raw.githubusercontent.com/kubernetes-csi/csi-driver-smb/master/charts
   jetstack: https://charts.jetstack.io
   keel: https://charts.keel.sh
-  plex: https://raw.githubusercontent.com/plexinc/pms-docker/gh-pages
   traefik: https://traefik.github.io/charts
 
 appsTemplates:
@@ -69,10 +68,8 @@ apps:
     priority: -78
   plex:
     <<: *default
-    chart: plex/plex-media-server
-    version: 0.4.0
+    chart: ./plex/chart
+    version: 0.1.0
     namespace: plex
     valuesFile: plex/values.yml
     priority: -69
-    enabled: false
-

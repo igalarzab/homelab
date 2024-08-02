@@ -31,9 +31,8 @@ extraObjects:
     kind: Secret
     metadata:
       name: smb-transmission-downloads-credentials
-      namespace: transmission
       labels:
-        app.kubernetes.io/name: transmission
+        {{- include "transmission.labels" . | nindent 4 }}
     type: Opaque
     stringData:
       username: ${NAS_SMB_USERNAME}
@@ -43,9 +42,8 @@ extraObjects:
     kind: PersistentVolume
     metadata:
       name: smb-transmission-downloads
-      namespace: transmission
       labels:
-        app.kubernetes.io/name: transmission
+        {{- include "transmission.labels" . | nindent 4 }}
       annotations:
         pv.kubernetes.io/provisioned-by: smb.csi.k8s.io
     spec:
@@ -65,13 +63,14 @@ extraObjects:
           source: ${NAS_SMB_SOURCE_DOWNLOADS}
         nodeStageSecretRef:
           name: smb-transmission-downloads-credentials
-          namespace: transmission
+          namespace: {{ .Release.Namespace }}
   - |
     kind: PersistentVolumeClaim
     apiVersion: v1
     metadata:
       name: smb-transmission-downloads
-      namespace: transmission
+      labels:
+        {{- include "transmission.labels" . | nindent 4 }}
     spec:
       volumeName: smb-transmission-downloads
       storageClassName: smb

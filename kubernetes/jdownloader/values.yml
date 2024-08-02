@@ -27,7 +27,7 @@ extraObjects:
     metadata:
       name: smb-jdownloader-downloads-credentials
       labels:
-        app.kubernetes.io/name: jdownloader
+        {{- include "jdownloader.labels" . | nindent 4 }}
     type: Opaque
     stringData:
       username: ${NAS_SMB_USERNAME}
@@ -38,7 +38,7 @@ extraObjects:
     metadata:
       name: smb-jdownloader-downloads
       labels:
-        app.kubernetes.io/name: jdownloader
+        {{- include "jdownloader.labels" . | nindent 4 }}
       annotations:
         pv.kubernetes.io/provisioned-by: smb.csi.k8s.io
     spec:
@@ -53,17 +53,19 @@ extraObjects:
         - ReadWriteMany
       csi:
         driver: smb.csi.k8s.io
-        volumeHandle: nas#jdownoader#downloads
+        volumeHandle: nas#jdownloader#downloads
         volumeAttributes:
           source: ${NAS_SMB_SOURCE_DOWNLOADS}
         nodeStageSecretRef:
           name: smb-jdownloader-downloads-credentials
-          namespace: jdownloader
+          namespace: {{ .Release.Namespace }}
   - |
     kind: PersistentVolumeClaim
     apiVersion: v1
     metadata:
       name: smb-jdownloader-downloads
+      labels:
+        {{- include "jdownloader.labels" . | nindent 4 }}
     spec:
       volumeName: smb-jdownloader-downloads
       storageClassName: smb

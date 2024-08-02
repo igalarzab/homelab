@@ -1,0 +1,57 @@
+plex:
+  advertiseIp:
+  claim:
+  tz: Asia/Singapore
+
+replicaCount: 1
+
+image:
+  repository: plexinc/pms-docker
+  tag: ""
+
+nameOverride: ""
+fullnameOverride: ""
+
+service:
+  type: ClusterIP
+  port: 32400
+
+ingress:
+  enabled: false
+  hosts: []
+  #  - chart-example.local
+
+livenessProbe:
+  initialDelaySeconds: 60
+  periodSeconds: 10
+  timeoutSeconds: 10
+  successThreshold: 1
+  failureThreshold: 3
+
+readinessProbe:
+  initialDelaySeconds: 30
+  periodSeconds: 10
+  timeoutSeconds: 10
+  successThreshold: 1
+  failureThreshold: 3
+
+resources: {}
+  # limits:
+  #   cpu: 100m
+  #   memory: 128Mi
+  # requests:
+  #   cpu: 100m
+  #   memory: 128Mi
+
+volumes: []
+# - name: foo
+#   secret:
+#     secretName: mysecret
+#     optional: false
+
+volumeMounts: []
+# - name: foo
+#   mountPath: "/etc/foo"
+#   readOnly: true
+
+extraObjects: []

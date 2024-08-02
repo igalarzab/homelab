@@ -1,45 +1,80 @@
-nameOverride: plex
-fullnameOverride: plex
-
-image:
-  tag: "1.40.4.8679-424562606"
+plex:
+  advertiseIp: plex.${COMMON_DOMAIN_ROOT}
+  claim:
 
 ingress:
   enabled: true
-  url: https://plex.${COMMON_DOMAIN_ROOT}
-  #ingressClassName: "ingress-ngin"
+  hosts:
+    - host: plex.${COMMON_DOMAIN_ROOT}
+      paths:
+        - /
 
-pms:
-  configExistingClaim: "pms-config"
-
-  resources:
-    limits:
-      cpu: 100m
-      memory: 128Mi
-    requests:
-      cpu: 100m
-      memory: 128Mi
-
-extraEnv:
-  PLEX_CLAIM: ${PLEX_CLAIM}
-  TZ: ${COMMON_TZ}
-  PLEX_UID: "1000"
-  PLEX_GID: "100"
-
-
-# Optionally specify additional volume mounts for the PMS and init containers.
-extraVolumeMounts:
-  - name: pms-quicksync
-    mountPath: /dev/dri
-  - name: pms-library
-    mountPath: /media/Multimedia
-
-# Optionally specify additional volumes for the pod.
-extraVolumes:
-  - name: pms-quicksync
+volumes:
+  - name: config
     hostPath:
-      path: /dev/dri
-      type: Directory
-  - name: pms-library
+      path: ${COMMON_VOLUMES_PATH}/plex
+      type: DirectoryOrCreate
+  - name: multimedia
     persistentVolumeClaim:
       claimName: smb-plex-multimedia
+
+volumeMounts:
+  - name: config
+    mountPath: /config
+  - name: multimedia
+    mountPath: /media/Multimedia
+
+extraObjects:
+  - |
+    apiVersion: v1
+    kind: Secret
+    metadata:
+      name: smb-plex-multimedia-credentials
+      labels:
+        {{- include "plex.labels" . | nindent 4 }}
+    type: Opaque
+    stringData:
+      username: ${NAS_SMB_USERNAME}
+      password: ${NAS_SMB_PASSWORD}
+  - |
+    apiVersion: v1
+    kind: PersistentVolume
+    metadata:
+      name: smb-plex-multimedia
+      labels:
+        {{- include "plex.labels" . | nindent 4 }}
+      annotations:
+        pv.kubernetes.io/provisioned-by: smb.csi.k8s.io
+    spec:
+      persistentVolumeReclaimPolicy: Retain
+      storageClassName: smb
+      mountOptions:
+        - dir_mode=0755
+        - file_mode=0644
+      capacity:
+        storage: ${NAS_SMB_SIZE}
+      accessModes:
+        - ReadWriteMany
+      csi:
+        driver: smb.csi.k8s.io
+        volumeHandle: nas#plex#multimedia
+        volumeAttributes:
+          source: ${NAS_SMB_SOURCE_MULTIMEDIA}
+        nodeStageSecretRef:
+          name: smb-plex-multimedia-credentials
+          namespace: {{ .Release.Namespace }}
+  - |
+    kind: PersistentVolumeClaim
+    apiVersion: v1
+    metadata:
+      name: smb-plex-multimedia
+      labels:
+        {{- include "plex.labels" . | nindent 4 }}
+    spec:
+      volumeName: smb-plex-multimedia
+      storageClassName: smb
+      accessModes:
+        - ReadWriteMany
+      resources:
+        requests:
+          storage: ${NAS_SMB_SIZE}
