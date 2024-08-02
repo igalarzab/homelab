@@ -1,15 +1,9 @@
----
-
 apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: {{ include "transmission.fullname" . }}
   labels:
     {{- include "transmission.labels" . | nindent 4 }}
-  {{- with .Values.annotations }}
-  annotations:
-    {{- toYaml . | nindent 4 }}
-  {{- end }}
 spec:
   replicas: {{ .Values.replicaCount }}
   selector:
@@ -25,7 +19,9 @@ spec:
         - name: {{ .Chart.Name }}
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
           securityContext:
-            privileged: true # TODO
+            capabilities:
+              add:
+                - NET_ADMIN
           env:
             - name: TZ
               value: {{ .Values.transmission.tz }}

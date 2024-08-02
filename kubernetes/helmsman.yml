@@ -5,6 +5,7 @@ metadata:
 namespaces:
   kube-system:
   cert-manager:
+  jdownloader:
   traefik:
   transmission:
   keel:
@@ -52,20 +53,26 @@ apps:
     namespace: keel
     valuesFile: keel/values.yml
     priority: -89
-  plex:
-    <<: *default
-    chart: plex/plex-media-server
-    version: 0.4.0
-    namespace: keel
-    valuesFile: plex/values.yml
-    priority: -79
-    enabled: false # TODO
   transmission:
     <<: *default
     chart: ./transmission/chart
     version: 0.1.0
     namespace: transmission
     valuesFile: transmission/values.yml
+    priority: -79
+  jdownloader:
+    <<: *default
+    chart: ./jdownloader/chart
+    version: 0.1.0
+    namespace: jdownloader
+    valuesFile: jdownloader/values.yml
     priority: -78
-    enabled: true
+  plex:
+    <<: *default
+    chart: plex/plex-media-server
+    version: 0.4.0
+    namespace: plex
+    valuesFile: plex/values.yml
+    priority: -69
+    enabled: false
 

@@ -43,3 +43,38 @@ spec:
   resources:
     requests:
       storage: ${SMB_NAS_SIZE}
+
+---
+
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: plex-pms-config
+  namespace: plex
+  labels:
+    app.kubernetes.io/name: plex
+spec:
+  storageClassName: manual
+  capacity:
+    storage: 5Gi
+  accessModes:
+    - ReadWriteOnce
+  persistentVolumeReclaimPolicy: Retain
+  hostPath:
+    path: "${COMMON_VOLUMES_PATH}/plex"
+
+---
+
+kind: PersistentVolumeClaim
+apiVersion: v1
+metadata:
+  name: plex-pms-config
+  namespace: plex
+spec:
+  volumeName: plex-pms-config
+  storageClassName: manual
+  accessModes:
+    - ReadWriteMany
+  resources:
+    requests:
+      storage: 5Gi

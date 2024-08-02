@@ -1,0 +1,75 @@
+ingress:
+  enabled: true
+  hosts:
+    - host: jd.${COMMON_DOMAIN_ROOT}
+      paths:
+        - /
+
+volumes:
+  - name: config
+    hostPath:
+      path: ${COMMON_VOLUMES_PATH}/jdownloader
+      type: DirectoryOrCreate
+  - name: downloads
+    persistentVolumeClaim:
+      claimName: smb-jdownloader-downloads
+
+volumeMounts:
+  - name: config
+    mountPath: /config
+  - name: downloads
+    mountPath: /output
+
+extraObjects:
+  - |
+    apiVersion: v1
+    kind: Secret
+    metadata:
+      name: smb-jdownloader-downloads-credentials
+      labels:
+        app.kubernetes.io/name: jdownloader
+    type: Opaque
+    stringData:
+      username: ${NAS_SMB_USERNAME}
+      password: ${NAS_SMB_PASSWORD}
+  - |
+    apiVersion: v1
+    kind: PersistentVolume
+    metadata:
+      name: smb-jdownloader-downloads
+      labels:
+        app.kubernetes.io/name: jdownloader
+      annotations:
+        pv.kubernetes.io/provisioned-by: smb.csi.k8s.io
+    spec:
+      persistentVolumeReclaimPolicy: Retain
+      storageClassName: smb
+      mountOptions:
+        - dir_mode=0755
+        - file_mode=0644
+      capacity:
+        storage: ${NAS_SMB_SIZE}
+      accessModes:
+        - ReadWriteMany
+      csi:
+        driver: smb.csi.k8s.io
+        volumeHandle: nas#jdownoader#downloads
+        volumeAttributes:
+          source: ${NAS_SMB_SOURCE_DOWNLOADS}
+        nodeStageSecretRef:
+          name: smb-jdownloader-downloads-credentials
+          namespace: jdownloader
+  - |
+    kind: PersistentVolumeClaim
+    apiVersion: v1
+    metadata:
+      name: smb-jdownloader-downloads
+    spec:
+      volumeName: smb-jdownloader-downloads
+      storageClassName: smb
+      accessModes:
+        - ReadWriteMany
+      resources:
+        requests:
+          storage: ${NAS_SMB_SIZE}
+

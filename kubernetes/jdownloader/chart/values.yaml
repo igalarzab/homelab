@@ -1,27 +1,10 @@
-transmission:
+jdownloader:
   tz: Asia/Singapore
-  speedLimitUpEnabled: false
-  speedLimitUp: 10000
-  speedLimitDownEnabled: false
-  speedLimitDown: 10000
-  opts: --inactive 3600 --ping 10 --ping-exit 60
-  webUI: combustion
-  downloadQueueSize: 4
-  ratioLimitEnabled: true
-  ratioLimit: 1
-  webProxyEnabled: false
-
-openvpn:
-  provider:
-  region:
-  username:
-  password:
-  network:
 
 replicaCount: 1
 
 image:
-  repository: haugene/transmission-openvpn
+  repository: jlesage/jdownloader-2
   tag: ""
 
 nameOverride: ""
@@ -29,28 +12,28 @@ fullnameOverride: ""
 
 service:
   type: ClusterIP
-  port: 9091
+  port: 5800
 
 ingress:
-  enabled: false
+  enabled: true
   hosts: []
   #  - chart-example.local
 
 livenessProbe:
-  initialDelaySeconds: 45
-  periodSeconds: 2
+  initialDelaySeconds: 30
+  periodSeconds: 10
   timeoutSeconds: 2
   successThreshold: 1
   failureThreshold: 3
 
 readinessProbe:
-  initialDelaySeconds: 10
-  periodSeconds: 2
+  initialDelaySeconds: 30
+  periodSeconds: 10
   timeoutSeconds: 2
-  successThreshold: 2
+  successThreshold: 1
   failureThreshold: 3
 
-resources:
+resources: {}
 #  limits:
 #    cpu: 100m
 #    memory: 128Mi
