@@ -17,4 +17,4 @@ ingress:
 
 service:
   enabled: true
-  type: LoadBalancer
+  type: ClusterIP

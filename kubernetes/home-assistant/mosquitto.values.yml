@@ -41,6 +41,17 @@ controllers:
               failureThreshold: 3
               tcpSocket:
                 port: mqtt
+    initContainers:
+      git:
+        image:
+          repository: alpine/git
+          tag: latest
+        command: ["/bin/sh"]
+        args:
+          - -c
+          - >-
+            git clone ${HOMELAB_REPO} /repo &&
+            mv /repo/${HOMELAB_MOSQUITTO_CONFIG}/{.,}*  /mosquitto/config/
 
 service:
   mosquitto:
@@ -52,14 +63,12 @@ service:
 
 persistence:
   mosquitto-config:
-    type: hostPath
-    hostPath: ${COMMON_VOLUMES_PATH}/mosquitto/config
-    hostPathType: DirectoryOrCreate
+    type: emptyDir
     globalMounts:
       - path: /mosquitto/config
   mosquitto-data:
     type: hostPath
-    hostPath: ${COMMON_VOLUMES_PATH}/mosquitto/data
+    hostPath: ${COMMON_VOLUMES_PATH}/mosquitto/
     hostPathType: DirectoryOrCreate
     globalMounts:
       - path: /mosquitto/data
