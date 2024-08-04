@@ -3,6 +3,8 @@
 
 defaultPodOptions:
   terminationGracePeriodSeconds: 30
+  annotations:
+    k8s.v1.cni.cncf.io/networks: kube-system/macvlan-iot
 
 controllers:
   home-assistant:
@@ -55,7 +57,7 @@ service:
 ingress:
   main:
     hosts:
-      - host: &host "ha.${COMMON_DOMAIN_ROOT}"
+      - host: "ha.${COMMON_DOMAIN_ROOT}"
         paths:
           - path: /
             pathType: Prefix

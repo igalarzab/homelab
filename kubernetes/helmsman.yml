@@ -13,6 +13,7 @@ namespaces:
   plex:
 
 helmRepos:
+  bitnami: https://charts.bitnami.com/bitnami
   bjw-s: https://bjw-s.github.io/helm-charts
   csi-driver-smb: https://raw.githubusercontent.com/kubernetes-csi/csi-driver-smb/master/charts
   jetstack: https://charts.jetstack.io
@@ -33,20 +34,27 @@ apps:
     version: v1.15.0
     namespace: kube-system
     priority: -100
+  multus-cni:
+    <<: *default
+    chart: bitnami/multus-cni
+    version: 2.1.10
+    namespace: kube-system
+    valuesFile: multus-cni/values.yml
+    priority: -99
   cert-manager:
     <<: *default
     chart: jetstack/cert-manager
     version: v1.15.2
     namespace: cert-manager
     valuesFile: cert-manager/values.yml
-    priority: -99
+    priority: -98
   traefik:
     <<: *default
     chart: traefik/traefik
     version: v30.0.2
     namespace: traefik
     valuesFile: traefik/values.yml
-    priority: -98
+    priority: -97
   keel:
     <<: *default
     chart: keel/keel

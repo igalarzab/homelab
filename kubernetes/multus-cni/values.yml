@@ -1,0 +1,23 @@
+extraDeploy:
+  - |
+    apiVersion: "k8s.cni.cncf.io/v1"
+    kind: NetworkAttachmentDefinition
+    metadata:
+      name: macvlan-iot
+    spec:
+      config: '{
+          "cniVersion": "1.0.0",
+          "type": "macvlan",
+          "master": "${MULTUS_ETHERNET_IFACE}",
+          "mode": "bridge",
+          "ipam": {
+            "type": "host-local",
+            "subnet": "${MULTUS_CIDR}",
+            "rangeStart": "${MULTUS_START_IP}",
+            "rangeEnd": "${MULTUS_END_IP}",
+            "routes": [
+              { "dst": "0.0.0.0/0" }
+            ],
+            "gateway": "${MULTUS_GATEWAY"
+          }
+        }'
