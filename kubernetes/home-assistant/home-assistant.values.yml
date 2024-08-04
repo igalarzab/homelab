@@ -12,10 +12,12 @@ controllers:
     containers:
       home-assistant:
         image:
-          repository: homeassistant/home-assistant
+          repository: linuxserver/homeassistant
           tag: "2024.7.4"
         env:
           TZ: ${COMMON_TZ}
+          PUID: 1000
+          PGID: 100
         ports:
           - name: http
             protocol: TCP
