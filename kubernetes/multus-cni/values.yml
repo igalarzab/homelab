@@ -18,6 +18,6 @@ extraDeploy:
             "routes": [
               { "dst": "0.0.0.0/0" }
             ],
-            "gateway": "${MULTUS_GATEWAY"
+            "gateway": "${MULTUS_GATEWAY}"
           }
         }'

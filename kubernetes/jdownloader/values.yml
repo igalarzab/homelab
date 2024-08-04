@@ -1,77 +1,114 @@
+---
+# yaml-language-server: $schema=https://raw.githubusercontent.com/bjw-s/helm-charts/app-template-3.2.0/charts/other/app-template/values.schema.json
+
+defaultPodOptions:
+  terminationGracePeriodSeconds: 30
+
+controllers:
+  jdownloader:
+    type: deployment
+    containers:
+      jdownloader:
+        image:
+          repository: jlesage/jdownloader-2
+          tag: "v24.08.1"
+        env:
+          TZ: ${COMMON_TZ}
+          USER_ID: 1000
+          GROUP_ID: 100
+        ports:
+          - name: http
+            protocol: TCP
+            containerPort: 5800
+        probes:
+          liveness:
+            enabled: true
+            custom: true
+            spec:
+              initialDelaySeconds: 10
+              periodSeconds: 10
+              timeoutSeconds: 2
+              successThreshold: 1
+              failureThreshold: 5
+              httpGet:
+                path: /
+                port: http
+          readiness:
+            enabled: true
+            custom: true
+            spec:
+              initialDelaySeconds: 10
+              periodSeconds: 10
+              timeoutSeconds: 2
+              successThreshold: 1
+              failureThreshold: 5
+              httpGet:
+                path: /
+                port: http
+
+service:
+  jdownloader:
+    controller: jdownloader
+    ports:
+      http:
+        port: 5800
+        targetPort: http
+
 ingress:
-  enabled: true
-  hosts:
-    - host: jd.${COMMON_DOMAIN_ROOT}
-      paths:
-        - /
+  main:
+    hosts:
+      - host: "jd.${COMMON_DOMAIN_ROOT}"
+        paths:
+          - path: /
+            pathType: Prefix
+            service:
+              identifier: jdownloader
+              port: http
 
-volumes:
-  - name: config
-    hostPath:
-      path: ${COMMON_VOLUMES_PATH}/jdownloader
-      type: DirectoryOrCreate
-  - name: downloads
-    persistentVolumeClaim:
-      claimName: smb-jdownloader-downloads
-
-volumeMounts:
-  - name: config
-    mountPath: /config
-  - name: downloads
-    mountPath: /output
-
-extraObjects:
-  - |
-    apiVersion: v1
-    kind: Secret
-    metadata:
-      name: smb-jdownloader-downloads-credentials
-      labels:
-        {{- include "jdownloader.labels" . | nindent 4 }}
-    type: Opaque
+secrets:
+  smb-downloads-credentials:
     stringData:
       username: ${NAS_SMB_USERNAME}
       password: ${NAS_SMB_PASSWORD}
-  - |
+
+persistence:
+  config:
+    type: hostPath
+    hostPath: ${COMMON_VOLUMES_PATH}/jdownloader
+    hostPathType: DirectoryOrCreate
+    globalMounts:
+      - path: /config
+
+  smb-downloads:
+    type: persistentVolumeClaim
+    storageClass: smb
+    accessMode: ReadWriteMany
+    size: ${NAS_SMB_SIZE}
+    globalMounts:
+      - path: /output
+
+rawResources:
+  smb-downloads:
     apiVersion: v1
     kind: PersistentVolume
-    metadata:
-      name: smb-jdownloader-downloads
-      labels:
-        {{- include "jdownloader.labels" . | nindent 4 }}
-      annotations:
-        pv.kubernetes.io/provisioned-by: smb.csi.k8s.io
+    annotations:
+      pv.kubernetes.io/provisioned-by: smb.csi.k8s.io
     spec:
-      persistentVolumeReclaimPolicy: Retain
-      storageClassName: smb
-      mountOptions:
-        - dir_mode=0755
-        - file_mode=0644
-      capacity:
-        storage: ${NAS_SMB_SIZE}
-      accessModes:
-        - ReadWriteMany
-      csi:
-        driver: smb.csi.k8s.io
-        volumeHandle: nas#jdownloader#downloads
-        volumeAttributes:
-          source: ${NAS_SMB_SOURCE_DOWNLOADS}
-        nodeStageSecretRef:
-          name: smb-jdownloader-downloads-credentials
-          namespace: {{ .Release.Namespace }}
-  - |
-    kind: PersistentVolumeClaim
-    apiVersion: v1
-    metadata:
-      name: smb-jdownloader-downloads
-      labels:
-        {{- include "jdownloader.labels" . | nindent 4 }}
-    spec:
-      volumeName: smb-jdownloader-downloads
-      storageClassName: smb
-      accessModes:
-        - ReadWriteMany
-      resources:
-        requests:
+      spec:
+        persistentVolumeReclaimPolicy: Retain
+        storageClassName: smb
+        mountOptions:
+          - dir_mode=0755
+          - file_mode=0644
+        capacity:
           storage: ${NAS_SMB_SIZE}
-
+        accessModes:
+          - ReadWriteMany
+        csi:
+          driver: smb.csi.k8s.io
+          volumeHandle: nas#jdownloader#downloads
+          volumeAttributes:
+            source: ${NAS_SMB_SOURCE_DOWNLOADS}
+          nodeStageSecretRef:
+            name: "jdownloader-smb-downloads-credentials"
+            namespace: "{{ .Release.Namespace }}"

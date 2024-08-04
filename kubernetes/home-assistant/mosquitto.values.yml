@@ -51,7 +51,7 @@ controllers:
           - -c
           - >-
             git clone ${HOMELAB_REPO} /repo &&
-            mv /repo/${HOMELAB_MOSQUITTO_CONFIG}/{.,}*  /mosquitto/config/
+            mv /repo/${HOMELAB_MOSQUITTO_CONFIG}/{.,}* /mosquitto/config/
 
 service:
   mosquitto:

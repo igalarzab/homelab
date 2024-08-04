@@ -1,80 +1,127 @@
-plex:
-  advertiseIp: plex.${COMMON_DOMAIN_ROOT}
-  claim:
+---
+# yaml-language-server: $schema=https://raw.githubusercontent.com/bjw-s/helm-charts/app-template-3.2.0/charts/other/app-template/values.schema.json
+
+defaultPodOptions:
+  terminationGracePeriodSeconds: 30
+
+controllers:
+  plex:
+    type: statefulset
+    containers:
+      plex:
+        image:
+          repository: plexinc/pms-docker
+          tag: "1.40.4.8679-424562606"
+        securityContext:
+          privileged: true # TODO: needed for quicksync
+        env:
+          ADVERTISE_IP: plex.${COMMON_DOMAIN_ROOT}
+          PLEX_CLAIM: ${PLEX_CLAIM}
+          TZ: ${COMMON_TZ}
+          PLEX_UID: 1000
+          PLEX_GID: 100
+        ports:
+          - name: http
+            protocol: TCP
+            containerPort: 32400
+        probes:
+          liveness:
+            enabled: true
+            custom: true
+            spec:
+              initialDelaySeconds: 10
+              periodSeconds: 10
+              timeoutSeconds: 2
+              successThreshold: 1
+              failureThreshold: 5
+              httpGet:
+                path: /identity
+                port: http
+          readiness:
+            enabled: true
+            custom: true
+            spec:
+              initialDelaySeconds: 10
+              periodSeconds: 10
+              timeoutSeconds: 2
+              successThreshold: 1
+              failureThreshold: 5
+              httpGet:
+                path: /identity
+                port: http
+
+service:
+  plex:
+    controller: plex
+    ports:
+      http:
+        port: 32400
+        targetPort: http
 
 ingress:
-  enabled: true
-  hosts:
-    - host: plex.${COMMON_DOMAIN_ROOT}
-      paths:
-        - /
+  main:
+    hosts:
+      - host: "plex.${COMMON_DOMAIN_ROOT}"
+        paths:
+          - path: /
+            pathType: Prefix
+            service:
+              identifier: plex
+              port: http
 
-volumes:
-  - name: config
-    hostPath:
-      path: ${COMMON_VOLUMES_PATH}/plex
-      type: DirectoryOrCreate
-  - name: multimedia
-    persistentVolumeClaim:
-      claimName: smb-plex-multimedia
-
-volumeMounts:
-  - name: config
-    mountPath: /config
-  - name: multimedia
-    mountPath: /media/Multimedia
-
-extraObjects:
-  - |
-    apiVersion: v1
-    kind: Secret
-    metadata:
-      name: smb-plex-multimedia-credentials
-      labels:
-        {{- include "plex.labels" . | nindent 4 }}
-    type: Opaque
+secrets:
+  smb-multimedia-credentials:
     stringData:
       username: ${NAS_SMB_USERNAME}
       password: ${NAS_SMB_PASSWORD}
-  - |
+
+persistence:
+  transcode:
+    type: emptyDir
+    globalMounts:
+      - path: /transcode
+  quicksync:
+    type: hostPath
+    hostPath: /dev/dri
+    hostPathType: Directory
+    globalMounts:
+      - path: /dev/dri
+  config:
+    type: hostPath
+    hostPath: ${COMMON_VOLUMES_PATH}/plex
+    hostPathType: DirectoryOrCreate
+    globalMounts:
+      - path: /config
+  smb-multimedia:
+    type: persistentVolumeClaim
+    storageClass: smb
+    accessMode: ReadWriteMany
+    size: ${NAS_SMB_SIZE}
+    globalMounts:
+      - path: /media/Multimedia
+
+rawResources:
+  smb-multimedia:
     apiVersion: v1
     kind: PersistentVolume
-    metadata:
-      name: smb-plex-multimedia
-      labels:
-        {{- include "plex.labels" . | nindent 4 }}
-      annotations:
-        pv.kubernetes.io/provisioned-by: smb.csi.k8s.io
+    annotations:
+      pv.kubernetes.io/provisioned-by: smb.csi.k8s.io
     spec:
-      persistentVolumeReclaimPolicy: Retain
-      storageClassName: smb
-      mountOptions:
-        - dir_mode=0755
-        - file_mode=0644
-      capacity:
-        storage: ${NAS_SMB_SIZE}
-      accessModes:
-        - ReadWriteMany
-      csi:
-        driver: smb.csi.k8s.io
-        volumeHandle: nas#plex#multimedia
-        volumeAttributes:
-          source: ${NAS_SMB_SOURCE_MULTIMEDIA}
-        nodeStageSecretRef:
-          name: smb-plex-multimedia-credentials
-          namespace: {{ .Release.Namespace }}
-  - |
-    kind: PersistentVolumeClaim
-    apiVersion: v1
-    metadata:
-      name: smb-plex-multimedia
-      labels:
-        {{- include "plex.labels" . | nindent 4 }}
-    spec:
-      volumeName: smb-plex-multimedia
-      storageClassName: smb
-      accessModes:
-        - ReadWriteMany
-      resources:
-        requests:
+      spec:
+        persistentVolumeReclaimPolicy: Retain
+        storageClassName: smb
+        mountOptions:
+          - dir_mode=0755
+          - file_mode=0644
+        capacity:
           storage: ${NAS_SMB_SIZE}
+        accessModes:
+          - ReadWriteMany
+        csi:
+          driver: smb.csi.k8s.io
+          volumeHandle: nas#plex#multimedia
+          volumeAttributes:
+            source: ${NAS_SMB_SOURCE_MULTIMEDIA}
+          nodeStageSecretRef:
+            name: "plex-smb-multimedia-credentials"
+            namespace: "{{ .Release.Namespace }}"

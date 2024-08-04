@@ -1,6 +1,0 @@
-apiVersion: v2
-name: plex
-description: A Helm chart for plex
-type: application
-version: 0.1.0
-appVersion: "1.40.4.8679-424562606"

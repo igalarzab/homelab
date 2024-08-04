@@ -13,7 +13,7 @@ advanced:
   log_file: zigbee2mqtt.log
   log_level: info
   log_output: ['console', 'file']
-  network_key: '!secrets.yaml network_key'
+  network_key: '!../dynamic/secrets.yaml network_key'
   pan_id: 3776
   timestamp_format: YYYY-MM-DDTHH:mm:ssZ
   transmit_power: 20
@@ -24,9 +24,9 @@ homeassistant:
   legacy_triggers: false
 mqtt:
   base_topic: zigbee2mqtt
-  server: '!secrets.yaml server'
-  user: '!secrets.yaml user'
-  password: '!secrets.yaml password'
+  server: '!../dynamic/secrets.yaml server'
+  user: '!../dynamic/secrets.yaml user'
+  password: '!../dynamic/secrets.yaml password'
 serial:
   adapter: ezsp
   baudrate: 115200

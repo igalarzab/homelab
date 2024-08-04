@@ -1,81 +1,124 @@
-transmission:
-  speedLimitUpEnabled: true
-  speedLimitUp: ${TRANSMISSION_SPEED_LIMIT_UP}
+---
+# yaml-language-server: $schema=https://raw.githubusercontent.com/bjw-s/helm-charts/app-template-3.2.0/charts/other/app-template/values.schema.json
 
-openvpn:
-  provider: ${TRANSMISSION_OPENVPN_PROVIDER}
-  region: ${TRANSMISSION_OPENVPN_REGION}
-  username: ${TRANSMISSION_OPENVPN_USERNAME}
-  password: ${TRANSMISSION_OPENVPN_PASSWORD}
-  network: ${TRANSMISSION_LOCAL_NETWORK}
+defaultPodOptions:
+  terminationGracePeriodSeconds: 30
+
+controllers:
+  transmission:
+    type: deployment
+    containers:
+      transmission:
+        image:
+          repository: haugene/transmission-openvpn
+          tag: "5"
+        securityContext:
+          capabilities:
+            add:
+              - NET_ADMIN
+        env:
+          TZ: ${COMMON_TZ}
+          OPENVPN_PROVIDER: ${TRANSMISSION_OPENVPN_PROVIDER}
+          OPENVPN_CONFIG: ${TRANSMISSION_OPENVPN_REGION}
+          OPENVPN_USERNAME: ${TRANSMISSION_OPENVPN_USERNAME}
+          OPENVPN_PASSWORD: ${TRANSMISSION_OPENVPN_PASSWORD}
+          LOCAL_NETWORK: ${TRANSMISSION_LOCAL_NETWORK}
+          OPENVPN_OPTS: --inactive 3600 --ping 10 --ping-exit 60
+          TRANSMISSION_WEB_UI: combustion
+          TRANSMISSION_DOWNLOAD_QUEUE_SIZE: 4
+          TRANSMISSION_RATIO_LIMIT_ENABLED: true
+          TRANSMISSION_RATIO_LIMIT: 2
+          TRANSMISSION_SPEED_LIMIT_DOWN: 10000
+          TRANSMISSION_SPEED_LIMIT_DOWN_ENABLED: false
+          TRANSMISSION_SPEED_LIMIT_UP: ${TRANSMISSION_SPEED_LIMIT_UP}
+          TRANSMISSION_SPEED_LIMIT_UP_ENABLED: true
+          WEBPROXY_ENABLED:
+        ports:
+          - name: http
+            protocol: TCP
+            containerPort: 9091
+        probes:
+          liveness:
+            enabled: true
+            custom: true
+            spec:
+              initialDelaySeconds: 10
+              periodSeconds: 10
+              timeoutSeconds: 2
+              successThreshold: 1
+              failureThreshold: 5
+              httpGet:
+                path: /
+                port: http
+          readiness:
+            enabled: true
+            custom: true
+            spec:
+              initialDelaySeconds: 10
+              periodSeconds: 10
+              timeoutSeconds: 2
+              successThreshold: 1
+              failureThreshold: 5
+              httpGet:
+                path: /
+                port: http
+
+service:
+  transmission:
+    controller: transmission
+    ports:
+      http:
+        port: 9091
+        targetPort: http
 
 ingress:
-  enabled: true
-  hosts:
-    - host: transmission.${COMMON_DOMAIN_ROOT}
-      paths:
-        - /
+  main:
+    hosts:
+      - host: "transmission.${COMMON_DOMAIN_ROOT}"
+        paths:
+          - path: /
+            pathType: Prefix
+            service:
+              identifier: transmission
+              port: http
 
-volumes:
-  - name: data
-    persistentVolumeClaim:
-      claimName: smb-transmission-downloads
-
-volumeMounts:
-  - name: data
-    mountPath: /data
-
-extraObjects:
-  - |
-    apiVersion: v1
-    kind: Secret
-    metadata:
-      name: smb-transmission-downloads-credentials
-      labels:
-        {{- include "transmission.labels" . | nindent 4 }}
-    type: Opaque
+secrets:
+  smb-downloads-credentials:
     stringData:
       username: ${NAS_SMB_USERNAME}
       password: ${NAS_SMB_PASSWORD}
-  - |
+
+persistence:
+  smb-downloads:
+    type: persistentVolumeClaim
+    storageClass: smb
+    accessMode: ReadWriteMany
+    size: ${NAS_SMB_SIZE}
+    globalMounts:
+      - path: /data
+
+rawResources:
+  smb-downloads:
     apiVersion: v1
     kind: PersistentVolume
-    metadata:
-      name: smb-transmission-downloads
-      labels:
-        {{- include "transmission.labels" . | nindent 4 }}
-      annotations:
-        pv.kubernetes.io/provisioned-by: smb.csi.k8s.io
+    annotations:
+      pv.kubernetes.io/provisioned-by: smb.csi.k8s.io
     spec:
-      persistentVolumeReclaimPolicy: Retain
-      storageClassName: smb
-      mountOptions:
-        - dir_mode=0755
-        - file_mode=0644
-      capacity:
-        storage: ${NAS_SMB_SIZE}
-      accessModes:
-        - ReadWriteMany
-      csi:
-        driver: smb.csi.k8s.io
-        volumeHandle: nas#transmission#downloads
-        volumeAttributes:
-          source: ${NAS_SMB_SOURCE_DOWNLOADS}
-        nodeStageSecretRef:
-          name: smb-transmission-downloads-credentials
-          namespace: {{ .Release.Namespace }}
-  - |
-    kind: PersistentVolumeClaim
-    apiVersion: v1
-    metadata:
-      name: smb-transmission-downloads
-      labels:
-        {{- include "transmission.labels" . | nindent 4 }}
-    spec:
-      volumeName: smb-transmission-downloads
-      storageClassName: smb
-      accessModes:
-        - ReadWriteMany
-      resources:
-        requests:
+      spec:
+        persistentVolumeReclaimPolicy: Retain
+        storageClassName: smb
+        mountOptions:
+          - dir_mode=0755
+          - file_mode=0644
+        capacity:
           storage: ${NAS_SMB_SIZE}
+        accessModes:
+          - ReadWriteMany
+        csi:
+          driver: smb.csi.k8s.io
+          volumeHandle: nas#transmission#downloads
+          volumeAttributes:
+            source: ${NAS_SMB_SOURCE_DOWNLOADS}
+          nodeStageSecretRef:
+            name: "transmission-smb-downloads-credentials"
+            namespace: "{{ .Release.Namespace }}"

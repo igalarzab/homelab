@@ -67,22 +67,22 @@ apps:
     enabled: false # TODO: Not using for now
   transmission:
     <<: *default
-    chart: ./transmission/chart
-    version: 0.1.0
+    chart: bjw-s/app-template
+    version: 3.3.2
     namespace: transmission
     valuesFile: transmission/values.yml
     priority: -79
   jdownloader:
     <<: *default
-    chart: ./jdownloader/chart
-    version: 0.1.0
+    chart: bjw-s/app-template
+    version: 3.3.2
     namespace: jdownloader
     valuesFile: jdownloader/values.yml
     priority: -78
   plex:
     <<: *default
-    chart: ./plex/chart
-    version: 0.1.0
+    chart: bjw-s/app-template
+    version: 3.3.2
     namespace: plex
     valuesFile: plex/values.yml
     priority: -69

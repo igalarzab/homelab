@@ -43,6 +43,17 @@ controllers:
               httpGet:
                 path: /
                 port: http
+    initContainers:
+      git:
+        image:
+          repository: bitnami/git
+          tag: latest
+        command: ["/bin/bash"]
+        args:
+          - -c
+          - >-
+            git clone ${HOMELAB_REPO} /repo &&
+            mv /repo/${HOMELAB_ZIGBEE_CONFIG}/{.,}* /app/data
 
 service:
   zigbee2mqtt:
@@ -65,8 +76,12 @@ ingress:
 
 persistence:
   zigbee2mqtt-data:
+    type: emptyDir
+    globalMounts:
+      - path: /app/data
+  zigbee2mqtt-dynamic:
     type: hostPath
     hostPath: ${COMMON_VOLUMES_PATH}/zigbee2mqtt
     hostPathType: DirectoryOrCreate
     globalMounts:
-      - path: /app/data
+      - path: /app/dynamic

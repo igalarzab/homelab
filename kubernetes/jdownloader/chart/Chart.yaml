@@ -1,6 +1,0 @@
-apiVersion: v2
-name: jdownloader
-description: A Helm chart for jdownloader
-type: application
-version: 0.1.0
-appVersion: v24.07.1
