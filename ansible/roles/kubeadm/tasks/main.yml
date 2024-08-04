@@ -18,3 +18,6 @@
 
 - name: Load CNI plugin
   import_tasks: cni.yml
+
+- name: Do extra stuff (non critical)
+  import_tasks: extras.yml

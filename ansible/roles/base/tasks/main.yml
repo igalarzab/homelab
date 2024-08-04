@@ -65,6 +65,7 @@
     - { file: 50-motd-news }
 
 - name: Disable swap
+  become: true
   command: swapoff -a
   when: ansible_memory_mb['swap']['total'] > 0
 

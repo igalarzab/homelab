@@ -1,13 +1,13 @@
 ---
 
 - name: Get k8s apt key
-  become: yes
+  become: true
   shell: "curl -fsSL {{ k8s_apt_key_url }} | gpg --dearmor -o {{ k8s_apt_key_path }}"
   args:
     creates: "{{ k8s_apt_key_path }}"
 
 - name: Add k8s repository
-  become: yes
+  become: true
   apt_repository:
     repo: "deb [signed-by={{ k8s_apt_key_path }}] {{ k8s_apt_repo_url }} /"
     state: present
@@ -38,4 +38,4 @@
   service:
     name: kubelet
     state: started
-    enabled: yes
+    enabled: true

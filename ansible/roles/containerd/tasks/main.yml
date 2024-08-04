@@ -1,13 +1,13 @@
 ---
 
 - name: Get docker apt key
-  become: yes
+  become: true
   shell: "curl -fsSL {{ docker_apt_key_url }} | gpg --dearmor -o {{ docker_apt_key_path }}"
   args:
     creates: "{{ docker_apt_key_path }}"
 
 - name: Add docker repository
-  become: yes
+  become: true
   apt_repository:
     repo: "deb [signed-by={{ docker_apt_key_path }}] {{ docker_apt_repo_url }}"
     state: present
@@ -33,6 +33,7 @@
 
 - name: Store crictl config
   become: true
+  notify: restart containerd
   template:
     src: templates/crictl.yaml.j2
     dest: /etc/crictl.yaml
@@ -41,8 +42,12 @@
     mode: "0644"
 
 - name: Enable containerd service
+  become: true
   service:
     name: containerd
     state: started
     enabled: yes
 
+- name: Restart containerd now
+  become: true
+  meta: flush_handlers

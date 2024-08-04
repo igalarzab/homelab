@@ -33,7 +33,7 @@
   fetch:
     src: /etc/kubernetes/admin.conf
     dest: ~/.kube/config
-    flat: yes
+    flat: true
 
 - name: Set .kube/config permissions
   delegate_to: localhost
