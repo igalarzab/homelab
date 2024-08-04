@@ -16,6 +16,7 @@ advanced:
   network_key: '!secrets.yaml network_key'
   pan_id: 3776
   timestamp_format: YYYY-MM-DDTHH:mm:ssZ
+  transmit_power: 20
 frontend:
   port: 8080
 homeassistant:
@@ -28,4 +29,6 @@ mqtt:
   password: '!secrets.yaml password'
 serial:
   adapter: ezsp
-  port: /dev/ttyACM0
+  baudrate: 115200
+  disable_led: false
+  port: tcp://10.31.2.11:6638
