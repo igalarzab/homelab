@@ -16,7 +16,7 @@ extraDeploy:
             "rangeStart": "${MULTUS_START_IP}",
             "rangeEnd": "${MULTUS_END_IP}",
             "routes": [
-              { "dst": "0.0.0.0/0" }
+              { "dst": "${MULTUS_CIDR}","gw":"${MULTUS_GATEWAY}" }
             ],
             "gateway": "${MULTUS_GATEWAY}"
           }
