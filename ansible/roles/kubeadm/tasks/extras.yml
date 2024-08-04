@@ -1,0 +1,10 @@
+---
+
+- name: Ensure k8s volumes directory exists
+  become: true
+  file:
+    path: /opt/k8s-volumes
+    state: directory
+    owner: root
+    group: root
+    mode: "0755"

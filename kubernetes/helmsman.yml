@@ -25,7 +25,7 @@ appsTemplates:
     enabled: true
     protected: false
     test: false
-    wait: false
+    wait: true
 
 apps:
   csi-driver-smb:
@@ -48,6 +48,8 @@ apps:
     namespace: cert-manager
     valuesFile: cert-manager/values.yml
     priority: -98
+    hooks:
+      postInstall: cert-manager/post-install.yml
   traefik:
     <<: *default
     chart: traefik/traefik
@@ -62,6 +64,7 @@ apps:
     namespace: keel
     valuesFile: keel/values.yml
     priority: -89
+    enabled: false # TODO: Not using for now
   transmission:
     <<: *default
     chart: ./transmission/chart
