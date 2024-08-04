@@ -44,9 +44,9 @@ controllers:
     initContainers:
       git:
         image:
-          repository: alpine/git
+          repository: bitnami/git
           tag: latest
-        command: ["/bin/sh"]
+        command: ["/bin/bash"]
         args:
           - -c
           - >-
