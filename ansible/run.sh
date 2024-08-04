@@ -1,7 +1,7 @@
 #!/bin/bash
 
 COMMAND=$1
-REMOTE_USER="${REMOTE_USER:-igalarzab}"
+REMOTE_USER="${REMOTE_USER:-$USER}"
 
 ansible-playbook \
     --ask-become-pass \
