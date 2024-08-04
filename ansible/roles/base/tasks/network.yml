@@ -5,8 +5,6 @@
   package:
     state: latest
     name:
-      - dbus-broker
       - dnsutils
-      - ipvsadm
       - net-tools
       - nfs-common

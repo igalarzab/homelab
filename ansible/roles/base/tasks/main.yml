@@ -49,7 +49,7 @@
       - util-linux
       - vim
 
-- name: Install en_GB locale
+- name: Install locale
   become: true
   community.general.locale_gen:
     name: "{{ locale }}"
