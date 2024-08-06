@@ -65,7 +65,6 @@ apps:
     namespace: keel
     valuesFile: keel/values.yml
     priority: -89
-    enabled: false # TODO: Not using for now
   transmission:
     <<: *default
     chart: bjw-s/app-template

@@ -9,6 +9,10 @@ defaultPodOptions:
 controllers:
   home-assistant:
     type: deployment
+    annotations:
+      keel.sh/policy: major
+      keel.sh/trigger: poll
+      keel.sh/pollSchedule: "0 0 4 * * 5" # 4am Fri
     containers:
       home-assistant:
         image:

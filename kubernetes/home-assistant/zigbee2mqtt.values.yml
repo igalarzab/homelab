@@ -7,6 +7,10 @@ defaultPodOptions:
 controllers:
   zigbee2mqtt:
     type: statefulset
+    annotations:
+      keel.sh/policy: minor
+      keel.sh/trigger: poll
+      keel.sh/pollSchedule: "0 0 4 * * 5" # 4am Fri
     containers:
       zigbee2mqtt:
         image:

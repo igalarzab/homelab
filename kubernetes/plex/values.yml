@@ -7,6 +7,10 @@ defaultPodOptions:
 controllers:
   plex:
     type: statefulset
+    annotations:
+      keel.sh/policy: force
+      keel.sh/trigger: poll
+      keel.sh/pollSchedule: "0 0 4 * * 5" # 4am Fri
     containers:
       plex:
         image:

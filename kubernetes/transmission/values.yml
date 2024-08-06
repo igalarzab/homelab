@@ -7,6 +7,10 @@ defaultPodOptions:
 controllers:
   transmission:
     type: deployment
+    annotations:
+      keel.sh/policy: major
+      keel.sh/trigger: poll
+      keel.sh/pollSchedule: "@midnight"
     containers:
       transmission:
         image:
