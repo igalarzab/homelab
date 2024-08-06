@@ -123,4 +123,3 @@ apps:
     namespace: home-assistant
     valuesFile: home-assistant/home-assistant.values.yml
     priority: -55
-    enabled: false # TODO: Not using for now

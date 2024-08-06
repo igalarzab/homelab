@@ -16,6 +16,9 @@ controllers:
         image:
           repository: koenkk/zigbee2mqtt
           tag: "1.39.1"
+        securityContext:
+          runAsUser: 1000
+          runAsGroup: 100
         env:
           TZ: ${COMMON_TZ}
         ports:
@@ -57,7 +60,8 @@ controllers:
           - -c
           - >-
             git clone ${HOMELAB_REPO} /repo &&
-            mv /repo/${HOMELAB_ZIGBEE_CONFIG}/{.,}* /app/data
+            mv /repo/${HOMELAB_ZIGBEE_CONFIG}/{.,}* /app/data &&
+            chown -R 1000:100 /app/data
 
 service:
   zigbee2mqtt:
@@ -89,7 +93,9 @@ secrets:
 
 persistence:
   data:
-    type: emptyDir
+    type: hostPath
+    hostPath: ${COMMON_VOLUMES_PATH}/zigbee2mqtt
+    hostPathType: DirectoryOrCreate
     advancedMounts:
       zigbee2mqtt:
         git:

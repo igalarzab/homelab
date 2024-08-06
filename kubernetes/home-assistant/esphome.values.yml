@@ -72,5 +72,7 @@ persistence:
     type: hostPath
     hostPath: ${COMMON_VOLUMES_PATH}/esphome
     hostPathType: DirectoryOrCreate
-    globalMounts:
-      - path: /config
+    advancedMounts:
+      esphome:
+        esphome:
+          - path: /config

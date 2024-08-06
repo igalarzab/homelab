@@ -72,5 +72,7 @@ persistence:
     type: hostPath
     hostPath: ${COMMON_VOLUMES_PATH}/node-red
     hostPathType: DirectoryOrCreate
-    globalMounts:
-      - path: /data
+    advancedMounts:
+      node-red:
+        node-red:
+          - path: /data

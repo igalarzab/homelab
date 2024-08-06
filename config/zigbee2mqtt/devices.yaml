@@ -1,0 +1,75 @@
+'0x00158d0001e0a23e':
+  friendly_name: entrance/door
+  optimistic: true
+  homeassistant:
+    name: Entrance Door
+'0x00158d000484ff28':
+  friendly_name: living_room/thermometer
+  optimistic: true
+  homeassistant:
+    name: Living Room Thermometer
+'0x00158d00028d8ebf':
+  friendly_name: living_room/door_terrace_right
+  optimistic: true
+  homeassistant:
+    name: Living Room Door Terrace Right
+'0x00158d0006330376':
+  friendly_name: living_room/door_terrace_left
+  optimistic: true
+  homeassistant:
+    name: Living Room Door Terrace Left
+'0x8c65a3fffeb3ee1c':
+  friendly_name: living_room/ir_controller
+  optimistic: true
+  homeassistant:
+    name: Living Room IR Controller
+'0x00158d00067be294':
+  friendly_name: bathroom/door
+  optimistic: true
+  homeassistant:
+    name: Bathroom Door
+'0x00158d0006bec2e2':
+  friendly_name: office/thermometer
+  optimistic: true
+  homeassistant:
+    name: Office Thermometer
+'0x00158d00067965b8':
+  friendly_name: office/door
+  optimistic: true
+  homeassistant:
+    name: Office Door
+'0x00158d00028c583f':
+  friendly_name: office/window_centre
+  optimistic: true
+  homeassistant:
+    name: Office Window Centre
+'0x00158d000633037a':
+  friendly_name: office/window_right
+  optimistic: true
+  homeassistant:
+    name: Office Window Right
+'0x00158d000484feb0':
+  friendly_name: bedroom/thermometer
+  optimistic: true
+  homeassistant:
+    name: Bedroom Thermometer
+'0x00158d0001e09fb1':
+  friendly_name: bedroom/door
+  optimistic: true
+  homeassistant:
+    name: Bedroom Door
+'0x0c4314fffe997804':
+  friendly_name: bedroom/light_bed
+  optimistic: true
+  homeassistant:
+    name: Bedroom Light Bed
+'0x00158d00028d6f3a':
+  friendly_name: bedroom/window_right
+  optimistic: true
+  homeassistant:
+    name: Bedroom Window Right
+'0x00158d0005053085':
+  friendly_name: bedroom/window_left
+  optimistic: true
+  homeassistant:
+    name: Bedroom Window Left
