@@ -55,7 +55,7 @@ service:
 ingress:
   main:
     hosts:
-      - host: &host "esphome.${COMMON_DOMAIN_ROOT}"
+      - host: "esphome.${COMMON_DOMAIN_ROOT}"
         paths:
           - path: /
             pathType: Prefix

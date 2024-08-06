@@ -61,14 +61,38 @@ service:
         port: 1883
         targetPort: mqtt
 
+secrets:
+  users:
+    stringData:
+      # FIXME: The full crypt() hash uses $ symbols and those cannot be escaped in the .env file because of golang's os.Expand()
+      # Because of it, we are storing the first blocks of the hashes here (these are not critical secrets anyway)
+      mosquitto.pwds: |+
+        home-assistant:$$7$$101$$46C1ho60XSvjKEIZ$$${MOSQUITTO_PASSWORDS_HA}
+        node-red:$$7$$101$$h51h7FfXn4G1gCOf$$${MOSQUITTO_PASSWORDS_NODERED}
+        zigbee2mqtt:$$7$$101$$GNInwfosp2Ucd67f$$${MOSQUITTO_PASSWORDS_ZIGBEE2MQTT}
+
 persistence:
-  mosquitto-config:
+  config:
     type: emptyDir
-    globalMounts:
-      - path: /mosquitto/config
-  mosquitto-data:
+    advancedMounts:
+      mosquitto:
+        git:
+          - path: /mosquitto/config
+        mosquitto:
+          - path: /mosquitto/config
+  users:
+    type: secret
+    name: "{{- (include \"bjw-s.common.lib.chart.names.fullname\" $) -}}-users"
+    advancedMounts:
+      mosquitto:
+        mosquitto:
+          - path: /mosquitto/config/mosquitto.pwds
+            subPath: mosquitto.pwds
+  data:
     type: hostPath
     hostPath: ${COMMON_VOLUMES_PATH}/mosquitto/
     hostPathType: DirectoryOrCreate
-    globalMounts:
-      - path: /mosquitto/data
+    advancedMounts:
+      mosquitto:
+        mosquitto:
+          - path: /mosquitto/data

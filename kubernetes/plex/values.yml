@@ -78,27 +78,35 @@ secrets:
 persistence:
   transcode:
     type: emptyDir
-    globalMounts:
-      - path: /transcode
+    advancedMounts:
+      plex:
+        plex:
+          - path: /transcode
   quicksync:
     type: hostPath
     hostPath: /dev/dri
     hostPathType: Directory
-    globalMounts:
-      - path: /dev/dri
+    advancedMounts:
+      plex:
+        plex:
+          - path: /dev/dri
   config:
     type: hostPath
     hostPath: ${COMMON_VOLUMES_PATH}/plex
     hostPathType: DirectoryOrCreate
-    globalMounts:
-      - path: /config
+    advancedMounts:
+      plex:
+        plex:
+          - path: /config
   smb-multimedia:
     type: persistentVolumeClaim
     storageClass: smb
-    accessMode: ReadWriteMany
+    accessMode: ReadOnlyMany
     size: ${NAS_SMB_SIZE}
-    globalMounts:
-      - path: /media/Multimedia
+    advancedMounts:
+      plex:
+        plex:
+          - path: /media/Multimedia
 
 rawResources:
   smb-multimedia:
@@ -111,17 +119,20 @@ rawResources:
         persistentVolumeReclaimPolicy: Retain
         storageClassName: smb
         mountOptions:
-          - dir_mode=0755
-          - file_mode=0644
+          - dir_mode=0555
+          - file_mode=0444
+          - uid=0
+          - gid=0
+          - mfsymlink
         capacity:
           storage: ${NAS_SMB_SIZE}
         accessModes:
-          - ReadWriteMany
+          - ReadOnlyMany
         csi:
           driver: smb.csi.k8s.io
           volumeHandle: nas#plex#multimedia
           volumeAttributes:
             source: ${NAS_SMB_SOURCE_MULTIMEDIA}
           nodeStageSecretRef:
-            name: "plex-smb-multimedia-credentials"
+            name: "{{- (include \"bjw-s.common.lib.chart.names.fullname\" $) -}}-smb-multimedia-credentials"
             namespace: "{{ .Release.Namespace }}"

@@ -55,7 +55,7 @@ service:
 ingress:
   main:
     hosts:
-      - host: &host "nodered.${COMMON_DOMAIN_ROOT}"
+      - host: "nodered.${COMMON_DOMAIN_ROOT}"
         paths:
           - path: /
             pathType: Prefix

@@ -14,6 +14,8 @@ controllers:
           tag: "v24.08.1"
         env:
           TZ: ${COMMON_TZ}
+          DARK_MODE: 1
+          KEEP_APP_RUNNING: 1
           USER_ID: 1000
           GROUP_ID: 100
         ports:
@@ -76,16 +78,20 @@ persistence:
     type: hostPath
     hostPath: ${COMMON_VOLUMES_PATH}/jdownloader
     hostPathType: DirectoryOrCreate
-    globalMounts:
-      - path: /config
+    advancedMounts:
+      jdownloader:
+        jdownloader:
+          - path: /config
 
   smb-downloads:
     type: persistentVolumeClaim
     storageClass: smb
     accessMode: ReadWriteMany
     size: ${NAS_SMB_SIZE}
-    globalMounts:
-      - path: /output
+    advancedMounts:
+      jdownloader:
+        jdownloader:
+          - path: /output
 
 rawResources:
   smb-downloads:
@@ -100,15 +106,18 @@ rawResources:
         mountOptions:
           - dir_mode=0755
           - file_mode=0644
+          - uid=1000
+          - gid=100
+          - mfsymlinks
         capacity:
           storage: ${NAS_SMB_SIZE}
         accessModes:
           - ReadWriteMany
         csi:
           driver: smb.csi.k8s.io
-          volumeHandle: nas#jdownloader#downloads
+          volumeHandle: nas#jdownloader#downloads-jdownloader
           volumeAttributes:
-            source: ${NAS_SMB_SOURCE_DOWNLOADS}
+            source: ${NAS_SMB_SOURCE_DOWNLOADS}/jdownloader
           nodeStageSecretRef:
-            name: "jdownloader-smb-downloads-credentials"
+            name: "{{- (include \"bjw-s.common.lib.chart.names.fullname\" $) -}}-smb-downloads-credentials"
             namespace: "{{ .Release.Namespace }}"

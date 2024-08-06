@@ -66,7 +66,7 @@ service:
 ingress:
   main:
     hosts:
-      - host: &host "zigbee.${COMMON_DOMAIN_ROOT}"
+      - host: "zigbee.${COMMON_DOMAIN_ROOT}"
         paths:
           - path: /
             pathType: Prefix
@@ -74,14 +74,29 @@ ingress:
               identifier: zigbee2mqtt
               port: http
 
+secrets:
+  secrets:
+    stringData:
+      secrets.yaml: |+
+        server: mqtt://mosquitto.mosquitto:1883
+        network_key: ${ZIGBEE2MQTT_NETWORK_KEY}
+        user: zigbee2mqtt
+        password: ${ZIGBEE2MQTT_PASSWORD}
+
 persistence:
-  zigbee2mqtt-data:
+  data:
     type: emptyDir
-    globalMounts:
-      - path: /app/data
-  zigbee2mqtt-dynamic:
-    type: hostPath
-    hostPath: ${COMMON_VOLUMES_PATH}/zigbee2mqtt
-    hostPathType: DirectoryOrCreate
-    globalMounts:
-      - path: /app/dynamic
+    advancedMounts:
+      zigbee2mqtt:
+        git:
+          - path: /app/data
+        zigbee2mqtt:
+          - path: /app/data
+  secrets:
+    type: secret
+    name: "{{- (include \"bjw-s.common.lib.chart.names.fullname\" $) -}}-secrets"
+    advancedMounts:
+      zigbee2mqtt:
+        zigbee2mqtt:
+          - path: /app/data/secrets.yaml
+            subPath: secrets.yaml

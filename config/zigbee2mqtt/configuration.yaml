@@ -9,11 +9,9 @@ advanced:
   last_seen: ISO_8601
   legacy_api: false
   legacy_availability_payload: false
-  log_directory: data/logs/
-  log_file: zigbee2mqtt.log
   log_level: info
-  log_output: ['console', 'file']
-  network_key: '!../dynamic/secrets.yaml network_key'
+  log_output: ['console']
+  network_key: '!secrets.yaml network_key'
   pan_id: 3776
   timestamp_format: YYYY-MM-DDTHH:mm:ssZ
   transmit_power: 20
@@ -24,11 +22,11 @@ homeassistant:
   legacy_triggers: false
 mqtt:
   base_topic: zigbee2mqtt
-  server: '!../dynamic/secrets.yaml server'
-  user: '!../dynamic/secrets.yaml user'
-  password: '!../dynamic/secrets.yaml password'
+  server: '!secrets.yaml server'
+  user: '!secrets.yaml user'
+  password: '!secrets.yaml password'
 serial:
   adapter: ezsp
+  port: tcp://10.31.2.11:6638
   baudrate: 115200
   disable_led: false
-  port: tcp://10.31.2.11:6638

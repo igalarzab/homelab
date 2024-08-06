@@ -7,6 +7,7 @@ namespaces:
   cert-manager:
   home-assistant:
   jdownloader:
+  mosquitto:
   traefik:
   transmission:
   keel:
@@ -90,8 +91,8 @@ apps:
     <<: *default
     chart: bjw-s/app-template
     version: 3.3.2
-    namespace: home-assistant
-    valuesFile: home-assistant/mosquitto.values.yml
+    namespace: mosquitto
+    valuesFile: mosquitto/values.yml
     priority: -59
   zigbee2mqtt:
     <<: *default
@@ -107,6 +108,7 @@ apps:
     namespace: home-assistant
     valuesFile: home-assistant/nodered.values.yml
     priority: -57
+    enabled: false # TODO: Not using for now
   esphome:
     <<: *default
     chart: bjw-s/app-template
@@ -114,6 +116,7 @@ apps:
     namespace: home-assistant
     valuesFile: home-assistant/esphome.values.yml
     priority: -56
+    enabled: false # TODO: Not using for now
   home-assistant:
     <<: *default
     chart: bjw-s/app-template
@@ -121,3 +124,4 @@ apps:
     namespace: home-assistant
     valuesFile: home-assistant/home-assistant.values.yml
     priority: -55
+    enabled: false # TODO: Not using for now
