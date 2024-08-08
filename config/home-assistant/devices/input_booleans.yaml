@@ -1,9 +1,19 @@
-home_vacuumed:
-  name: Home vacuumed today
+guests:
+  name: Guests at Home
   initial: 'off'
-  icon: mdi:robot-vacuum
+  icon: mdi:shield-lock
+
+holidays_mode:
+  name: Holidays Mode
+  initial: 'off'
+  icon: mdi:shield-lock
 
 home_locked:
   name: Home is locked
   initial: 'off'
   icon: mdi:shield-lock
+
+home_vacuumed:
+  name: Home vacuumed today
+  initial: 'off'
+  icon: mdi:robot-vacuum

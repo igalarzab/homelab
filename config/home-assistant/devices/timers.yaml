@@ -3,6 +3,9 @@ bedroom_sleeping:
   icon: mdi:bed
   duration: '08:00:00'
 
+
+# Timers for Automatic Lights
+
 bathroom_automatic_lights_timer:
   name: Bathroom Automatic Lights Timer
   icon: mdi:lamps
@@ -10,6 +13,11 @@ bathroom_automatic_lights_timer:
 
 bedroom_automatic_lights_timer:
   name: Bedroom Automatic Lights Timer
+  icon: mdi:lamps
+  duration: '03:00:00'
+
+entrance_automatic_lights_timer:
+  name: Entrance Automatic Lights Timer
   icon: mdi:lamps
   duration: '03:00:00'
 
@@ -25,5 +33,10 @@ kitchen_automatic_lights_timer:
 
 living_room_automatic_lights_timer:
   name: Living Room Automatic Lights Timer
+  icon: mdi:lamps
+  duration: '03:00:00'
+
+office_automatic_lights_timer:
+  name: Office Automatic Lights Timer
   icon: mdi:lamps
   duration: '03:00:00'

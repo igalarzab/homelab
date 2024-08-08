@@ -60,8 +60,8 @@ controllers:
           - -c
           - >-
             git clone ${HOMELAB_REPO} /repo &&
-            mv /repo/${HOMELAB_ZIGBEE_CONFIG}/{.,}* /app/data &&
-            chown -R 1000:100 /app/data
+            chown -R 1000:100 /repo &&
+            cp -R /repo/${HOMELAB_ZIGBEE_CONFIG}/{.,}* /app/data
 
 service:
   zigbee2mqtt:

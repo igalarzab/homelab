@@ -1,39 +1,34 @@
-# General Config
 homeassistant:
   name: Home
-  country: JP
-  currency: JPY
+  country: SG
+  currency: SGD
   customize: !include others/customize.yaml
-  elevation: !secret ha_elevation
   external_url: !secret ha_external_url
   internal_url: !secret ha_internal_url
-  latitude: !secret ha_latitude
-  longitude: !secret ha_longitude
+  latitude: !secret ha_home_latitude
+  longitude: !secret ha_home_longitude
+  elevation: !secret ha_home_elevation
   packages: !include_dir_named packages
   temperature_unit: C
-  time_zone: Asia/Tokyo
+  time_zone: Asia/Singapore
   unit_system: metric
   auth_providers:
     - type: homeassistant
 
-# Frontend
 frontend:
   themes: !include_dir_merge_named themes
 
-# Proxy Config
 http:
   use_x_forwarded_for: true
   trusted_proxies:
     - 127.0.0.1
     - ::1
-    - !secret ha_proxy_url
+    - 10.0.0.0/8
 
-# Enable default config + logging
 default_config:
 logger: !include others/logger.yaml
 recorder: !include others/recorder.yaml
 
-# Smart Home Config
 automation ui: !include automations.yaml
 automation yaml: !include_dir_merge_list automations
 group: !include others/groups.yaml
@@ -42,13 +37,8 @@ scene: !include scenes.yaml
 scene yaml: !include_dir_merge_list scenes
 script: !include_dir_merge_named scripts
 
-# Devices
-climate: !include devices/climate.yaml
 media_player: !include devices/media_players.yaml
 input_boolean: !include devices/input_booleans.yaml
 spotcast: !include devices/spotcast.yaml
 timer: !include devices/timers.yaml
 sensor: !include devices/sensors.yaml
-
-# Third party plugins
-smartir:

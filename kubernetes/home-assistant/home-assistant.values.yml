@@ -51,6 +51,18 @@ controllers:
               httpGet:
                 path: /
                 port: http
+    initContainers:
+      git:
+        image:
+          repository: bitnami/git
+          tag: latest
+        command: ["/bin/bash"]
+        args:
+          - -c
+          - >-
+            git clone ${HOMELAB_REPO} /repo &&
+            chown -R 1000:100 /repo &&
+            cp -R /repo/${HOMELAB_HA_CONFIG}/{.,}* /config
 
 service:
   home-assistant:
@@ -71,6 +83,20 @@ ingress:
               identifier: home-assistant
               port: http
 
+secrets:
+  secrets:
+    stringData:
+      secrets.yaml: |+
+        ha_external_url: ${HA_INTERNAL_URL}
+        ha_internal_url: ${HA_EXTERNAL_URL}
+
+        ha_home_latitude: ${HA_HOME_LATITUDE}
+        ha_home_longitude: ${HA_HOME_LONGITUDE}
+        ha_home_elevation: ${HA_HOME_ELEVATION}
+
+        spotcast_sp_dc: ${HA_SPOTCAST_SP_DC}
+        spotcast_sp_key: ${HA_SPOTCAST_SP_KEY}
+
 persistence:
   config:
     type: hostPath
@@ -78,5 +104,15 @@ persistence:
     hostPathType: DirectoryOrCreate
     advancedMounts:
       home-assistant:
+        git:
+          - path: /config
         home-assistant:
           - path: /config
+  secrets:
+    type: secret
+    name: "{{- (include \"bjw-s.common.lib.chart.names.fullname\" $) -}}-secrets"
+    advancedMounts:
+      home-assistant:
+        home-assistant:
+          - path: /config/secrets.yaml
+            subPath: secrets.yaml

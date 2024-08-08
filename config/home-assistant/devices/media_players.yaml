@@ -4,4 +4,4 @@
   device_class: tv
   children:
     - media_player.living_room_tv
-    - media_player.living_room_android_tv
+    - media_player.living_room_tv_android

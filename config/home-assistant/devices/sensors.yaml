@@ -1,6 +1,0 @@
-- platform: integration
-  unique_id: energy_spent_homelab
-  name: HomeLab Energy Spent
-  source: sensor.homelab_power
-  unit_prefix: k
-  round: 2
