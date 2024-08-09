@@ -115,7 +115,6 @@ apps:
     namespace: home-assistant
     valuesFile: home-assistant/esphome.values.yml
     priority: -56
-    enabled: false # TODO: Not using for now
   home-assistant:
     <<: *default
     chart: bjw-s/app-template

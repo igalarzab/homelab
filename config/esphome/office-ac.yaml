@@ -1,0 +1,7 @@
+substitutions:
+  name: office-ac
+  friendly_name: Office AC
+  area: Office
+
+packages:
+  mitsubishi-ac: !include templates/mitsubishi-ac.yaml

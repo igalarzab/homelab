@@ -1,0 +1,7 @@
+substitutions:
+  name: bedroom-ac
+  friendly_name: Bedroom AC
+  area: Bedroom
+
+packages:
+  mitsubishi-ac: !include templates/mitsubishi-ac.yaml

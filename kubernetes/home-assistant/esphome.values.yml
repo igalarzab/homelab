@@ -3,6 +3,8 @@
 
 defaultPodOptions:
   terminationGracePeriodSeconds: 30
+  annotations:
+    k8s.v1.cni.cncf.io/networks: kube-system/macvlan-iot
 
 controllers:
   esphome:
@@ -47,6 +49,18 @@ controllers:
               httpGet:
                 path: /
                 port: http
+    initContainers:
+      git:
+        image:
+          repository: bitnami/git
+          tag: latest
+        command: ["/bin/bash"]
+        args:
+          - -c
+          - >-
+            git clone ${HOMELAB_REPO} /repo &&
+            chown -R root:root /repo &&
+            cp -R /repo/${HOMELAB_ESPHOME_CONFIG}/{.,}* /config
 
 service:
   esphome:
@@ -67,6 +81,16 @@ ingress:
               identifier: esphome
               port: http
 
+secrets:
+  secrets:
+    stringData:
+      secrets.yaml: |+
+        wifi_ssid: "${ESPHOME_WIFI_SSID}"
+        wifi_password: "${ESPHOME_WIFI_PASSWORD}"
+
+        ac_ota_password: "${ESPHOME_AC_OTA_PASSWORD}"
+        ac_api_encryption_key: "${ESPHOME_AC_API_ENCRYPTION_KEY}"
+
 persistence:
   config:
     type: hostPath
@@ -74,5 +98,15 @@ persistence:
     hostPathType: DirectoryOrCreate
     advancedMounts:
       esphome:
+        git:
+          - path: /config
         esphome:
           - path: /config
+  secrets:
+    type: secret
+    name: "{{- (include \"bjw-s.common.lib.chart.names.fullname\" $) -}}-secrets"
+    advancedMounts:
+      esphome:
+        esphome:
+          - path: /config/secrets.yaml
+            subPath: secrets.yaml

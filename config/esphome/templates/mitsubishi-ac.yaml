@@ -1,0 +1,97 @@
+#
+# Board Config
+#
+
+esp32:
+  board: esp32doit-devkit-v1
+  framework:
+    type: esp-idf
+
+esphome:
+  name: ${name}
+  area: ${area}
+  friendly_name: ${friendly_name}
+
+external_components:
+  - source: github://echavet/MitsubishiCN105ESPHome
+
+logger:
+  level: INFO
+  logs:
+    EVT_SETS : INFO
+    WIFI : INFO
+    MQTT : INFO
+    WRITE_SETTINGS : INFO
+    SETTINGS : INFO
+    STATUS : INFO
+    CN105Climate: WARN
+    CN105: INFO
+    climate: WARN
+    sensor: WARN
+    chkSum : INFO
+    WRITE : WARN
+    READ : WARN
+    Header: INFO
+    Decoder : INFO
+    CONTROL_WANTED_SETTINGS: INFO
+
+wifi:
+  ssid: !secret wifi_ssid
+  password: !secret wifi_password
+
+uart:
+  id: HP_UART
+  baud_rate: 2400
+  tx_pin: GPIO17
+  rx_pin: GPIO16
+
+#
+# Home Assistant
+#
+
+api:
+  encryption:
+    key: !secret ac_api_encryption_key
+
+bluetooth_proxy:
+  active: true
+
+ota:
+  - platform: esphome
+    password: !secret ac_ota_password
+
+time:
+  - platform: homeassistant
+    id: homeassistant_time
+
+text_sensor:
+  - platform: wifi_info
+    ip_address:
+      name: IP
+    ssid:
+      name: SSID
+  - platform: version
+    name: Version
+    hide_timestamp: true
+
+button:
+  - platform: restart
+    name: Restart
+
+climate:
+  - platform: cn105
+    name: "Controller"
+    icon: mdi:heat-pump
+    update_interval: 1500ms
+    visual:
+      min_temperature: 15
+      max_temperature: 30
+      temperature_step:
+        target_temperature: 1.0
+        current_temperature: 0.1
+    vertical_vane_select:
+      name: Vertical Vane
+    supports:
+      mode: ["HEAT_COOL", "COOL", "DRY", "FAN_ONLY"]
+      fan_mode: ["AUTO", "QUIET", "LOW", "MEDIUM", "HIGH"]
+      swing_mode: ["OFF", "VERTICAL"]
