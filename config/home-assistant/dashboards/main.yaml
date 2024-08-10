@@ -7,12 +7,6 @@ views:
         entity: person.jose
       - name: Devices
         entity: sensor.unavailable_entities
-      - name: Download
-        entity: sensor.speedtest_download
-      - name: UK
-        entity: binary_sensor.work_day_uk
-      - name: JP
-        entity: binary_sensor.work_day_japan
     cards:
       - type: weather-forecast
         entity: weather.forecast_home
@@ -192,20 +186,28 @@ views:
           - entity: script.home_disable_security_system
       - type: entities
         entities:
-          - entity: binary_sensor.hall_door_entrance_contact
-          - entity: binary_sensor.bathroom_door_entrance_contact
-          - entity: binary_sensor.bedroom_door_entrance_contact
-          - entity: binary_sensor.living_room_door_entrance_contact
-          - entity: binary_sensor.bedroom_door_terrace_contact
-          - entity: binary_sensor.living_room_door_terrace_contact
+          - entity: binary_sensor.entrance_door_contact
+          - entity: binary_sensor.living_room_door_terrace_left_contact
+          - entity: binary_sensor.living_room_door_terrace_right_contact
+          - entity: binary_sensor.office_door_contact
+          - entity: binary_sensor.bathroom_door_contact
+          - entity: binary_sensor.bedroom_door_contact
         title: Doors
       - type: entities
         entities:
+          - entity: binary_sensor.office_window_centre_contact
+          - entity: binary_sensor.office_window_right_contact
+          - entity: binary_sensor.bedroom_window_left_contact
+          - entity: binary_sensor.bedroom_window_right_contact
+        title: Windows
+      - type: entities
+        entities:
+          - entity: binary_sensor.entrance_motion_occupancy
+          - entity: binary_sensor.kitchen_motion_occupancy
+          - entity: binary_sensor.hall_motion_occupancy
+          - entity: binary_sensor.office_motion_occupancy
           - entity: binary_sensor.bathroom_motion_occupancy
           - entity: binary_sensor.bedroom_motion_occupancy
-          - entity: binary_sensor.hall_motion_occupancy
-          - entity: binary_sensor.kitchen_motion_occupancy
-          - entity: binary_sensor.living_room_motion_occupancy
         title: Presence
   - path: living-room
     title: ''
@@ -220,42 +222,49 @@ views:
         show_icon: true
         state_color: true
         entities:
-          - entity: sensor.living_room_motion_illuminance_lux
           - entity: sensor.living_room_thermometer_temperature
           - entity: sensor.living_room_thermometer_humidity
-      - type: entities
-        title: Lights
-        show_header_toggle: false
-        state_color: true
-        entities:
-          - entity: script.living_room_normal_lights
-          - entity: light.living_room_lights
-          - entity: light.living_room_lights_ceiling
-          - entity: light.living_room_lights_sofa
-          - entity: light.living_room_lights_tv
       - type: entities
         title: Moods
         show_header_toggle: false
         state_color: false
         entities:
-          - entity: script.living_room_chill_lights
           - entity: script.living_room_chill_atmosphere
-          - entity: script.home_romantic_lights
           - entity: script.home_romantic_atmosphere
-          - entity: script.home_sexy_lights
           - entity: script.home_sexy_atmosphere
       - type: entities
         title: Entities
         show_header_toggle: false
         state_color: true
         entities:
-          - entity: group.living_room_curtains
+          - entity: cover.living_room_curtains
       - type: thermostat
-        entity: climate.living_room_ac
+        entity: climate.living_room_ac_left
+      - type: thermostat
+        entity: climate.living_room_ac_right
       - type: media-control
         entity: media_player.living_room_speaker
       - type: media-control
         entity: media_player.living_room_media_center
+  - path: office
+    icon: mdi:chair-rolling
+    badges: []
+    cards:
+      - type: glance
+        title: Sensors
+        state_color: true
+        show_name: false
+        show_icon: true
+        show_state: true
+        entities:
+          - entity: binary_sensor.office_door_contact
+          - entity: sensor.office_motion_illuminance
+          - entity: sensor.office_thermometer_temperature
+          - entity: sensor.office_thermometer_humidity
+      - type: thermostat
+        entity: climate.office_ac_controller
+      - type: media-control
+        entity: media_player.office_speaker
   - path: bedroom
     icon: mdi:bed
     badges: []
@@ -267,22 +276,14 @@ views:
         show_icon: true
         show_state: true
         entities:
-          - entity: binary_sensor.bedroom_door_entrance_contact
+          - entity: binary_sensor.bedroom_door_contact
           - entity: sensor.bedroom_motion_illuminance_lux
           - entity: sensor.bedroom_thermometer_temperature
           - entity: sensor.bedroom_thermometer_humidity
       - type: entities
-        title: Lights
-        entities:
-          - entity: script.bedroom_normal_lights
-          - entity: light.bedroom_lights
-        state_color: true
-        show_header_toggle: false
-      - type: entities
         title: Moods
         show_header_toggle: false
         entities:
-          - entity: script.bedroom_chill_lights
           - entity: script.bedroom_chill_atmosphere
       - type: entities
         title: Entities
@@ -341,9 +342,11 @@ views:
         title: Sensors
       - type: entities
         entities:
-          - entity: timer.bathroom_automatic_lights_timer
-          - entity: timer.bedroom_automatic_lights_timer
-          - entity: timer.hall_automatic_lights_timer
+          - entity: timer.entrance_automatic_lights_timer
           - entity: timer.kitchen_automatic_lights_timer
           - entity: timer.living_room_automatic_lights_timer
+          - entity: timer.hall_automatic_lights_timer
+          - entity: timer.office_automatic_lights_timer
+          - entity: timer.bathroom_automatic_lights_timer
+          - entity: timer.bedroom_automatic_lights_timer
         title: Light Timers

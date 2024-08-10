@@ -4,7 +4,7 @@
 defaultPodOptions:
   terminationGracePeriodSeconds: 30
   annotations:
-    k8s.v1.cni.cncf.io/networks: kube-system/macvlan-iot
+    k8s.v1.cni.cncf.io/networks: '[{ "name": "macvlan-iot", "namespace": "kube-system", "mac":"62:e5:28:8e:7a:de" }]'
 
 controllers:
   home-assistant:
@@ -17,7 +17,7 @@ controllers:
       home-assistant:
         image:
           repository: linuxserver/homeassistant
-          tag: "2024.7.4"
+          tag: "2024.8.0"
         env:
           TZ: ${COMMON_TZ}
           PUID: 1000

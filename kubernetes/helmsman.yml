@@ -107,7 +107,6 @@ apps:
     namespace: home-assistant
     valuesFile: home-assistant/nodered.values.yml
     priority: -57
-    enabled: false # TODO: Not using for now
   esphome:
     <<: *default
     chart: bjw-s/app-template

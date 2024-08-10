@@ -47,6 +47,18 @@ controllers:
               httpGet:
                 path: /
                 port: http
+    initContainers:
+      git:
+        image:
+          repository: bitnami/git
+          tag: latest
+        command: ["/bin/bash"]
+        args:
+          - -c
+          - >-
+            git clone ${HOMELAB_REPO} /repo &&
+            chown -R 1000:100 /repo &&
+            cp -R /repo/${HOMELAB_NODERED_CONFIG}/{.,}* /data
 
 service:
   node-red:
@@ -74,5 +86,7 @@ persistence:
     hostPathType: DirectoryOrCreate
     advancedMounts:
       node-red:
+        git:
+          - path: /data
         node-red:
           - path: /data
