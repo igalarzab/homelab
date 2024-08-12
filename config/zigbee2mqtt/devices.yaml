@@ -146,6 +146,10 @@
 '0x0c4314fffe997804':
   friendly_name: bedroom/light_bed
   optimistic: true
+  transition: ''
+  color_sync: true
+  state_action: false
+  filtered_attributes: ['linkquality']
   homeassistant:
     name: Bedroom Light Bed
     device:

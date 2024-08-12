@@ -85,7 +85,7 @@ climate:
     update_interval: 1500ms
     visual:
       min_temperature: 15
-      max_temperature: 30
+      max_temperature: 35
       temperature_step:
         target_temperature: 1.0
         current_temperature: 0.1
