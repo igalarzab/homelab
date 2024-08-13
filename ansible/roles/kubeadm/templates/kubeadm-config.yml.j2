@@ -19,6 +19,10 @@ apiServer:
   timeoutForControlPlane: 4m0s
   extraArgs:
     service-node-port-range: 80-32767
+  certSANs:
+    - 127.0.0.1
+    - localhost
+    - {{ k8s_api_server_san }}
 networking:
   dnsDomain: cluster.local
   podSubnet: {{ pod_cidr_ipv4 }}

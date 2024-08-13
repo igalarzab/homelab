@@ -74,7 +74,7 @@ service:
 ingress:
   main:
     hosts:
-      - host: "zigbee.${COMMON_DOMAIN_ROOT}"
+      - host: "z2m.${COMMON_DOMAIN_ROOT}"
         paths:
           - path: /
             pathType: Prefix

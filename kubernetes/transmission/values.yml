@@ -120,7 +120,6 @@ rawResources:
           - file_mode=0644
           - uid=1000
           - gid=100
-          - mfsymlinks
         capacity:
           storage: ${NAS_SMB_SIZE}
         accessModes:

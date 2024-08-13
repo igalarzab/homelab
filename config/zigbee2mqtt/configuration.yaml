@@ -28,6 +28,6 @@ mqtt:
 serial:
   adapter: ember
   rtscts: false
-  port: tcp://10.31.2.11:6638
+  port: tcp://10.31.7.40:6638
   baudrate: 115200
   disable_led: false

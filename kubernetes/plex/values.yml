@@ -127,7 +127,6 @@ rawResources:
           - file_mode=0444
           - uid=0
           - gid=0
-          - mfsymlink
         capacity:
           storage: ${NAS_SMB_SIZE}
         accessModes:
