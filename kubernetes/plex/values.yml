@@ -3,6 +3,8 @@
 
 defaultPodOptions:
   terminationGracePeriodSeconds: 30
+  annotations:
+    k8s.v1.cni.cncf.io/networks: '[{ "name": "network-vlan-sot", "namespace": "kube-system", "mac":"e6:99:c8:2e:b8:ea" }]'
 
 controllers:
   plex:
@@ -19,7 +21,6 @@ controllers:
         securityContext:
           privileged: true # TODO: needed for quicksync
         env:
-          ADVERTISE_IP: plex.${COMMON_DOMAIN_ROOT}
           PLEX_CLAIM: ${PLEX_CLAIM}
           TZ: ${COMMON_TZ}
           PLEX_UID: 1000

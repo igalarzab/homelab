@@ -3,21 +3,43 @@ extraDeploy:
     apiVersion: "k8s.cni.cncf.io/v1"
     kind: NetworkAttachmentDefinition
     metadata:
-      name: macvlan-iot
+      name: network-vlan-server
     spec:
       config: '{
           "cniVersion": "1.0.0",
           "type": "macvlan",
-          "master": "${MULTUS_ETHERNET_IFACE}",
+          "master": "${MULTUS_VLAN_SERVER_ETHERNET_IFACE}",
           "mode": "bridge",
           "ipam": {
             "type": "host-local",
-            "subnet": "${MULTUS_CIDR}",
-            "rangeStart": "${MULTUS_START_IP}",
-            "rangeEnd": "${MULTUS_END_IP}",
+            "subnet": "${MULTUS_VLAN_SERVER_CIDR}",
+            "rangeStart": "${MULTUS_VLAN_SERVER_START_IP}",
+            "rangeEnd": "${MULTUS_VLAN_SERVER_END_IP}",
             "routes": [
-              { "dst": "${MULTUS_CIDR}","gw":"${MULTUS_GATEWAY}" }
+              { "dst": "${MULTUS_VLAN_SERVER_ROUTE_CIDR}", "gw":"${MULTUS_VLAN_SERVER_GATEWAY}" }
             ],
-            "gateway": "${MULTUS_GATEWAY}"
+            "gateway": "${MULTUS_VLAN_SERVER_GATEWAY}"
+          }
+        }'
+  - |
+    apiVersion: "k8s.cni.cncf.io/v1"
+    kind: NetworkAttachmentDefinition
+    metadata:
+      name: network-vlan-sot
+    spec:
+      config: '{
+          "cniVersion": "1.0.0",
+          "type": "macvlan",
+          "master": "${MULTUS_VLAN_SOT_ETHERNET_IFACE}",
+          "mode": "bridge",
+          "ipam": {
+            "type": "host-local",
+            "subnet": "${MULTUS_VLAN_SOT_CIDR}",
+            "rangeStart": "${MULTUS_VLAN_SOT_START_IP}",
+            "rangeEnd": "${MULTUS_VLAN_SOT_END_IP}",
+            "routes": [
+              { "dst": "${MULTUS_VLAN_SOT_ROUTE_CIDR}", "gw":"${MULTUS_VLAN_SOT_GATEWAY}" }
+            ],
+            "gateway": "${MULTUS_VLAN_SOT_GATEWAY}"
           }
         }'
