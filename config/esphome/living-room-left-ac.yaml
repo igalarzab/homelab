@@ -1,0 +1,7 @@
+substitutions:
+  name: living-room-left-ac
+  friendly_name: Living Room Left AC
+  area: Living Room
+
+packages:
+  mitsubishi-ac: !include templates/mitsubishi-ac.yaml

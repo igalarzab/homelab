@@ -6,7 +6,7 @@ apps = [
     'jdownloader',
     'keel',
     'kube-system',
-    'observability',
+    'mosquitto',
     'plex',
     'traefik',
     'transmission',

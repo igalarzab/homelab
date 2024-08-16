@@ -114,6 +114,14 @@
     name: Office Remote Desk
     device:
       suggested_area: Office
+'0x54ef441000d694d9':
+  friendly_name: office/switch_entrance
+  optimistic: true
+  filtered_attributes: ['device_temperature', 'flip_indicator_light', 'linkquality', 'mode_switch', 'power_outage_count', 'power_outage_memory', 'update_available']
+  homeassistant:
+    name: Office Switch Entrance
+    device:
+      suggested_area: Office
 '0x00158d00067be294':
   friendly_name: bathroom/door
   optimistic: true
@@ -131,6 +139,12 @@
     name: Bathroom Motion
     device:
       suggested_area: Bathroom
+'0x00158d000ae464b9':
+  friendly_name: bathroom/thermometer
+  optimistic: true
+  filtered_attributes: ['linkquality', 'power_outage_count', 'pressure', 'voltage']
+  homeassistant:
+    name: Bathroom Thermometer
 '0x00158d000484feb0':
   friendly_name: bedroom/thermometer
   optimistic: true
