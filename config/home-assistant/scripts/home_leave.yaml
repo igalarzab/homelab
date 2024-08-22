@@ -1,5 +1,5 @@
 home_leave:
-  alias: Home Leave 
+  alias: Home Leave
   icon: mdi:home-remove
   mode: single
   sequence:

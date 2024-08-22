@@ -6,6 +6,5 @@ bedroom_chill_atmosphere:
     - service: script.helper_music
       data:
         player_id: media_player.bedroom_speaker
-        player_name: Bedroom speaker
+        player_name: Bedroom Speaker
         playlist: spotify:playlist:37i9dQZF1DX889U0CL85jj
-    - service: script.bedroom_chill_lights

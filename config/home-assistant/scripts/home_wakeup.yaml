@@ -13,7 +13,3 @@ home_wakeup:
         playlist: spotify:playlist:37i9dQZF1EIdJI2xV2PSSs
     - service: cover.open_cover
       entity_id: group.home_curtains
-    - alias: "One of the curtains does not open correctly, no idea why"
-      delay: 10
-    - service: cover.open_cover
-      entity_id: cover.living_room_right_curtains

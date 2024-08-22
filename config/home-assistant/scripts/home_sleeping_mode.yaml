@@ -5,17 +5,9 @@ home_sleeping_mode:
   sequence:
     - service: timer.start
       entity_id: timer.bedroom_sleeping
-    - service: light.turn_off
-      entity_id: light.living_room_lights
-    - service: light.turn_off
-      entity_id: light.living_room_lights_tv
     - service: media_player.turn_off
       entity_id: media_player.living_room_tv
     - service: media_player.turn_off
       entity_id: media_player.home_speakers
     - service: cover.close_cover
       entity_id: group.home_curtains
-    - alias: "One of the curtains does not close correctly, no idea why"
-      delay: 10
-    - service: cover.close_cover
-      entity_id: cover.living_room_right_curtains

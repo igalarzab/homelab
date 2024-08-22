@@ -2,30 +2,35 @@ home_climate:
   name: Home Climate Units
   icon: mdi:home-thermometer
   entities:
-    - climate.living_room_ac
-    - climate.bedroom_ac
+    - climate.bedroom_ac_controller
+    - climate.office_ac_controller
+    - climate.living_room_left_ac_controller
+    - climate.living_room_right_ac_controller
 
 home_curtains:
   name: Home Curtains
   icon: mdi:blinds
   entities:
     - cover.bedroom_curtains
-    - group.living_room_curtains
+    - cover.living_room_curtains
 
 home_motion_inside:
   name: Home Inside Motion
   icon: mdi:run
   entities:
     - binary_sensor.bathroom_motion_occupancy
-    - binary_sensor.living_room_motion_occupancy
     - binary_sensor.bedroom_motion_occupancy
+    - binary_sensor.hall_motion_occupancy
+    - binary_sensor.kitchen_motion_occupancy
+    - binary_sensor.living_room_motion_occupancy
+    - binary_sensor.office_motion_occupancy
 
 home_motion:
   name: Home Motion
   icon: mdi:run
   entities:
     - group.home_motion_inside
-    - binary_sensor.hall_motion_occupancy
+    - binary_sensor.entrance_motion_occupancy
 
 home_automatic_lights_timers:
   name: Home Automatic Lights Timers
@@ -33,13 +38,8 @@ home_automatic_lights_timers:
   entities:
     - timer.bathroom_automatic_lights_timer
     - timer.bedroom_automatic_lights_timer
+    - timer.entrance_lights_timer
     - timer.hall_automatic_lights_timer
     - timer.kitchen_automatic_lights_timer
     - timer.living_room_automatic_lights_timer
-
-living_room_curtains:
-  name: Living Room Curtains
-  icon: mdi:blinds
-  entities:
-    - cover.living_room_left_curtains
-    - cover.living_room_right_curtains
+    - timer.office_automatic_lights_timer
