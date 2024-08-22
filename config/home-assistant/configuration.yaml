@@ -37,8 +37,10 @@ scene: !include scenes.yaml
 scene yaml: !include_dir_merge_list scenes
 script: !include_dir_merge_named scripts
 
-media_player: !include devices/media_players.yaml
 input_boolean: !include devices/input_booleans.yaml
+input_button: !include devices/input_buttons.yaml
+input_number: !include devices/input_numbers.yaml
+media_player: !include devices/media_players.yaml
+sensor: !include devices/sensors.yaml
 spotcast: !include devices/spotcast.yaml
 timer: !include devices/timers.yaml
-sensor: !include devices/sensors.yaml

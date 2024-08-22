@@ -1,11 +1,25 @@
-home_climate:
-  name: Home Climate Units
-  icon: mdi:home-thermometer
+#
+# AC
+#
+
+living_room_ac_controller:
+  name: Living Room AC
+  icon: mdi:air-conditioner
+  entities:
+    - climate.living_room_left_ac_controller
+    - climate.living_room_right_ac_controller
+
+home_ac_controller:
+  name: Home AC Units
+  icon: mdi:air-conditioner
   entities:
     - climate.bedroom_ac_controller
     - climate.office_ac_controller
-    - climate.living_room_left_ac_controller
-    - climate.living_room_right_ac_controller
+    - group.living_room_ac_controller
+
+#
+# Curtains
+#
 
 home_curtains:
   name: Home Curtains
@@ -14,7 +28,50 @@ home_curtains:
     - cover.bedroom_curtains
     - cover.living_room_curtains
 
-home_motion_inside:
+#
+# Lights
+#
+
+living_room_lights:
+  name: Living Room Lights
+  icon: mdi:lightbulb-group-outline
+  entities:
+    - switch.living_room_controller_wall_left_switch_one
+    - switch.living_room_controller_wall_left_switch_two
+
+bedroom_lights:
+  name: Bedroom Lights
+  icon: mdi:lightbulb-group-outline
+  entities:
+    - switch.bedroom_controller_entrance_switch_one
+    - light.bedroom_light_bed
+
+office_lights:
+  name: Office Lights
+  icon: mdi:lightbulb-group-outline
+  entities:
+    - switch.office_controller_entrance_switch_left
+
+hall_lights:
+  name: Hall Lights
+  icon: mdi:lightbulb-group-outline
+  entities:
+    - switch.living_room_controller_wall_left_switch_three
+
+home_lights:
+  name: Home Lights
+  icon: mdi:lightbulb-group-outline
+  entities:
+    - group.bedroom_lights
+    - group.living_room_lights
+    - group.office_lights
+    - group.hall_lights
+
+#
+# Occupancy
+#
+
+home_inside_motion_occupancy:
   name: Home Inside Motion
   icon: mdi:run
   entities:
@@ -25,12 +82,41 @@ home_motion_inside:
     - binary_sensor.living_room_motion_occupancy
     - binary_sensor.office_motion_occupancy
 
-home_motion:
+home_motion_occupancy:
   name: Home Motion
   icon: mdi:run
   entities:
-    - group.home_motion_inside
+    - group.home_inside_motion_occupancy
     - binary_sensor.entrance_motion_occupancy
+
+#
+# Doors / Windows
+#
+
+office_windows:
+  name: Office Windows
+  icon: mdi:window-open
+  entities:
+    - binary_sensor.office_window_centre_contact
+    - binary_sensor.office_window_right_contact
+
+bedroom_windows:
+  name: Office Windows
+  icon: mdi:window-open
+  entities:
+    - binary_sensor.bedroom_window_left_contact
+    - binary_sensor.bedroom_window_right_contact
+
+living_room_doors:
+  name: Living Room Doors
+  icon: mdi:door-closed
+  entities:
+    - binary_sensor.living_room_door_left_contact
+    - binary_sensor.living_room_door_right_contact
+
+#
+# Others
+#
 
 home_automatic_lights_timers:
   name: Home Automatic Lights Timers
@@ -38,7 +124,7 @@ home_automatic_lights_timers:
   entities:
     - timer.bathroom_automatic_lights_timer
     - timer.bedroom_automatic_lights_timer
-    - timer.entrance_lights_timer
+    - timer.entrance_automatic_lights_timer
     - timer.hall_automatic_lights_timer
     - timer.kitchen_automatic_lights_timer
     - timer.living_room_automatic_lights_timer

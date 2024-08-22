@@ -92,6 +92,6 @@ climate:
     vertical_vane_select:
       name: Vertical Vane
     supports:
-      mode: ["HEAT_COOL", "COOL", "DRY", "FAN_ONLY"]
+      mode: ["COOL", "DRY", "FAN_ONLY"]
       fan_mode: ["AUTO", "QUIET", "LOW", "MEDIUM", "HIGH"]
       swing_mode: ["OFF", "VERTICAL"]

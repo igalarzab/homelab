@@ -1,20 +1,21 @@
-helper_music:
-  alias: Helper Music
+play_music:
+  alias: Play Music
   icon: mdi:music
   mode: single
   fields:
     player_id:
       description: Player ID where to run the music
+      example: media_player.home_speakers
       selector:
         target:
           entity:
             domain: media_player
     player_name:
       description: Player name where to run the music
-      example: Living Room Speaker
+      example: Home Speakers
     volume_level:
       description: Volume of the speakers
-      example: 0.2
+      example: 0.15
     playlist:
       description: ID of the playlist to play
       example: spotify:playlist:37i9dQZF1DX889U0CL85jj

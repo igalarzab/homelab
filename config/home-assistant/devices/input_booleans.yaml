@@ -1,15 +1,15 @@
 guests:
   name: Guests at Home
   initial: 'off'
-  icon: mdi:shield-lock
+  icon: mdi:account-plus
 
-holidays_mode:
+holidays:
   name: Holidays Mode
   initial: 'off'
-  icon: mdi:shield-lock
+  icon: mdi:beach
 
 home_locked:
-  name: Home is locked
+  name: Home Locked
   initial: 'off'
   icon: mdi:shield-lock
 

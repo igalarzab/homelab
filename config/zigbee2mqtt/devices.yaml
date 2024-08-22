@@ -1,195 +1,277 @@
+# Aqara Door/Window Sensors
 '0x00158d0001e0a23e':
   friendly_name: entrance/door
-  optimistic: true
   filtered_attributes: ['device_temperature', 'linkquality', 'power_outage_count', 'trigger_count', 'voltage']
   homeassistant:
     name: Entrance Door
     device:
       suggested_area: Entrance
+    contact:
+      device_class: door
+      name: Contact
+'0x00158d00028d8ebf':
+  friendly_name: living_room/door_right
+  filtered_attributes: ['device_temperature', 'linkquality', 'power_outage_count', 'trigger_count', 'voltage']
+  homeassistant:
+    name: Living Room Door Right
+    device:
+      suggested_area: Living Room
+    contact:
+      device_class: door
+      name: Contact
+'0x00158d0006330376':
+  friendly_name: living_room/door_left
+  filtered_attributes: ['device_temperature', 'linkquality', 'power_outage_count', 'trigger_count', 'voltage']
+  homeassistant:
+    name: Living Room Door Left
+    device:
+      suggested_area: Living Room
+    contact:
+      device_class: door
+      name: Contact
+'0x00158d00067965b8':
+  friendly_name: office/door
+  filtered_attributes: ['device_temperature', 'linkquality', 'power_outage_count', 'trigger_count', 'voltage']
+  homeassistant:
+    name: Office Door
+    device:
+      suggested_area: Office
+    contact:
+      device_class: door
+      name: Contact
+'0x00158d00028c583f':
+  friendly_name: office/window_centre
+  filtered_attributes: ['device_temperature', 'linkquality', 'power_outage_count', 'trigger_count', 'voltage']
+  homeassistant:
+    name: Office Window Centre
+    device:
+      suggested_area: Office
+    contact:
+      device_class: window
+      name: Contact
+'0x00158d000633037a':
+  friendly_name: office/window_right
+  filtered_attributes: ['device_temperature', 'linkquality', 'power_outage_count', 'trigger_count', 'voltage']
+  homeassistant:
+    name: Office Window Right
+    device:
+      suggested_area: Office
+    contact:
+      device_class: window
+      name: Contact
+'0x00158d00067be294':
+  friendly_name: bathroom/door
+  filtered_attributes: ['device_temperature', 'linkquality', 'power_outage_count', 'trigger_count', 'voltage']
+  homeassistant:
+    name: Bathroom Door
+    device:
+      suggested_area: Bathroom
+    contact:
+      device_class: door
+      name: Contact
+'0x00158d0001e09fb1':
+  friendly_name: bedroom/door
+  filtered_attributes: ['device_temperature', 'linkquality', 'power_outage_count', 'trigger_count', 'voltage']
+  homeassistant:
+    name: Bedroom Door
+    device:
+      suggested_area: Bedroom
+    contact:
+      device_class: door
+      name: Contact
+'0x00158d00028d6f3a':
+  friendly_name: bedroom/window_right
+  filtered_attributes: ['device_temperature', 'linkquality', 'power_outage_count', 'trigger_count', 'voltage']
+  homeassistant:
+    name: Bedroom Window Right
+    device:
+      suggested_area: Bedroom
+    contact:
+      device_class: window
+      name: Contact
+'0x00158d0005053085':
+  friendly_name: bedroom/window_left
+  filtered_attributes: ['device_temperature', 'linkquality', 'power_outage_count', 'trigger_count', 'voltage']
+  homeassistant:
+    name: Bedroom Window Left
+    device:
+      suggested_area: Bedroom
+    contact:
+      device_class: window
+      name: Contact
+
+# Aqara Motion Sensors
 '0x00158d00066933ab':
   friendly_name: 'entrance/motion'
-  optimistic: true
   occupancy_timeout: 15
-  filtered_attributes: ['device_temperature', 'linkquality', 'power_outage_count', 'trigger_count', 'voltage']
+  filtered_attributes: ['device_temperature', 'illuminance_lux', 'linkquality', 'power_outage_count', 'trigger_count', 'voltage']
   homeassistant:
     name: Entrance Motion
     device:
       suggested_area: Entrance
 '0x00158d000669412a':
   friendly_name: 'kitchen/motion'
-  optimistic: true
   occupancy_timeout: 15
-  filtered_attributes: ['device_temperature', 'linkquality', 'power_outage_count', 'trigger_count', 'voltage']
+  filtered_attributes: ['device_temperature', 'illuminance_lux', 'linkquality', 'power_outage_count', 'trigger_count', 'voltage']
   homeassistant:
     name: Kitchen Motion
     device:
       suggested_area: Kitchen
+'0x00158d000669577b':
+  friendly_name: hall/motion
+  occupancy_timeout: 15
+  filtered_attributes: ['device_temperature', 'illuminance_lux', 'linkquality', 'power_outage_count', 'trigger_count', 'voltage']
+  homeassistant:
+    name: Hall Motion
+    device:
+      suggested_area: Hall
+'0x00158d0006e45a7e':
+  friendly_name: 'bathroom/motion'
+  occupancy_timeout: 15
+  filtered_attributes: ['device_temperature', 'illuminance_lux', 'linkquality', 'power_outage_count', 'trigger_count', 'voltage']
+  homeassistant:
+    name: Bathroom Motion
+    device:
+      suggested_area: Bathroom
+'0x00158d0006695335':
+  friendly_name: 'bedroom/motion'
+  occupancy_timeout: 15
+  filtered_attributes: ['device_temperature', 'illuminance_lux', 'linkquality', 'power_outage_count', 'trigger_count', 'voltage']
+  homeassistant:
+    name: Bedroom Motion
+    device:
+      suggested_area: Bedroom
+
+# Linptech Presence Sensor
+'0xa49e69fffe90929b':
+  friendly_name: office/motion
+  debounce: 1
+  filtered_attributes: ['battery_low', 'device_temperature', 'fading_time', 'linkquality', 'motion_detection_distance', 'motion_detection_sensitivity', 'power_outage_count', 'presence_keep_time', 'static_detection_sensitivity', 'tamper', 'trigger_count', 'voltage']
+  homeassistant:
+    name: Office Motion
+    device:
+      suggested_area: Office
+
+# Aqara Thermometers
 '0x00158d000484ff28':
   friendly_name: living_room/thermometer
-  optimistic: true
   filtered_attributes: ['linkquality', 'power_outage_count', 'pressure', 'voltage']
   homeassistant:
     name: Living Room Thermometer
     device:
       suggested_area: Living Room
-'0x00158d00028d8ebf':
-  friendly_name: living_room/door_terrace_right
-  optimistic: true
-  filtered_attributes: ['device_temperature', 'linkquality', 'power_outage_count', 'trigger_count', 'voltage']
-  homeassistant:
-    name: Living Room Terrace Right Door
-    device:
-      suggested_area: Living Room
-'0x00158d0006330376':
-  friendly_name: living_room/door_terrace_left
-  optimistic: true
-  filtered_attributes: ['device_temperature', 'linkquality', 'power_outage_count', 'trigger_count', 'voltage']
-  homeassistant:
-    name: Living Room Terrace Left Door
-    device:
-      suggested_area: Living Room
-'0x8c65a3fffeb3ee1c':
-  friendly_name: living_room/ir_controller
-  optimistic: true
-  filtered_attributes: ['linkquality']
-  homeassistant:
-    name: Living Room IR Controller
-    device:
-      suggested_area: Living Room
-'0x00158d000669577b':
-  friendly_name: hall/motion
-  optimistic: true
-  occupancy_timeout: 15
-  filtered_attributes: ['device_temperature', 'linkquality', 'power_outage_count', 'trigger_count', 'voltage']
-  homeassistant:
-    name: Hall Motion
-    device:
-      suggested_area: Hall
 '0x00158d0006bec2e2':
   friendly_name: office/thermometer
-  optimistic: true
   filtered_attributes: ['linkquality', 'power_outage_count', 'pressure', 'voltage']
   homeassistant:
     name: Office Thermometer
     device:
       suggested_area: Office
-'0x00158d00067965b8':
-  friendly_name: office/door
-  optimistic: true
-  filtered_attributes: ['device_temperature', 'linkquality', 'power_outage_count', 'trigger_count', 'voltage']
-  homeassistant:
-    name: Office Door
-    device:
-      suggested_area: Office
-'0x00158d00028c583f':
-  friendly_name: office/window_centre
-  optimistic: true
-  filtered_attributes: ['device_temperature', 'linkquality', 'power_outage_count', 'trigger_count', 'voltage']
-  homeassistant:
-    name: Office Centre Window
-    device:
-      suggested_area: Office
-'0x00158d000633037a':
-  friendly_name: office/window_right
-  optimistic: true
-  filtered_attributes: ['device_temperature', 'linkquality', 'power_outage_count', 'trigger_count', 'voltage']
-  homeassistant:
-    name: Office Right Window
-    device:
-      suggested_area: Office
-'0xa49e69fffe90929b':
-  friendly_name: office/motion
-  optimistic: true
-  occupancy_timeout: 15
-  filtered_attributes: ['device_temperature', 'linkquality', 'power_outage_count', 'trigger_count', 'voltage']
-  homeassistant:
-    name: Office Motion
-    device:
-      suggested_area: Office
-'0x001788010b59c0e5':
-  friendly_name: office/remote_desk
-  optimistic: true
-  filtered_attributes: ['linkquality', 'update', 'update_available']
-  homeassistant:
-    name: Office Remote Desk
-    device:
-      suggested_area: Office
-'0x54ef441000d694d9':
-  friendly_name: office/switch_entrance
-  optimistic: true
-  filtered_attributes: ['device_temperature', 'flip_indicator_light', 'linkquality', 'mode_switch', 'power_outage_count', 'power_outage_memory', 'update_available']
-  homeassistant:
-    name: Office Switch Entrance
-    device:
-      suggested_area: Office
-'0x00158d00067be294':
-  friendly_name: bathroom/door
-  optimistic: true
-  filtered_attributes: ['device_temperature', 'linkquality', 'power_outage_count', 'trigger_count', 'voltage']
-  homeassistant:
-    name: Bathroom Door
-    device:
-      suggested_area: Bathroom
-'0x00158d0006e45a7e':
-  friendly_name: 'bathroom/motion'
-  optimistic: true
-  occupancy_timeout: 15
-  filtered_attributes: ['device_temperature', 'linkquality', 'power_outage_count', 'trigger_count', 'voltage']
-  homeassistant:
-    name: Bathroom Motion
-    device:
-      suggested_area: Bathroom
 '0x00158d000ae464b9':
   friendly_name: bathroom/thermometer
-  optimistic: true
   filtered_attributes: ['linkquality', 'power_outage_count', 'pressure', 'voltage']
   homeassistant:
     name: Bathroom Thermometer
+    device:
+      suggested_area: Bathroom
 '0x00158d000484feb0':
   friendly_name: bedroom/thermometer
-  optimistic: true
   filtered_attributes: ['linkquality', 'power_outage_count', 'pressure', 'voltage']
   homeassistant:
     name: Bedroom Thermometer
-'0x00158d0001e09fb1':
-  friendly_name: bedroom/door
-  optimistic: true
-  filtered_attributes: ['device_temperature', 'linkquality', 'power_outage_count', 'trigger_count', 'voltage']
+    device:
+      suggested_area: Bedroom
+
+# IR Blasters
+'0x8c65a3fffeb3ee1c':
+  friendly_name: living_room/ir_controller
+  filtered_attributes: ['linkquality']
   homeassistant:
-    name: Bedroom Door
+    name: Living Room IR Controller
+    device:
+      suggested_area: Living Room
+
+# Phillips Hue Switches
+'0x001788010b59c0e5':
+  friendly_name: office/controller_desk
+  filtered_attributes: ['linkquality', 'update', 'update_available']
+  homeassistant:
+    name: Office Controller Desk
+    device:
+      suggested_area: Office
+'0x00178801096aa3ed':
+  friendly_name: bedroom/controller_bed
+  filtered_attributes: ['linkquality', 'update', 'update_available']
+  homeassistant:
+    name: Bedroom Controller Bed
+    device:
+      suggested_area: Bedroom
+
+# Aqara Switches E1
+'0x54ef441000d694d9':
+  friendly_name: office/controller_entrance
+  optimistic: true
+  filtered_attributes: ['device_temperature', 'flip_indicator_light', 'linkquality', 'mode_switch', 'operation_mode_left', 'operation_mode_right', 'power_outage_count', 'power_outage_memory', 'update', 'update_available']
+  homeassistant:
+    name: Office Controller Entrance
+    device:
+      suggested_area: Office
+    switch_left:
+      name: Switch Left
+    switch_right:
+      name: Switch Right
+
+# Aqara Switch Z1 Pro
+'0x54ef441000bc376b':
+  friendly_name: 'bedroom/controller_entrace'
+  optimistic: true
+  filtered_attributes: ['action_slide_relative_displacement', 'action_slide_speed', 'action_slide_time', 'action_slide_time_delta', 'click_mode', 'device_temperature', 'linkquality', 'lock_relay', 'lock_relay_bottom', 'lock_relay_center', 'lock_relay_top', 'mode_switch', 'operation_mode_bottom', 'operation_mode_center', 'operation_mode_top', 'power_on_behavior', 'power_outage_count', 'trigger_count', 'update', 'update_available', 'voltage']
+  homeassistant:
+    name: Bedroom Controller Entrance
+    device:
+      suggested_area: Bedroom
+    switch_top:
+      object_id: switch_one
+    switch_center:
+      object_id: switch_two
+    switch_bottom:
+      object_id: switch_three
+    switch_one:
+      name: Switch One
+    switch_two:
+      name: Switch Two
+    switch_three:
+      name: Switch Three
+'0x54ef441000bc590f':
+  friendly_name: living_room/controller_wall_left
+  optimistic: true
+  filtered_attributes: ['action_slide_relative_displacement', 'action_slide_speed', 'action_slide_time', 'action_slide_time_delta', 'click_mode', 'device_temperature', 'linkquality', 'lock_relay', 'lock_relay_bottom', 'lock_relay_center', 'lock_relay_top', 'mode_switch', 'operation_mode_bottom', 'operation_mode_center', 'operation_mode_top', 'power_on_behavior', 'power_outage_count', 'trigger_count', 'update', 'update_available', 'voltage']
+  homeassistant:
+    name: Living Room Controller Wall Left
+    device:
+      suggested_area: Living Room
+    switch_top:
+      object_id: switch_one
+    switch_center:
+      object_id: switch_two
+    switch_bottom:
+      object_id: switch_three
+    switch_one:
+      name: Switch One
+    switch_two:
+      name: Switch Two
+    switch_three:
+      name: Switch Three
+
+# Ikea Lights
 '0x0c4314fffe997804':
   friendly_name: bedroom/light_bed
   optimistic: true
   transition: ''
   color_sync: true
   state_action: false
-  filtered_attributes: ['linkquality']
+  filtered_attributes: ['color_mode', 'color_options', 'color_temp_startup', 'linkquality', 'power_on_behavior', 'update', 'update_available']
   homeassistant:
     name: Bedroom Light Bed
-    device:
-      suggested_area: Bedroom
-'0x00158d00028d6f3a':
-  friendly_name: bedroom/window_right
-  optimistic: true
-  filtered_attributes: ['device_temperature', 'linkquality', 'power_outage_count', 'trigger_count', 'voltage']
-  homeassistant:
-    name: Bedroom Right Window
-    device:
-      suggested_area: Bedroom
-'0x00158d0005053085':
-  friendly_name: bedroom/window_left
-  optimistic: true
-  filtered_attributes: ['device_temperature', 'linkquality', 'power_outage_count', 'trigger_count', 'voltage']
-  homeassistant:
-    name: Bedroom Left Window
-    device:
-      suggested_area: Bedroom
-'0x00158d0006695335':
-  friendly_name: 'bedroom/motion'
-  optimistic: true
-  occupancy_timeout: 15
-  filtered_attributes: ['device_temperature', 'linkquality', 'power_outage_count', 'trigger_count', 'voltage']
-  homeassistant:
-    name: Bedroom Motion
     device:
       suggested_area: Bedroom

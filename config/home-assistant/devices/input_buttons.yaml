@@ -1,0 +1,11 @@
+go_to_sleep:
+  name: Go to Sleep
+  icon: mdi:sleep
+
+leave_home:
+  name: Leave Home
+  icon: mdi:exit-run
+
+wake_up:
+  name: Wake Up
+  icon: mdi:bed-clock

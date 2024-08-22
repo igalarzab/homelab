@@ -175,20 +175,16 @@ views:
               transform: scale(0.5)
               color: rgba(0,0,0,0)
       - type: entities
-        title: Scripts
-        show_header_toggle: false
-        state_color: false
         entities:
-          - entity: script.home_turn_off_everything
-          - entity: script.home_sleeping_mode
-          - entity: script.home_wakeup
-          - entity: script.home_enable_security_system
-          - entity: script.home_disable_security_system
+          - entity: input_button.leave_home
+          - entity: input_button.go_to_sleep
+          - entity: input_button.wake_up
+        title: Actions
       - type: entities
         entities:
           - entity: binary_sensor.entrance_door_contact
-          - entity: binary_sensor.living_room_door_terrace_left_contact
-          - entity: binary_sensor.living_room_door_terrace_right_contact
+          - entity: binary_sensor.living_room_door_left_contact
+          - entity: binary_sensor.living_room_door_right_contact
           - entity: binary_sensor.office_door_contact
           - entity: binary_sensor.bathroom_door_contact
           - entity: binary_sensor.bedroom_door_contact
@@ -225,23 +221,15 @@ views:
           - entity: sensor.living_room_thermometer_temperature
           - entity: sensor.living_room_thermometer_humidity
       - type: entities
-        title: Moods
-        show_header_toggle: false
-        state_color: false
-        entities:
-          - entity: script.living_room_chill_atmosphere
-          - entity: script.home_romantic_atmosphere
-          - entity: script.home_sexy_atmosphere
-      - type: entities
         title: Entities
         show_header_toggle: false
         state_color: true
         entities:
           - entity: cover.living_room_curtains
       - type: thermostat
-        entity: climate.living_room_ac_left
+        entity: climate.living_room_left_ac_controller
       - type: thermostat
-        entity: climate.living_room_ac_right
+        entity: climate.living_room_right_ac_controller
       - type: media-control
         entity: media_player.living_room_speaker
       - type: media-control
@@ -277,14 +265,9 @@ views:
         show_state: true
         entities:
           - entity: binary_sensor.bedroom_door_contact
-          - entity: sensor.bedroom_motion_illuminance_lux
+          - entity: sensor.bedroom_motion_illuminance
           - entity: sensor.bedroom_thermometer_temperature
           - entity: sensor.bedroom_thermometer_humidity
-      - type: entities
-        title: Moods
-        show_header_toggle: false
-        entities:
-          - entity: script.bedroom_chill_atmosphere
       - type: entities
         title: Entities
         show_header_toggle: false
@@ -292,7 +275,7 @@ views:
         entities:
           - entity: cover.bedroom_curtains
       - type: thermostat
-        entity: climate.bedroom_ac
+        entity: climate.bedroom_ac_controller
       - type: media-control
         entity: media_player.bedroom_speaker
   - path: printers
@@ -328,10 +311,13 @@ views:
     badges: []
     cards:
       - type: entities
-        title: Home Switches
+        title: Home Config
         entities:
+          - entity: input_boolean.guests
+          - entity: input_boolean.holidays
           - entity: input_boolean.home_vacuumed
           - entity: input_boolean.home_locked
+          - entity: input_number.too_hot
         show_header_toggle: false
         state_color: true
       - type: entities
@@ -342,6 +328,7 @@ views:
         title: Sensors
       - type: entities
         entities:
+          - entity: timer.bedroom_sleeping
           - entity: timer.entrance_automatic_lights_timer
           - entity: timer.kitchen_automatic_lights_timer
           - entity: timer.living_room_automatic_lights_timer
@@ -349,4 +336,4 @@ views:
           - entity: timer.office_automatic_lights_timer
           - entity: timer.bathroom_automatic_lights_timer
           - entity: timer.bedroom_automatic_lights_timer
-        title: Light Timers
+        title: Timers
