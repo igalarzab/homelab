@@ -6,6 +6,26 @@ dashboards:
     icon: mdi:monitor-dashboard
     show_in_sidebar: true
     filename: dashboards/main.yaml
+  floor-plan:
+    mode: yaml
+    title: Home
+    icon: mdi:floor-plan
+    show_in_sidebar: true
+    filename: dashboards/floor-plan.yaml
+  new-dashboard:
+    mode: yaml
+    title: Home
+    icon: mdi:monitor-dashboard
+    show_in_sidebar: true
+    filename: dashboards/new.yaml
 resources:
   - url: 'https://fonts.googleapis.com/css?family=Raleway'
     type: css
+  - url: /local/community/config-template-card/config-template-card.js
+    type: module
+  - url: /local/community/decluttering-card/decluttering-card.js
+    type: module
+  - url: /local/community/button-card/button-card.js
+    type: module
+  - url: /local/community/light-entity-card/light-entity-card.js
+    type: module
