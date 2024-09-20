@@ -310,7 +310,7 @@
       name: Switch Three
 
 # Ikea Lights
-'0x0c4314fffe997804':
+'0x287681fffef1e8cc':
   friendly_name: bedroom/light_bed
   optimistic: true
   transition: ''
