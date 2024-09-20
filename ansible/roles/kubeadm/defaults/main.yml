@@ -1,10 +1,10 @@
 ---
 
-k8s_version: "1.30"
-k8s_full_version: "1.30.3"
+k8s_apt_version: "1.31"
+k8s_full_version: "1.31.1"
 
 k8s_apt_key_path: /usr/share/keyrings/kubernetes-apt-keyring.gpg
-k8s_apt_repo_url: "https://pkgs.k8s.io/core:/stable:/v{{ k8s_version }}/deb"
+k8s_apt_repo_url: "https://pkgs.k8s.io/core:/stable:/v{{ k8s_apt_version }}/deb"
 k8s_apt_key_url: "{{ k8s_apt_repo_url }}/Release.key"
 
 pod_cidr_ipv4: 10.92.0.0/16

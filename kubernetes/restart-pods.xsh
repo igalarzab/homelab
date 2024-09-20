@@ -1,6 +1,7 @@
 #!/usr/bin/env xonsh
 
 apps = [
+    'authentik',
     'cert-manager',
     'home-assistant',
     'jdownloader',

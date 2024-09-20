@@ -12,6 +12,7 @@
     repo: "deb [signed-by={{ k8s_apt_key_path }}] {{ k8s_apt_repo_url }} /"
     state: present
     update_cache: true
+    filename: k8s
 
 - name: Install k8s packages
   become: true

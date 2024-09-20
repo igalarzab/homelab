@@ -11,6 +11,7 @@
   apt_repository:
     repo: "deb [signed-by={{ docker_apt_key_path }}] {{ docker_apt_repo_url }}"
     state: present
+    filename: k8s
     update_cache: true
 
 - name: Install containerd packages
