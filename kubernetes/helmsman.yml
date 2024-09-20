@@ -3,20 +3,23 @@ metadata:
   maintainer: Jose Galarza
 
 namespaces:
-  kube-system:
+  authentik:
   cert-manager:
   home-assistant:
   jdownloader:
+  keel:
+  kube-system:
   mosquitto:
+  plex:
   traefik:
   transmission:
-  keel:
-  plex:
 
 helmRepos:
+  authentik: https://charts.goauthentik.io
   bitnami: https://charts.bitnami.com/bitnami
   bjw-s: https://bjw-s.github.io/helm-charts
   csi-driver-smb: https://raw.githubusercontent.com/kubernetes-csi/csi-driver-smb/master/charts
+  metrics-server: https://kubernetes-sigs.github.io/metrics-server/
   jetstack: https://charts.jetstack.io
   keel: https://charts.keel.sh
   traefik: https://traefik.github.io/charts
@@ -32,92 +35,113 @@ apps:
   csi-driver-smb:
     <<: *default
     chart: csi-driver-smb/csi-driver-smb
-    version: v1.15.0
+    version: "v1.15.0"
     namespace: kube-system
-    priority: -100
+    priority: -109
+  csi-driver-proxmox:
+    <<: *default
+    chart: oci://ghcr.io/sergelogvinov/charts/proxmox-csi-plugin
+    version: "0.2.9"
+    namespace: kube-system
+    valuesFile: csi-driver-proxmox/values.yml
+    priority: -108
   multus-cni:
     <<: *default
     chart: bitnami/multus-cni
-    version: 2.1.10
+    version: "2.1.10"
     namespace: kube-system
     valuesFile: multus-cni/values.yml
-    priority: -99
+    priority: -107
+  metrics-server:
+    <<: *default
+    chart: metrics-server/metrics-server
+    version: "3.12.1"
+    namespace: kube-system
+    valuesFile: metrics-server/values.yml
+    priority: -106
   cert-manager:
     <<: *default
     chart: jetstack/cert-manager
-    version: v1.15.2
+    version: "v1.15.2"
     namespace: cert-manager
     valuesFile: cert-manager/values.yml
-    priority: -98
+    priority: -99
     hooks:
       postInstall: cert-manager/post-install.yml
   traefik:
     <<: *default
     chart: traefik/traefik
-    version: v30.0.2
+    version: "v30.0.2"
     namespace: traefik
     valuesFile: traefik/values.yml
-    priority: -97
+    priority: -98
   keel:
     <<: *default
     chart: keel/keel
-    version: 1.0.3
+    version: "1.0.3"
     namespace: keel
     valuesFile: keel/values.yml
-    priority: -89
+    priority: -97
+  authentik:
+    <<: *default
+    chart: authentik/authentik
+    version: "2024.6.4"
+    namespace: authentik
+    valuesFile: authentik/values.yml
+    priority: -88
   transmission:
     <<: *default
     chart: bjw-s/app-template
-    version: 3.3.2
+    version: "3.3.2"
     namespace: transmission
     valuesFile: transmission/values.yml
     priority: -79
   jdownloader:
     <<: *default
     chart: bjw-s/app-template
-    version: 3.3.2
+    version: "3.3.2"
     namespace: jdownloader
     valuesFile: jdownloader/values.yml
     priority: -78
   plex:
     <<: *default
     chart: bjw-s/app-template
-    version: 3.3.2
+    version: "3.3.2"
     namespace: plex
     valuesFile: plex/values.yml
     priority: -69
   mosquitto:
     <<: *default
     chart: bjw-s/app-template
-    version: 3.3.2
+    version: "3.3.2"
     namespace: mosquitto
     valuesFile: mosquitto/values.yml
     priority: -59
   zigbee2mqtt:
     <<: *default
     chart: bjw-s/app-template
-    version: 3.3.2
+    version: "3.3.2"
     namespace: home-assistant
     valuesFile: home-assistant/zigbee2mqtt.values.yml
     priority: -58
   node-red:
     <<: *default
     chart: bjw-s/app-template
-    version: 3.3.2
+    version: "3.3.2"
     namespace: home-assistant
     valuesFile: home-assistant/nodered.values.yml
     priority: -57
   esphome:
     <<: *default
     chart: bjw-s/app-template
-    version: 3.3.2
+    version: "3.3.2"
     namespace: home-assistant
     valuesFile: home-assistant/esphome.values.yml
     priority: -56
   home-assistant:
     <<: *default
     chart: bjw-s/app-template
-    version: 3.3.2
+    version: "3.3.2"
     namespace: home-assistant
     valuesFile: home-assistant/home-assistant.values.yml
     priority: -55

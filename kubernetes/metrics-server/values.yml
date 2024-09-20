@@ -1,0 +1,2 @@
+args:
+  - --kubelet-insecure-tls # TODO: Run metrics-server in a secure way

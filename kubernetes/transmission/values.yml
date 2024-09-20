@@ -7,6 +7,7 @@ defaultPodOptions:
 controllers:
   transmission:
     type: deployment
+    strategy: RollingUpdate
     annotations:
       keel.sh/policy: major
       keel.sh/trigger: poll

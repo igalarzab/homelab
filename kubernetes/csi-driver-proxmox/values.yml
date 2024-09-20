@@ -1,0 +1,14 @@
+config:
+  clusters:
+    - url: https://proxmox.${COMMON_DOMAIN_ROOT}:8006/api2/json
+      insecure: true
+      token_id: "kubernetes-csi@pve!csi"
+      token_secret: ${CSI_DRIVER_PROXMOX_TOKEN}
+      region: homelab
+
+storageClass:
+  - name: proxmox-data
+    storage: local-volumes
+    fstype: ext4
+    reclaimPolicy: Delete
+    ssd: true
