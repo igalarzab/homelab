@@ -1166,13 +1166,7 @@
         "z": "9437c76dc0c1335d",
         "name": "Status In",
         "links": [
-            "a9194b6c0c9d79ba",
-            "0e7cd5392e6cd5f1",
-            "92bc101d0a19d91b",
             "0b3383f4e9d1beaf",
-            "cac0c010774a38c0",
-            "1c46e8fa39e9d555",
-            "178043ec809f25fc",
             "906ba48f22324101",
             "93b77fe38d0af726",
             "5a9d8eb91a674d35"
@@ -3505,7 +3499,7 @@
             }
         ],
         "x": 150,
-        "y": 740,
+        "y": 760,
         "wires": [
             [
                 "84d49a26691371e9"
@@ -3517,7 +3511,7 @@
         "id": "84d49a26691371e9",
         "type": "api-current-state",
         "z": "8b6e3b319b97a18a",
-        "name": "Home Locked?",
+        "name": "Home Locked for 5m?",
         "server": "f88bb71a82464dcf",
         "version": 3,
         "outputs": 2,
@@ -3541,7 +3535,7 @@
                 "valueType": "entity"
             }
         ],
-        "for": "0",
+        "for": "5",
         "forType": "num",
         "forUnits": "minutes",
         "override_topic": false,
@@ -3549,12 +3543,13 @@
         "override_payload": "msg",
         "entity_location": "data",
         "override_data": "msg",
-        "x": 340,
-        "y": 740,
+        "x": 360,
+        "y": 760,
         "wires": [
             [
                 "cd7485589133f724",
-                "bd0c2c63af0933cf"
+                "bd0c2c63af0933cf",
+                "095ab5c043ad66f9"
             ],
             []
         ]
@@ -3580,7 +3575,7 @@
         "mustacheAltTags": false,
         "outputProperties": [],
         "queue": "none",
-        "x": 560,
+        "x": 660,
         "y": 700,
         "wires": [
             []
@@ -3622,7 +3617,7 @@
         "override_payload": "msg",
         "entity_location": "data",
         "override_data": "msg",
-        "x": 560,
+        "x": 660,
         "y": 760,
         "wires": [
             [],
@@ -3650,7 +3645,7 @@
         "mustacheAltTags": false,
         "outputProperties": [],
         "queue": "none",
-        "x": 750,
+        "x": 850,
         "y": 760,
         "wires": [
             []
@@ -3743,7 +3738,7 @@
         "name": "Lights",
         "info": "",
         "x": 90,
-        "y": 900,
+        "y": 940,
         "wires": []
     },
     {
@@ -3841,7 +3836,7 @@
             }
         ],
         "x": 160,
-        "y": 960,
+        "y": 1000,
         "wires": []
     },
     {
@@ -3869,6 +3864,58 @@
         "y": 500,
         "wires": [
             []
+        ]
+    },
+    {
+        "id": "4b88c2bcdb2d79e2",
+        "type": "api-call-service",
+        "z": "8b6e3b319b97a18a",
+        "name": "Turn On Dining Room Lights",
+        "server": "f88bb71a82464dcf",
+        "version": 5,
+        "debugenabled": false,
+        "domain": "switch",
+        "service": "turn_on",
+        "areaId": [],
+        "deviceId": [],
+        "entityId": [
+            "switch.living_room_controller_wall_switch_one"
+        ],
+        "data": "",
+        "dataType": "jsonata",
+        "mergeContext": "",
+        "mustacheAltTags": false,
+        "outputProperties": [],
+        "queue": "none",
+        "x": 900,
+        "y": 820,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "095ab5c043ad66f9",
+        "type": "delay",
+        "z": "8b6e3b319b97a18a",
+        "name": "",
+        "pauseType": "delay",
+        "timeout": "5",
+        "timeoutUnits": "seconds",
+        "rate": "1",
+        "nbRateUnits": "1",
+        "rateUnits": "second",
+        "randomFirst": "1",
+        "randomLast": "5",
+        "randomUnits": "seconds",
+        "drop": false,
+        "allowrate": false,
+        "outputs": 1,
+        "x": 640,
+        "y": 820,
+        "wires": [
+            [
+                "4b88c2bcdb2d79e2"
+            ]
         ]
     },
     {
@@ -5595,8 +5642,8 @@
             },
             {
                 "name": "LIGHT_THRESHOLD",
-                "value": "100",
-                "type": "str"
+                "value": "250",
+                "type": "num"
             }
         ],
         "x": 150,
@@ -7433,7 +7480,7 @@
         "y": 220,
         "wires": [
             [
-                "7eb6d807b0b45de3"
+                "6f0a4b4e6829a057"
             ],
             []
         ]
@@ -7442,12 +7489,12 @@
         "id": "7eb6d807b0b45de3",
         "type": "api-call-service",
         "z": "c41ab6f93f6c103e",
-        "name": "Switch Fan",
+        "name": "Turn On Fan",
         "server": "f88bb71a82464dcf",
         "version": 5,
         "debugenabled": false,
         "domain": "homeassistant",
-        "service": "toggle",
+        "service": "turn_on",
         "areaId": [],
         "deviceId": [],
         "entityId": [
@@ -7459,7 +7506,114 @@
         "mustacheAltTags": false,
         "outputProperties": [],
         "queue": "none",
-        "x": 370,
+        "x": 630,
+        "y": 220,
+        "wires": [
+            [
+                "1868631f528de583"
+            ]
+        ]
+    },
+    {
+        "id": "6f0a4b4e6829a057",
+        "type": "api-current-state",
+        "z": "c41ab6f93f6c103e",
+        "name": "Bathroom Door Closed?",
+        "server": "f88bb71a82464dcf",
+        "version": 3,
+        "outputs": 2,
+        "halt_if": "off",
+        "halt_if_type": "str",
+        "halt_if_compare": "is",
+        "entity_id": "binary_sensor.bathroom_door_contact",
+        "state_type": "str",
+        "blockInputOverrides": false,
+        "outputProperties": [
+            {
+                "property": "payload",
+                "propertyType": "msg",
+                "value": "",
+                "valueType": "entityState"
+            },
+            {
+                "property": "data",
+                "propertyType": "msg",
+                "value": "",
+                "valueType": "entity"
+            }
+        ],
+        "for": "0",
+        "forType": "num",
+        "forUnits": "minutes",
+        "override_topic": false,
+        "state_location": "payload",
+        "override_payload": "msg",
+        "entity_location": "data",
+        "override_data": "msg",
+        "x": 410,
+        "y": 220,
+        "wires": [
+            [
+                "7eb6d807b0b45de3"
+            ],
+            []
+        ]
+    },
+    {
+        "id": "1868631f528de583",
+        "type": "ha-wait-until",
+        "z": "c41ab6f93f6c103e",
+        "name": "Bathroom Door Opens",
+        "server": "f88bb71a82464dcf",
+        "version": 2,
+        "outputs": 2,
+        "entityId": "binary_sensor.bathroom_door_contact",
+        "entityIdFilterType": "exact",
+        "property": "state",
+        "comparator": "is",
+        "value": "on",
+        "valueType": "str",
+        "timeout": "60",
+        "timeoutType": "num",
+        "timeoutUnits": "minutes",
+        "checkCurrentState": true,
+        "blockInputOverrides": true,
+        "outputProperties": [],
+        "entityLocation": "data",
+        "entityLocationType": "none",
+        "x": 840,
+        "y": 220,
+        "wires": [
+            [
+                "7463993a07842f80"
+            ],
+            [
+                "7463993a07842f80"
+            ]
+        ]
+    },
+    {
+        "id": "7463993a07842f80",
+        "type": "api-call-service",
+        "z": "c41ab6f93f6c103e",
+        "name": "Turn Off Fan",
+        "server": "f88bb71a82464dcf",
+        "version": 5,
+        "debugenabled": false,
+        "domain": "homeassistant",
+        "service": "turn_off",
+        "areaId": [],
+        "deviceId": [],
+        "entityId": [
+            "switch.bathroom_controller_wall_switch_left"
+        ],
+        "data": "",
+        "dataType": "jsonata",
+        "mergeContext": "",
+        "mustacheAltTags": false,
+        "outputProperties": [],
+        "queue": "none",
+        "x": 1050,
         "y": 220,
         "wires": [
             []
