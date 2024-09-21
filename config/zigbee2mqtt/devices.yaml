@@ -220,7 +220,6 @@
 # Aqara Switches E1
 '0x54ef441000d68d4d':
   friendly_name: bathroom/controller_wall
-  optimistic: true
   filtered_attributes: ['device_temperature', 'flip_indicator_light', 'linkquality', 'mode_switch', 'operation_mode_left', 'operation_mode_right', 'power_outage_count', 'power_outage_memory']
   homeassistant:
     name: Bathroom Controller Wall
@@ -232,7 +231,6 @@
       name: Switch Right
 '0x54ef441000d68ffc':
   friendly_name: entrance/controller_wall
-  optimistic: true
   filtered_attributes: ['device_temperature', 'flip_indicator_light', 'linkquality', 'mode_switch', 'operation_mode_left', 'operation_mode_right', 'power_outage_count', 'power_outage_memory']
   homeassistant:
     name: Entrance Controller Wall
@@ -244,7 +242,6 @@
       name: Switch Right
 '0x54ef441000d68889':
   friendly_name: kitchen/controller_wall
-  optimistic: true
   filtered_attributes: ['device_temperature', 'flip_indicator_light', 'linkquality', 'mode_switch', 'operation_mode_left', 'operation_mode_right', 'power_outage_count', 'power_outage_memory']
   homeassistant:
     name: Kitchen Controller Wall
@@ -256,7 +253,6 @@
       name: Switch Right
 '0x54ef441000d694d9':
   friendly_name: office/controller_wall
-  optimistic: true
   filtered_attributes: ['device_temperature', 'flip_indicator_light', 'linkquality', 'mode_switch', 'operation_mode_left', 'operation_mode_right', 'power_outage_count', 'power_outage_memory']
   homeassistant:
     name: Office Controller Wall
@@ -270,7 +266,6 @@
 # Aqara Switch Z1 Pro
 '0x54ef441000bc376b':
   friendly_name: 'bedroom/controller_wall'
-  optimistic: true
   filtered_attributes: ['action_slide_relative_displacement', 'action_slide_speed', 'action_slide_time', 'action_slide_time_delta', 'click_mode', 'device_temperature', 'linkquality', 'lock_relay', 'lock_relay_bottom', 'lock_relay_center', 'lock_relay_top', 'mode_switch', 'operation_mode_bottom', 'operation_mode_center', 'operation_mode_top', 'power_on_behavior', 'power_outage_count', 'trigger_count', 'voltage']
   homeassistant:
     name: Bedroom Controller Wall
@@ -290,7 +285,6 @@
       name: Switch Three
 '0x54ef441000bc590f':
   friendly_name: living_room/controller_wall
-  optimistic: true
   filtered_attributes: ['action_slide_relative_displacement', 'action_slide_speed', 'action_slide_time', 'action_slide_time_delta', 'click_mode', 'device_temperature', 'linkquality', 'lock_relay', 'lock_relay_bottom', 'lock_relay_center', 'lock_relay_top', 'mode_switch', 'operation_mode_bottom', 'operation_mode_center', 'operation_mode_top', 'power_on_behavior', 'power_outage_count', 'trigger_count', 'voltage']
   homeassistant:
     name: Living Room Controller Wall
@@ -312,7 +306,6 @@
 # Ikea Lights
 '0x287681fffef1e8cc':
   friendly_name: bedroom/light_bed
-  optimistic: true
   transition: ''
   color_sync: true
   state_action: false
