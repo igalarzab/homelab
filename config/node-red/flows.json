@@ -48,14 +48,6 @@
         "env": []
     },
     {
-        "id": "8f5e75d405c57d2f",
-        "type": "tab",
-        "label": "Hall",
-        "disabled": false,
-        "info": "",
-        "env": []
-    },
-    {
         "id": "0ef8a234d4e5690c",
         "type": "tab",
         "label": "System",
@@ -173,7 +165,8 @@
             }
         ],
         "meta": {},
-        "color": "#DDAA99",
+        "color": "#A6BBCF",
+        "icon": "node-red-contrib-home-assistant-websocket/ha-entity-switch.svg",
         "status": {
             "x": 780,
             "y": 660,
@@ -357,7 +350,8 @@
             }
         ],
         "meta": {},
-        "color": "#DDAA99",
+        "color": "#3FADB5",
+        "icon": "font-awesome/fa-thermometer-0",
         "status": {
             "x": 1020,
             "y": 260,
@@ -402,7 +396,8 @@
             }
         ],
         "meta": {},
-        "color": "#DDAA99",
+        "color": "#E2D96E",
+        "icon": "font-awesome/fa-sun-o",
         "status": {
             "x": 1120,
             "y": 220,
@@ -431,6 +426,7 @@
         "type": "subflow",
         "name": "No-Op",
         "info": "",
+        "category": "",
         "in": [
             {
                 "x": 60,
@@ -449,7 +445,11 @@
                     }
                 ]
             }
-        ]
+        ],
+        "env": [],
+        "meta": {},
+        "color": "#C0C0C0",
+        "icon": "font-awesome/fa-circle-o-notch"
     },
     {
         "id": "0eac027afb048323",
@@ -601,17 +601,14 @@
             }
         ],
         "meta": {},
-        "color": "#DDAA99",
+        "color": "#E2D96E",
+        "icon": "font-awesome/fa-lightbulb-o",
         "status": {
-            "x": 1340,
-            "y": 200,
+            "x": 200,
+            "y": 755,
             "wires": [
                 {
-                    "id": "60de136ab08038c8",
-                    "port": 0
-                },
-                {
-                    "id": "3692f61d4b646731",
+                    "id": "0931d2c5bb51a9c1",
                     "port": 0
                 }
             ]
@@ -1421,8 +1418,7 @@
         "y": 300,
         "wires": [
             [
-                "6390d356c73e09fe",
-                "2ce02519c79425f2"
+                "6390d356c73e09fe"
             ]
         ]
     },
@@ -1471,8 +1467,7 @@
         "wires": [
             [
                 "45a6f28106fdd36c",
-                "66e887e65681d733",
-                "c439ea5069d4bec2"
+                "66e887e65681d733"
             ],
             []
         ]
@@ -1560,8 +1555,7 @@
                 "0234a70e3c0af25e"
             ],
             [
-                "40eff425930fde47",
-                "9e23f48b8c98504e"
+                "40eff425930fde47"
             ]
         ]
     },
@@ -1822,38 +1816,6 @@
             ],
             []
         ]
-    },
-    {
-        "id": "2ce02519c79425f2",
-        "type": "debug",
-        "z": "9437c76dc0c1335d",
-        "name": "debug 4",
-        "active": true,
-        "tosidebar": true,
-        "console": false,
-        "tostatus": false,
-        "complete": "false",
-        "statusVal": "",
-        "statusType": "auto",
-        "x": 1340,
-        "y": 400,
-        "wires": []
-    },
-    {
-        "id": "9e23f48b8c98504e",
-        "type": "debug",
-        "z": "9437c76dc0c1335d",
-        "name": "debug 5",
-        "active": true,
-        "tosidebar": true,
-        "console": false,
-        "tostatus": false,
-        "complete": "false",
-        "statusVal": "",
-        "statusType": "auto",
-        "x": 1580,
-        "y": 220,
-        "wires": []
     },
     {
         "id": "a6498f59d0b5faf6",
@@ -2927,7 +2889,7 @@
             }
         ],
         "x": 170,
-        "y": 240,
+        "y": 340,
         "wires": [
             [
                 "2f2ba9961146323a"
@@ -2950,12 +2912,14 @@
         "finalize": "",
         "libs": [],
         "x": 410,
-        "y": 160,
+        "y": 200,
         "wires": [
             [
-                "6af40da077d20e8b"
+                "27a63424d78d0d44"
             ],
-            []
+            [
+                "514e3a30e1722a03"
+            ]
         ]
     },
     {
@@ -2979,8 +2943,8 @@
         "mustacheAltTags": false,
         "outputProperties": [],
         "queue": "none",
-        "x": 640,
-        "y": 160,
+        "x": 860,
+        "y": 120,
         "wires": [
             [
                 "60de136ab08038c8"
@@ -3006,10 +2970,12 @@
         "from": "",
         "to": "",
         "reg": false,
-        "x": 960,
-        "y": 160,
+        "x": 1060,
+        "y": 120,
         "wires": [
-            []
+            [
+                "837b3236396d8e69"
+            ]
         ]
     },
     {
@@ -3048,12 +3014,11 @@
         "override_payload": "msg",
         "entity_location": "data",
         "override_data": "msg",
-        "x": 750,
-        "y": 260,
+        "x": 1070,
+        "y": 380,
         "wires": [
             [
-                "8ea7273bf9abebf0",
-                "e9a454d2169ea3c7"
+                "8ea7273bf9abebf0"
             ],
             []
         ]
@@ -3094,8 +3059,8 @@
         "override_payload": "msg",
         "entity_location": "data",
         "override_data": "msg",
-        "x": 760,
-        "y": 320,
+        "x": 1080,
+        "y": 440,
         "wires": [
             [
                 "8ea7273bf9abebf0"
@@ -3116,12 +3081,14 @@
         "finalize": "",
         "libs": [],
         "x": 410,
-        "y": 300,
+        "y": 480,
         "wires": [
             [
-                "0b8676008a2f775b"
+                "e6dfb35f0b4a5154"
             ],
-            []
+            [
+                "05dceca431a4d2cf"
+            ]
         ]
     },
     {
@@ -3143,10 +3110,12 @@
         "from": "",
         "to": "",
         "reg": false,
-        "x": 1120,
-        "y": 280,
+        "x": 1460,
+        "y": 400,
         "wires": [
-            []
+            [
+                "aed9390d780a0258"
+            ]
         ]
     },
     {
@@ -3170,8 +3139,8 @@
         "mustacheAltTags": false,
         "outputProperties": [],
         "queue": "none",
-        "x": 940,
-        "y": 280,
+        "x": 1260,
+        "y": 400,
         "wires": [
             [
                 "3692f61d4b646731"
@@ -3190,65 +3159,366 @@
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 580,
-        "y": 300,
+        "x": 900,
+        "y": 360,
         "wires": [
             [
-                "fb972d62cd68f880"
+                "836f3a475521dcdd"
             ],
             [
                 "f244c974aab6e3a3",
-                "18c9c003199d17ad",
-                "a143215ba292064e"
+                "18c9c003199d17ad"
             ]
         ]
     },
     {
-        "id": "fb972d62cd68f880",
-        "type": "debug",
+        "id": "27a63424d78d0d44",
+        "type": "api-current-state",
         "z": "0eac027afb048323",
-        "name": "debug 6",
-        "active": true,
-        "tosidebar": true,
-        "console": false,
-        "tostatus": false,
-        "complete": "false",
-        "statusVal": "",
-        "statusType": "auto",
+        "name": "Light Automations Enabled?",
+        "server": "f88bb71a82464dcf",
+        "version": 3,
+        "outputs": 2,
+        "halt_if": "on",
+        "halt_if_type": "str",
+        "halt_if_compare": "is",
+        "entity_id": "input_boolean.home_light_automations",
+        "state_type": "str",
+        "blockInputOverrides": false,
+        "outputProperties": [
+            {
+                "property": "payload",
+                "propertyType": "msg",
+                "value": "",
+                "valueType": "entityState"
+            },
+            {
+                "property": "data",
+                "propertyType": "msg",
+                "value": "",
+                "valueType": "entity"
+            }
+        ],
+        "for": "0",
+        "forType": "num",
+        "forUnits": "minutes",
+        "override_topic": false,
+        "state_location": "payload",
+        "override_payload": "msg",
+        "entity_location": "data",
+        "override_data": "msg",
         "x": 640,
-        "y": 480,
+        "y": 160,
+        "wires": [
+            [
+                "6af40da077d20e8b"
+            ],
+            [
+                "5aad74f37633f12d"
+            ]
+        ]
+    },
+    {
+        "id": "e6dfb35f0b4a5154",
+        "type": "api-current-state",
+        "z": "0eac027afb048323",
+        "name": "Light Automations Enabled?",
+        "server": "f88bb71a82464dcf",
+        "version": 3,
+        "outputs": 2,
+        "halt_if": "on",
+        "halt_if_type": "str",
+        "halt_if_compare": "is",
+        "entity_id": "input_boolean.home_light_automations",
+        "state_type": "str",
+        "blockInputOverrides": false,
+        "outputProperties": [
+            {
+                "property": "payload",
+                "propertyType": "msg",
+                "value": "",
+                "valueType": "entityState"
+            },
+            {
+                "property": "data",
+                "propertyType": "msg",
+                "value": "",
+                "valueType": "entity"
+            }
+        ],
+        "for": "0",
+        "forType": "num",
+        "forUnits": "minutes",
+        "override_topic": false,
+        "state_location": "payload",
+        "override_payload": "msg",
+        "entity_location": "data",
+        "override_data": "msg",
+        "x": 640,
+        "y": 460,
+        "wires": [
+            [
+                "0b8676008a2f775b"
+            ],
+            [
+                "9ca54a3a7af2f108"
+            ]
+        ]
+    },
+    {
+        "id": "542f63427dacf8a5",
+        "type": "comment",
+        "z": "0eac027afb048323",
+        "name": "Update Node Status",
+        "info": "",
+        "x": 130,
+        "y": 680,
         "wires": []
     },
     {
-        "id": "a143215ba292064e",
-        "type": "debug",
+        "id": "0931d2c5bb51a9c1",
+        "type": "link in",
         "z": "0eac027afb048323",
-        "name": "debug 7",
-        "active": true,
-        "tosidebar": true,
-        "console": false,
-        "tostatus": false,
-        "complete": "false",
-        "statusVal": "",
-        "statusType": "auto",
-        "x": 640,
-        "y": 560,
+        "name": "link in 1",
+        "links": [
+            "837b3236396d8e69",
+            "aed9390d780a0258",
+            "ec7ac1638ea317f0",
+            "2de4238d17df875d",
+            "a3f28d08e064c26b",
+            "5f61547e65515866",
+            "ded53877258c896a"
+        ],
+        "x": 95,
+        "y": 755,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "837b3236396d8e69",
+        "type": "link out",
+        "z": "0eac027afb048323",
+        "name": "link out 1",
+        "mode": "link",
+        "links": [
+            "0931d2c5bb51a9c1"
+        ],
+        "x": 1195,
+        "y": 120,
         "wires": []
     },
     {
-        "id": "e9a454d2169ea3c7",
-        "type": "debug",
+        "id": "aed9390d780a0258",
+        "type": "link out",
         "z": "0eac027afb048323",
-        "name": "debug 8",
-        "active": true,
-        "tosidebar": true,
-        "console": false,
-        "tostatus": false,
-        "complete": "false",
-        "statusVal": "",
-        "statusType": "auto",
-        "x": 960,
-        "y": 380,
+        "name": "link out 2",
+        "mode": "link",
+        "links": [
+            "0931d2c5bb51a9c1"
+        ],
+        "x": 1605,
+        "y": 400,
+        "wires": []
+    },
+    {
+        "id": "5aad74f37633f12d",
+        "type": "change",
+        "z": "0eac027afb048323",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "{\"fill\":\"yellow\",\"text\":\"Light Automations Disabled\"}",
+                "tot": "json"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 880,
+        "y": 180,
+        "wires": [
+            [
+                "ec7ac1638ea317f0"
+            ]
+        ]
+    },
+    {
+        "id": "ec7ac1638ea317f0",
+        "type": "link out",
+        "z": "0eac027afb048323",
+        "name": "link out 3",
+        "mode": "link",
+        "links": [
+            "0931d2c5bb51a9c1"
+        ],
+        "x": 1015,
+        "y": 180,
+        "wires": []
+    },
+    {
+        "id": "9ca54a3a7af2f108",
+        "type": "change",
+        "z": "0eac027afb048323",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "{\"fill\":\"yellow\",\"text\":\"Light Automations Disabled\"}",
+                "tot": "json"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 920,
+        "y": 540,
+        "wires": [
+            [
+                "2de4238d17df875d"
+            ]
+        ]
+    },
+    {
+        "id": "2de4238d17df875d",
+        "type": "link out",
+        "z": "0eac027afb048323",
+        "name": "link out 4",
+        "mode": "link",
+        "links": [
+            "0931d2c5bb51a9c1"
+        ],
+        "x": 1055,
+        "y": 540,
+        "wires": []
+    },
+    {
+        "id": "836f3a475521dcdd",
+        "type": "change",
+        "z": "0eac027afb048323",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "{\"fill\":\"yellow\",\"text\":\"Sleeping Mode Enabled\"}",
+                "tot": "json"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 1100,
+        "y": 320,
+        "wires": [
+            [
+                "a3f28d08e064c26b"
+            ]
+        ]
+    },
+    {
+        "id": "a3f28d08e064c26b",
+        "type": "link out",
+        "z": "0eac027afb048323",
+        "name": "link out 5",
+        "mode": "link",
+        "links": [
+            "0931d2c5bb51a9c1"
+        ],
+        "x": 1235,
+        "y": 320,
+        "wires": []
+    },
+    {
+        "id": "514e3a30e1722a03",
+        "type": "change",
+        "z": "0eac027afb048323",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "{\"fill\":\"yellow\",\"text\":\"Door Closed\"}",
+                "tot": "json"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 600,
+        "y": 220,
+        "wires": [
+            [
+                "5f61547e65515866"
+            ]
+        ]
+    },
+    {
+        "id": "5f61547e65515866",
+        "type": "link out",
+        "z": "0eac027afb048323",
+        "name": "link out 6",
+        "mode": "link",
+        "links": [
+            "0931d2c5bb51a9c1"
+        ],
+        "x": 735,
+        "y": 220,
+        "wires": []
+    },
+    {
+        "id": "05dceca431a4d2cf",
+        "type": "change",
+        "z": "0eac027afb048323",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "{\"fill\":\"yellow\",\"text\":\"Door Closed\"}",
+                "tot": "json"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 600,
+        "y": 520,
+        "wires": [
+            [
+                "ded53877258c896a"
+            ]
+        ]
+    },
+    {
+        "id": "ded53877258c896a",
+        "type": "link out",
+        "z": "0eac027afb048323",
+        "name": "link out 7",
+        "mode": "link",
+        "links": [
+            "0931d2c5bb51a9c1"
+        ],
+        "x": 735,
+        "y": 520,
         "wires": []
     },
     {
@@ -3817,7 +4087,7 @@
         "id": "dbeb4ee98644a8d8",
         "type": "subflow:0eac027afb048323",
         "z": "8b6e3b319b97a18a",
-        "name": "Entrance Lights",
+        "name": "Entrance Lights - Wasp Box",
         "env": [
             {
                 "name": "MOTION_SENSOR",
@@ -3835,7 +4105,7 @@
                 "type": "str"
             }
         ],
-        "x": 160,
+        "x": 200,
         "y": 1000,
         "wires": []
     },
@@ -3932,7 +4202,7 @@
         "id": "36e596819a5ac1c0",
         "type": "subflow:0eac027afb048323",
         "z": "95eb18db5e77ef4c",
-        "name": "Kitchen Lights",
+        "name": "Kitchen Lights - Wasp Box",
         "env": [
             {
                 "name": "MOTION_SENSOR",
@@ -3955,7 +4225,7 @@
                 "type": "bool"
             }
         ],
-        "x": 150,
+        "x": 190,
         "y": 120,
         "wires": []
     },
@@ -4358,7 +4628,7 @@
         "name": "Speakers",
         "info": "",
         "x": 100,
-        "y": 680,
+        "y": 700,
         "wires": []
     },
     {
@@ -4407,7 +4677,7 @@
             }
         ],
         "x": 140,
-        "y": 740,
+        "y": 760,
         "wires": [
             [
                 "de65f32f36812a2c"
@@ -4452,7 +4722,7 @@
         "entity_location": "data",
         "override_data": "msg",
         "x": 350,
-        "y": 740,
+        "y": 760,
         "wires": [
             [
                 "c1349d450a3cfcf2"
@@ -4482,7 +4752,7 @@
         "outputProperties": [],
         "queue": "none",
         "x": 580,
-        "y": 740,
+        "y": 760,
         "wires": [
             []
         ]
@@ -4808,6 +5078,302 @@
         ]
     },
     {
+        "id": "bfb9b8a1c9ec4f4b",
+        "type": "comment",
+        "z": "751c2276bdb4df53",
+        "name": "AC - Humidity",
+        "info": "",
+        "x": 110,
+        "y": 900,
+        "wires": []
+    },
+    {
+        "id": "be3d905cd1f44bec",
+        "type": "server-state-changed",
+        "z": "751c2276bdb4df53",
+        "name": "Humidity > 70%",
+        "server": "f88bb71a82464dcf",
+        "version": 5,
+        "outputs": 2,
+        "exposeAsEntityConfig": "",
+        "entityId": "sensor.living_room_thermometer_humidity",
+        "entityIdType": "exact",
+        "outputInitially": false,
+        "stateType": "str",
+        "ifState": "70",
+        "ifStateType": "num",
+        "ifStateOperator": "gte",
+        "outputOnlyOnStateChange": true,
+        "for": "0",
+        "forType": "num",
+        "forUnits": "seconds",
+        "ignorePrevStateNull": false,
+        "ignorePrevStateUnknown": true,
+        "ignorePrevStateUnavailable": true,
+        "ignoreCurrentStateUnknown": true,
+        "ignoreCurrentStateUnavailable": true,
+        "outputProperties": [
+            {
+                "property": "payload",
+                "propertyType": "msg",
+                "value": "",
+                "valueType": "entityState"
+            },
+            {
+                "property": "data",
+                "propertyType": "msg",
+                "value": "",
+                "valueType": "eventData"
+            },
+            {
+                "property": "topic",
+                "propertyType": "msg",
+                "value": "",
+                "valueType": "triggerId"
+            }
+        ],
+        "x": 160,
+        "y": 1000,
+        "wires": [
+            [
+                "16adf3ec4e9952c8"
+            ],
+            []
+        ]
+    },
+    {
+        "id": "16adf3ec4e9952c8",
+        "type": "api-current-state",
+        "z": "751c2276bdb4df53",
+        "name": "Home Locked?",
+        "server": "f88bb71a82464dcf",
+        "version": 3,
+        "outputs": 2,
+        "halt_if": "on",
+        "halt_if_type": "str",
+        "halt_if_compare": "is",
+        "entity_id": "input_boolean.home_locked",
+        "state_type": "str",
+        "blockInputOverrides": false,
+        "outputProperties": [
+            {
+                "property": "payload",
+                "propertyType": "msg",
+                "value": "",
+                "valueType": "entityState"
+            },
+            {
+                "property": "data",
+                "propertyType": "msg",
+                "value": "",
+                "valueType": "entity"
+            }
+        ],
+        "for": "0",
+        "forType": "num",
+        "forUnits": "minutes",
+        "override_topic": false,
+        "state_location": "payload",
+        "override_payload": "msg",
+        "entity_location": "data",
+        "override_data": "msg",
+        "x": 360,
+        "y": 1000,
+        "wires": [
+            [
+                "dd348d43cad75d11"
+            ],
+            []
+        ]
+    },
+    {
+        "id": "f3c9368ece566626",
+        "type": "api-call-service",
+        "z": "751c2276bdb4df53",
+        "name": "Dry mode on ACs",
+        "server": "f88bb71a82464dcf",
+        "version": 5,
+        "debugenabled": false,
+        "domain": "climate",
+        "service": "set_hvac_mode",
+        "areaId": [],
+        "deviceId": [],
+        "entityId": [
+            "group.living_room_ac_controller"
+        ],
+        "data": "{ hvac_mode: \"dry\" }",
+        "dataType": "jsonata",
+        "mergeContext": "",
+        "mustacheAltTags": false,
+        "outputProperties": [],
+        "queue": "none",
+        "x": 730,
+        "y": 960,
+        "wires": [
+            [
+                "90d059eca3a4f797"
+            ]
+        ]
+    },
+    {
+        "id": "90d059eca3a4f797",
+        "type": "ha-wait-until",
+        "z": "751c2276bdb4df53",
+        "name": "Humidity < 55%",
+        "server": "f88bb71a82464dcf",
+        "version": 2,
+        "outputs": 2,
+        "entityId": "sensor.living_room_thermometer_humidity",
+        "entityIdFilterType": "exact",
+        "property": "state",
+        "comparator": "lte",
+        "value": "55",
+        "valueType": "num",
+        "timeout": "120",
+        "timeoutType": "num",
+        "timeoutUnits": "minutes",
+        "checkCurrentState": true,
+        "blockInputOverrides": true,
+        "outputProperties": [],
+        "entityLocation": "data",
+        "entityLocationType": "none",
+        "x": 940,
+        "y": 960,
+        "wires": [
+            [
+                "392e14aa19a915d0"
+            ],
+            [
+                "392e14aa19a915d0"
+            ]
+        ]
+    },
+    {
+        "id": "392e14aa19a915d0",
+        "type": "api-call-service",
+        "z": "751c2276bdb4df53",
+        "name": "Turn Off ACs",
+        "server": "f88bb71a82464dcf",
+        "version": 5,
+        "debugenabled": false,
+        "domain": "climate",
+        "service": "turn_off",
+        "areaId": [],
+        "deviceId": [],
+        "entityId": [
+            "group.living_room_ac_controller"
+        ],
+        "data": "",
+        "dataType": "jsonata",
+        "mergeContext": "",
+        "mustacheAltTags": false,
+        "outputProperties": [],
+        "queue": "none",
+        "x": 1130,
+        "y": 960,
+        "wires": [
+            [
+                "6d154cb9e6ae8ac3"
+            ]
+        ]
+    },
+    {
+        "id": "dd348d43cad75d11",
+        "type": "api-current-state",
+        "z": "751c2276bdb4df53",
+        "name": "AC off?",
+        "server": "f88bb71a82464dcf",
+        "version": 3,
+        "outputs": 2,
+        "halt_if": "off",
+        "halt_if_type": "str",
+        "halt_if_compare": "is",
+        "entity_id": "group.living_room_ac_controller",
+        "state_type": "str",
+        "blockInputOverrides": false,
+        "outputProperties": [
+            {
+                "property": "payload",
+                "propertyType": "msg",
+                "value": "",
+                "valueType": "entityState"
+            },
+            {
+                "property": "data",
+                "propertyType": "msg",
+                "value": "",
+                "valueType": "entity"
+            }
+        ],
+        "for": "0",
+        "forType": "num",
+        "forUnits": "minutes",
+        "override_topic": false,
+        "state_location": "payload",
+        "override_payload": "msg",
+        "entity_location": "data",
+        "override_data": "msg",
+        "x": 540,
+        "y": 1000,
+        "wires": [
+            [
+                "f3c9368ece566626",
+                "58b05fa0401050a8"
+            ],
+            []
+        ]
+    },
+    {
+        "id": "58b05fa0401050a8",
+        "type": "api-call-service",
+        "z": "751c2276bdb4df53",
+        "name": "Send Notification",
+        "server": "f88bb71a82464dcf",
+        "version": 5,
+        "debugenabled": false,
+        "domain": "notify",
+        "service": "notify",
+        "areaId": [],
+        "deviceId": [],
+        "entityId": [],
+        "data": "{\"title\":\"Humidity too high\",\"message\":\"Turning On ACs\"}",
+        "dataType": "json",
+        "mergeContext": "",
+        "mustacheAltTags": false,
+        "outputProperties": [],
+        "queue": "none",
+        "x": 730,
+        "y": 1020,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "6d154cb9e6ae8ac3",
+        "type": "api-call-service",
+        "z": "751c2276bdb4df53",
+        "name": "Send Notification",
+        "server": "f88bb71a82464dcf",
+        "version": 5,
+        "debugenabled": false,
+        "domain": "notify",
+        "service": "notify",
+        "areaId": [],
+        "deviceId": [],
+        "entityId": [],
+        "data": "{\"title\":\"Humidity under control\",\"message\":\"Turning Off ACs\"}",
+        "dataType": "json",
+        "mergeContext": "",
+        "mustacheAltTags": false,
+        "outputProperties": [],
+        "queue": "none",
+        "x": 1330,
+        "y": 960,
+        "wires": [
+            []
+        ]
+    },
+    {
         "id": "8e9bdb95e32233dc",
         "type": "comment",
         "z": "03c58ed96b7b8395",
@@ -5071,7 +5637,7 @@
             }
         ],
         "x": 200,
-        "y": 640,
+        "y": 620,
         "wires": []
     },
     {
@@ -5618,7 +6184,7 @@
         "id": "163a3e85d5a378ed",
         "type": "subflow:0eac027afb048323",
         "z": "03c58ed96b7b8395",
-        "name": "Office Lights",
+        "name": "Office Lights - Wasp Box",
         "env": [
             {
                 "name": "MOTION_SENSOR",
@@ -5646,7 +6212,7 @@
                 "type": "num"
             }
         ],
-        "x": 150,
+        "x": 190,
         "y": 120,
         "wires": []
     },
@@ -6163,7 +6729,7 @@
         "outputProperties": [],
         "queue": "none",
         "x": 430,
-        "y": 1380,
+        "y": 1440,
         "wires": [
             [
                 "ec065520cae675a9",
@@ -6193,7 +6759,7 @@
         "outputProperties": [],
         "queue": "none",
         "x": 700,
-        "y": 1340,
+        "y": 1400,
         "wires": [
             []
         ]
@@ -6218,7 +6784,7 @@
         "outputProperties": [],
         "queue": "none",
         "x": 670,
-        "y": 1400,
+        "y": 1460,
         "wires": [
             []
         ]
@@ -6374,7 +6940,7 @@
             }
         ],
         "x": 170,
-        "y": 1380,
+        "y": 1440,
         "wires": [
             [
                 "3224e9d5fcf7be0c"
@@ -6388,7 +6954,7 @@
         "name": "Waking Up",
         "info": "",
         "x": 100,
-        "y": 1260,
+        "y": 1320,
         "wires": []
     },
     {
@@ -6398,7 +6964,7 @@
         "name": "Curtains",
         "info": "",
         "x": 100,
-        "y": 1580,
+        "y": 1640,
         "wires": []
     },
     {
@@ -6423,7 +6989,7 @@
         "payload": "",
         "payloadType": "date",
         "x": 160,
-        "y": 1640,
+        "y": 1700,
         "wires": [
             [
                 "a9df5d043cd4f9b2"
@@ -6452,7 +7018,7 @@
         "outputProperties": [],
         "queue": "none",
         "x": 760,
-        "y": 1640,
+        "y": 1700,
         "wires": [
             []
         ]
@@ -6479,7 +7045,7 @@
         "outputProperties": [],
         "queue": "none",
         "x": 760,
-        "y": 1740,
+        "y": 1800,
         "wires": [
             []
         ]
@@ -6530,7 +7096,7 @@
             }
         ],
         "x": 130,
-        "y": 1740,
+        "y": 1800,
         "wires": [
             [
                 "f3816294a5e03ba9"
@@ -6575,7 +7141,7 @@
         "entity_location": "data",
         "override_data": "msg",
         "x": 550,
-        "y": 1640,
+        "y": 1700,
         "wires": [
             [
                 "eaf045020f53888a"
@@ -6620,7 +7186,7 @@
         "entity_location": "data",
         "override_data": "msg",
         "x": 550,
-        "y": 1740,
+        "y": 1800,
         "wires": [
             [
                 "2613e3260eaae516"
@@ -6665,7 +7231,7 @@
         "entity_location": "data",
         "override_data": "msg",
         "x": 340,
-        "y": 1740,
+        "y": 1800,
         "wires": [
             [],
             [
@@ -6710,7 +7276,7 @@
         "entity_location": "data",
         "override_data": "msg",
         "x": 340,
-        "y": 1640,
+        "y": 1700,
         "wires": [
             [],
             [
@@ -6725,7 +7291,7 @@
         "name": "Remote Controllers",
         "info": "",
         "x": 130,
-        "y": 1900,
+        "y": 1960,
         "wires": []
     },
     {
@@ -6741,7 +7307,7 @@
             }
         ],
         "x": 150,
-        "y": 2140,
+        "y": 2200,
         "wires": [
             [
                 "6e8cf105234b6b3c"
@@ -6791,7 +7357,7 @@
         "outputProperties": [],
         "queue": "none",
         "x": 450,
-        "y": 1960,
+        "y": 2020,
         "wires": [
             []
         ]
@@ -6818,7 +7384,7 @@
         "outputProperties": [],
         "queue": "none",
         "x": 430,
-        "y": 2320,
+        "y": 2380,
         "wires": [
             []
         ]
@@ -6845,7 +7411,7 @@
         "outputProperties": [],
         "queue": "none",
         "x": 440,
-        "y": 2380,
+        "y": 2440,
         "wires": [
             []
         ]
@@ -6872,7 +7438,7 @@
         "outputProperties": [],
         "queue": "none",
         "x": 470,
-        "y": 2080,
+        "y": 2140,
         "wires": [
             []
         ]
@@ -6899,7 +7465,7 @@
         "outputProperties": [],
         "queue": "none",
         "x": 490,
-        "y": 2200,
+        "y": 2260,
         "wires": [
             []
         ]
@@ -6926,7 +7492,7 @@
         "outputProperties": [],
         "queue": "none",
         "x": 460,
-        "y": 2140,
+        "y": 2200,
         "wires": [
             []
         ]
@@ -6953,7 +7519,7 @@
         "outputProperties": [],
         "queue": "none",
         "x": 450,
-        "y": 2260,
+        "y": 2320,
         "wires": [
             []
         ]
@@ -7171,7 +7737,7 @@
         "outputProperties": [],
         "queue": "none",
         "x": 660,
-        "y": 1980,
+        "y": 2040,
         "wires": [
             []
         ]
@@ -7188,7 +7754,7 @@
         "sunElevationThreshold": 6,
         "sunShowElevationInStatus": false,
         "x": 450,
-        "y": 2020,
+        "y": 2080,
         "wires": [
             [
                 "04abcd31e0034c1a"
@@ -7220,7 +7786,7 @@
         "outputProperties": [],
         "queue": "none",
         "x": 670,
-        "y": 2040,
+        "y": 2100,
         "wires": [
             []
         ]
@@ -7358,7 +7924,7 @@
         "id": "0799e9b147939cc2",
         "type": "subflow:0eac027afb048323",
         "z": "fa6bb9cfa58677c8",
-        "name": "Bedroom Lights",
+        "name": "Bedroom Lights - Wasp Box",
         "env": [
             {
                 "name": "MOTION_SENSOR",
@@ -7386,7 +7952,7 @@
                 "type": "str"
             }
         ],
-        "x": 160,
+        "x": 200,
         "y": 200,
         "wires": []
     },
@@ -7428,7 +7994,7 @@
             }
         ],
         "x": 200,
-        "y": 120,
+        "y": 140,
         "wires": []
     },
     {
@@ -7477,7 +8043,7 @@
             }
         ],
         "x": 170,
-        "y": 220,
+        "y": 240,
         "wires": [
             [
                 "6f0a4b4e6829a057"
@@ -7506,8 +8072,8 @@
         "mustacheAltTags": false,
         "outputProperties": [],
         "queue": "none",
-        "x": 630,
-        "y": 220,
+        "x": 210,
+        "y": 360,
         "wires": [
             [
                 "1868631f528de583"
@@ -7551,10 +8117,10 @@
         "entity_location": "data",
         "override_data": "msg",
         "x": 410,
-        "y": 220,
+        "y": 240,
         "wires": [
             [
-                "7eb6d807b0b45de3"
+                "7d5cfe0a9f238622"
             ],
             []
         ]
@@ -7581,14 +8147,14 @@
         "outputProperties": [],
         "entityLocation": "data",
         "entityLocationType": "none",
-        "x": 840,
-        "y": 220,
+        "x": 420,
+        "y": 360,
         "wires": [
             [
-                "7463993a07842f80"
+                "0b268b48126875e9"
             ],
             [
-                "7463993a07842f80"
+                "0b268b48126875e9"
             ]
         ]
     },
@@ -7613,163 +8179,49 @@
         "mustacheAltTags": false,
         "outputProperties": [],
         "queue": "none",
-        "x": 1050,
-        "y": 220,
+        "x": 1070,
+        "y": 360,
         "wires": [
             []
         ]
     },
     {
-        "id": "e755b5728f77f0e3",
-        "type": "comment",
-        "z": "8f5e75d405c57d2f",
-        "name": "Lights",
-        "info": "",
-        "x": 90,
-        "y": 60,
-        "wires": []
-    },
-    {
-        "id": "ba9f7fae897a2c5c",
-        "type": "server-state-changed",
-        "z": "8f5e75d405c57d2f",
-        "d": true,
-        "name": "No Presence for 1m",
-        "server": "f88bb71a82464dcf",
-        "version": 5,
-        "outputs": 2,
-        "exposeAsEntityConfig": "",
-        "entityId": "binary_sensor.hall_motion_occupancy",
-        "entityIdType": "exact",
-        "outputInitially": false,
-        "stateType": "str",
-        "ifState": "off",
-        "ifStateType": "str",
-        "ifStateOperator": "is",
-        "outputOnlyOnStateChange": true,
-        "for": "1",
-        "forType": "num",
-        "forUnits": "minutes",
-        "ignorePrevStateNull": false,
-        "ignorePrevStateUnknown": true,
-        "ignorePrevStateUnavailable": true,
-        "ignoreCurrentStateUnknown": true,
-        "ignoreCurrentStateUnavailable": true,
-        "outputProperties": [
-            {
-                "property": "payload",
-                "propertyType": "msg",
-                "value": "",
-                "valueType": "entityState"
-            },
-            {
-                "property": "data",
-                "propertyType": "msg",
-                "value": "",
-                "valueType": "eventData"
-            },
-            {
-                "property": "topic",
-                "propertyType": "msg",
-                "value": "",
-                "valueType": "triggerId"
-            }
-        ],
-        "x": 170,
-        "y": 180,
+        "id": "0b268b48126875e9",
+        "type": "delay",
+        "z": "c41ab6f93f6c103e",
+        "name": "",
+        "pauseType": "delay",
+        "timeout": "30",
+        "timeoutUnits": "seconds",
+        "rate": "1",
+        "nbRateUnits": "1",
+        "rateUnits": "second",
+        "randomFirst": "1",
+        "randomLast": "5",
+        "randomUnits": "seconds",
+        "drop": false,
+        "allowrate": false,
+        "outputs": 1,
+        "x": 620,
+        "y": 360,
         "wires": [
             [
-                "4dd55bf8c354674f"
-            ],
-            [
-                "360206ba25850f32"
+                "76a55c798c17d4de"
             ]
         ]
     },
     {
-        "id": "85b048947c99b29d",
-        "type": "api-call-service",
-        "z": "8f5e75d405c57d2f",
-        "name": "Lights On",
-        "server": "f88bb71a82464dcf",
-        "version": 5,
-        "debugenabled": false,
-        "domain": "homeassistant",
-        "service": "turn_on",
-        "areaId": [],
-        "deviceId": [],
-        "entityId": [
-            "group.hall_lights"
-        ],
-        "data": "",
-        "dataType": "jsonata",
-        "mergeContext": "",
-        "mustacheAltTags": false,
-        "outputProperties": [],
-        "queue": "none",
-        "x": 760,
-        "y": 220,
-        "wires": [
-            []
-        ]
-    },
-    {
-        "id": "7b5bf1e7252da343",
+        "id": "76a55c798c17d4de",
         "type": "api-current-state",
-        "z": "8f5e75d405c57d2f",
-        "name": "Dark?",
+        "z": "c41ab6f93f6c103e",
+        "name": "Bathroom Door Opened?",
         "server": "f88bb71a82464dcf",
         "version": 3,
         "outputs": 2,
-        "halt_if": "30",
-        "halt_if_type": "num",
-        "halt_if_compare": "lte",
-        "entity_id": "sensor.hall_motion_illuminance",
-        "state_type": "str",
-        "blockInputOverrides": false,
-        "outputProperties": [
-            {
-                "property": "payload",
-                "propertyType": "msg",
-                "value": "",
-                "valueType": "entityState"
-            },
-            {
-                "property": "data",
-                "propertyType": "msg",
-                "value": "",
-                "valueType": "entity"
-            }
-        ],
-        "for": "0",
-        "forType": "num",
-        "forUnits": "minutes",
-        "override_topic": false,
-        "state_location": "payload",
-        "override_payload": "msg",
-        "entity_location": "data",
-        "override_data": "msg",
-        "x": 570,
-        "y": 200,
-        "wires": [
-            [
-                "85b048947c99b29d"
-            ],
-            []
-        ]
-    },
-    {
-        "id": "9f0c21e46a7c0131",
-        "type": "api-current-state",
-        "z": "8f5e75d405c57d2f",
-        "name": "Sunset?",
-        "server": "f88bb71a82464dcf",
-        "version": 3,
-        "outputs": 2,
-        "halt_if": "below_horizon",
+        "halt_if": "on",
         "halt_if_type": "str",
         "halt_if_compare": "is",
-        "entity_id": "sun.sun",
+        "entity_id": "binary_sensor.bathroom_door_contact",
         "state_type": "str",
         "blockInputOverrides": false,
         "outputProperties": [
@@ -7794,54 +8246,29 @@
         "override_payload": "msg",
         "entity_location": "data",
         "override_data": "msg",
-        "x": 580,
-        "y": 260,
+        "x": 830,
+        "y": 360,
         "wires": [
             [
-                "85b048947c99b29d"
+                "7463993a07842f80"
             ],
-            []
+            [
+                "1868631f528de583"
+            ]
         ]
     },
     {
-        "id": "4dd55bf8c354674f",
-        "type": "api-call-service",
-        "z": "8f5e75d405c57d2f",
-        "name": "Lights Off",
-        "server": "f88bb71a82464dcf",
-        "version": 5,
-        "debugenabled": false,
-        "domain": "homeassistant",
-        "service": "turn_off",
-        "areaId": [],
-        "deviceId": [],
-        "entityId": [
-            "group.hall_lights"
-        ],
-        "data": "",
-        "dataType": "jsonata",
-        "mergeContext": "",
-        "mustacheAltTags": false,
-        "outputProperties": [],
-        "queue": "none",
-        "x": 380,
-        "y": 140,
-        "wires": [
-            []
-        ]
-    },
-    {
-        "id": "360206ba25850f32",
+        "id": "7d5cfe0a9f238622",
         "type": "api-current-state",
-        "z": "8f5e75d405c57d2f",
-        "name": "Sleeping?",
+        "z": "c41ab6f93f6c103e",
+        "name": "Light Automations Enabled?",
         "server": "f88bb71a82464dcf",
         "version": 3,
         "outputs": 2,
-        "halt_if": "idle",
+        "halt_if": "on",
         "halt_if_type": "str",
-        "halt_if_compare": "is_not",
-        "entity_id": "timer.bedroom_sleeping",
+        "halt_if_compare": "is",
+        "entity_id": "input_boolean.home_light_automations",
         "state_type": "str",
         "blockInputOverrides": false,
         "outputProperties": [
@@ -7866,14 +8293,13 @@
         "override_payload": "msg",
         "entity_location": "data",
         "override_data": "msg",
-        "x": 380,
-        "y": 220,
+        "x": 680,
+        "y": 240,
         "wires": [
-            [],
             [
-                "7b5bf1e7252da343",
-                "9f0c21e46a7c0131"
-            ]
+                "7eb6d807b0b45de3"
+            ],
+            []
         ]
     },
     {

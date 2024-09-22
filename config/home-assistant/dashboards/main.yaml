@@ -315,8 +315,9 @@ views:
         entities:
           - entity: input_boolean.guests
           - entity: input_boolean.holidays
-          - entity: input_boolean.home_vacuumed
+          - entity: input_boolean.home_light_automations
           - entity: input_boolean.home_locked
+          - entity: input_boolean.home_vacuumed
           - entity: input_number.too_hot
         show_header_toggle: false
         state_color: true
