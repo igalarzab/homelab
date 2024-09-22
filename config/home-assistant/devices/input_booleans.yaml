@@ -8,6 +8,11 @@ holidays:
   initial: 'off'
   icon: mdi:beach
 
+home_light_automations:
+  name: Home Light Automations
+  initial: 'on'
+  icon: mdi:lightbulb-alert
+
 home_locked:
   name: Home Locked
   initial: 'off'
