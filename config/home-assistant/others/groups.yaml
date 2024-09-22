@@ -99,7 +99,6 @@ home_inside_motion_occupancy:
   entities:
     - binary_sensor.bathroom_motion_occupancy
     - binary_sensor.bedroom_motion_occupancy
-    - binary_sensor.hall_motion_occupancy
     - binary_sensor.kitchen_motion_occupancy
     - binary_sensor.living_room_motion_occupancy
     - binary_sensor.office_motion_occupancy

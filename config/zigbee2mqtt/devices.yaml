@@ -127,14 +127,6 @@
     name: Kitchen Motion
     device:
       suggested_area: Kitchen
-'0x00158d000669577b':
-  friendly_name: hall/motion
-  occupancy_timeout: 15
-  filtered_attributes: ['device_temperature', 'illuminance_lux', 'linkquality', 'power_outage_count', 'trigger_count', 'voltage']
-  homeassistant:
-    name: Hall Motion
-    device:
-      suggested_area: Hall
 '0x00158d0006e45a7e':
   friendly_name: 'bathroom/motion'
   occupancy_timeout: 15
