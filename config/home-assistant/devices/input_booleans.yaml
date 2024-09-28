@@ -1,11 +1,9 @@
 guests:
   name: Guests at Home
-  initial: 'off'
   icon: mdi:account-plus
 
 holidays:
   name: Holidays Mode
-  initial: 'off'
   icon: mdi:beach
 
 home_light_automations:
@@ -15,10 +13,8 @@ home_light_automations:
 
 home_locked:
   name: Home Locked
-  initial: 'off'
   icon: mdi:shield-lock
 
 home_vacuumed:
   name: Home vacuumed today
-  initial: 'off'
   icon: mdi:robot-vacuum
