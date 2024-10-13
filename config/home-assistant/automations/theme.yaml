@@ -1,0 +1,14 @@
+- alias: Set theme based on the system theme
+  mode: single
+  triggers:
+    - trigger: homeassistant
+      event: start
+  actions:
+    - action: frontend.set_theme
+      data:
+        mode: light
+        name: Catppuccin Latte
+    - action: frontend.set_theme
+      data:
+        name: Catppuccin Macchiato
+        mode: dark

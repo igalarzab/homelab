@@ -3769,7 +3769,7 @@
             }
         ],
         "x": 150,
-        "y": 760,
+        "y": 780,
         "wires": [
             [
                 "84d49a26691371e9"
@@ -3814,12 +3814,13 @@
         "entity_location": "data",
         "override_data": "msg",
         "x": 360,
-        "y": 760,
+        "y": 780,
         "wires": [
             [
                 "cd7485589133f724",
                 "bd0c2c63af0933cf",
-                "095ab5c043ad66f9"
+                "095ab5c043ad66f9",
+                "f5b05178043ae019"
             ],
             []
         ]
@@ -3846,9 +3847,11 @@
         "outputProperties": [],
         "queue": "none",
         "x": 660,
-        "y": 700,
+        "y": 720,
         "wires": [
-            []
+            [
+                "1b0fdb091b292887"
+            ]
         ]
     },
     {
@@ -3888,7 +3891,7 @@
         "entity_location": "data",
         "override_data": "msg",
         "x": 660,
-        "y": 760,
+        "y": 780,
         "wires": [
             [],
             [
@@ -3916,7 +3919,7 @@
         "outputProperties": [],
         "queue": "none",
         "x": 850,
-        "y": 760,
+        "y": 780,
         "wires": [
             []
         ]
@@ -4008,7 +4011,7 @@
         "name": "Lights",
         "info": "",
         "x": 90,
-        "y": 940,
+        "y": 1000,
         "wires": []
     },
     {
@@ -4103,10 +4106,15 @@
                 "name": "LIGHT_ENTITY",
                 "value": "group.entrance_lights",
                 "type": "str"
+            },
+            {
+                "name": "LIGHT_THRESHOLD",
+                "value": "0",
+                "type": "num"
             }
         ],
         "x": 200,
-        "y": 1000,
+        "y": 1060,
         "wires": []
     },
     {
@@ -4158,7 +4166,7 @@
         "outputProperties": [],
         "queue": "none",
         "x": 900,
-        "y": 820,
+        "y": 900,
         "wires": [
             []
         ]
@@ -4181,11 +4189,110 @@
         "allowrate": false,
         "outputs": 1,
         "x": 640,
-        "y": 820,
+        "y": 900,
         "wires": [
             [
                 "4b88c2bcdb2d79e2"
             ]
+        ]
+    },
+    {
+        "id": "1b0fdb091b292887",
+        "type": "api-call-service",
+        "z": "8b6e3b319b97a18a",
+        "name": "Turn Off Holidays Mode",
+        "server": "f88bb71a82464dcf",
+        "version": 5,
+        "debugenabled": false,
+        "domain": "input_boolean",
+        "service": "turn_off",
+        "areaId": [],
+        "deviceId": [],
+        "entityId": [
+            "input_boolean.holidays"
+        ],
+        "data": "",
+        "dataType": "json",
+        "mergeContext": "",
+        "mustacheAltTags": false,
+        "outputProperties": [],
+        "queue": "none",
+        "x": 890,
+        "y": 720,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "f5b05178043ae019",
+        "type": "api-current-state",
+        "z": "8b6e3b319b97a18a",
+        "name": "AC Automations On?",
+        "server": "f88bb71a82464dcf",
+        "version": 3,
+        "outputs": 2,
+        "halt_if": "on",
+        "halt_if_type": "str",
+        "halt_if_compare": "is",
+        "entity_id": "input_boolean.home_ac_automations",
+        "state_type": "str",
+        "blockInputOverrides": false,
+        "outputProperties": [
+            {
+                "property": "payload",
+                "propertyType": "msg",
+                "value": "",
+                "valueType": "entityState"
+            },
+            {
+                "property": "data",
+                "propertyType": "msg",
+                "value": "",
+                "valueType": "entity"
+            }
+        ],
+        "for": "0",
+        "forType": "num",
+        "forUnits": "minutes",
+        "override_topic": false,
+        "state_location": "payload",
+        "override_payload": "msg",
+        "entity_location": "data",
+        "override_data": "msg",
+        "x": 680,
+        "y": 840,
+        "wires": [
+            [
+                "26af23030aeaaebc"
+            ],
+            []
+        ]
+    },
+    {
+        "id": "26af23030aeaaebc",
+        "type": "api-call-service",
+        "z": "8b6e3b319b97a18a",
+        "name": "Turn On Living Room AC Right",
+        "server": "f88bb71a82464dcf",
+        "version": 5,
+        "debugenabled": false,
+        "domain": "climate",
+        "service": "turn_on",
+        "areaId": [],
+        "deviceId": [],
+        "entityId": [
+            "climate.living_room_right_ac_controller"
+        ],
+        "data": "",
+        "dataType": "jsonata",
+        "mergeContext": "",
+        "mustacheAltTags": false,
+        "outputProperties": [],
+        "queue": "none",
+        "x": 950,
+        "y": 840,
+        "wires": [
+            []
         ]
     },
     {
@@ -5133,7 +5240,7 @@
             }
         ],
         "x": 160,
-        "y": 1000,
+        "y": 1020,
         "wires": [
             [
                 "16adf3ec4e9952c8"
@@ -5178,10 +5285,10 @@
         "entity_location": "data",
         "override_data": "msg",
         "x": 360,
-        "y": 1000,
+        "y": 1020,
         "wires": [
             [
-                "dd348d43cad75d11"
+                "479108a7bd2da13e"
             ],
             []
         ]
@@ -5195,20 +5302,20 @@
         "version": 5,
         "debugenabled": false,
         "domain": "climate",
-        "service": "set_hvac_mode",
+        "service": "set_temperature",
         "areaId": [],
         "deviceId": [],
         "entityId": [
             "group.living_room_ac_controller"
         ],
-        "data": "{ hvac_mode: \"dry\" }",
-        "dataType": "jsonata",
+        "data": "{ \"hvac_mode\": \"dry\", \"temperature\": \"26\" }",
+        "dataType": "json",
         "mergeContext": "",
         "mustacheAltTags": false,
         "outputProperties": [],
         "queue": "none",
-        "x": 730,
-        "y": 960,
+        "x": 970,
+        "y": 980,
         "wires": [
             [
                 "90d059eca3a4f797"
@@ -5237,14 +5344,14 @@
         "outputProperties": [],
         "entityLocation": "data",
         "entityLocationType": "none",
-        "x": 940,
-        "y": 960,
+        "x": 1180,
+        "y": 980,
         "wires": [
             [
                 "392e14aa19a915d0"
             ],
             [
-                "392e14aa19a915d0"
+                "c8fe07cd1622552b"
             ]
         ]
     },
@@ -5269,8 +5376,8 @@
         "mustacheAltTags": false,
         "outputProperties": [],
         "queue": "none",
-        "x": 1130,
-        "y": 960,
+        "x": 1370,
+        "y": 940,
         "wires": [
             [
                 "6d154cb9e6ae8ac3"
@@ -5313,8 +5420,8 @@
         "override_payload": "msg",
         "entity_location": "data",
         "override_data": "msg",
-        "x": 540,
-        "y": 1000,
+        "x": 780,
+        "y": 1020,
         "wires": [
             [
                 "f3c9368ece566626",
@@ -5342,8 +5449,8 @@
         "mustacheAltTags": false,
         "outputProperties": [],
         "queue": "none",
-        "x": 730,
-        "y": 1020,
+        "x": 970,
+        "y": 1040,
         "wires": [
             []
         ]
@@ -5367,9 +5474,108 @@
         "mustacheAltTags": false,
         "outputProperties": [],
         "queue": "none",
-        "x": 1330,
-        "y": 960,
+        "x": 1570,
+        "y": 940,
         "wires": [
+            []
+        ]
+    },
+    {
+        "id": "c8fe07cd1622552b",
+        "type": "api-call-service",
+        "z": "751c2276bdb4df53",
+        "name": "Turn Off ACs",
+        "server": "f88bb71a82464dcf",
+        "version": 5,
+        "debugenabled": false,
+        "domain": "climate",
+        "service": "turn_off",
+        "areaId": [],
+        "deviceId": [],
+        "entityId": [
+            "group.living_room_ac_controller"
+        ],
+        "data": "",
+        "dataType": "jsonata",
+        "mergeContext": "",
+        "mustacheAltTags": false,
+        "outputProperties": [],
+        "queue": "none",
+        "x": 1370,
+        "y": 1000,
+        "wires": [
+            [
+                "abe36cb0a8328078"
+            ]
+        ]
+    },
+    {
+        "id": "abe36cb0a8328078",
+        "type": "api-call-service",
+        "z": "751c2276bdb4df53",
+        "name": "Send Notification",
+        "server": "f88bb71a82464dcf",
+        "version": 5,
+        "debugenabled": false,
+        "domain": "notify",
+        "service": "notify",
+        "areaId": [],
+        "deviceId": [],
+        "entityId": [],
+        "data": "{\"title\":\"Humidity still not under control\",\"message\":\"Turning Off ACs with humidity still too high\"}",
+        "dataType": "json",
+        "mergeContext": "",
+        "mustacheAltTags": false,
+        "outputProperties": [],
+        "queue": "none",
+        "x": 1570,
+        "y": 1000,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "479108a7bd2da13e",
+        "type": "api-current-state",
+        "z": "751c2276bdb4df53",
+        "name": "AC Automations On?",
+        "server": "f88bb71a82464dcf",
+        "version": 3,
+        "outputs": 2,
+        "halt_if": "on",
+        "halt_if_type": "str",
+        "halt_if_compare": "is",
+        "entity_id": "input_boolean.home_ac_automations",
+        "state_type": "str",
+        "blockInputOverrides": false,
+        "outputProperties": [
+            {
+                "property": "payload",
+                "propertyType": "msg",
+                "value": "",
+                "valueType": "entityState"
+            },
+            {
+                "property": "data",
+                "propertyType": "msg",
+                "value": "",
+                "valueType": "entity"
+            }
+        ],
+        "for": "0",
+        "forType": "num",
+        "forUnits": "minutes",
+        "override_topic": false,
+        "state_location": "payload",
+        "override_payload": "msg",
+        "entity_location": "data",
+        "override_data": "msg",
+        "x": 580,
+        "y": 1020,
+        "wires": [
+            [
+                "dd348d43cad75d11"
+            ],
             []
         ]
     },
@@ -5432,7 +5638,7 @@
         "y": 520,
         "wires": [
             [
-                "211bf5dddd5fd4ea"
+                "ed81d30112109096"
             ],
             []
         ]
@@ -5458,7 +5664,7 @@
         "mustacheAltTags": false,
         "outputProperties": [],
         "queue": "none",
-        "x": 390,
+        "x": 610,
         "y": 520,
         "wires": [
             []
@@ -5485,8 +5691,8 @@
         "mustacheAltTags": false,
         "outputProperties": [],
         "queue": "none",
-        "x": 590,
-        "y": 340,
+        "x": 850,
+        "y": 320,
         "wires": [
             []
         ]
@@ -5594,7 +5800,7 @@
         "y": 340,
         "wires": [
             [
-                "fca036d1ffe4ce55"
+                "f1a093c35cfd0de2"
             ],
             []
         ]
@@ -5734,7 +5940,7 @@
         "y": 380,
         "wires": [
             [
-                "fca036d1ffe4ce55"
+                "f1a093c35cfd0de2"
             ],
             []
         ]
@@ -6175,7 +6381,7 @@
         "y": 280,
         "wires": [
             [
-                "fca036d1ffe4ce55"
+                "f1a093c35cfd0de2"
             ],
             []
         ]
@@ -6215,6 +6421,96 @@
         "x": 190,
         "y": 120,
         "wires": []
+    },
+    {
+        "id": "f1a093c35cfd0de2",
+        "type": "api-current-state",
+        "z": "03c58ed96b7b8395",
+        "name": "AC Automations On?",
+        "server": "f88bb71a82464dcf",
+        "version": 3,
+        "outputs": 2,
+        "halt_if": "on",
+        "halt_if_type": "str",
+        "halt_if_compare": "is",
+        "entity_id": "input_boolean.home_ac_automations",
+        "state_type": "str",
+        "blockInputOverrides": false,
+        "outputProperties": [
+            {
+                "property": "payload",
+                "propertyType": "msg",
+                "value": "",
+                "valueType": "entityState"
+            },
+            {
+                "property": "data",
+                "propertyType": "msg",
+                "value": "",
+                "valueType": "entity"
+            }
+        ],
+        "for": "0",
+        "forType": "num",
+        "forUnits": "minutes",
+        "override_topic": false,
+        "state_location": "payload",
+        "override_payload": "msg",
+        "entity_location": "data",
+        "override_data": "msg",
+        "x": 620,
+        "y": 320,
+        "wires": [
+            [
+                "fca036d1ffe4ce55"
+            ],
+            []
+        ]
+    },
+    {
+        "id": "ed81d30112109096",
+        "type": "api-current-state",
+        "z": "03c58ed96b7b8395",
+        "name": "AC Automations On?",
+        "server": "f88bb71a82464dcf",
+        "version": 3,
+        "outputs": 2,
+        "halt_if": "on",
+        "halt_if_type": "str",
+        "halt_if_compare": "is",
+        "entity_id": "input_boolean.home_ac_automations",
+        "state_type": "str",
+        "blockInputOverrides": false,
+        "outputProperties": [
+            {
+                "property": "payload",
+                "propertyType": "msg",
+                "value": "",
+                "valueType": "entityState"
+            },
+            {
+                "property": "data",
+                "propertyType": "msg",
+                "value": "",
+                "valueType": "entity"
+            }
+        ],
+        "for": "0",
+        "forType": "num",
+        "forUnits": "minutes",
+        "override_topic": false,
+        "state_location": "payload",
+        "override_payload": "msg",
+        "entity_location": "data",
+        "override_data": "msg",
+        "x": 380,
+        "y": 520,
+        "wires": [
+            [
+                "211bf5dddd5fd4ea"
+            ],
+            []
+        ]
     },
     {
         "id": "21a21c921ce7a64f",
@@ -6464,7 +6760,7 @@
         "mustacheAltTags": false,
         "outputProperties": [],
         "queue": "none",
-        "x": 800,
+        "x": 1040,
         "y": 440,
         "wires": [
             []
@@ -6491,7 +6787,7 @@
         "mustacheAltTags": false,
         "outputProperties": [],
         "queue": "none",
-        "x": 380,
+        "x": 620,
         "y": 620,
         "wires": [
             []
@@ -6546,7 +6842,7 @@
         "y": 620,
         "wires": [
             [
-                "fce951f1ac71d4a5"
+                "c71b1eaaa42f8475"
             ],
             []
         ]
@@ -6572,7 +6868,7 @@
         "mustacheAltTags": false,
         "outputProperties": [],
         "queue": "none",
-        "x": 1070,
+        "x": 1310,
         "y": 500,
         "wires": [
             []
@@ -6601,7 +6897,7 @@
         "outputProperties": [],
         "queue": "none",
         "x": 1290,
-        "y": 1040,
+        "y": 1060,
         "wires": [
             []
         ]
@@ -6643,12 +6939,12 @@
         "entity_location": "data",
         "override_data": "msg",
         "x": 1050,
-        "y": 1060,
+        "y": 1080,
         "wires": [
             [],
             [
-                "a7516f939caeaa3b",
-                "ab859369e73002d2"
+                "ab859369e73002d2",
+                "a7516f939caeaa3b"
             ]
         ]
     },
@@ -6728,7 +7024,7 @@
         "mustacheAltTags": false,
         "outputProperties": [],
         "queue": "none",
-        "x": 430,
+        "x": 410,
         "y": 1440,
         "wires": [
             [
@@ -6758,7 +7054,7 @@
         "mustacheAltTags": false,
         "outputProperties": [],
         "queue": "none",
-        "x": 700,
+        "x": 680,
         "y": 1400,
         "wires": [
             []
@@ -6783,7 +7079,7 @@
         "mustacheAltTags": false,
         "outputProperties": [],
         "queue": "none",
-        "x": 670,
+        "x": 650,
         "y": 1460,
         "wires": [
             []
@@ -7560,7 +7856,7 @@
         "override_payload": "msg",
         "entity_location": "data",
         "override_data": "msg",
-        "x": 800,
+        "x": 1040,
         "y": 500,
         "wires": [
             [
@@ -7610,8 +7906,7 @@
         "wires": [
             [],
             [
-                "c03a59b5b2299844",
-                "bd9f7115a617b2cc"
+                "a97e8b63e27a9d12"
             ]
         ]
     },
@@ -7652,7 +7947,7 @@
         "entity_location": "data",
         "override_data": "msg",
         "x": 1050,
-        "y": 1200,
+        "y": 1220,
         "wires": [
             [
                 "8e760635a748b647",
@@ -7683,7 +7978,7 @@
         "outputProperties": [],
         "queue": "none",
         "x": 1300,
-        "y": 1160,
+        "y": 1180,
         "wires": [
             []
         ]
@@ -7710,7 +8005,7 @@
         "outputProperties": [],
         "queue": "none",
         "x": 1290,
-        "y": 1220,
+        "y": 1240,
         "wires": [
             []
         ]
@@ -7843,7 +8138,7 @@
         "outputProperties": [],
         "queue": "none",
         "x": 1300,
-        "y": 1100,
+        "y": 1120,
         "wires": [
             []
         ]
@@ -7955,6 +8250,97 @@
         "x": 200,
         "y": 200,
         "wires": []
+    },
+    {
+        "id": "a97e8b63e27a9d12",
+        "type": "api-current-state",
+        "z": "fa6bb9cfa58677c8",
+        "name": "AC Automations On?",
+        "server": "f88bb71a82464dcf",
+        "version": 3,
+        "outputs": 2,
+        "halt_if": "on",
+        "halt_if_type": "str",
+        "halt_if_compare": "is",
+        "entity_id": "input_boolean.home_ac_automations",
+        "state_type": "str",
+        "blockInputOverrides": false,
+        "outputProperties": [
+            {
+                "property": "payload",
+                "propertyType": "msg",
+                "value": "",
+                "valueType": "entityState"
+            },
+            {
+                "property": "data",
+                "propertyType": "msg",
+                "value": "",
+                "valueType": "entity"
+            }
+        ],
+        "for": "0",
+        "forType": "num",
+        "forUnits": "minutes",
+        "override_topic": false,
+        "state_location": "payload",
+        "override_payload": "msg",
+        "entity_location": "data",
+        "override_data": "msg",
+        "x": 800,
+        "y": 480,
+        "wires": [
+            [
+                "c03a59b5b2299844",
+                "bd9f7115a617b2cc"
+            ],
+            []
+        ]
+    },
+    {
+        "id": "c71b1eaaa42f8475",
+        "type": "api-current-state",
+        "z": "fa6bb9cfa58677c8",
+        "name": "AC Automations On?",
+        "server": "f88bb71a82464dcf",
+        "version": 3,
+        "outputs": 2,
+        "halt_if": "on",
+        "halt_if_type": "str",
+        "halt_if_compare": "is",
+        "entity_id": "input_boolean.home_ac_automations",
+        "state_type": "str",
+        "blockInputOverrides": false,
+        "outputProperties": [
+            {
+                "property": "payload",
+                "propertyType": "msg",
+                "value": "",
+                "valueType": "entityState"
+            },
+            {
+                "property": "data",
+                "propertyType": "msg",
+                "value": "",
+                "valueType": "entity"
+            }
+        ],
+        "for": "0",
+        "forType": "num",
+        "forUnits": "minutes",
+        "override_topic": false,
+        "state_location": "payload",
+        "override_payload": "msg",
+        "entity_location": "data",
+        "override_data": "msg",
+        "x": 380,
+        "y": 620,
+        "wires": [
+            [
+                "fce951f1ac71d4a5"
+            ],
+            []
+        ]
     },
     {
         "id": "6eedb26837a07fad",

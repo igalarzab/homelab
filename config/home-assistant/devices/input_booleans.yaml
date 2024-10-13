@@ -6,6 +6,11 @@ holidays:
   name: Holidays Mode
   icon: mdi:beach
 
+home_ac_automations:
+  name: Home AC Automations
+  initial: 'on'
+  icon: mdi:air-conditioner
+
 home_light_automations:
   name: Home Light Automations
   initial: 'on'

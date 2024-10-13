@@ -1,0 +1,14 @@
+global:
+  postgresql:
+    auth:
+      postgresPassword: "SuperSecretPGAdminPa55word!"
+      username: "dvdrental_admin"
+      password: "notAsSecretU5erPa55word"
+      database: "dvdrental"
+
+primary:
+  persistence:
+    enabled: false
+  initdb:
+    user: "postgres"
+    password: "SuperSecretPGAdminPa55word!"
