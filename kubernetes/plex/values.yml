@@ -17,7 +17,7 @@ controllers:
       plex:
         image:
           repository: plexinc/pms-docker
-          tag: "1.41.0.8992-8463ad060"
+          tag: "${DOCKER_TAG__PLEX__STATEFULSET__PLEX__0}"
         securityContext:
           privileged: true # TODO: needed for quicksync
         env:

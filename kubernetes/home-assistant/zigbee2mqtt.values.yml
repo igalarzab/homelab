@@ -15,7 +15,7 @@ controllers:
       zigbee2mqtt:
         image:
           repository: koenkk/zigbee2mqtt
-          tag: "1.40.1"
+          tag: "${DOCKER_TAG__HOME_ASSISTANT__STATEFULSET__ZIGBEE2MQTT__0}"
         securityContext:
           runAsUser: 1000
           runAsGroup: 100

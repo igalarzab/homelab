@@ -16,7 +16,7 @@ controllers:
       node-red:
         image:
           repository: nodered/node-red
-          tag: "4.0.3"
+          tag: "${DOCKER_TAG__HOME_ASSISTANT__DEPLOYMENT__NODE_RED__0}"
         env:
           TZ: ${COMMON_TZ}
         ports:

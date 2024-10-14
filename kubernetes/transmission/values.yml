@@ -16,7 +16,7 @@ controllers:
       transmission:
         image:
           repository: haugene/transmission-openvpn
-          tag: "5"
+          tag: "${DOCKER_TAG__TRANSMISSION__DEPLOYMENT__TRANSMISSION__0}"
         securityContext:
           capabilities:
             add:

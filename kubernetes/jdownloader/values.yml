@@ -16,7 +16,7 @@ controllers:
       jdownloader:
         image:
           repository: jlesage/jdownloader-2
-          tag: "v24.08.1"
+          tag: "${DOCKER_TAG__JDOWNLOADER__DEPLOYMENT__JDOWNLOADER__0}"
         env:
           TZ: ${COMMON_TZ}
           DARK_MODE: 1
