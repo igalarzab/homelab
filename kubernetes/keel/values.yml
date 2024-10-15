@@ -18,3 +18,7 @@ ingress:
 service:
   enabled: true
   type: ClusterIP
+
+persistence:
+  enabled: true
+  storageClass: proxmox-data
