@@ -11,169 +11,6 @@ views:
       - type: weather-forecast
         entity: weather.forecast_home
         show_forecast: false
-      - type: picture-elements
-        image: /local/floor_plan.png
-        elements:
-          - type: state-icon
-            entity: light.bathroom_lights
-            tap_action:
-              action: toggle
-            style:
-              top: 16%
-              left: 55%
-              transform: scale(1.2)
-          - type: state-icon
-            entity: light.hall_lights
-            tap_action:
-              action: toggle
-            style:
-              top: 12%
-              left: 22%
-              transform: scale(1.2)
-          - type: state-badge
-            entity: binary_sensor.hall_door_entrance_contact
-            title: null
-            style:
-              top: 1%
-              left: 18%
-              transform: scale(0.5)
-              color: rgba(0,0,0,0)
-          - type: state-badge
-            entity: binary_sensor.bathroom_door_entrance_contact
-            title: null
-            style:
-              top: 16%
-              left: 31%
-              transform: scale(0.5)
-              color: rgba(0,0,0,0)
-          - type: state-icon
-            entity: light.kitchen_lights
-            tap_action:
-              action: toggle
-            style:
-              top: 38%
-              left: 63%
-              transform: scale(1.2)
-          - type: state-icon
-            entity: light.bedroom_lights
-            tap_action:
-              action: toggle
-            style:
-              top: 71%
-              left: 71%
-              transform: scale(1.2)
-          - type: state-badge
-            entity: binary_sensor.bedroom_door_entrance_contact
-            title: null
-            style:
-              top: 68%
-              left: 46%
-              transform: scale(0.5)
-              color: rgba(0,0,0,0)
-          - type: state-badge
-            entity: binary_sensor.living_room_door_entrance_contact
-            title: null
-            style:
-              top: 20%
-              left: 18%
-              transform: scale(0.5)
-              color: rgba(0,0,0,0)
-          - type: state-badge
-            entity: binary_sensor.living_room_door_terrace_contact
-            title: null
-            style:
-              top: 89%
-              left: 18%
-              transform: scale(0.5)
-              color: rgba(0,0,0,0)
-          - type: state-badge
-            entity: binary_sensor.bedroom_door_terrace_contact
-            title: null
-            style:
-              top: 89%
-              left: 70%
-              transform: scale(0.5)
-              color: rgba(0,0,0,0)
-          - type: state-icon
-            entity: light.living_room_lights
-            tap_action:
-              action: toggle
-            style:
-              top: 50%
-              left: 25%
-              transform: scale(1.5)
-          - type: state-icon
-            entity: light.living_room_lights_ceiling_left
-            tap_action:
-              action: toggle
-            style:
-              top: 35%
-              left: 27%
-              transform: scale(1.2)
-          - type: state-icon
-            entity: light.living_room_lights_sofa_left
-            tap_action:
-              action: toggle
-            style:
-              top: 35%
-              left: 6%
-              transform: scale(1.2)
-          - type: state-icon
-            entity: light.living_room_lights_ceiling_right
-            tap_action:
-              action: toggle
-            style:
-              top: 72%
-              left: 27%
-              transform: scale(1.2)
-          - type: state-icon
-            entity: light.living_room_lights_sofa_right
-            tap_action:
-              action: toggle
-            style:
-              top: 72%
-              left: 6%
-              transform: scale(1.2)
-          - type: state-icon
-            entity: light.living_room_lights_tv
-            tap_action:
-              action: toggle
-            style:
-              top: 60%
-              left: 40%
-              transform: scale(1.2)
-          - type: state-badge
-            entity: sensor.living_room_thermometer_temperature
-            title: null
-            style:
-              top: 85%
-              left: 32%
-              transform: scale(0.5)
-              color: rgba(0,0,0,0)
-          - type: state-badge
-            entity: sensor.living_room_thermometer_humidity
-            title: null
-            style:
-              top: 85%
-              left: 40%
-              transform: scale(0.5)
-              color: rgba(0,0,0,0)
-          - type: state-badge
-            entity: sensor.bedroom_thermometer_temperature
-            title: null
-            style:
-              top: 86%
-              left: 52%
-              transform: scale(0.5)
-              color: rgba(0,0,0,0)
-          - type: state-badge
-            entity: sensor.bedroom_thermometer_humidity
-            title: null
-            style:
-              top: 86%
-              left: 60%
-              transform: scale(0.5)
-              color: rgba(0,0,0,0)
       - type: entities
         entities:
           - entity: input_button.leave_home
@@ -220,6 +57,23 @@ views:
           - entity: sensor.living_room_thermometer_temperature
           - entity: sensor.living_room_thermometer_humidity
       - type: entities
+        title: Lights
+        show_header_toggle: false
+        state_color: true
+        entities:
+          - entity: switch.living_room_controller_wall_switch_one
+            name: Dining Table Lights
+            icon: mdi:lightbulb
+          - entity: switch.living_room_controller_wall_switch_two
+            name: Sofa Lights
+            icon: mdi:lightbulb
+          - entity: switch.living_room_controller_wall_switch_three
+            name: Hall Lights
+            icon: mdi:lightbulb
+          - entity: light.living_room_tv_lightstrip
+            name: TV Lights
+            icon: mdi:lightbulb
+      - type: entities
         title: Entities
         show_header_toggle: false
         state_color: true
@@ -248,6 +102,14 @@ views:
           - entity: sensor.office_motion_illuminance
           - entity: sensor.office_thermometer_temperature
           - entity: sensor.office_thermometer_humidity
+      - type: entities
+        title: Lights
+        show_header_toggle: false
+        state_color: true
+        entities:
+          - entity: switch.office_controller_wall_switch_left
+            name: Ceiling Light
+            icon: mdi:lightbulb
       - type: thermostat
         entity: climate.office_ac_controller
       - type: media-control
@@ -268,6 +130,17 @@ views:
           - entity: sensor.bedroom_thermometer_temperature
           - entity: sensor.bedroom_thermometer_humidity
       - type: entities
+        title: Lights
+        show_header_toggle: false
+        state_color: true
+        entities:
+          - entity: switch.bedroom_controller_wall_switch_one
+            name: Ceiling Light
+            icon: mdi:lightbulb
+          - entity: light.bedroom_light_bed
+            name: Bed Light
+            icon: mdi:lightbulb
+      - type: entities
         title: Entities
         show_header_toggle: false
         state_color: true
@@ -277,34 +150,6 @@ views:
         entity: climate.bedroom_ac_controller
       - type: media-control
         entity: media_player.bedroom_speaker
-  - path: printers
-    icon: mdi:printer-3d-nozzle
-    badges: []
-    cards:
-      - type: entities
-        title: Telesto (P1S)
-        entities:
-          - entity: light.p1s_chamber_light
-          - entity: sensor.p1s_current_stage
-          - entity: sensor.p1s_task_name
-          - entity: sensor.p1s_print_progress
-          - entity: sensor.p1s_remaining_time
-          - entity: sensor.p1s_bed_temperature
-          - entity: sensor.p1s_nozzle_temperature
-          - entity: sensor.living_room_thermometer_p1s_temperature
-          - entity: sensor.living_room_thermometer_p1s_humidity
-        show_header_toggle: false
-        state_color: true
-      - type: entities
-        title: Filament
-        entities:
-          - entity: sensor.filament_thermometer_temperature
-          - entity: sensor.filament_thermometer_humidity
-        show_header_toggle: false
-        state_color: true
-      - type: picture-entity
-        entity: image.p1s_camera
-        camera_view: live
   - path: switches
     icon: mdi:video-input-svideo
     badges: []
@@ -314,10 +159,10 @@ views:
         entities:
           - entity: input_boolean.guests
           - entity: input_boolean.holidays
-          - entity: input_boolean.home_ac_automations
-          - entity: input_boolean.home_light_automations
           - entity: input_boolean.home_locked
           - entity: input_boolean.home_vacuumed
+          - entity: input_boolean.home_ac_automations
+          - entity: input_boolean.home_light_automations
           - entity: input_number.too_hot
         show_header_toggle: false
         state_color: true
