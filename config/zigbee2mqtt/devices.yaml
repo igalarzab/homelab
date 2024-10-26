@@ -183,6 +183,13 @@
     name: Bedroom Thermometer
     device:
       suggested_area: Bedroom
+'0xa4c13811dcd50973':
+  friendly_name: terrace/plant_thermometer
+  filtered_attributes: ['battery_state', 'linkquality', 'temperature_unit']
+  homeassistant:
+    name: Terrace Plant Thermometer
+    device:
+      suggested_area: Terrace
 
 # IR Blasters
 '0x8c65a3fffeb3ee1c':
@@ -208,6 +215,13 @@
     name: Bedroom Controller Bed
     device:
       suggested_area: Bedroom
+'0x001788010968e553':
+  friendly_name: living_room/controller_sofa
+  filtered_attributes: ['linkquality']
+  homeassistant:
+    name: Living Room Controller Sofa
+    device:
+      suggested_area: Living Room
 
 # Aqara Switches E1
 '0x54ef441000d68d4d':
@@ -306,3 +320,12 @@
     name: Bedroom Light Bed
     device:
       suggested_area: Bedroom
+
+# Others
+'0x00158d0005430faf':
+  friendly_name: 'kitchen/vibration_countersink'
+  filtered_attributes: ['angle', 'angle_x', 'angle_x_absolute', 'angle_y', 'angle_y_absolute', 'angle_z', 'device_temperature', 'linkquality', 'power_outage_count', 'sensitivity', 'strength', 'voltage', 'x_axis', 'y_axis', 'z_axis']
+  homeassistant:
+    name: Kintchen Countersink Vibration
+    device:
+      suggested_area: Kitchen
