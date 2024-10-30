@@ -10,7 +10,6 @@ namespaces:
   keel:
   kube-system:
   mosquitto:
-  postgresql:
   plex:
   traefik:
   transmission:
@@ -83,13 +82,6 @@ apps:
     namespace: keel
     valuesFile: keel/values.yml
     priority: -97
-#  postgresql:
-#    <<: *default
-#    chart: bitnami/postgresql
-#    version: "15.5.26"
-#    namespace: postgresql
-#    valuesFile: postgresql/values.yml
-#    priority: -89
   authentik:
     <<: *default
     chart: authentik/authentik
