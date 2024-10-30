@@ -64,7 +64,7 @@
         "in": [],
         "out": [
             {
-                "x": 800,
+                "x": 850,
                 "y": 140,
                 "wires": [
                     {
@@ -74,7 +74,7 @@
                 ]
             },
             {
-                "x": 800,
+                "x": 840,
                 "y": 200,
                 "wires": [
                     {
@@ -84,7 +84,7 @@
                 ]
             },
             {
-                "x": 800,
+                "x": 860,
                 "y": 260,
                 "wires": [
                     {
@@ -94,7 +94,7 @@
                 ]
             },
             {
-                "x": 800,
+                "x": 860,
                 "y": 320,
                 "wires": [
                     {
@@ -104,7 +104,7 @@
                 ]
             },
             {
-                "x": 800,
+                "x": 860,
                 "y": 380,
                 "wires": [
                     {
@@ -114,7 +114,7 @@
                 ]
             },
             {
-                "x": 800,
+                "x": 860,
                 "y": 440,
                 "wires": [
                     {
@@ -124,7 +124,7 @@
                 ]
             },
             {
-                "x": 800,
+                "x": 860,
                 "y": 500,
                 "wires": [
                     {
@@ -134,7 +134,7 @@
                 ]
             },
             {
-                "x": 800,
+                "x": 850,
                 "y": 560,
                 "wires": [
                     {
@@ -166,6 +166,16 @@
         ],
         "meta": {},
         "color": "#A6BBCF",
+        "outputLabels": [
+            "top_single",
+            "top_long",
+            "increase_single",
+            "increase_long",
+            "single_decrease",
+            "decrease_long",
+            "bottom_single",
+            "bottom_long"
+        ],
         "icon": "node-red-contrib-home-assistant-websocket/ha-entity-switch.svg",
         "status": {
             "x": 780,
@@ -572,12 +582,7 @@
                     "opts": {
                         "types": [
                             "str",
-                            "num",
-                            "bool",
-                            "json",
-                            "bin",
-                            "env",
-                            "conf-types"
+                            "env"
                         ]
                     }
                 }
@@ -598,6 +603,23 @@
                         ]
                     }
                 }
+            },
+            {
+                "name": "MANUAL_TIMER",
+                "type": "str",
+                "value": "",
+                "ui": {
+                    "label": {
+                        "en-US": "Manual Timer"
+                    },
+                    "type": "input",
+                    "opts": {
+                        "types": [
+                            "str",
+                            "env"
+                        ]
+                    }
+                }
             }
         ],
         "meta": {},
@@ -609,6 +631,139 @@
             "wires": [
                 {
                     "id": "0931d2c5bb51a9c1",
+                    "port": 0
+                }
+            ]
+        }
+    },
+    {
+        "id": "984902351988bd6e",
+        "type": "subflow",
+        "name": "Aqara Z1 Pro",
+        "info": "",
+        "category": "",
+        "in": [],
+        "out": [
+            {
+                "x": 710,
+                "y": 80,
+                "wires": [
+                    {
+                        "id": "6aeb63b1a73e8480",
+                        "port": 0
+                    }
+                ]
+            }
+        ],
+        "env": [
+            {
+                "name": "Z1_DEVICE",
+                "type": "str",
+                "value": "bedroom/wall_controller"
+            }
+        ],
+        "meta": {},
+        "color": "#D8BFD8",
+        "outputLabels": [
+            "single_top"
+        ],
+        "icon": "font-awesome/fa-bullseye"
+    },
+    {
+        "id": "d37603fe6994eea4",
+        "type": "subflow",
+        "name": "Aqara E1",
+        "info": "",
+        "category": "",
+        "in": [],
+        "out": [
+            {
+                "x": 680,
+                "y": 120,
+                "wires": [
+                    {
+                        "id": "ea56ecf91b753c81",
+                        "port": 0
+                    }
+                ]
+            },
+            {
+                "x": 690,
+                "y": 180,
+                "wires": [
+                    {
+                        "id": "763756b167de1715",
+                        "port": 0
+                    }
+                ]
+            },
+            {
+                "x": 690,
+                "y": 240,
+                "wires": [
+                    {
+                        "id": "e6281d911a6b7a66",
+                        "port": 0
+                    }
+                ]
+            },
+            {
+                "x": 690,
+                "y": 300,
+                "wires": [
+                    {
+                        "id": "82a189e5f8a6b34b",
+                        "port": 0
+                    }
+                ]
+            }
+        ],
+        "env": [
+            {
+                "name": "E1_DEVICE",
+                "type": "str",
+                "value": "",
+                "ui": {
+                    "label": {
+                        "en-US": "Aqara E1 Entity"
+                    },
+                    "type": "input",
+                    "opts": {
+                        "types": [
+                            "str",
+                            "env"
+                        ]
+                    }
+                }
+            }
+        ],
+        "meta": {},
+        "color": "#D8BFD8",
+        "outputLabels": [
+            "single_left",
+            "double_left",
+            "single_right",
+            "double_right"
+        ],
+        "icon": "node-red/db.svg",
+        "status": {
+            "x": 640,
+            "y": 360,
+            "wires": [
+                {
+                    "id": "ea56ecf91b753c81",
+                    "port": 0
+                },
+                {
+                    "id": "763756b167de1715",
+                    "port": 0
+                },
+                {
+                    "id": "e6281d911a6b7a66",
+                    "port": 0
+                },
+                {
+                    "id": "82a189e5f8a6b34b",
                     "port": 0
                 }
             ]
@@ -2915,7 +3070,7 @@
         "y": 200,
         "wires": [
             [
-                "27a63424d78d0d44"
+                "a0ac83b409a3ed91"
             ],
             [
                 "514e3a30e1722a03"
@@ -2988,7 +3143,7 @@
         "outputs": 2,
         "halt_if": "${LIGHT_THRESHOLD}",
         "halt_if_type": "num",
-        "halt_if_compare": "lte",
+        "halt_if_compare": "lt",
         "entity_id": "${BRIGHTNESS_SENSOR}",
         "state_type": "str",
         "blockInputOverrides": false,
@@ -3084,7 +3239,7 @@
         "y": 480,
         "wires": [
             [
-                "e6dfb35f0b4a5154"
+                "2239e4f1c7c35e50"
             ],
             [
                 "05dceca431a4d2cf"
@@ -3168,100 +3323,6 @@
             [
                 "f244c974aab6e3a3",
                 "18c9c003199d17ad"
-            ]
-        ]
-    },
-    {
-        "id": "27a63424d78d0d44",
-        "type": "api-current-state",
-        "z": "0eac027afb048323",
-        "name": "Light Automations Enabled?",
-        "server": "f88bb71a82464dcf",
-        "version": 3,
-        "outputs": 2,
-        "halt_if": "on",
-        "halt_if_type": "str",
-        "halt_if_compare": "is",
-        "entity_id": "input_boolean.home_light_automations",
-        "state_type": "str",
-        "blockInputOverrides": false,
-        "outputProperties": [
-            {
-                "property": "payload",
-                "propertyType": "msg",
-                "value": "",
-                "valueType": "entityState"
-            },
-            {
-                "property": "data",
-                "propertyType": "msg",
-                "value": "",
-                "valueType": "entity"
-            }
-        ],
-        "for": "0",
-        "forType": "num",
-        "forUnits": "minutes",
-        "override_topic": false,
-        "state_location": "payload",
-        "override_payload": "msg",
-        "entity_location": "data",
-        "override_data": "msg",
-        "x": 640,
-        "y": 160,
-        "wires": [
-            [
-                "6af40da077d20e8b"
-            ],
-            [
-                "5aad74f37633f12d"
-            ]
-        ]
-    },
-    {
-        "id": "e6dfb35f0b4a5154",
-        "type": "api-current-state",
-        "z": "0eac027afb048323",
-        "name": "Light Automations Enabled?",
-        "server": "f88bb71a82464dcf",
-        "version": 3,
-        "outputs": 2,
-        "halt_if": "on",
-        "halt_if_type": "str",
-        "halt_if_compare": "is",
-        "entity_id": "input_boolean.home_light_automations",
-        "state_type": "str",
-        "blockInputOverrides": false,
-        "outputProperties": [
-            {
-                "property": "payload",
-                "propertyType": "msg",
-                "value": "",
-                "valueType": "entityState"
-            },
-            {
-                "property": "data",
-                "propertyType": "msg",
-                "value": "",
-                "valueType": "entity"
-            }
-        ],
-        "for": "0",
-        "forType": "num",
-        "forUnits": "minutes",
-        "override_topic": false,
-        "state_location": "payload",
-        "override_payload": "msg",
-        "entity_location": "data",
-        "override_data": "msg",
-        "x": 640,
-        "y": 460,
-        "wires": [
-            [
-                "0b8676008a2f775b"
-            ],
-            [
-                "9ca54a3a7af2f108"
             ]
         ]
     },
@@ -3522,6 +3583,311 @@
         "wires": []
     },
     {
+        "id": "a0ac83b409a3ed91",
+        "type": "function",
+        "z": "0eac027afb048323",
+        "name": "Light Automations Enabled?",
+        "func": "const ha = global.get('homeassistant.ha');\n\nconst globalEnabled = ha.states['input_boolean.home_light_automations'];\n\nif (!globalEnabled) {\n    return [null, msg];\n}\n\nconst timerName = env.get('MANUAL_TIMER');\n\nif (!timerName) {\n    return [msg, null];\n}\n\nconst timerState = ha.states[timerName];\n\nif (!timerName || !('state' in timerState)) {\n    node.error(`No timer state found in ${timerName}`);\n    return;\n}\n\nif (timerState.state == 'idle') {\n    return [msg, null];\n}\n\nreturn [null, msg];",
+        "outputs": 2,
+        "timeout": "",
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 640,
+        "y": 160,
+        "wires": [
+            [
+                "6af40da077d20e8b"
+            ],
+            [
+                "5aad74f37633f12d"
+            ]
+        ]
+    },
+    {
+        "id": "2239e4f1c7c35e50",
+        "type": "function",
+        "z": "0eac027afb048323",
+        "name": "Light Automations Enabled?",
+        "func": "const ha = global.get('homeassistant.ha');\n\nconst globalEnabled = ha.states['input_boolean.home_light_automations'];\n\nif (!globalEnabled) {\n    return [null, msg];\n}\n\nconst timerName = env.get('MANUAL_TIMER');\n\nif (!timerName) {\n    return [msg, null];\n}\n\nconst timerState = ha.states[timerName];\n\nif (!timerName || !('state' in timerState)) {\n    node.error(`No timer state found in ${timerName}`);\n    return;\n}\n\nif (timerState.state == 'idle') {\n    return [msg, null];\n}\n\nreturn [null, msg];",
+        "outputs": 2,
+        "timeout": "",
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 640,
+        "y": 460,
+        "wires": [
+            [
+                "0b8676008a2f775b"
+            ],
+            [
+                "9ca54a3a7af2f108"
+            ]
+        ]
+    },
+    {
+        "id": "badcea23a5d0ad3f",
+        "type": "mqtt in",
+        "z": "984902351988bd6e",
+        "name": "",
+        "topic": "${Z1_DEVICE}",
+        "qos": "2",
+        "datatype": "json",
+        "broker": "1031d59e41cceee8",
+        "nl": false,
+        "rap": true,
+        "rh": 0,
+        "inputs": 0,
+        "x": 130,
+        "y": 200,
+        "wires": [
+            [
+                "36c6e836bf7cd6cf"
+            ]
+        ]
+    },
+    {
+        "id": "36c6e836bf7cd6cf",
+        "type": "switch",
+        "z": "984902351988bd6e",
+        "name": "Button",
+        "property": "payload.action",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "eq",
+                "v": "single_top",
+                "vt": "str"
+            },
+            {
+                "t": "eq",
+                "v": "single_midle",
+                "vt": "str"
+            },
+            {
+                "t": "eq",
+                "v": "single_bottom",
+                "vt": "str"
+            },
+            {
+                "t": "eq",
+                "v": "single_wireless",
+                "vt": "str"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 4,
+        "x": 310,
+        "y": 200,
+        "wires": [
+            [
+                "6aeb63b1a73e8480"
+            ],
+            [],
+            [],
+            []
+        ]
+    },
+    {
+        "id": "6aeb63b1a73e8480",
+        "type": "change",
+        "z": "984902351988bd6e",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "{\"fill\":\"green\",\"text\":\"Top Switch, Single Press\"}",
+                "tot": "json"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 520,
+        "y": 80,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "ce743790969d066d",
+        "type": "mqtt in",
+        "z": "d37603fe6994eea4",
+        "name": "",
+        "topic": "${E1_DEVICE}",
+        "qos": "2",
+        "datatype": "json",
+        "broker": "1031d59e41cceee8",
+        "nl": false,
+        "rap": true,
+        "rh": 0,
+        "inputs": 0,
+        "x": 110,
+        "y": 200,
+        "wires": [
+            [
+                "d2bbab1ce6163229"
+            ]
+        ]
+    },
+    {
+        "id": "d2bbab1ce6163229",
+        "type": "switch",
+        "z": "d37603fe6994eea4",
+        "name": "Button",
+        "property": "payload.action",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "eq",
+                "v": "single_left",
+                "vt": "str"
+            },
+            {
+                "t": "eq",
+                "v": "double_left",
+                "vt": "str"
+            },
+            {
+                "t": "eq",
+                "v": "single_right",
+                "vt": "str"
+            },
+            {
+                "t": "eq",
+                "v": "double_right",
+                "vt": "str"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 4,
+        "x": 290,
+        "y": 200,
+        "wires": [
+            [
+                "ea56ecf91b753c81"
+            ],
+            [
+                "763756b167de1715"
+            ],
+            [
+                "e6281d911a6b7a66"
+            ],
+            [
+                "82a189e5f8a6b34b"
+            ]
+        ]
+    },
+    {
+        "id": "ea56ecf91b753c81",
+        "type": "change",
+        "z": "d37603fe6994eea4",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "{\"fill\":\"green\",\"text\":\"Single Left\"}",
+                "tot": "json"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 480,
+        "y": 120,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "82a189e5f8a6b34b",
+        "type": "change",
+        "z": "d37603fe6994eea4",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "{\"fill\":\"green\",\"text\":\"Double Right\"}",
+                "tot": "json"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 480,
+        "y": 300,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "763756b167de1715",
+        "type": "change",
+        "z": "d37603fe6994eea4",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "{\"fill\":\"green\",\"text\":\"Double Left\"}",
+                "tot": "json"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 480,
+        "y": 180,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "e6281d911a6b7a66",
+        "type": "change",
+        "z": "d37603fe6994eea4",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "{\"fill\":\"green\",\"text\":\"Single Right\"}",
+                "tot": "json"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 480,
+        "y": 240,
+        "wires": [
+            []
+        ]
+    },
+    {
         "id": "ee75fafb4ffd9a2c",
         "type": "comment",
         "z": "8b6e3b319b97a18a",
@@ -3553,8 +3919,8 @@
         "mustacheAltTags": false,
         "outputProperties": [],
         "queue": "none",
-        "x": 670,
-        "y": 200,
+        "x": 710,
+        "y": 120,
         "wires": [
             []
         ]
@@ -3595,8 +3961,8 @@
         "override_payload": "msg",
         "entity_location": "data",
         "override_data": "msg",
-        "x": 670,
-        "y": 440,
+        "x": 710,
+        "y": 360,
         "wires": [
             [],
             [
@@ -3625,8 +3991,8 @@
         "mustacheAltTags": false,
         "outputProperties": [],
         "queue": "none",
-        "x": 900,
-        "y": 440,
+        "x": 920,
+        "y": 360,
         "wires": [
             []
         ]
@@ -3638,7 +4004,7 @@
         "name": "Arriving Home",
         "info": "",
         "x": 110,
-        "y": 640,
+        "y": 540,
         "wires": []
     },
     {
@@ -3662,8 +4028,8 @@
         "mustacheAltTags": false,
         "outputProperties": [],
         "queue": "none",
-        "x": 650,
-        "y": 260,
+        "x": 690,
+        "y": 180,
         "wires": [
             []
         ]
@@ -3690,8 +4056,8 @@
         "mustacheAltTags": false,
         "outputProperties": [],
         "queue": "none",
-        "x": 660,
-        "y": 320,
+        "x": 700,
+        "y": 240,
         "wires": [
             []
         ]
@@ -3709,7 +4075,9 @@
         "areaId": [],
         "deviceId": [],
         "entityId": [
-            "group.home_lights"
+            "switch.bathroom_controller_wall_switch_left",
+            "group.home_lights",
+            "light.living_room_tv_lightstrip"
         ],
         "data": "",
         "dataType": "jsonata",
@@ -3717,8 +4085,8 @@
         "mustacheAltTags": false,
         "outputProperties": [],
         "queue": "none",
-        "x": 660,
-        "y": 380,
+        "x": 700,
+        "y": 300,
         "wires": [
             []
         ]
@@ -3769,7 +4137,7 @@
             }
         ],
         "x": 150,
-        "y": 780,
+        "y": 700,
         "wires": [
             [
                 "84d49a26691371e9"
@@ -3814,13 +4182,10 @@
         "entity_location": "data",
         "override_data": "msg",
         "x": 360,
-        "y": 780,
+        "y": 700,
         "wires": [
             [
-                "cd7485589133f724",
-                "bd0c2c63af0933cf",
-                "095ab5c043ad66f9",
-                "f5b05178043ae019"
+                "cd7485589133f724"
             ],
             []
         ]
@@ -3846,11 +4211,14 @@
         "mustacheAltTags": false,
         "outputProperties": [],
         "queue": "none",
-        "x": 660,
-        "y": 720,
+        "x": 580,
+        "y": 700,
         "wires": [
             [
-                "1b0fdb091b292887"
+                "1b0fdb091b292887",
+                "bd0c2c63af0933cf",
+                "f5b05178043ae019",
+                "095ab5c043ad66f9"
             ]
         ]
     },
@@ -3890,8 +4258,8 @@
         "override_payload": "msg",
         "entity_location": "data",
         "override_data": "msg",
-        "x": 660,
-        "y": 780,
+        "x": 860,
+        "y": 700,
         "wires": [
             [],
             [
@@ -3918,8 +4286,8 @@
         "mustacheAltTags": false,
         "outputProperties": [],
         "queue": "none",
-        "x": 850,
-        "y": 780,
+        "x": 1050,
+        "y": 700,
         "wires": [
             []
         ]
@@ -3945,10 +4313,17 @@
         "mustacheAltTags": false,
         "outputProperties": [],
         "queue": "none",
-        "x": 650,
-        "y": 140,
+        "x": 410,
+        "y": 260,
         "wires": [
-            []
+            [
+                "1f6705cf3cbafbb7",
+                "a7e21d1bcd19c4bb",
+                "efd3221ac35f1134",
+                "b543223065b94c6e",
+                "75ad8e92f5bc17a9",
+                "08e21dd5cc1cd5bb"
+            ]
         ]
     },
     {
@@ -3997,10 +4372,10 @@
             }
         ],
         "x": 180,
-        "y": 260,
+        "y": 240,
         "wires": [
             [
-                "a799a9a0.b40288"
+                "aaed8017c7fa3d9f"
             ]
         ]
     },
@@ -4011,14 +4386,14 @@
         "name": "Lights",
         "info": "",
         "x": 90,
-        "y": 1000,
+        "y": 940,
         "wires": []
     },
     {
         "id": "cbb3944b1318ae9a",
         "type": "server-state-changed",
         "z": "8b6e3b319b97a18a",
-        "name": "Wall Right Switch Turned On",
+        "name": "Wall Right Switch",
         "server": "f88bb71a82464dcf",
         "version": 5,
         "outputs": 2,
@@ -4059,31 +4434,13 @@
                 "valueType": "triggerId"
             }
         ],
-        "x": 200,
-        "y": 340,
-        "wires": [
-            [
-                "a799a9a0.b40288"
-            ],
-            []
-        ]
-    },
-    {
-        "id": "a799a9a0.b40288",
-        "type": "subflow:30b7e19d.180c4e",
-        "z": "8b6e3b319b97a18a",
-        "x": 430,
+        "x": 160,
         "y": 300,
         "wires": [
             [
-                "aaed8017c7fa3d9f",
-                "1f6705cf3cbafbb7",
-                "a7e21d1bcd19c4bb",
-                "efd3221ac35f1134",
-                "b543223065b94c6e",
-                "75ad8e92f5bc17a9",
-                "08e21dd5cc1cd5bb"
-            ]
+                "aaed8017c7fa3d9f"
+            ],
+            []
         ]
     },
     {
@@ -4111,17 +4468,22 @@
                 "name": "LIGHT_THRESHOLD",
                 "value": "0",
                 "type": "num"
+            },
+            {
+                "name": "MANUAL_TIMER",
+                "value": "timer.entrance_automatic_lights_timer",
+                "type": "str"
             }
         ],
         "x": 200,
-        "y": 1060,
+        "y": 1000,
         "wires": []
     },
     {
         "id": "08e21dd5cc1cd5bb",
         "type": "api-call-service",
         "z": "8b6e3b319b97a18a",
-        "name": "Turn Off Wall Right Switch",
+        "name": "Reset Entrance Switch",
         "server": "f88bb71a82464dcf",
         "version": 5,
         "debugenabled": false,
@@ -4138,8 +4500,8 @@
         "mustacheAltTags": false,
         "outputProperties": [],
         "queue": "none",
-        "x": 690,
-        "y": 500,
+        "x": 720,
+        "y": 420,
         "wires": [
             []
         ]
@@ -4165,8 +4527,8 @@
         "mustacheAltTags": false,
         "outputProperties": [],
         "queue": "none",
-        "x": 900,
-        "y": 900,
+        "x": 1100,
+        "y": 820,
         "wires": [
             []
         ]
@@ -4188,8 +4550,8 @@
         "drop": false,
         "allowrate": false,
         "outputs": 1,
-        "x": 640,
-        "y": 900,
+        "x": 840,
+        "y": 820,
         "wires": [
             [
                 "4b88c2bcdb2d79e2"
@@ -4218,7 +4580,7 @@
         "outputProperties": [],
         "queue": "none",
         "x": 890,
-        "y": 720,
+        "y": 640,
         "wires": [
             []
         ]
@@ -4259,8 +4621,8 @@
         "override_payload": "msg",
         "entity_location": "data",
         "override_data": "msg",
-        "x": 680,
-        "y": 840,
+        "x": 880,
+        "y": 760,
         "wires": [
             [
                 "26af23030aeaaebc"
@@ -4289,10 +4651,147 @@
         "mustacheAltTags": false,
         "outputProperties": [],
         "queue": "none",
-        "x": 950,
-        "y": 840,
+        "x": 1150,
+        "y": 760,
         "wires": [
             []
+        ]
+    },
+    {
+        "id": "a549e9c14caa5956",
+        "type": "subflow:d37603fe6994eea4",
+        "z": "8b6e3b319b97a18a",
+        "name": "Entrance Switch",
+        "env": [
+            {
+                "name": "E1_DEVICE",
+                "value": "zigbee2mqtt/entrance/controller_wall",
+                "type": "str"
+            }
+        ],
+        "x": 160,
+        "y": 1120,
+        "wires": [
+            [
+                "d31d8293b1b02656"
+            ],
+            [
+                "c21d6613821f8b0b"
+            ],
+            [],
+            []
+        ]
+    },
+    {
+        "id": "d31d8293b1b02656",
+        "type": "api-call-service",
+        "z": "8b6e3b319b97a18a",
+        "name": "Toggle Ceiling Light",
+        "server": "f88bb71a82464dcf",
+        "version": 5,
+        "debugenabled": false,
+        "domain": "switch",
+        "service": "toggle",
+        "areaId": [],
+        "deviceId": [],
+        "entityId": [
+            "switch.entrance_controller_wall_switch_left"
+        ],
+        "data": "",
+        "dataType": "jsonata",
+        "mergeContext": "",
+        "mustacheAltTags": false,
+        "outputProperties": [],
+        "queue": "none",
+        "x": 390,
+        "y": 1080,
+        "wires": [
+            [
+                "b6340d7128ba40be"
+            ]
+        ]
+    },
+    {
+        "id": "b6340d7128ba40be",
+        "type": "api-call-service",
+        "z": "8b6e3b319b97a18a",
+        "name": "Start Manual Timer",
+        "server": "f88bb71a82464dcf",
+        "version": 5,
+        "debugenabled": false,
+        "domain": "timer",
+        "service": "start",
+        "areaId": [],
+        "deviceId": [],
+        "entityId": [
+            "timer.entrance_automatic_lights_timer"
+        ],
+        "data": "",
+        "dataType": "jsonata",
+        "mergeContext": "",
+        "mustacheAltTags": false,
+        "outputProperties": [],
+        "queue": "none",
+        "x": 610,
+        "y": 1080,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "fd0af924f29f1995",
+        "type": "api-call-service",
+        "z": "8b6e3b319b97a18a",
+        "name": "Cancel Manual Timer",
+        "server": "f88bb71a82464dcf",
+        "version": 5,
+        "debugenabled": false,
+        "domain": "timer",
+        "service": "cancel",
+        "areaId": [],
+        "deviceId": [],
+        "entityId": [
+            "timer.entrance_automatic_lights_timer"
+        ],
+        "data": "",
+        "dataType": "jsonata",
+        "mergeContext": "",
+        "mustacheAltTags": false,
+        "outputProperties": [],
+        "queue": "none",
+        "x": 620,
+        "y": 1140,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "c21d6613821f8b0b",
+        "type": "api-call-service",
+        "z": "8b6e3b319b97a18a",
+        "name": "Toggle Ceiling Light",
+        "server": "f88bb71a82464dcf",
+        "version": 5,
+        "debugenabled": false,
+        "domain": "switch",
+        "service": "toggle",
+        "areaId": [],
+        "deviceId": [],
+        "entityId": [
+            "switch.entrance_controller_wall_switch_left"
+        ],
+        "data": "",
+        "dataType": "jsonata",
+        "mergeContext": "",
+        "mustacheAltTags": false,
+        "outputProperties": [],
+        "queue": "none",
+        "x": 390,
+        "y": 1140,
+        "wires": [
+            [
+                "fd0af924f29f1995"
+            ]
         ]
     },
     {
@@ -4351,7 +4850,7 @@
         "id": "c6ccc4ccbf979859",
         "type": "subflow:44754de2761b91b1",
         "z": "95eb18db5e77ef4c",
-        "name": "Wall Switch Left <-> Living Room Right AC",
+        "name": "Wall Switch Left <-> Living Room AC",
         "env": [
             {
                 "name": "AC",
@@ -4364,7 +4863,7 @@
                 "type": "str"
             }
         ],
-        "x": 240,
+        "x": 230,
         "y": 440,
         "wires": []
     },
@@ -4853,7 +5352,7 @@
         "id": "f891a0238888a2b3",
         "type": "server-state-changed",
         "z": "751c2276bdb4df53",
-        "name": "TV Playing",
+        "name": "TV Playing 15s?",
         "server": "f88bb71a82464dcf",
         "version": 5,
         "outputs": 2,
@@ -4894,7 +5393,7 @@
                 "valueType": "triggerId"
             }
         ],
-        "x": 140,
+        "x": 160,
         "y": 760,
         "wires": [
             [
@@ -4914,7 +5413,7 @@
         "halt_if": "playing",
         "halt_if_type": "str",
         "halt_if_compare": "is",
-        "entity_id": "media_player.living_room_speaker",
+        "entity_id": "media_player.home_speakers",
         "state_type": "str",
         "blockInputOverrides": false,
         "outputProperties": [
@@ -4939,7 +5438,7 @@
         "override_payload": "msg",
         "entity_location": "data",
         "override_data": "msg",
-        "x": 350,
+        "x": 370,
         "y": 760,
         "wires": [
             [
@@ -4952,16 +5451,16 @@
         "id": "c1349d450a3cfcf2",
         "type": "api-call-service",
         "z": "751c2276bdb4df53",
-        "name": "Stop Speakers",
+        "name": "Pause Speakers",
         "server": "f88bb71a82464dcf",
         "version": 5,
         "debugenabled": false,
         "domain": "media_player",
-        "service": "media_stop",
+        "service": "media_pause",
         "areaId": [],
         "deviceId": [],
         "entityId": [
-            "media_player.living_room_speaker"
+            "media_player.home_speakers"
         ],
         "data": "",
         "dataType": "jsonata",
@@ -4972,7 +5471,9 @@
         "x": 580,
         "y": 760,
         "wires": [
-            []
+            [
+                "77fa39109f21bded"
+            ]
         ]
     },
     {
@@ -5716,15 +6217,18 @@
         "y": 1420,
         "wires": [
             [
-                "0c2993ef0244d0fa",
-                "8aa03c37fbe2cb82"
+                "0c2993ef0244d0fa"
             ],
-            [],
+            [
+                "7e3c98cd2d2ba205"
+            ],
             [
                 "4fcfa663066e1a10"
             ],
             [],
-            [],
+            [
+                "5d83e048a0fc527b"
+            ],
             [],
             [
                 "b1c09774694667f7"
@@ -5756,9 +6260,11 @@
         "outputProperties": [],
         "queue": "none",
         "x": 470,
-        "y": 1240,
+        "y": 1260,
         "wires": [
-            []
+            [
+                "2375ce59f65abe10"
+            ]
         ]
     },
     {
@@ -5783,7 +6289,7 @@
         "outputProperties": [],
         "queue": "none",
         "x": 430,
-        "y": 1600,
+        "y": 1560,
         "wires": [
             []
         ]
@@ -5810,7 +6316,7 @@
         "outputProperties": [],
         "queue": "none",
         "x": 440,
-        "y": 1660,
+        "y": 1620,
         "wires": [
             []
         ]
@@ -5837,26 +6343,297 @@
         "outputProperties": [],
         "queue": "none",
         "x": 470,
-        "y": 1300,
+        "y": 1440,
+        "wires": [
+            [
+                "8d41b1d57fa3b081"
+            ]
+        ]
+    },
+    {
+        "id": "5d83e048a0fc527b",
+        "type": "api-call-service",
+        "z": "751c2276bdb4df53",
+        "name": "Toggle Kitchen Light",
+        "server": "f88bb71a82464dcf",
+        "version": 5,
+        "debugenabled": false,
+        "domain": "switch",
+        "service": "toggle",
+        "areaId": [],
+        "deviceId": [],
+        "entityId": [
+            "switch.kitchen_controller_wall_switch_right"
+        ],
+        "data": "",
+        "dataType": "jsonata",
+        "mergeContext": "",
+        "mustacheAltTags": false,
+        "outputProperties": [],
+        "queue": "none",
+        "x": 460,
+        "y": 1500,
+        "wires": [
+            [
+                "50fe15ad504432bf"
+            ]
+        ]
+    },
+    {
+        "id": "2375ce59f65abe10",
+        "type": "api-call-service",
+        "z": "751c2276bdb4df53",
+        "name": "Start Living Room Timer",
+        "server": "f88bb71a82464dcf",
+        "version": 5,
+        "debugenabled": false,
+        "domain": "timer",
+        "service": "start",
+        "areaId": [],
+        "deviceId": [],
+        "entityId": [
+            "timer.living_room_automatic_lights_timer"
+        ],
+        "data": "",
+        "dataType": "jsonata",
+        "mergeContext": "",
+        "mustacheAltTags": false,
+        "outputProperties": [],
+        "queue": "none",
+        "x": 730,
+        "y": 1260,
         "wires": [
             []
         ]
     },
     {
-        "id": "8aa03c37fbe2cb82",
-        "type": "debug",
+        "id": "50fe15ad504432bf",
+        "type": "api-call-service",
         "z": "751c2276bdb4df53",
-        "name": "debug 1",
-        "active": true,
-        "tosidebar": true,
-        "console": false,
-        "tostatus": false,
-        "complete": "false",
-        "statusVal": "",
-        "statusType": "auto",
-        "x": 420,
-        "y": 1400,
-        "wires": []
+        "name": "Start Kitchen Timer",
+        "server": "f88bb71a82464dcf",
+        "version": 5,
+        "debugenabled": false,
+        "domain": "timer",
+        "service": "start",
+        "areaId": [],
+        "deviceId": [],
+        "entityId": [
+            "timer.kitchen_automatic_lights_timer"
+        ],
+        "data": "",
+        "dataType": "jsonata",
+        "mergeContext": "",
+        "mustacheAltTags": false,
+        "outputProperties": [],
+        "queue": "none",
+        "x": 690,
+        "y": 1500,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "8d41b1d57fa3b081",
+        "type": "api-call-service",
+        "z": "751c2276bdb4df53",
+        "name": "Start Living Room Timer",
+        "server": "f88bb71a82464dcf",
+        "version": 5,
+        "debugenabled": false,
+        "domain": "timer",
+        "service": "start",
+        "areaId": [],
+        "deviceId": [],
+        "entityId": [
+            "timer.living_room_automatic_lights_timer"
+        ],
+        "data": "",
+        "dataType": "jsonata",
+        "mergeContext": "",
+        "mustacheAltTags": false,
+        "outputProperties": [],
+        "queue": "none",
+        "x": 730,
+        "y": 1440,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "7e3c98cd2d2ba205",
+        "type": "api-call-service",
+        "z": "751c2276bdb4df53",
+        "name": "Turn Off All Lights",
+        "server": "f88bb71a82464dcf",
+        "version": 5,
+        "debugenabled": false,
+        "domain": "switch",
+        "service": "turn_off",
+        "areaId": [],
+        "deviceId": [],
+        "entityId": [
+            "switch.kitchen_controller_wall_switch_right",
+            "switch.living_room_controller_wall_switch_one",
+            "switch.living_room_controller_wall_switch_two"
+        ],
+        "data": "",
+        "dataType": "jsonata",
+        "mergeContext": "",
+        "mustacheAltTags": false,
+        "outputProperties": [],
+        "queue": "none",
+        "x": 450,
+        "y": 1360,
+        "wires": [
+            [
+                "4c1e1d209b9cc9a7",
+                "fcb252a6326971d2"
+            ]
+        ]
+    },
+    {
+        "id": "4c1e1d209b9cc9a7",
+        "type": "api-call-service",
+        "z": "751c2276bdb4df53",
+        "name": "Start Living Room Timer",
+        "server": "f88bb71a82464dcf",
+        "version": 5,
+        "debugenabled": false,
+        "domain": "timer",
+        "service": "start",
+        "areaId": [],
+        "deviceId": [],
+        "entityId": [
+            "timer.living_room_automatic_lights_timer"
+        ],
+        "data": "",
+        "dataType": "jsonata",
+        "mergeContext": "",
+        "mustacheAltTags": false,
+        "outputProperties": [],
+        "queue": "none",
+        "x": 690,
+        "y": 1320,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "fcb252a6326971d2",
+        "type": "api-call-service",
+        "z": "751c2276bdb4df53",
+        "name": "Start Kitchen Timer",
+        "server": "f88bb71a82464dcf",
+        "version": 5,
+        "debugenabled": false,
+        "domain": "timer",
+        "service": "start",
+        "areaId": [],
+        "deviceId": [],
+        "entityId": [
+            "timer.kitchen_automatic_lights_timer"
+        ],
+        "data": "",
+        "dataType": "jsonata",
+        "mergeContext": "",
+        "mustacheAltTags": false,
+        "outputProperties": [],
+        "queue": "none",
+        "x": 670,
+        "y": 1380,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "77fa39109f21bded",
+        "type": "ha-wait-until",
+        "z": "751c2276bdb4df53",
+        "name": "Wait until TV Stops",
+        "server": "f88bb71a82464dcf",
+        "version": 2,
+        "outputs": 2,
+        "entityId": "media_player.living_room_media_center",
+        "entityIdFilterType": "exact",
+        "property": "state",
+        "comparator": "is_not",
+        "value": "playing",
+        "valueType": "str",
+        "timeout": "120",
+        "timeoutType": "num",
+        "timeoutUnits": "minutes",
+        "checkCurrentState": true,
+        "blockInputOverrides": true,
+        "outputProperties": [],
+        "entityLocation": "data",
+        "entityLocationType": "none",
+        "x": 790,
+        "y": 760,
+        "wires": [
+            [
+                "f9276bb2baf2ae0e"
+            ],
+            []
+        ]
+    },
+    {
+        "id": "dc4d4f94b86cfb0b",
+        "type": "api-call-service",
+        "z": "751c2276bdb4df53",
+        "name": "Start Speakers",
+        "server": "f88bb71a82464dcf",
+        "version": 5,
+        "debugenabled": false,
+        "domain": "media_player",
+        "service": "media_play",
+        "areaId": [],
+        "deviceId": [],
+        "entityId": [
+            "media_player.home_speakers"
+        ],
+        "data": "",
+        "dataType": "jsonata",
+        "mergeContext": "",
+        "mustacheAltTags": false,
+        "outputProperties": [],
+        "queue": "none",
+        "x": 1240,
+        "y": 760,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "f9276bb2baf2ae0e",
+        "type": "ha-wait-until",
+        "z": "751c2276bdb4df53",
+        "name": "Wait if TV Starts 30s",
+        "server": "f88bb71a82464dcf",
+        "version": 2,
+        "outputs": 2,
+        "entityId": "media_player.living_room_media_center",
+        "entityIdFilterType": "exact",
+        "property": "state",
+        "comparator": "is",
+        "value": "playing",
+        "valueType": "str",
+        "timeout": "30",
+        "timeoutType": "num",
+        "timeoutUnits": "seconds",
+        "checkCurrentState": true,
+        "blockInputOverrides": true,
+        "outputProperties": [],
+        "entityLocation": "data",
+        "entityLocationType": "none",
+        "x": 1020,
+        "y": 760,
+        "wires": [
+            [],
+            [
+                "dc4d4f94b86cfb0b"
+            ]
+        ]
     },
     {
         "id": "8e9bdb95e32233dc",
@@ -5865,7 +6642,7 @@
         "name": "AC",
         "info": "",
         "x": 90,
-        "y": 220,
+        "y": 60,
         "wires": []
     },
     {
@@ -5914,7 +6691,7 @@
             }
         ],
         "x": 150,
-        "y": 520,
+        "y": 360,
         "wires": [
             [
                 "ed81d30112109096"
@@ -5943,8 +6720,8 @@
         "mustacheAltTags": false,
         "outputProperties": [],
         "queue": "none",
-        "x": 610,
-        "y": 520,
+        "x": 830,
+        "y": 360,
         "wires": [
             []
         ]
@@ -5970,8 +6747,8 @@
         "mustacheAltTags": false,
         "outputProperties": [],
         "queue": "none",
-        "x": 850,
-        "y": 320,
+        "x": 1010,
+        "y": 180,
         "wires": [
             []
         ]
@@ -6022,7 +6799,7 @@
             }
         ],
         "x": 140,
-        "y": 280,
+        "y": 120,
         "wires": [
             [
                 "ad52222854a835ae"
@@ -6034,7 +6811,7 @@
         "id": "54ddf8b425e6f199",
         "type": "server-state-changed",
         "z": "03c58ed96b7b8395",
-        "name": "Door Closed for 1m",
+        "name": "Door Closed for 5m",
         "server": "f88bb71a82464dcf",
         "version": 5,
         "outputs": 2,
@@ -6047,7 +6824,7 @@
         "ifStateType": "str",
         "ifStateOperator": "is",
         "outputOnlyOnStateChange": true,
-        "for": "1",
+        "for": "5",
         "forType": "num",
         "forUnits": "minutes",
         "ignorePrevStateNull": false,
@@ -6076,7 +6853,7 @@
             }
         ],
         "x": 150,
-        "y": 340,
+        "y": 240,
         "wires": [
             [
                 "f1a093c35cfd0de2"
@@ -6091,7 +6868,7 @@
         "name": "Lights",
         "info": "",
         "x": 90,
-        "y": 60,
+        "y": 1220,
         "wires": []
     },
     {
@@ -6101,7 +6878,7 @@
         "name": "Remote Controllers",
         "info": "",
         "x": 130,
-        "y": 1080,
+        "y": 920,
         "wires": []
     },
     {
@@ -6122,7 +6899,7 @@
             }
         ],
         "x": 200,
-        "y": 620,
+        "y": 460,
         "wires": []
     },
     {
@@ -6171,7 +6948,7 @@
             }
         ],
         "x": 110,
-        "y": 400,
+        "y": 180,
         "wires": [
             [
                 "845d433260753bda"
@@ -6215,11 +6992,11 @@
         "override_payload": "msg",
         "entity_location": "data",
         "override_data": "msg",
-        "x": 370,
-        "y": 380,
+        "x": 330,
+        "y": 180,
         "wires": [
             [
-                "f1a093c35cfd0de2"
+                "2c63e685af7724a8"
             ],
             []
         ]
@@ -6231,7 +7008,7 @@
         "name": "Vacuum Cleaner",
         "info": "",
         "x": 120,
-        "y": 780,
+        "y": 620,
         "wires": []
     },
     {
@@ -6280,7 +7057,7 @@
             }
         ],
         "x": 160,
-        "y": 840,
+        "y": 680,
         "wires": [
             [
                 "3d377b5c43c0a7cb"
@@ -6310,131 +7087,10 @@
         "outputProperties": [],
         "queue": "none",
         "x": 410,
-        "y": 840,
+        "y": 680,
         "wires": [
             []
         ]
-    },
-    {
-        "id": "ea6ac59acc29db9d",
-        "type": "server-state-changed",
-        "z": "03c58ed96b7b8395",
-        "d": true,
-        "name": "Is print idle?",
-        "server": "f88bb71a82464dcf",
-        "version": 5,
-        "outputs": 2,
-        "exposeAsEntityConfig": "",
-        "entityId": "sensor.p1s_current_stage",
-        "entityIdType": "exact",
-        "outputInitially": false,
-        "stateType": "str",
-        "ifState": "offline, idle, finish",
-        "ifStateType": "str",
-        "ifStateOperator": "includes",
-        "outputOnlyOnStateChange": true,
-        "for": "2",
-        "forType": "num",
-        "forUnits": "minutes",
-        "ignorePrevStateNull": true,
-        "ignorePrevStateUnknown": true,
-        "ignorePrevStateUnavailable": true,
-        "ignoreCurrentStateUnknown": true,
-        "ignoreCurrentStateUnavailable": true,
-        "outputProperties": [
-            {
-                "property": "payload",
-                "propertyType": "msg",
-                "value": "",
-                "valueType": "entityState"
-            },
-            {
-                "property": "data",
-                "propertyType": "msg",
-                "value": "",
-                "valueType": "eventData"
-            },
-            {
-                "property": "topic",
-                "propertyType": "msg",
-                "value": "",
-                "valueType": "triggerId"
-            }
-        ],
-        "x": 150,
-        "y": 1440,
-        "wires": [
-            [
-                "838f69b2867d6f17"
-            ],
-            [
-                "da53b104d01349a5"
-            ]
-        ]
-    },
-    {
-        "id": "da53b104d01349a5",
-        "type": "api-call-service",
-        "z": "03c58ed96b7b8395",
-        "name": "Turn On Led",
-        "server": "f88bb71a82464dcf",
-        "version": 5,
-        "debugenabled": false,
-        "domain": "light",
-        "service": "turn_on",
-        "areaId": [],
-        "deviceId": [],
-        "entityId": [
-            "light.p1s_chamber_light"
-        ],
-        "data": "{}",
-        "dataType": "jsonata",
-        "mergeContext": "",
-        "mustacheAltTags": false,
-        "outputProperties": [],
-        "queue": "none",
-        "x": 410,
-        "y": 1480,
-        "wires": [
-            []
-        ]
-    },
-    {
-        "id": "838f69b2867d6f17",
-        "type": "api-call-service",
-        "z": "03c58ed96b7b8395",
-        "name": "Turn Off Led",
-        "server": "f88bb71a82464dcf",
-        "version": 5,
-        "debugenabled": false,
-        "domain": "light",
-        "service": "turn_off",
-        "areaId": [],
-        "deviceId": [],
-        "entityId": [
-            "light.p1s_chamber_light"
-        ],
-        "data": "{}",
-        "dataType": "jsonata",
-        "mergeContext": "",
-        "mustacheAltTags": false,
-        "outputProperties": [],
-        "queue": "none",
-        "x": 410,
-        "y": 1420,
-        "wires": [
-            []
-        ]
-    },
-    {
-        "id": "252aee5827c860ba",
-        "type": "comment",
-        "z": "03c58ed96b7b8395",
-        "name": "3D Printer Leds",
-        "info": "",
-        "x": 120,
-        "y": 1360,
-        "wires": []
     },
     {
         "id": "442e056c51b2b92e",
@@ -6458,7 +7114,7 @@
         "payload": "",
         "payloadType": "date",
         "x": 140,
-        "y": 940,
+        "y": 780,
         "wires": [
             [
                 "fd4232a462d66e9a"
@@ -6487,7 +7143,7 @@
         "outputProperties": [],
         "queue": "none",
         "x": 760,
-        "y": 940,
+        "y": 780,
         "wires": [
             []
         ]
@@ -6529,7 +7185,7 @@
         "entity_location": "data",
         "override_data": "msg",
         "x": 330,
-        "y": 940,
+        "y": 780,
         "wires": [
             [],
             [
@@ -6550,7 +7206,7 @@
             }
         ],
         "x": 160,
-        "y": 1200,
+        "y": 1040,
         "wires": [
             [
                 "31cd3317a90a3265"
@@ -6588,7 +7244,7 @@
         "outputProperties": [],
         "queue": "none",
         "x": 370,
-        "y": 1160,
+        "y": 1000,
         "wires": [
             []
         ]
@@ -6615,7 +7271,7 @@
         "outputProperties": [],
         "queue": "none",
         "x": 370,
-        "y": 1220,
+        "y": 1060,
         "wires": [
             []
         ]
@@ -6656,11 +7312,11 @@
         "override_payload": "msg",
         "entity_location": "data",
         "override_data": "msg",
-        "x": 360,
-        "y": 280,
+        "x": 320,
+        "y": 120,
         "wires": [
             [
-                "f1a093c35cfd0de2"
+                "2c63e685af7724a8"
             ],
             []
         ]
@@ -6693,12 +7349,17 @@
             },
             {
                 "name": "LIGHT_THRESHOLD",
-                "value": "250",
+                "value": "350",
                 "type": "num"
+            },
+            {
+                "name": "MANUAL_TIMER",
+                "value": "timer.office_automatic_lights_timer",
+                "type": "str"
             }
         ],
         "x": 190,
-        "y": 120,
+        "y": 1280,
         "wires": []
     },
     {
@@ -6737,8 +7398,8 @@
         "override_payload": "msg",
         "entity_location": "data",
         "override_data": "msg",
-        "x": 620,
-        "y": 320,
+        "x": 780,
+        "y": 180,
         "wires": [
             [
                 "fca036d1ffe4ce55"
@@ -6783,10 +7444,10 @@
         "entity_location": "data",
         "override_data": "msg",
         "x": 380,
-        "y": 520,
+        "y": 360,
         "wires": [
             [
-                "211bf5dddd5fd4ea"
+                "1b99ca262306ddbe"
             ],
             []
         ]
@@ -6828,11 +7489,238 @@
         "entity_location": "data",
         "override_data": "msg",
         "x": 550,
-        "y": 940,
+        "y": 780,
         "wires": [
             [],
             [
                 "3d8e18f5d75109b7"
+            ]
+        ]
+    },
+    {
+        "id": "48ec78bf68ea1820",
+        "type": "subflow:d37603fe6994eea4",
+        "z": "03c58ed96b7b8395",
+        "name": "Entrance Switch",
+        "env": [
+            {
+                "name": "E1_DEVICE",
+                "value": "zigbee2mqtt/office/controller_wall",
+                "type": "str"
+            }
+        ],
+        "x": 160,
+        "y": 1400,
+        "wires": [
+            [
+                "7a1ca51f51f87d21"
+            ],
+            [
+                "a0ab3a33d6e79bd5"
+            ],
+            [],
+            []
+        ]
+    },
+    {
+        "id": "7a1ca51f51f87d21",
+        "type": "api-call-service",
+        "z": "03c58ed96b7b8395",
+        "name": "Toggle Ceiling Light",
+        "server": "f88bb71a82464dcf",
+        "version": 5,
+        "debugenabled": false,
+        "domain": "switch",
+        "service": "toggle",
+        "areaId": [],
+        "deviceId": [],
+        "entityId": [
+            "switch.office_controller_wall_switch_left"
+        ],
+        "data": "",
+        "dataType": "jsonata",
+        "mergeContext": "",
+        "mustacheAltTags": false,
+        "outputProperties": [],
+        "queue": "none",
+        "x": 390,
+        "y": 1360,
+        "wires": [
+            [
+                "b4d461b338a95f2c"
+            ]
+        ]
+    },
+    {
+        "id": "b4d461b338a95f2c",
+        "type": "api-call-service",
+        "z": "03c58ed96b7b8395",
+        "name": "Start Manual Timer",
+        "server": "f88bb71a82464dcf",
+        "version": 5,
+        "debugenabled": false,
+        "domain": "timer",
+        "service": "start",
+        "areaId": [],
+        "deviceId": [],
+        "entityId": [
+            "timer.office_automatic_lights_timer"
+        ],
+        "data": "",
+        "dataType": "jsonata",
+        "mergeContext": "",
+        "mustacheAltTags": false,
+        "outputProperties": [],
+        "queue": "none",
+        "x": 610,
+        "y": 1360,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "fc9eda149f4efef2",
+        "type": "api-call-service",
+        "z": "03c58ed96b7b8395",
+        "name": "Cancel Manual Timer",
+        "server": "f88bb71a82464dcf",
+        "version": 5,
+        "debugenabled": false,
+        "domain": "timer",
+        "service": "cancel",
+        "areaId": [],
+        "deviceId": [],
+        "entityId": [
+            "timer.office_automatic_lights_timer"
+        ],
+        "data": "",
+        "dataType": "jsonata",
+        "mergeContext": "",
+        "mustacheAltTags": false,
+        "outputProperties": [],
+        "queue": "none",
+        "x": 620,
+        "y": 1420,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "a0ab3a33d6e79bd5",
+        "type": "api-call-service",
+        "z": "03c58ed96b7b8395",
+        "name": "Toggle Ceiling Light",
+        "server": "f88bb71a82464dcf",
+        "version": 5,
+        "debugenabled": false,
+        "domain": "switch",
+        "service": "toggle",
+        "areaId": [],
+        "deviceId": [],
+        "entityId": [
+            "switch.office_controller_wall_switch_left"
+        ],
+        "data": "",
+        "dataType": "jsonata",
+        "mergeContext": "",
+        "mustacheAltTags": false,
+        "outputProperties": [],
+        "queue": "none",
+        "x": 390,
+        "y": 1420,
+        "wires": [
+            [
+                "fc9eda149f4efef2"
+            ]
+        ]
+    },
+    {
+        "id": "1b99ca262306ddbe",
+        "type": "api-current-state",
+        "z": "03c58ed96b7b8395",
+        "name": "Are there Guests?",
+        "server": "f88bb71a82464dcf",
+        "version": 3,
+        "outputs": 2,
+        "halt_if": "on",
+        "halt_if_type": "str",
+        "halt_if_compare": "is",
+        "entity_id": "input_boolean.guests",
+        "state_type": "str",
+        "blockInputOverrides": false,
+        "outputProperties": [
+            {
+                "property": "payload",
+                "propertyType": "msg",
+                "value": "",
+                "valueType": "entityState"
+            },
+            {
+                "property": "data",
+                "propertyType": "msg",
+                "value": "",
+                "valueType": "entity"
+            }
+        ],
+        "for": "0",
+        "forType": "num",
+        "forUnits": "minutes",
+        "override_topic": false,
+        "state_location": "payload",
+        "override_payload": "msg",
+        "entity_location": "data",
+        "override_data": "msg",
+        "x": 610,
+        "y": 360,
+        "wires": [
+            [],
+            [
+                "211bf5dddd5fd4ea"
+            ]
+        ]
+    },
+    {
+        "id": "2c63e685af7724a8",
+        "type": "api-current-state",
+        "z": "03c58ed96b7b8395",
+        "name": "Are there Guests?",
+        "server": "f88bb71a82464dcf",
+        "version": 3,
+        "outputs": 2,
+        "halt_if": "on",
+        "halt_if_type": "str",
+        "halt_if_compare": "is",
+        "entity_id": "input_boolean.guests",
+        "state_type": "str",
+        "blockInputOverrides": false,
+        "outputProperties": [
+            {
+                "property": "payload",
+                "propertyType": "msg",
+                "value": "",
+                "valueType": "entityState"
+            },
+            {
+                "property": "data",
+                "propertyType": "msg",
+                "value": "",
+                "valueType": "entity"
+            }
+        ],
+        "for": "0",
+        "forType": "num",
+        "forUnits": "minutes",
+        "override_topic": false,
+        "state_location": "payload",
+        "override_payload": "msg",
+        "entity_location": "data",
+        "override_data": "msg",
+        "x": 530,
+        "y": 140,
+        "wires": [
+            [],
+            [
+                "f1a093c35cfd0de2"
             ]
         ]
     },
@@ -6843,7 +7731,7 @@
         "name": "Going to Sleep",
         "info": "",
         "x": 120,
-        "y": 800,
+        "y": 560,
         "wires": []
     },
     {
@@ -6892,7 +7780,7 @@
             }
         ],
         "x": 160,
-        "y": 980,
+        "y": 880,
         "wires": [
             [
                 "33a13bfcc32ef764"
@@ -6912,7 +7800,7 @@
         "sunElevationThreshold": 6,
         "sunShowElevationInStatus": false,
         "x": 350,
-        "y": 980,
+        "y": 880,
         "wires": [
             [
                 "f79e69ba338a0b8d"
@@ -6942,7 +7830,7 @@
         "outputProperties": [],
         "queue": "none",
         "x": 750,
-        "y": 920,
+        "y": 820,
         "wires": [
             [
                 "8b93b84ceca7782f",
@@ -6950,7 +7838,8 @@
                 "61190aab1cf44a38",
                 "32c7c71ecd2dbd46",
                 "aff1cc67187cc2cc",
-                "0f56b2703068833f"
+                "0f56b2703068833f",
+                "6151e9658f45cdf0"
             ]
         ]
     },
@@ -6961,7 +7850,7 @@
         "name": "AC",
         "info": "",
         "x": 90,
-        "y": 300,
+        "y": 60,
         "wires": []
     },
     {
@@ -7010,7 +7899,7 @@
             }
         ],
         "x": 160,
-        "y": 460,
+        "y": 220,
         "wires": [
             [
                 "5bfbcc15a80e8945"
@@ -7055,7 +7944,7 @@
         "entity_location": "data",
         "override_data": "msg",
         "x": 380,
-        "y": 460,
+        "y": 220,
         "wires": [
             [
                 "e1eabf25edbbf70f"
@@ -7085,7 +7974,7 @@
         "outputProperties": [],
         "queue": "none",
         "x": 1040,
-        "y": 440,
+        "y": 200,
         "wires": [
             []
         ]
@@ -7112,7 +8001,7 @@
         "outputProperties": [],
         "queue": "none",
         "x": 620,
-        "y": 620,
+        "y": 380,
         "wires": [
             []
         ]
@@ -7163,7 +8052,7 @@
             }
         ],
         "x": 160,
-        "y": 620,
+        "y": 380,
         "wires": [
             [
                 "c71b1eaaa42f8475"
@@ -7193,7 +8082,7 @@
         "outputProperties": [],
         "queue": "none",
         "x": 1310,
-        "y": 500,
+        "y": 260,
         "wires": [
             []
         ]
@@ -7221,7 +8110,7 @@
         "outputProperties": [],
         "queue": "none",
         "x": 1290,
-        "y": 1060,
+        "y": 880,
         "wires": [
             []
         ]
@@ -7263,7 +8152,7 @@
         "entity_location": "data",
         "override_data": "msg",
         "x": 1050,
-        "y": 1080,
+        "y": 900,
         "wires": [
             [],
             [
@@ -7295,7 +8184,7 @@
         "outputProperties": [],
         "queue": "none",
         "x": 1060,
-        "y": 820,
+        "y": 580,
         "wires": [
             []
         ]
@@ -7322,7 +8211,7 @@
         "outputProperties": [],
         "queue": "none",
         "x": 1040,
-        "y": 880,
+        "y": 640,
         "wires": [
             []
         ]
@@ -7349,11 +8238,12 @@
         "outputProperties": [],
         "queue": "none",
         "x": 410,
-        "y": 1440,
+        "y": 1320,
         "wires": [
             [
                 "ec065520cae675a9",
-                "10e767ea0801a3ee"
+                "10e767ea0801a3ee",
+                "d723371b6e77c7ea"
             ]
         ]
     },
@@ -7379,7 +8269,7 @@
         "outputProperties": [],
         "queue": "none",
         "x": 680,
-        "y": 1400,
+        "y": 1260,
         "wires": [
             []
         ]
@@ -7404,7 +8294,7 @@
         "outputProperties": [],
         "queue": "none",
         "x": 650,
-        "y": 1460,
+        "y": 1320,
         "wires": [
             []
         ]
@@ -7416,7 +8306,7 @@
         "name": "Lights",
         "info": "",
         "x": 90,
-        "y": 60,
+        "y": 2780,
         "wires": []
     },
     {
@@ -7437,7 +8327,7 @@
             }
         ],
         "x": 240,
-        "y": 360,
+        "y": 120,
         "wires": []
     },
     {
@@ -7458,7 +8348,7 @@
             }
         ],
         "x": 220,
-        "y": 120,
+        "y": 2840,
         "wires": []
     },
     {
@@ -7507,7 +8397,7 @@
             }
         ],
         "x": 180,
-        "y": 920,
+        "y": 820,
         "wires": [
             [
                 "9019d74dd955c42c"
@@ -7560,7 +8450,7 @@
             }
         ],
         "x": 170,
-        "y": 1440,
+        "y": 1320,
         "wires": [
             [
                 "3224e9d5fcf7be0c"
@@ -7574,7 +8464,7 @@
         "name": "Waking Up",
         "info": "",
         "x": 100,
-        "y": 1320,
+        "y": 1200,
         "wires": []
     },
     {
@@ -7584,7 +8474,7 @@
         "name": "Curtains",
         "info": "",
         "x": 100,
-        "y": 1640,
+        "y": 1520,
         "wires": []
     },
     {
@@ -7609,7 +8499,7 @@
         "payload": "",
         "payloadType": "date",
         "x": 160,
-        "y": 1700,
+        "y": 1580,
         "wires": [
             [
                 "a9df5d043cd4f9b2"
@@ -7638,7 +8528,7 @@
         "outputProperties": [],
         "queue": "none",
         "x": 760,
-        "y": 1700,
+        "y": 1580,
         "wires": [
             []
         ]
@@ -7665,7 +8555,7 @@
         "outputProperties": [],
         "queue": "none",
         "x": 760,
-        "y": 1800,
+        "y": 1680,
         "wires": [
             []
         ]
@@ -7716,7 +8606,7 @@
             }
         ],
         "x": 130,
-        "y": 1800,
+        "y": 1680,
         "wires": [
             [
                 "f3816294a5e03ba9"
@@ -7761,7 +8651,7 @@
         "entity_location": "data",
         "override_data": "msg",
         "x": 550,
-        "y": 1700,
+        "y": 1580,
         "wires": [
             [
                 "eaf045020f53888a"
@@ -7806,7 +8696,7 @@
         "entity_location": "data",
         "override_data": "msg",
         "x": 550,
-        "y": 1800,
+        "y": 1680,
         "wires": [
             [
                 "2613e3260eaae516"
@@ -7851,7 +8741,7 @@
         "entity_location": "data",
         "override_data": "msg",
         "x": 340,
-        "y": 1800,
+        "y": 1680,
         "wires": [
             [],
             [
@@ -7896,7 +8786,7 @@
         "entity_location": "data",
         "override_data": "msg",
         "x": 340,
-        "y": 1700,
+        "y": 1580,
         "wires": [
             [],
             [
@@ -7911,7 +8801,7 @@
         "name": "Remote Controllers",
         "info": "",
         "x": 130,
-        "y": 1960,
+        "y": 2040,
         "wires": []
     },
     {
@@ -7927,7 +8817,7 @@
             }
         ],
         "x": 150,
-        "y": 2200,
+        "y": 2300,
         "wires": [
             [
                 "6e8cf105234b6b3c"
@@ -7977,9 +8867,11 @@
         "outputProperties": [],
         "queue": "none",
         "x": 450,
-        "y": 2020,
+        "y": 2100,
         "wires": [
-            []
+            [
+                "2b8e4227bc8eb874"
+            ]
         ]
     },
     {
@@ -8004,7 +8896,7 @@
         "outputProperties": [],
         "queue": "none",
         "x": 430,
-        "y": 2380,
+        "y": 2480,
         "wires": [
             []
         ]
@@ -8031,7 +8923,7 @@
         "outputProperties": [],
         "queue": "none",
         "x": 440,
-        "y": 2440,
+        "y": 2540,
         "wires": [
             []
         ]
@@ -8058,7 +8950,7 @@
         "outputProperties": [],
         "queue": "none",
         "x": 470,
-        "y": 2140,
+        "y": 2240,
         "wires": [
             []
         ]
@@ -8085,7 +8977,7 @@
         "outputProperties": [],
         "queue": "none",
         "x": 490,
-        "y": 2260,
+        "y": 2360,
         "wires": [
             []
         ]
@@ -8112,7 +9004,7 @@
         "outputProperties": [],
         "queue": "none",
         "x": 460,
-        "y": 2200,
+        "y": 2300,
         "wires": [
             []
         ]
@@ -8139,7 +9031,7 @@
         "outputProperties": [],
         "queue": "none",
         "x": 450,
-        "y": 2320,
+        "y": 2420,
         "wires": [
             []
         ]
@@ -8181,7 +9073,7 @@
         "entity_location": "data",
         "override_data": "msg",
         "x": 1040,
-        "y": 500,
+        "y": 260,
         "wires": [
             [
                 "b44d08f8b019f1f7"
@@ -8226,7 +9118,7 @@
         "entity_location": "data",
         "override_data": "msg",
         "x": 580,
-        "y": 460,
+        "y": 220,
         "wires": [
             [],
             [
@@ -8271,7 +9163,7 @@
         "entity_location": "data",
         "override_data": "msg",
         "x": 1050,
-        "y": 1220,
+        "y": 1040,
         "wires": [
             [
                 "8e760635a748b647",
@@ -8302,7 +9194,7 @@
         "outputProperties": [],
         "queue": "none",
         "x": 1300,
-        "y": 1180,
+        "y": 1000,
         "wires": [
             []
         ]
@@ -8329,7 +9221,7 @@
         "outputProperties": [],
         "queue": "none",
         "x": 1290,
-        "y": 1240,
+        "y": 1060,
         "wires": [
             []
         ]
@@ -8355,8 +9247,8 @@
         "mustacheAltTags": false,
         "outputProperties": [],
         "queue": "none",
-        "x": 660,
-        "y": 2040,
+        "x": 680,
+        "y": 2140,
         "wires": [
             []
         ]
@@ -8373,7 +9265,7 @@
         "sunElevationThreshold": 6,
         "sunShowElevationInStatus": false,
         "x": 450,
-        "y": 2080,
+        "y": 2180,
         "wires": [
             [
                 "04abcd31e0034c1a"
@@ -8404,8 +9296,8 @@
         "mustacheAltTags": false,
         "outputProperties": [],
         "queue": "none",
-        "x": 670,
-        "y": 2100,
+        "x": 690,
+        "y": 2200,
         "wires": [
             []
         ]
@@ -8435,7 +9327,7 @@
         "outputProperties": [],
         "queue": "none",
         "x": 1060,
-        "y": 940,
+        "y": 700,
         "wires": [
             []
         ]
@@ -8462,7 +9354,7 @@
         "outputProperties": [],
         "queue": "none",
         "x": 1300,
-        "y": 1120,
+        "y": 940,
         "wires": [
             []
         ]
@@ -8489,7 +9381,7 @@
         "outputProperties": [],
         "queue": "none",
         "x": 1070,
-        "y": 1000,
+        "y": 760,
         "wires": [
             []
         ]
@@ -8531,7 +9423,7 @@
         "entity_location": "data",
         "override_data": "msg",
         "x": 520,
-        "y": 980,
+        "y": 880,
         "wires": [
             [],
             [
@@ -8569,10 +9461,15 @@
                 "name": "DOOR_SENSOR",
                 "value": "binary_sensor.bedroom_door_contact",
                 "type": "str"
+            },
+            {
+                "name": "MANUAL_TIMER",
+                "value": "timer.bedroom_automatic_lights_timer",
+                "type": "str"
             }
         ],
         "x": 200,
-        "y": 200,
+        "y": 2920,
         "wires": []
     },
     {
@@ -8612,7 +9509,7 @@
         "entity_location": "data",
         "override_data": "msg",
         "x": 800,
-        "y": 480,
+        "y": 240,
         "wires": [
             [
                 "c03a59b5b2299844",
@@ -8658,11 +9555,469 @@
         "entity_location": "data",
         "override_data": "msg",
         "x": 380,
-        "y": 620,
+        "y": 380,
         "wires": [
             [
                 "fce951f1ac71d4a5"
             ],
+            []
+        ]
+    },
+    {
+        "id": "59e62d9f96e900f0",
+        "type": "comment",
+        "z": "fa6bb9cfa58677c8",
+        "name": "Co2",
+        "info": "",
+        "x": 90,
+        "y": 1840,
+        "wires": []
+    },
+    {
+        "id": "714435401d2913f9",
+        "type": "server-state-changed",
+        "z": "fa6bb9cfa58677c8",
+        "name": "Co2 too high?",
+        "server": "f88bb71a82464dcf",
+        "version": 5,
+        "outputs": 2,
+        "exposeAsEntityConfig": "",
+        "entityId": "sensor.bedroom_airgradient_carbon_dioxide",
+        "entityIdType": "exact",
+        "outputInitially": false,
+        "stateType": "str",
+        "ifState": "800",
+        "ifStateType": "num",
+        "ifStateOperator": "gte",
+        "outputOnlyOnStateChange": true,
+        "for": "3",
+        "forType": "num",
+        "forUnits": "minutes",
+        "ignorePrevStateNull": false,
+        "ignorePrevStateUnknown": true,
+        "ignorePrevStateUnavailable": true,
+        "ignoreCurrentStateUnknown": true,
+        "ignoreCurrentStateUnavailable": true,
+        "outputProperties": [
+            {
+                "property": "payload",
+                "propertyType": "msg",
+                "value": "",
+                "valueType": "entityState"
+            },
+            {
+                "property": "data",
+                "propertyType": "msg",
+                "value": "",
+                "valueType": "eventData"
+            },
+            {
+                "property": "topic",
+                "propertyType": "msg",
+                "value": "",
+                "valueType": "triggerId"
+            }
+        ],
+        "x": 150,
+        "y": 1900,
+        "wires": [
+            [
+                "da7b5456509e646d"
+            ],
+            []
+        ]
+    },
+    {
+        "id": "da7b5456509e646d",
+        "type": "api-current-state",
+        "z": "fa6bb9cfa58677c8",
+        "name": "Door Open?",
+        "server": "f88bb71a82464dcf",
+        "version": 3,
+        "outputs": 2,
+        "halt_if": "on",
+        "halt_if_type": "str",
+        "halt_if_compare": "is",
+        "entity_id": "binary_sensor.bedroom_door_contact",
+        "state_type": "str",
+        "blockInputOverrides": false,
+        "outputProperties": [
+            {
+                "property": "payload",
+                "propertyType": "msg",
+                "value": "",
+                "valueType": "entityState"
+            },
+            {
+                "property": "data",
+                "propertyType": "msg",
+                "value": "",
+                "valueType": "entity"
+            }
+        ],
+        "for": "0",
+        "forType": "num",
+        "forUnits": "minutes",
+        "override_topic": false,
+        "state_location": "payload",
+        "override_payload": "msg",
+        "entity_location": "data",
+        "override_data": "msg",
+        "x": 330,
+        "y": 1900,
+        "wires": [
+            [
+                "353c7332c964ab3e"
+            ],
+            []
+        ]
+    },
+    {
+        "id": "c4632767798ab5ee",
+        "type": "api-call-service",
+        "z": "fa6bb9cfa58677c8",
+        "name": "Turn On Bathroom Fan",
+        "server": "f88bb71a82464dcf",
+        "version": 5,
+        "debugenabled": false,
+        "domain": "switch",
+        "service": "turn_on",
+        "areaId": [],
+        "deviceId": [],
+        "entityId": [
+            "switch.bathroom_controller_wall_switch_left"
+        ],
+        "data": "",
+        "dataType": "jsonata",
+        "mergeContext": "",
+        "mustacheAltTags": false,
+        "outputProperties": [],
+        "queue": "none",
+        "x": 760,
+        "y": 1900,
+        "wires": [
+            [
+                "79c4079fc04d0343"
+            ]
+        ]
+    },
+    {
+        "id": "79c4079fc04d0343",
+        "type": "ha-wait-until",
+        "z": "fa6bb9cfa58677c8",
+        "name": "Co2 low",
+        "server": "f88bb71a82464dcf",
+        "version": 2,
+        "outputs": 2,
+        "entityId": "sensor.bedroom_airgradient_carbon_dioxide",
+        "entityIdFilterType": "exact",
+        "property": "state",
+        "comparator": "lte",
+        "value": "600",
+        "valueType": "num",
+        "timeout": "5",
+        "timeoutType": "num",
+        "timeoutUnits": "hours",
+        "checkCurrentState": true,
+        "blockInputOverrides": true,
+        "outputProperties": [],
+        "entityLocation": "data",
+        "entityLocationType": "none",
+        "x": 960,
+        "y": 1900,
+        "wires": [
+            [
+                "eee44aaa4c11e412"
+            ],
+            [
+                "eee44aaa4c11e412"
+            ]
+        ]
+    },
+    {
+        "id": "eee44aaa4c11e412",
+        "type": "api-call-service",
+        "z": "fa6bb9cfa58677c8",
+        "name": "Turn Off Bathroom Fan",
+        "server": "f88bb71a82464dcf",
+        "version": 5,
+        "debugenabled": false,
+        "domain": "switch",
+        "service": "turn_off",
+        "areaId": [],
+        "deviceId": [],
+        "entityId": [
+            "switch.bathroom_controller_wall_switch_left"
+        ],
+        "data": "",
+        "dataType": "jsonata",
+        "mergeContext": "",
+        "mustacheAltTags": false,
+        "outputProperties": [],
+        "queue": "none",
+        "x": 1160,
+        "y": 1900,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "2d781381eff8e403",
+        "type": "subflow:984902351988bd6e",
+        "z": "fa6bb9cfa58677c8",
+        "name": "Wall Controller",
+        "env": [
+            {
+                "name": "Z1_DEVICE",
+                "value": "zigbee2mqtt/bedroom/controller_wall",
+                "type": "str"
+            }
+        ],
+        "x": 160,
+        "y": 2700,
+        "wires": [
+            [
+                "6d4fc2616588dfb5"
+            ]
+        ]
+    },
+    {
+        "id": "6d4fc2616588dfb5",
+        "type": "api-call-service",
+        "z": "fa6bb9cfa58677c8",
+        "name": "Toggle Ceiling Light",
+        "server": "f88bb71a82464dcf",
+        "version": 5,
+        "debugenabled": false,
+        "domain": "switch",
+        "service": "toggle",
+        "areaId": [],
+        "deviceId": [],
+        "entityId": [
+            "switch.bedroom_controller_wall_switch_one"
+        ],
+        "data": "",
+        "dataType": "jsonata",
+        "mergeContext": "",
+        "mustacheAltTags": false,
+        "outputProperties": [],
+        "queue": "none",
+        "x": 370,
+        "y": 2700,
+        "wires": [
+            [
+                "35c58cd3eec360be"
+            ]
+        ]
+    },
+    {
+        "id": "35c58cd3eec360be",
+        "type": "api-call-service",
+        "z": "fa6bb9cfa58677c8",
+        "name": "Start Manual Timer",
+        "server": "f88bb71a82464dcf",
+        "version": 5,
+        "debugenabled": false,
+        "domain": "timer",
+        "service": "start",
+        "areaId": [],
+        "deviceId": [],
+        "entityId": [
+            "timer.bedroom_automatic_lights_timer"
+        ],
+        "data": "",
+        "dataType": "jsonata",
+        "mergeContext": "",
+        "mustacheAltTags": false,
+        "outputProperties": [],
+        "queue": "none",
+        "x": 590,
+        "y": 2700,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "353c7332c964ab3e",
+        "type": "api-current-state",
+        "z": "fa6bb9cfa58677c8",
+        "name": "Bathroom Fan Off?",
+        "server": "f88bb71a82464dcf",
+        "version": 3,
+        "outputs": 2,
+        "halt_if": "off",
+        "halt_if_type": "str",
+        "halt_if_compare": "is",
+        "entity_id": "switch.bathroom_controller_wall_switch_left",
+        "state_type": "str",
+        "blockInputOverrides": false,
+        "outputProperties": [
+            {
+                "property": "payload",
+                "propertyType": "msg",
+                "value": "",
+                "valueType": "entityState"
+            },
+            {
+                "property": "data",
+                "propertyType": "msg",
+                "value": "",
+                "valueType": "entity"
+            }
+        ],
+        "for": "0",
+        "forType": "num",
+        "forUnits": "minutes",
+        "override_topic": false,
+        "state_location": "payload",
+        "override_payload": "msg",
+        "entity_location": "data",
+        "override_data": "msg",
+        "x": 530,
+        "y": 1900,
+        "wires": [
+            [
+                "c4632767798ab5ee"
+            ],
+            []
+        ]
+    },
+    {
+        "id": "2b8e4227bc8eb874",
+        "type": "api-call-service",
+        "z": "fa6bb9cfa58677c8",
+        "name": "Start Manual Timer",
+        "server": "f88bb71a82464dcf",
+        "version": 5,
+        "debugenabled": false,
+        "domain": "timer",
+        "service": "start",
+        "areaId": [],
+        "deviceId": [],
+        "entityId": [
+            "timer.bedroom_automatic_lights_timer"
+        ],
+        "data": "",
+        "dataType": "jsonata",
+        "mergeContext": "",
+        "mustacheAltTags": false,
+        "outputProperties": [],
+        "queue": "none",
+        "x": 710,
+        "y": 2100,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "d723371b6e77c7ea",
+        "type": "api-call-service",
+        "z": "fa6bb9cfa58677c8",
+        "name": "AirGradient screen brigthness to 100",
+        "server": "f88bb71a82464dcf",
+        "version": 5,
+        "debugenabled": false,
+        "domain": "number",
+        "service": "set_value",
+        "areaId": [],
+        "deviceId": [],
+        "entityId": [
+            "number.bedroom_airgradient_display_brightness"
+        ],
+        "data": "{\"value\":100}",
+        "dataType": "json",
+        "mergeContext": "",
+        "mustacheAltTags": false,
+        "outputProperties": [],
+        "queue": "none",
+        "x": 730,
+        "y": 1380,
+        "wires": [
+            [
+                "a5db56a5752c68fc"
+            ]
+        ]
+    },
+    {
+        "id": "a5db56a5752c68fc",
+        "type": "api-call-service",
+        "z": "fa6bb9cfa58677c8",
+        "name": "AirGradient led brigthness to 100",
+        "server": "f88bb71a82464dcf",
+        "version": 5,
+        "debugenabled": false,
+        "domain": "number",
+        "service": "set_value",
+        "areaId": [],
+        "deviceId": [],
+        "entityId": [
+            "number.bedroom_airgradient_led_bar_brightness"
+        ],
+        "data": "{\"value\":100}",
+        "dataType": "json",
+        "mergeContext": "",
+        "mustacheAltTags": false,
+        "outputProperties": [],
+        "queue": "none",
+        "x": 1060,
+        "y": 1380,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "6151e9658f45cdf0",
+        "type": "api-call-service",
+        "z": "fa6bb9cfa58677c8",
+        "name": "AirGradient screen brigthness to 0",
+        "server": "f88bb71a82464dcf",
+        "version": 5,
+        "debugenabled": false,
+        "domain": "number",
+        "service": "set_value",
+        "areaId": [],
+        "deviceId": [],
+        "entityId": [
+            "number.bedroom_airgradient_display_brightness"
+        ],
+        "data": "{\"value\":0}",
+        "dataType": "json",
+        "mergeContext": "",
+        "mustacheAltTags": false,
+        "outputProperties": [],
+        "queue": "none",
+        "x": 1100,
+        "y": 820,
+        "wires": [
+            [
+                "b3e5dc23230bd3e8"
+            ]
+        ]
+    },
+    {
+        "id": "b3e5dc23230bd3e8",
+        "type": "api-call-service",
+        "z": "fa6bb9cfa58677c8",
+        "name": "AirGradient led brigthness to 0",
+        "server": "f88bb71a82464dcf",
+        "version": 5,
+        "debugenabled": false,
+        "domain": "number",
+        "service": "set_value",
+        "areaId": [],
+        "deviceId": [],
+        "entityId": [
+            "number.bedroom_airgradient_led_bar_brightness"
+        ],
+        "data": "{\"value\":0}",
+        "dataType": "json",
+        "mergeContext": "",
+        "mustacheAltTags": false,
+        "outputProperties": [],
+        "queue": "none",
+        "x": 1410,
+        "y": 820,
+        "wires": [
             []
         ]
     },

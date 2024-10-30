@@ -1,8 +1,6 @@
 - platform: template
   sensors:
     sunlight_pct:
-      entity_id:
-        - sun.sun
       value_template: >-
         {%- set elevation = state_attr('sun.sun','elevation') | float %}
         {%- set min_elevation = -6 %}
@@ -15,10 +13,7 @@
         {%- set brightness = adjusted_elevation * 100 %}
         {{ brightness | round }}
       unit_of_measurement: '%'
-      device_class: 'illuminance'
     sunlight_opacity:
-      entity_id:
-        - sensor.sunlight_pct
       value_template: >-
         {%- set sunpct = states('sensor.sunlight_pct') | float %}
         {%- set opacity = sunpct / 100 | float %}

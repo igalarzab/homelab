@@ -19,7 +19,7 @@ bedroom_automatic_lights_timer:
 entrance_automatic_lights_timer:
   name: Entrance Automatic Lights Timer
   icon: mdi:lamps
-  duration: '03:00:00'
+  duration: '00:15:00'
 
 hall_automatic_lights_timer:
   name: Hall Automatic Lights Timer
