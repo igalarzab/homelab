@@ -23,6 +23,7 @@ controllers:
           TZ: ${COMMON_TZ}
           PUID: 1000
           PGID: 100
+          PYTHONPATH: /config/deps/
         ports:
           - name: http
             protocol: TCP
