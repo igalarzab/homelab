@@ -5,6 +5,7 @@ metadata:
 namespaces:
   authentik:
   cert-manager:
+  cloudflare-ddns:
   home-assistant:
   jdownloader:
   keel:
@@ -82,6 +83,13 @@ apps:
     namespace: keel
     valuesFile: keel/values.yml
     priority: -97
+  cloudflare-ddns:
+    <<: *default
+    chart: bjw-s/app-template
+    version: "3.5.1"
+    namespace: cloudflare-ddns
+    valuesFile: cloudflare-ddns/values.yml
+    priority: -96
   authentik:
     <<: *default
     chart: authentik/authentik

@@ -1,0 +1,25 @@
+---
+# yaml-language-server: $schema=https://raw.githubusercontent.com/bjw-s/helm-charts/app-template-3.2.0/charts/other/app-template/values.schema.json
+
+defaultPodOptions:
+  terminationGracePeriodSeconds: 30
+
+controllers:
+  cloudflare-ddns:
+    type: deployment
+    annotations:
+      keel.sh/policy: minor
+      keel.sh/trigger: poll
+      keel.sh/pollSchedule: "@midnight"
+    containers:
+      cloudflare-ddns:
+        image:
+          repository: favonia/cloudflare-ddns
+          tag: ${DOCKER_TAG__CLOUDFLARE_DDNS__DEPLOYMENT__CLOUDFLARE_DDNS__0}
+        env:
+          CLOUDFLARE_API_TOKEN: ${CLOUDFLARE_DDNS_TOKEN}
+          DOMAINS: ${CLOUDFLARE_DDNS_DOMAINS}
+          IP6_PROVIDER: none
+        securityContext:
+          runAsUser: 1000
+          runAsGroup: 1000
