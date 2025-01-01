@@ -42,14 +42,14 @@ apps:
   csi-driver-proxmox:
     <<: *default
     chart: oci://ghcr.io/sergelogvinov/charts/proxmox-csi-plugin
-    version: "0.2.13"
+    version: "0.3.1"
     namespace: kube-system
     valuesFile: csi-driver-proxmox/values.yml
     priority: -108
   multus-cni:
     <<: *default
     chart: bitnami/multus-cni
-    version: "2.1.17"
+    version: "2.2.0"
     namespace: kube-system
     valuesFile: multus-cni/values.yml
     priority: -107
@@ -63,7 +63,7 @@ apps:
   cert-manager:
     <<: *default
     chart: jetstack/cert-manager
-    version: "v1.16.1"
+    version: "v1.16.2"
     namespace: cert-manager
     valuesFile: cert-manager/values.yml
     priority: -99
@@ -72,84 +72,84 @@ apps:
   traefik:
     <<: *default
     chart: traefik/traefik
-    version: "v32.1.1"
+    version: "v33.2.1"
     namespace: traefik
     valuesFile: traefik/values.yml
     priority: -98
   keel:
     <<: *default
     chart: keel/keel
-    version: "1.0.3"
+    version: "1.0.5"
     namespace: keel
     valuesFile: keel/values.yml
     priority: -97
   cloudflare-ddns:
     <<: *default
     chart: bjw-s/app-template
-    version: "3.5.1"
+    version: "3.6.0"
     namespace: cloudflare-ddns
     valuesFile: cloudflare-ddns/values.yml
     priority: -96
   authentik:
     <<: *default
     chart: authentik/authentik
-    version: "2024.8.3"
+    version: "2024.12.1"
     namespace: authentik
     valuesFile: authentik/values.yml
     priority: -88
   transmission:
     <<: *default
     chart: bjw-s/app-template
-    version: "3.5.1"
+    version: "3.6.0"
     namespace: transmission
     valuesFile: transmission/values.yml
     priority: -79
   jdownloader:
     <<: *default
     chart: bjw-s/app-template
-    version: "3.5.1"
+    version: "3.6.0"
     namespace: jdownloader
     valuesFile: jdownloader/values.yml
     priority: -78
   plex:
     <<: *default
     chart: bjw-s/app-template
-    version: "3.5.1"
+    version: "3.6.0"
     namespace: plex
     valuesFile: plex/values.yml
     priority: -69
   mosquitto:
     <<: *default
     chart: bjw-s/app-template
-    version: "3.5.1"
+    version: "3.6.0"
     namespace: mosquitto
     valuesFile: mosquitto/values.yml
     priority: -59
   zigbee2mqtt:
     <<: *default
     chart: bjw-s/app-template
-    version: "3.5.1"
+    version: "3.6.0"
     namespace: home-assistant
     valuesFile: home-assistant/zigbee2mqtt.values.yml
     priority: -58
   node-red:
     <<: *default
     chart: bjw-s/app-template
-    version: "3.5.1"
+    version: "3.6.0"
     namespace: home-assistant
     valuesFile: home-assistant/nodered.values.yml
     priority: -57
   esphome:
     <<: *default
     chart: bjw-s/app-template
-    version: "3.5.1"
+    version: "3.6.0"
     namespace: home-assistant
     valuesFile: home-assistant/esphome.values.yml
     priority: -56
   home-assistant:
     <<: *default
     chart: bjw-s/app-template
-    version: "3.5.1"
+    version: "3.6.0"
     namespace: home-assistant
     valuesFile: home-assistant/home-assistant.values.yml
     priority: -55
