@@ -1,7 +1,7 @@
 bedroom_sleeping:
   name: Sleeping
   icon: mdi:bed
-  duration: '08:00:00'
+  duration: '11:00:00'
 
 
 # Timers for Automatic Lights
