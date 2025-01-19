@@ -257,17 +257,6 @@
       name: Switch Left
     switch_right:
       name: Switch Right
-'0x54ef441000d694d9':
-  friendly_name: office/controller_wall
-  filtered_attributes: ['device_temperature', 'linkquality', 'power_outage_count', 'power_outage_memory']
-  homeassistant:
-    name: Office Controller Wall
-    device:
-      suggested_area: Office
-    switch_left:
-      name: Switch Left
-    switch_right:
-      name: Switch Right
 
 # Aqara Switch Z1 Pro
 '0x54ef441000bc376b':
@@ -296,6 +285,25 @@
     name: Living Room Controller Wall
     device:
       suggested_area: Living Room
+    switch_top:
+      object_id: switch_one
+    switch_center:
+      object_id: switch_two
+    switch_bottom:
+      object_id: switch_three
+    switch_one:
+      name: Switch One
+    switch_two:
+      name: Switch Two
+    switch_three:
+      name: Switch Three
+'0x54ef441000bed284':
+  friendly_name: office/controller_wall
+  filtered_attributes: ['device_temperature', 'linkquality', 'power_outage_count', 'trigger_count', 'voltage']
+  homeassistant:
+    name: Office Controller Wall
+    device:
+      suggested_area: Office
     switch_top:
       object_id: switch_one
     switch_center:

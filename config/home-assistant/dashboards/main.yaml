@@ -107,7 +107,7 @@ views:
         show_header_toggle: false
         state_color: true
         entities:
-          - entity: switch.office_controller_wall_switch_left
+          - entity: switch.office_controller_wall_switch_one
             name: Ceiling Light
             icon: mdi:lightbulb
       - type: thermostat
@@ -150,6 +150,32 @@ views:
         entity: climate.bedroom_ac_controller
       - type: media-control
         entity: media_player.bedroom_speaker
+  - path: bathroom
+    icon: mdi:toilet
+    badges: []
+    cards:
+      - type: glance
+        title: Sensors
+        state_color: true
+        show_name: false
+        show_icon: true
+        show_state: true
+        entities:
+          - entity: binary_sensor.bathroom_door_contact
+          - entity: sensor.bathroom_motion_illuminance
+          - entity: sensor.bathroom_thermometer_temperature
+          - entity: sensor.bathroom_thermometer_humidity
+      - type: entities
+        title: Lights
+        show_header_toggle: false
+        state_color: true
+        entities:
+          - entity: switch.bathroom_controller_wall_switch_right
+            name: Ceiling Light
+            icon: mdi:lightbulb
+          - entity: switch.bathroom_controller_wall_switch_left
+            name: Fan
+            icon: mdi:fan
   - path: switches
     icon: mdi:video-input-svideo
     badges: []
