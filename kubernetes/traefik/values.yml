@@ -15,9 +15,11 @@ metrics:
 ports:
   web:
     nodePort: 80
-    redirectTo:
-      port: websecure
-      permanent: true
+    redirections:
+      entryPoint:
+        to: websecure
+        scheme: https
+        permanent: true
   websecure:
     nodePort: 443
 

@@ -240,23 +240,11 @@
         "color": "#3FADB5",
         "icon": "font-awesome/fa-thermometer-0",
         "status": {
-            "x": 1020,
-            "y": 260,
+            "x": 1380,
+            "y": 220,
             "wires": [
                 {
-                    "id": "89b5ba5883233dfb",
-                    "port": 0
-                },
-                {
-                    "id": "b3db80cfee277d88",
-                    "port": 0
-                },
-                {
-                    "id": "232b830dedea4911",
-                    "port": 0
-                },
-                {
-                    "id": "8eb6887b9e25f2f8",
+                    "id": "c55671969192bfcb",
                     "port": 0
                 }
             ]
@@ -286,23 +274,11 @@
         "color": "#E2D96E",
         "icon": "font-awesome/fa-sun-o",
         "status": {
-            "x": 1120,
+            "x": 1380,
             "y": 220,
             "wires": [
                 {
-                    "id": "9233ff21d5f5d632",
-                    "port": 0
-                },
-                {
-                    "id": "0ff1089ed4f8402e",
-                    "port": 0
-                },
-                {
-                    "id": "2a960bc62fe9d1ad",
-                    "port": 0
-                },
-                {
-                    "id": "81d9fba568e06482",
+                    "id": "e8f2c7c8607c7048",
                     "port": 0
                 }
             ]
@@ -1146,7 +1122,7 @@
             }
         ],
         "x": 130,
-        "y": 160,
+        "y": 120,
         "wires": [
             [
                 "0cb15bd1ddeac6b8"
@@ -1182,7 +1158,7 @@
         "domain": "switch",
         "service": "turn_on",
         "x": 560,
-        "y": 120,
+        "y": 80,
         "wires": [
             [
                 "89b5ba5883233dfb"
@@ -1215,7 +1191,7 @@
         "domain": "switch",
         "service": "turn_off",
         "x": 560,
-        "y": 180,
+        "y": 140,
         "wires": [
             [
                 "b3db80cfee277d88"
@@ -1273,7 +1249,7 @@
             }
         ],
         "x": 120,
-        "y": 360,
+        "y": 320,
         "wires": [
             [
                 "8317cda84e9c80c8"
@@ -1309,7 +1285,7 @@
         "domain": "climate",
         "service": "turn_off",
         "x": 550,
-        "y": 400,
+        "y": 360,
         "wires": [
             [
                 "8eb6887b9e25f2f8"
@@ -1342,7 +1318,7 @@
         "domain": "climate",
         "service": "turn_on",
         "x": 550,
-        "y": 320,
+        "y": 280,
         "wires": [
             [
                 "232b830dedea4911"
@@ -1369,9 +1345,11 @@
         "to": "",
         "reg": false,
         "x": 780,
-        "y": 120,
+        "y": 80,
         "wires": [
-            []
+            [
+                "dda6a531fe5da59d"
+            ]
         ]
     },
     {
@@ -1394,9 +1372,11 @@
         "to": "",
         "reg": false,
         "x": 780,
-        "y": 180,
+        "y": 140,
         "wires": [
-            []
+            [
+                "dda6a531fe5da59d"
+            ]
         ]
     },
     {
@@ -1419,9 +1399,11 @@
         "to": "",
         "reg": false,
         "x": 780,
-        "y": 320,
+        "y": 280,
         "wires": [
-            []
+            [
+                "dda6a531fe5da59d"
+            ]
         ]
     },
     {
@@ -1444,9 +1426,11 @@
         "to": "",
         "reg": false,
         "x": 780,
-        "y": 400,
+        "y": 360,
         "wires": [
-            []
+            [
+                "dda6a531fe5da59d"
+            ]
         ]
     },
     {
@@ -1486,7 +1470,7 @@
         "entity_location": "data",
         "override_data": "msg",
         "x": 330,
-        "y": 120,
+        "y": 80,
         "wires": [
             [],
             [
@@ -1531,7 +1515,7 @@
         "entity_location": "data",
         "override_data": "msg",
         "x": 330,
-        "y": 320,
+        "y": 280,
         "wires": [
             [],
             [
@@ -1576,7 +1560,7 @@
         "entity_location": "data",
         "override_data": "msg",
         "x": 330,
-        "y": 400,
+        "y": 360,
         "wires": [
             [
                 "e1689db97fd40b57"
@@ -1621,12 +1605,62 @@
         "entity_location": "data",
         "override_data": "msg",
         "x": 330,
-        "y": 180,
+        "y": 140,
         "wires": [
             [
                 "d672b65d84bfa882"
             ],
             []
+        ]
+    },
+    {
+        "id": "c55671969192bfcb",
+        "type": "change",
+        "z": "44754de2761b91b1",
+        "name": "Format",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload.text",
+                "pt": "msg",
+                "to": "$join([payload.text, \" : \", payload.time])",
+                "tot": "jsonata"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 1260,
+        "y": 220,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "dda6a531fe5da59d",
+        "type": "moment",
+        "z": "44754de2761b91b1",
+        "name": "",
+        "topic": "",
+        "input": "",
+        "inputType": "date",
+        "inTz": "${TZ}",
+        "adjAmount": 0,
+        "adjType": "days",
+        "adjDir": "add",
+        "format": "Do MMM, H:mm",
+        "locale": "C",
+        "output": "payload.time",
+        "outputType": "msg",
+        "outTz": "${TZ}",
+        "x": 1060,
+        "y": 220,
+        "wires": [
+            [
+                "c55671969192bfcb"
+            ]
         ]
     },
     {
@@ -1905,7 +1939,9 @@
         "x": 780,
         "y": 80,
         "wires": [
-            []
+            [
+                "edf6b55853f16444"
+            ]
         ]
     },
     {
@@ -1930,7 +1966,9 @@
         "x": 780,
         "y": 140,
         "wires": [
-            []
+            [
+                "edf6b55853f16444"
+            ]
         ]
     },
     {
@@ -1955,7 +1993,9 @@
         "x": 780,
         "y": 280,
         "wires": [
-            []
+            [
+                "edf6b55853f16444"
+            ]
         ]
     },
     {
@@ -1980,7 +2020,9 @@
         "x": 780,
         "y": 360,
         "wires": [
-            []
+            [
+                "edf6b55853f16444"
+            ]
         ]
     },
     {
@@ -2164,6 +2206,56 @@
         ]
     },
     {
+        "id": "e8f2c7c8607c7048",
+        "type": "change",
+        "z": "a9c82ea585250d5c",
+        "name": "Format",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload.text",
+                "pt": "msg",
+                "to": "$join([payload.text, \" : \", payload.time])",
+                "tot": "jsonata"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 1260,
+        "y": 220,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "edf6b55853f16444",
+        "type": "moment",
+        "z": "a9c82ea585250d5c",
+        "name": "",
+        "topic": "",
+        "input": "",
+        "inputType": "date",
+        "inTz": "${TZ}",
+        "adjAmount": 0,
+        "adjType": "days",
+        "adjDir": "add",
+        "format": "Do MMM, H:mm",
+        "locale": "C",
+        "output": "payload.time",
+        "outputType": "msg",
+        "outTz": "${TZ}",
+        "x": 1060,
+        "y": 220,
+        "wires": [
+            [
+                "e8f2c7c8607c7048"
+            ]
+        ]
+    },
+    {
         "id": "a8e882e72e2f2cf2",
         "type": "comment",
         "z": "0eac027afb048323",
@@ -2239,7 +2331,7 @@
         "type": "function",
         "z": "0eac027afb048323",
         "name": "Door Open?",
-        "func": "const doorSensorName = env.get('DOOR_SENSOR');\n\nif (!doorSensorName) {\n    return [msg, null];\n}\n\nconst ha = global.get('homeassistant.ha');\nconst doorState = ha.states[doorSensorName];\n\nif (!doorState || !('state' in doorState)) {\n    node.error(`No door state found in ${doorSensorName}`);\n    return;\n}\n\nif (doorState.state == 'on') {\n    return [msg, null];\n}\n\nreturn [null, msg];",
+        "func": "const doorSensorName = env.get('DOOR_SENSOR');\n\n// Door sensor is optional\nif (!doorSensorName) {\n    return [msg, null];\n}\n\nconst ha = global.get('homeassistant.ha');\nconst doorState = ha.states[doorSensorName];\n\nif (!doorState || !('state' in doorState)) {\n    node.error(`No door state found in ${doorSensorName}`);\n    return;\n}\n\nif (doorState.state == 'on') {\n    return [msg, null];\n}\n\nreturn [null, msg];",
         "outputs": 2,
         "timeout": "",
         "noerr": 0,
@@ -2412,7 +2504,7 @@
         "type": "function",
         "z": "0eac027afb048323",
         "name": "Door Open?",
-        "func": "const doorSensorName = env.get('DOOR_SENSOR');\n\nif (!doorSensorName) {\n    return [msg, null];\n}\n\nconst ha = global.get('homeassistant.ha');\nconst doorState = ha.states[doorSensorName];\n\nif (!doorState || !('state' in doorState)) {\n    node.error(`No door state found in ${doorSensorName}`);\n    return;\n}\n\nif (doorState.state == 'on') {\n    return [msg, null];\n}\n\nreturn [null, msg];",
+        "func": "const doorSensorName = env.get('DOOR_SENSOR');\n\n// Door sensor is optional\nif (!doorSensorName) {\n    return [msg, null];\n}\n\nconst ha = global.get('homeassistant.ha');\nconst doorState = ha.states[doorSensorName];\n\nif (!doorState || !('state' in doorState)) {\n    node.error(`No door state found in ${doorSensorName}`);\n    return;\n}\n\nif (doorState.state == 'on') {\n    return [msg, null];\n}\n\nreturn [null, msg];",
         "outputs": 2,
         "timeout": "",
         "noerr": 0,
@@ -2495,7 +2587,7 @@
         "type": "function",
         "z": "0eac027afb048323",
         "name": "Sleeping?",
-        "func": "const disabledWhenSleeping = env.get('DISABLED_WHEN_SLEEPING');\n\nif (!disabledWhenSleeping) {\n    return [null, msg];\n}\n\nconst ha = global.get('homeassistant.ha');\nconst sleeping = ha.states['timer.bedroom_sleeping'];\n\nif (!sleeping || !('state' in sleeping)) {\n    node.error('No sleeping timer found');\n    return;\n}\n\nif (sleeping.state == 'idle') {\n    return [null, msg];\n}\n\nreturn [msg, null];",
+        "func": "const ha = global.get('homeassistant.ha');\nconst disabledWhenSleeping = env.get('DISABLED_WHEN_SLEEPING');\n\nif (!disabledWhenSleeping) {\n    return [null, msg];\n}\n\nconst sleeping = ha.states['timer.bedroom_sleeping'];\n\nif (!sleeping || !('state' in sleeping)) {\n    node.error('No sleeping timer found');\n    return;\n}\n\nif (sleeping.state == 'idle') {\n    return [null, msg];\n}\n\nreturn [msg, null];",
         "outputs": 2,
         "timeout": "",
         "noerr": 0,
@@ -2777,7 +2869,7 @@
         "type": "function",
         "z": "0eac027afb048323",
         "name": "Light Automations Enabled?",
-        "func": "const ha = global.get('homeassistant.ha');\n\nconst globalEnabled = ha.states['input_boolean.home_light_automations'];\n\nif (!globalEnabled) {\n    return [null, msg];\n}\n\nconst timerName = env.get('MANUAL_TIMER');\n\nif (!timerName) {\n    return [msg, null];\n}\n\nconst timerState = ha.states[timerName];\n\nif (!timerName || !('state' in timerState)) {\n    node.error(`No timer state found in ${timerName}`);\n    return;\n}\n\nif (timerState.state == 'idle') {\n    return [msg, null];\n}\n\nreturn [null, msg];",
+        "func": "const ha = global.get('homeassistant.ha');\n\nconst globalEnabled = ha.states['input_boolean.home_light_automations'];\n\nif (!globalEnabled || !('state' in globalEnabled)) {\n    node.error(`No global settings for wasp box`);\n    return;\n}\n\nif (globalEnabled.state == 'off') {\n    return [null, msg];\n}\n\nconst timerName = env.get('MANUAL_TIMER');\n\n// Timer is optional\nif (!timerName) {\n    return [msg, null];\n}\n\nconst timerState = ha.states[timerName];\n\nif (!timerState || !('state' in timerState)) {\n    node.error(`No timer state found in ${timerName}`);\n    return;\n}\n\nif (timerState.state == 'idle') {\n    return [msg, null];\n}\n\nreturn [null, msg];",
         "outputs": 2,
         "timeout": "",
         "noerr": 0,
@@ -2800,7 +2892,7 @@
         "type": "function",
         "z": "0eac027afb048323",
         "name": "Light Automations Enabled?",
-        "func": "const ha = global.get('homeassistant.ha');\n\nconst globalEnabled = ha.states['input_boolean.home_light_automations'];\n\nif (!globalEnabled) {\n    return [null, msg];\n}\n\nconst timerName = env.get('MANUAL_TIMER');\n\nif (!timerName) {\n    return [msg, null];\n}\n\nconst timerState = ha.states[timerName];\n\nif (!timerName || !('state' in timerState)) {\n    node.error(`No timer state found in ${timerName}`);\n    return;\n}\n\nif (timerState.state == 'idle') {\n    return [msg, null];\n}\n\nreturn [null, msg];",
+        "func": "const ha = global.get('homeassistant.ha');\n\nconst globalEnabled = ha.states['input_boolean.home_light_automations'];\n\nif (!globalEnabled || !('state' in globalEnabled)) {\n    node.error(`No global settings for wasp box`);\n    return;\n}\n\nif (globalEnabled.state == 'off') {\n    return [null, msg];\n}\n\nconst timerName = env.get('MANUAL_TIMER');\n\n// Timer is optional\nif (!timerName) {\n    return [msg, null];\n}\n\nconst timerState = ha.states[timerName];\n\nif (!timerState || !('state' in timerState)) {\n    node.error(`No timer state found in ${timerName}`);\n    return;\n}\n\nif (timerState.state == 'idle') {\n    return [msg, null];\n}\n\nreturn [null, msg];",
         "outputs": 2,
         "timeout": "",
         "noerr": 0,
@@ -4000,38 +4092,7 @@
         "domain": "timer",
         "service": "start",
         "x": 430,
-        "y": 1060,
-        "wires": [
-            []
-        ]
-    },
-    {
-        "id": "fd0af924f29f1995",
-        "type": "api-call-service",
-        "z": "8b6e3b319b97a18a",
-        "name": "Cancel Manual Timer",
-        "server": "f88bb71a82464dcf",
-        "version": 7,
-        "debugenabled": false,
-        "action": "timer.cancel",
-        "floorId": [],
-        "areaId": [],
-        "deviceId": [],
-        "entityId": [
-            "timer.entrance_automatic_lights_timer"
-        ],
-        "labelId": [],
-        "data": "",
-        "dataType": "jsonata",
-        "mergeContext": "",
-        "mustacheAltTags": false,
-        "outputProperties": [],
-        "queue": "none",
-        "blockInputOverrides": true,
-        "domain": "timer",
-        "service": "cancel",
-        "x": 440,
-        "y": 1120,
+        "y": 1080,
         "wires": [
             []
         ]
@@ -4040,7 +4101,7 @@
         "id": "932d2d2de96d36dc",
         "type": "api-call-service",
         "z": "8b6e3b319b97a18a",
-        "name": "Turn On Living Room AC Right",
+        "name": "Turn On Living Room AC Left",
         "server": "f88bb71a82464dcf",
         "version": 7,
         "debugenabled": false,
@@ -4049,7 +4110,7 @@
         "areaId": [],
         "deviceId": [],
         "entityId": [
-            "climate.living_room_right_ac_controller"
+            "climate.living_room_left_ac_controller"
         ],
         "labelId": [],
         "data": "",
@@ -4061,7 +4122,7 @@
         "blockInputOverrides": false,
         "domain": "climate",
         "service": "turn_on",
-        "x": 1550,
+        "x": 1540,
         "y": 740,
         "wires": [
             []
@@ -4175,35 +4236,10 @@
             }
         ],
         "x": 190,
-        "y": 1060,
+        "y": 1080,
         "wires": [
             [
                 "b6340d7128ba40be"
-            ]
-        ]
-    },
-    {
-        "id": "550f59bf1ee783dc",
-        "type": "subflow:2e02acbf157d8262",
-        "z": "8b6e3b319b97a18a",
-        "name": "Wall Switch - Double Left",
-        "env": [
-            {
-                "name": "E1_TOPIC",
-                "value": "entrance/controller_wall",
-                "type": "str"
-            },
-            {
-                "name": "E1_ACTION",
-                "value": "double_left",
-                "type": "str"
-            }
-        ],
-        "x": 190,
-        "y": 1120,
-        "wires": [
-            [
-                "fd0af924f29f1995"
             ]
         ]
     },
@@ -4221,7 +4257,6 @@
         "id": "36e596819a5ac1c0",
         "type": "subflow:0eac027afb048323",
         "z": "95eb18db5e77ef4c",
-        "d": true,
         "name": "Kitchen Lights - Wasp Box",
         "env": [
             {
@@ -4243,6 +4278,11 @@
                 "name": "DISABLED_WHEN_SLEEPING",
                 "value": "true",
                 "type": "bool"
+            },
+            {
+                "name": "MANUAL_TIMER",
+                "value": "timer.kitchen_automatic_lights_timer",
+                "type": "str"
             }
         ],
         "x": 190,
@@ -4256,7 +4296,7 @@
         "name": "AC",
         "info": "",
         "x": 90,
-        "y": 380,
+        "y": 280,
         "wires": []
     },
     {
@@ -4277,130 +4317,63 @@
             }
         ],
         "x": 230,
-        "y": 440,
+        "y": 340,
         "wires": []
     },
     {
-        "id": "74c4d23713f6c9e3",
-        "type": "server-state-changed",
+        "id": "c8386ee4cdc3545b",
+        "type": "api-call-service",
         "z": "95eb18db5e77ef4c",
-        "name": "No vibration in countersink for 5m?",
+        "name": "Start Manual Timer",
         "server": "f88bb71a82464dcf",
-        "version": 6,
-        "outputs": 2,
-        "exposeAsEntityConfig": "",
-        "entities": {
-            "entity": [
-                "binary_sensor.kitchen_vibration_countersink"
-            ],
-            "substring": [],
-            "regex": []
-        },
-        "outputInitially": false,
-        "stateType": "str",
-        "ifState": "off",
-        "ifStateType": "str",
-        "ifStateOperator": "is",
-        "outputOnlyOnStateChange": true,
-        "for": "5",
-        "forType": "num",
-        "forUnits": "minutes",
-        "ignorePrevStateNull": false,
-        "ignorePrevStateUnknown": false,
-        "ignorePrevStateUnavailable": false,
-        "ignoreCurrentStateUnknown": false,
-        "ignoreCurrentStateUnavailable": false,
-        "outputProperties": [
+        "version": 7,
+        "debugenabled": false,
+        "action": "timer.start",
+        "floorId": [],
+        "areaId": [],
+        "deviceId": [],
+        "entityId": [
+            "timer.kitchen_automatic_lights_timer"
+        ],
+        "labelId": [],
+        "data": "",
+        "dataType": "jsonata",
+        "mergeContext": "",
+        "mustacheAltTags": false,
+        "outputProperties": [],
+        "queue": "none",
+        "blockInputOverrides": true,
+        "domain": "timer",
+        "service": "start",
+        "x": 430,
+        "y": 180,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "22669ac5b21be6ab",
+        "type": "subflow:2e02acbf157d8262",
+        "z": "95eb18db5e77ef4c",
+        "name": "Wall Switch - Single Right",
+        "env": [
             {
-                "property": "payload",
-                "propertyType": "msg",
-                "value": "",
-                "valueType": "entityState"
+                "name": "E1_TOPIC",
+                "value": "kitchen/controller_wall",
+                "type": "str"
             },
             {
-                "property": "data",
-                "propertyType": "msg",
-                "value": "",
-                "valueType": "eventData"
-            },
-            {
-                "property": "topic",
-                "propertyType": "msg",
-                "value": "",
-                "valueType": "triggerId"
+                "name": "E1_ACTION",
+                "value": "single_right",
+                "type": "str"
             }
         ],
-        "x": 220,
-        "y": 240,
+        "x": 190,
+        "y": 180,
         "wires": [
             [
-                "f0284d0786caa115"
-            ],
-            [
-                "be5fd4b076193373"
+                "c8386ee4cdc3545b"
             ]
-        ]
-    },
-    {
-        "id": "be5fd4b076193373",
-        "type": "api-call-service",
-        "z": "95eb18db5e77ef4c",
-        "name": "Turn On Lights",
-        "server": "f88bb71a82464dcf",
-        "version": 7,
-        "debugenabled": false,
-        "action": "switch.turn_on",
-        "floorId": [],
-        "areaId": [],
-        "deviceId": [],
-        "entityId": [
-            "switch.kitchen_controller_wall_switch_right"
-        ],
-        "labelId": [],
-        "data": "",
-        "dataType": "jsonata",
-        "mergeContext": "",
-        "mustacheAltTags": false,
-        "outputProperties": [],
-        "queue": "none",
-        "blockInputOverrides": false,
-        "domain": "switch",
-        "service": "turn_on",
-        "x": 480,
-        "y": 280,
-        "wires": [
-            []
-        ]
-    },
-    {
-        "id": "f0284d0786caa115",
-        "type": "api-call-service",
-        "z": "95eb18db5e77ef4c",
-        "name": "Turn Off Lights",
-        "server": "f88bb71a82464dcf",
-        "version": 7,
-        "debugenabled": false,
-        "action": "switch.turn_off",
-        "floorId": [],
-        "areaId": [],
-        "deviceId": [],
-        "entityId": [
-            "switch.kitchen_controller_wall_switch_right"
-        ],
-        "labelId": [],
-        "data": "",
-        "dataType": "jsonata",
-        "mergeContext": "",
-        "mustacheAltTags": false,
-        "outputProperties": [],
-        "queue": "none",
-        "blockInputOverrides": false,
-        "domain": "switch",
-        "service": "turn_off",
-        "x": 480,
-        "y": 220,
-        "wires": [
-            []
         ]
     },
     {
@@ -5240,14 +5213,14 @@
         "id": "16adf3ec4e9952c8",
         "type": "api-current-state",
         "z": "751c2276bdb4df53",
-        "name": "Home Locked?",
+        "name": "On Holidays?",
         "server": "f88bb71a82464dcf",
         "version": 3,
         "outputs": 2,
         "halt_if": "on",
         "halt_if_type": "str",
         "halt_if_compare": "is",
-        "entity_id": "input_boolean.home_locked",
+        "entity_id": "input_boolean.holidays",
         "state_type": "str",
         "blockInputOverrides": false,
         "outputProperties": [
@@ -5860,7 +5833,7 @@
         "blockInputOverrides": false,
         "domain": "timer",
         "service": "start",
-        "x": 690,
+        "x": 710,
         "y": 1500,
         "wires": [
             []
@@ -5958,7 +5931,7 @@
         "blockInputOverrides": false,
         "domain": "timer",
         "service": "start",
-        "x": 690,
+        "x": 730,
         "y": 1320,
         "wires": [
             []
@@ -5989,7 +5962,7 @@
         "blockInputOverrides": false,
         "domain": "timer",
         "service": "start",
-        "x": 670,
+        "x": 710,
         "y": 1380,
         "wires": [
             []
@@ -6799,7 +6772,9 @@
         "x": 370,
         "y": 1000,
         "wires": [
-            []
+            [
+                "5a014c8a6eef66f5"
+            ]
         ]
     },
     {
@@ -6828,7 +6803,7 @@
         "domain": "climate",
         "service": "toggle",
         "x": 370,
-        "y": 1060,
+        "y": 1080,
         "wires": [
             []
         ]
@@ -7196,6 +7171,37 @@
         "service": "start",
         "x": 430,
         "y": 1340,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "5a014c8a6eef66f5",
+        "type": "api-call-service",
+        "z": "03c58ed96b7b8395",
+        "name": "Start Office Timer",
+        "server": "f88bb71a82464dcf",
+        "version": 7,
+        "debugenabled": false,
+        "action": "timer.start",
+        "floorId": [],
+        "areaId": [],
+        "deviceId": [],
+        "entityId": [
+            "timer.office_automatic_lights_timer"
+        ],
+        "labelId": [],
+        "data": "",
+        "dataType": "jsonata",
+        "mergeContext": "",
+        "mustacheAltTags": false,
+        "outputProperties": [],
+        "queue": "none",
+        "blockInputOverrides": false,
+        "domain": "timer",
+        "service": "start",
+        "x": 570,
+        "y": 1000,
         "wires": [
             []
         ]
@@ -7881,7 +7887,7 @@
             }
         ],
         "x": 220,
-        "y": 3080,
+        "y": 3180,
         "wires": []
     },
     {
@@ -8328,7 +8334,7 @@
             }
         ],
         "x": 150,
-        "y": 2660,
+        "y": 2680,
         "wires": [
             [
                 "6e8cf105234b6b3c"
@@ -8415,7 +8421,7 @@
         "domain": "climate",
         "service": "toggle",
         "x": 430,
-        "y": 2840,
+        "y": 2860,
         "wires": [
             []
         ]
@@ -8446,7 +8452,7 @@
         "domain": "cover",
         "service": "toggle",
         "x": 440,
-        "y": 2900,
+        "y": 2920,
         "wires": [
             []
         ]
@@ -8477,7 +8483,7 @@
         "domain": "light",
         "service": "turn_on",
         "x": 470,
-        "y": 2600,
+        "y": 2620,
         "wires": [
             []
         ]
@@ -8508,7 +8514,7 @@
         "domain": "light",
         "service": "turn_on",
         "x": 490,
-        "y": 2720,
+        "y": 2740,
         "wires": [
             []
         ]
@@ -8539,7 +8545,7 @@
         "domain": "light",
         "service": "turn_on",
         "x": 460,
-        "y": 2660,
+        "y": 2680,
         "wires": [
             []
         ]
@@ -8570,7 +8576,7 @@
         "domain": "light",
         "service": "turn_off",
         "x": 450,
-        "y": 2780,
+        "y": 2800,
         "wires": [
             []
         ]
@@ -8799,7 +8805,7 @@
         "domain": "input_button",
         "service": "press",
         "x": 680,
-        "y": 2500,
+        "y": 2520,
         "wires": [
             []
         ]
@@ -8816,7 +8822,7 @@
         "sunElevationThreshold": 6,
         "sunShowElevationInStatus": false,
         "x": 450,
-        "y": 2540,
+        "y": 2560,
         "wires": [
             [
                 "04abcd31e0034c1a"
@@ -8852,7 +8858,7 @@
         "domain": "input_button",
         "service": "press",
         "x": 690,
-        "y": 2560,
+        "y": 2580,
         "wires": [
             []
         ]
@@ -9036,7 +9042,7 @@
             }
         ],
         "x": 200,
-        "y": 3140,
+        "y": 3100,
         "wires": []
     },
     {
@@ -9158,7 +9164,7 @@
         },
         "outputInitially": false,
         "stateType": "str",
-        "ifState": "1200",
+        "ifState": "1500",
         "ifStateType": "num",
         "ifStateOperator": "gte",
         "outputOnlyOnStateChange": true,
@@ -9294,9 +9300,9 @@
         },
         "property": "state",
         "comparator": "lte",
-        "value": "600",
+        "value": "900",
         "valueType": "num",
-        "timeout": "3",
+        "timeout": "2",
         "timeoutType": "num",
         "timeoutUnits": "hours",
         "checkCurrentState": true,
@@ -9599,7 +9605,7 @@
             }
         ],
         "x": 190,
-        "y": 3200,
+        "y": 3260,
         "wires": [
             [
                 "818e6ff514a1e05c"
@@ -9632,7 +9638,7 @@
         "domain": "timer",
         "service": "start",
         "x": 430,
-        "y": 3200,
+        "y": 3260,
         "wires": [
             []
         ]
@@ -9717,7 +9723,7 @@
         "id": "75c9746da7832486",
         "type": "api-call-service",
         "z": "fa6bb9cfa58677c8",
-        "name": "Turn On Living Room AC Right",
+        "name": "Turn On Living Room AC Left",
         "server": "f88bb71a82464dcf",
         "version": 7,
         "debugenabled": false,
@@ -9726,7 +9732,7 @@
         "areaId": [],
         "deviceId": [],
         "entityId": [
-            "climate.living_room_right_ac_controller"
+            "climate.living_room_left_ac_controller"
         ],
         "labelId": [],
         "data": "",
@@ -9738,7 +9744,7 @@
         "blockInputOverrides": false,
         "domain": "climate",
         "service": "turn_on",
-        "x": 1210,
+        "x": 1200,
         "y": 1640,
         "wires": [
             []
@@ -9812,11 +9818,6 @@
                 "type": "str"
             },
             {
-                "name": "DOOR_SENSOR",
-                "value": "binary_sensor.bathroom_door_contact",
-                "type": "str"
-            },
-            {
                 "name": "BRIGHTNESS_SENSOR",
                 "value": "sensor.bathroom_motion_illuminance",
                 "type": "str"
@@ -9824,6 +9825,16 @@
             {
                 "name": "LIGHT_ENTITY",
                 "value": "switch.bathroom_controller_wall_switch_right",
+                "type": "str"
+            },
+            {
+                "name": "DOOR_SENSOR",
+                "value": "binary_sensor.bathroom_door_contact",
+                "type": "str"
+            },
+            {
+                "name": "MANUAL_TIMER",
+                "value": "timer.bathroom_automatic_lights_timer",
                 "type": "str"
             }
         ],
@@ -9882,10 +9893,10 @@
             }
         ],
         "x": 170,
-        "y": 240,
+        "y": 320,
         "wires": [
             [
-                "6f0a4b4e6829a057"
+                "7d5cfe0a9f238622"
             ],
             []
         ]
@@ -9915,57 +9926,12 @@
         "blockInputOverrides": false,
         "domain": "homeassistant",
         "service": "turn_on",
-        "x": 250,
+        "x": 650,
         "y": 320,
         "wires": [
             [
                 "1868631f528de583"
             ]
-        ]
-    },
-    {
-        "id": "6f0a4b4e6829a057",
-        "type": "api-current-state",
-        "z": "c41ab6f93f6c103e",
-        "name": "Bathroom Door Closed?",
-        "server": "f88bb71a82464dcf",
-        "version": 3,
-        "outputs": 2,
-        "halt_if": "off",
-        "halt_if_type": "str",
-        "halt_if_compare": "is",
-        "entity_id": "binary_sensor.bathroom_door_contact",
-        "state_type": "str",
-        "blockInputOverrides": false,
-        "outputProperties": [
-            {
-                "property": "payload",
-                "propertyType": "msg",
-                "value": "",
-                "valueType": "entityState"
-            },
-            {
-                "property": "data",
-                "propertyType": "msg",
-                "value": "",
-                "valueType": "entity"
-            }
-        ],
-        "for": "0",
-        "forType": "num",
-        "forUnits": "minutes",
-        "override_topic": false,
-        "state_location": "payload",
-        "override_payload": "msg",
-        "entity_location": "data",
-        "override_data": "msg",
-        "x": 410,
-        "y": 240,
-        "wires": [
-            [
-                "7d5cfe0a9f238622"
-            ],
-            []
         ]
     },
     {
@@ -9995,7 +9961,7 @@
         "outputProperties": [],
         "entityLocation": "data",
         "entityLocationType": "none",
-        "x": 460,
+        "x": 860,
         "y": 320,
         "wires": [
             [
@@ -10031,8 +9997,8 @@
         "blockInputOverrides": false,
         "domain": "homeassistant",
         "service": "turn_off",
-        "x": 1150,
-        "y": 280,
+        "x": 1550,
+        "y": 260,
         "wires": [
             []
         ]
@@ -10054,7 +10020,7 @@
         "drop": false,
         "allowrate": false,
         "outputs": 1,
-        "x": 670,
+        "x": 1070,
         "y": 320,
         "wires": [
             [
@@ -10098,7 +10064,7 @@
         "override_payload": "msg",
         "entity_location": "data",
         "override_data": "msg",
-        "x": 890,
+        "x": 1290,
         "y": 320,
         "wires": [
             [
@@ -10145,8 +10111,8 @@
         "override_payload": "msg",
         "entity_location": "data",
         "override_data": "msg",
-        "x": 680,
-        "y": 240,
+        "x": 420,
+        "y": 320,
         "wires": [
             [
                 "7eb6d807b0b45de3"
@@ -10190,7 +10156,7 @@
         "override_payload": "msg",
         "entity_location": "data",
         "override_data": "msg",
-        "x": 1160,
+        "x": 1560,
         "y": 320,
         "wires": [
             [
@@ -10226,10 +10192,66 @@
         "blockInputOverrides": false,
         "domain": "homeassistant",
         "service": "turn_off",
-        "x": 1370,
+        "x": 1770,
         "y": 320,
         "wires": [
             []
+        ]
+    },
+    {
+        "id": "970e3c72c2362dfd",
+        "type": "api-call-service",
+        "z": "c41ab6f93f6c103e",
+        "name": "Start Manual Timer",
+        "server": "f88bb71a82464dcf",
+        "version": 7,
+        "debugenabled": false,
+        "action": "timer.start",
+        "floorId": [],
+        "areaId": [],
+        "deviceId": [],
+        "entityId": [
+            "timer.bathroom_automatic_lights_timer"
+        ],
+        "labelId": [],
+        "data": "",
+        "dataType": "jsonata",
+        "mergeContext": "",
+        "mustacheAltTags": false,
+        "outputProperties": [],
+        "queue": "none",
+        "blockInputOverrides": true,
+        "domain": "timer",
+        "service": "start",
+        "x": 430,
+        "y": 220,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "54f89c05a38f819b",
+        "type": "subflow:2e02acbf157d8262",
+        "z": "c41ab6f93f6c103e",
+        "name": "Wall Switch - Single Right",
+        "env": [
+            {
+                "name": "E1_TOPIC",
+                "value": "bathroom/controller_wall",
+                "type": "str"
+            },
+            {
+                "name": "E1_ACTION",
+                "value": "single_right",
+                "type": "str"
+            }
+        ],
+        "x": 190,
+        "y": 220,
+        "wires": [
+            [
+                "970e3c72c2362dfd"
+            ]
         ]
     },
     {
