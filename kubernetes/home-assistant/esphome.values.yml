@@ -11,7 +11,7 @@ controllers:
     type: deployment
     strategy: Recreate # TODO: How does forcing the MAC affect a RollingUpdate release?
     annotations:
-      keel.sh/policy: minor
+      keel.sh/policy: major
       keel.sh/trigger: poll
       keel.sh/pollSchedule: "0 0 4 * * 5" # 4am Fri
     containers:

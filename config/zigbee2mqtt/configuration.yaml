@@ -1,25 +1,23 @@
-availability: true
-groups: groups.yaml
+version: 4
+availability:
+  enabled: true
 devices: devices.yaml
-device_options:
-  legacy: false
+device_options: {}
 advanced:
   channel: 25
-  homeassistant_legacy_entity_attributes: false
   last_seen: ISO_8601
-  legacy_api: false
-  legacy_availability_payload: false
   log_level: debug
-  log_output: ['console']
+  log_output:
+    - console
   network_key: '!secrets.yaml network_key'
   pan_id: 3776
   timestamp_format: YYYY-MM-DDTHH:mm:ssZ
   transmit_power: 20
 frontend:
+  enabled: true
   port: 8080
 homeassistant:
-  legacy_entity_attributes: false
-  legacy_triggers: false
+  enabled: true
 mqtt:
   base_topic: zigbee2mqtt
   server: '!secrets.yaml server'
