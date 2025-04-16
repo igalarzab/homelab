@@ -64,6 +64,10 @@ time:
   - platform: homeassistant
     id: homeassistant_time
 
+sensor:
+  - platform: uptime
+    name: Uptime
+
 text_sensor:
   - platform: wifi_info
     ip_address:
