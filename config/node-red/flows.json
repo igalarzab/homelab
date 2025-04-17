@@ -5258,17 +5258,17 @@
         "id": "f3c9368ece566626",
         "type": "api-call-service",
         "z": "751c2276bdb4df53",
-        "name": "Dry mode on ACs",
+        "name": "Dry mode on AC Left",
         "server": "f88bb71a82464dcf",
         "version": 7,
         "debugenabled": false,
         "action": "climate.set_temperature",
         "floorId": [],
         "areaId": [],
-        "deviceId": [],
-        "entityId": [
-            "group.living_room_ac_controller"
+        "deviceId": [
+            "b482b1782e90386ee58b69333d8f7610"
         ],
+        "entityId": [],
         "labelId": [],
         "data": "{ \"hvac_mode\": \"dry\", \"temperature\": \"26\" }",
         "dataType": "json",
@@ -5279,7 +5279,7 @@
         "blockInputOverrides": false,
         "domain": "climate",
         "service": "set_temperature",
-        "x": 970,
+        "x": 980,
         "y": 980,
         "wires": [
             [
@@ -5314,7 +5314,7 @@
         "outputProperties": [],
         "entityLocation": "data",
         "entityLocationType": "none",
-        "x": 1180,
+        "x": 1200,
         "y": 980,
         "wires": [
             [
@@ -5329,17 +5329,17 @@
         "id": "392e14aa19a915d0",
         "type": "api-call-service",
         "z": "751c2276bdb4df53",
-        "name": "Turn Off ACs",
+        "name": "Turn Off AC Left",
         "server": "f88bb71a82464dcf",
         "version": 7,
         "debugenabled": false,
         "action": "climate.turn_off",
         "floorId": [],
         "areaId": [],
-        "deviceId": [],
-        "entityId": [
-            "group.living_room_ac_controller"
+        "deviceId": [
+            "b482b1782e90386ee58b69333d8f7610"
         ],
+        "entityId": [],
         "labelId": [],
         "data": "",
         "dataType": "jsonata",
@@ -5350,7 +5350,7 @@
         "blockInputOverrides": false,
         "domain": "climate",
         "service": "turn_off",
-        "x": 1370,
+        "x": 1400,
         "y": 940,
         "wires": [
             [
@@ -5456,7 +5456,7 @@
         "blockInputOverrides": false,
         "domain": "notify",
         "service": "notify",
-        "x": 1570,
+        "x": 1610,
         "y": 940,
         "wires": [
             []
@@ -5466,7 +5466,7 @@
         "id": "c8fe07cd1622552b",
         "type": "api-call-service",
         "z": "751c2276bdb4df53",
-        "name": "Turn Off ACs",
+        "name": "Turn Off AC Left",
         "server": "f88bb71a82464dcf",
         "version": 7,
         "debugenabled": false,
@@ -5475,7 +5475,7 @@
         "areaId": [],
         "deviceId": [],
         "entityId": [
-            "group.living_room_ac_controller"
+            "climate.living_room_left_ac_controller"
         ],
         "labelId": [],
         "data": "",
@@ -5487,7 +5487,7 @@
         "blockInputOverrides": false,
         "domain": "climate",
         "service": "turn_off",
-        "x": 1370,
+        "x": 1400,
         "y": 1000,
         "wires": [
             [
@@ -5518,7 +5518,7 @@
         "blockInputOverrides": false,
         "domain": "notify",
         "service": "notify",
-        "x": 1570,
+        "x": 1610,
         "y": 1000,
         "wires": [
             []
@@ -9245,7 +9245,7 @@
         "y": 2260,
         "wires": [
             [
-                "353c7332c964ab3e"
+                "6e76baf3edf7f709"
             ],
             []
         ]
@@ -9275,7 +9275,7 @@
         "blockInputOverrides": false,
         "domain": "switch",
         "service": "turn_on",
-        "x": 760,
+        "x": 920,
         "y": 2260,
         "wires": [
             [
@@ -9310,7 +9310,7 @@
         "outputProperties": [],
         "entityLocation": "data",
         "entityLocationType": "none",
-        "x": 960,
+        "x": 1120,
         "y": 2260,
         "wires": [
             [
@@ -9346,7 +9346,7 @@
         "blockInputOverrides": false,
         "domain": "switch",
         "service": "turn_off",
-        "x": 1160,
+        "x": 1320,
         "y": 2260,
         "wires": [
             []
@@ -9388,7 +9388,7 @@
         "override_payload": "msg",
         "entity_location": "data",
         "override_data": "msg",
-        "x": 530,
+        "x": 690,
         "y": 2260,
         "wires": [
             [
@@ -9794,6 +9794,51 @@
                 "75c9746da7832486"
             ],
             []
+        ]
+    },
+    {
+        "id": "6e76baf3edf7f709",
+        "type": "api-current-state",
+        "z": "fa6bb9cfa58677c8",
+        "name": "Sleeping?",
+        "server": "f88bb71a82464dcf",
+        "version": 3,
+        "outputs": 2,
+        "halt_if": "idle",
+        "halt_if_type": "str",
+        "halt_if_compare": "is_not",
+        "entity_id": "timer.bedroom_sleeping",
+        "state_type": "str",
+        "blockInputOverrides": false,
+        "outputProperties": [
+            {
+                "property": "payload",
+                "propertyType": "msg",
+                "value": "",
+                "valueType": "entityState"
+            },
+            {
+                "property": "data",
+                "propertyType": "msg",
+                "value": "",
+                "valueType": "entity"
+            }
+        ],
+        "for": "0",
+        "forType": "num",
+        "forUnits": "minutes",
+        "override_topic": false,
+        "state_location": "payload",
+        "override_payload": "msg",
+        "entity_location": "data",
+        "override_data": "msg",
+        "x": 500,
+        "y": 2260,
+        "wires": [
+            [],
+            [
+                "353c7332c964ab3e"
+            ]
         ]
     },
     {
@@ -10320,6 +10365,150 @@
         "service": "turn_off",
         "x": 340,
         "y": 120,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "2cf21261.5d395e",
+        "type": "template",
+        "z": "0ef8a234d4e5690c",
+        "name": "Battery msg",
+        "field": "message",
+        "fieldType": "msg",
+        "format": "handlebars",
+        "syntax": "mustache",
+        "template": "The battery level for the {{payload.attributes.friendly_name}} is at {{payload.state}}%",
+        "output": "str",
+        "x": 630,
+        "y": 360,
+        "wires": [
+            [
+                "9a2ba31c94599773"
+            ]
+        ]
+    },
+    {
+        "id": "81582b29.b2e13",
+        "type": "ha-get-entities",
+        "z": "0ef8a234d4e5690c",
+        "name": "Low Battery Devices",
+        "server": "f88bb71a82464dcf",
+        "version": 1,
+        "rules": [
+            {
+                "condition": "state_object",
+                "property": "attributes.device_class",
+                "logic": "is",
+                "value": "battery",
+                "valueType": "str"
+            },
+            {
+                "condition": "state_object",
+                "property": "state",
+                "logic": "lte",
+                "value": "20",
+                "valueType": "num"
+            },
+            {
+                "condition": "state_object",
+                "property": "entity_id",
+                "logic": "is_not",
+                "value": "sensor.setebos_battery_level",
+                "valueType": "str"
+            },
+            {
+                "condition": "state_object",
+                "property": "entity_id",
+                "logic": "is_not",
+                "value": "sensor.setebos_watch_battery_level",
+                "valueType": "str"
+            },
+            {
+                "condition": "state_object",
+                "property": "entity_id",
+                "logic": "is_not",
+                "value": "sensor.tethys_battery_level",
+                "valueType": "str"
+            }
+        ],
+        "outputType": "split",
+        "outputEmptyResults": false,
+        "outputLocationType": "msg",
+        "outputLocation": "payload",
+        "outputResultsCount": 1,
+        "x": 420,
+        "y": 360,
+        "wires": [
+            [
+                "2cf21261.5d395e"
+            ]
+        ]
+    },
+    {
+        "id": "f7d478d7c6d26760",
+        "type": "comment",
+        "z": "0ef8a234d4e5690c",
+        "name": "Notifications",
+        "info": "",
+        "x": 110,
+        "y": 280,
+        "wires": []
+    },
+    {
+        "id": "d4e0fe6ed7d69f52",
+        "type": "inject",
+        "z": "0ef8a234d4e5690c",
+        "name": "At 11:00 on Mondays",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "00 11 * * 1",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 180,
+        "y": 360,
+        "wires": [
+            [
+                "81582b29.b2e13"
+            ]
+        ]
+    },
+    {
+        "id": "9a2ba31c94599773",
+        "type": "api-call-service",
+        "z": "0ef8a234d4e5690c",
+        "name": "Send Notification",
+        "server": "f88bb71a82464dcf",
+        "version": 7,
+        "debugenabled": false,
+        "action": "notify.notify",
+        "floorId": [],
+        "areaId": [],
+        "deviceId": [],
+        "entityId": [],
+        "labelId": [],
+        "data": "{\"title\":\"Low Battery\",\"message\":\"{{ message }}\"}",
+        "dataType": "json",
+        "mergeContext": "",
+        "mustacheAltTags": false,
+        "outputProperties": [],
+        "queue": "none",
+        "blockInputOverrides": false,
+        "domain": "notify",
+        "service": "notify",
+        "x": 830,
+        "y": 360,
         "wires": [
             []
         ]
