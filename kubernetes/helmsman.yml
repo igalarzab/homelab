@@ -49,7 +49,7 @@ apps:
   multus-cni:
     <<: *default
     chart: bitnami/multus-cni
-    version: "2.2.6"
+    version: "2.2.10"
     namespace: kube-system
     valuesFile: multus-cni/values.yml
     priority: -107
@@ -86,14 +86,14 @@ apps:
   cloudflare-ddns:
     <<: *default
     chart: bjw-s/app-template
-    version: "3.7.1"
+    version: "3.7.3"
     namespace: cloudflare-ddns
     valuesFile: cloudflare-ddns/values.yml
     priority: -96
   authentik:
     <<: *default
     chart: authentik/authentik
-    version: "2024.12.3"
+    version: "2025.2.4"
     namespace: authentik
     valuesFile: authentik/values.yml
     priority: -88
@@ -101,56 +101,56 @@ apps:
     <<: *default
     enabled: false
     chart: bjw-s/app-template
-    version: "3.7.1"
+    version: "3.7.3"
     namespace: transmission
     valuesFile: transmission/values.yml
     priority: -79
   jdownloader:
     <<: *default
     chart: bjw-s/app-template
-    version: "3.7.1"
+    version: "3.7.3"
     namespace: jdownloader
     valuesFile: jdownloader/values.yml
     priority: -78
   plex:
     <<: *default
     chart: bjw-s/app-template
-    version: "3.7.1"
+    version: "3.7.3"
     namespace: plex
     valuesFile: plex/values.yml
     priority: -69
   mosquitto:
     <<: *default
     chart: bjw-s/app-template
-    version: "3.7.1"
+    version: "3.7.3"
     namespace: mosquitto
     valuesFile: mosquitto/values.yml
     priority: -59
   zigbee2mqtt:
     <<: *default
     chart: bjw-s/app-template
-    version: "3.7.1"
+    version: "3.7.3"
     namespace: home-assistant
     valuesFile: home-assistant/zigbee2mqtt.values.yml
     priority: -58
   node-red:
     <<: *default
     chart: bjw-s/app-template
-    version: "3.7.1"
+    version: "3.7.3"
     namespace: home-assistant
     valuesFile: home-assistant/nodered.values.yml
     priority: -57
   esphome:
     <<: *default
     chart: bjw-s/app-template
-    version: "3.7.1"
+    version: "3.7.3"
     namespace: home-assistant
     valuesFile: home-assistant/esphome.values.yml
     priority: -56
   home-assistant:
     <<: *default
     chart: bjw-s/app-template
-    version: "3.7.1"
+    version: "3.7.3"
     namespace: home-assistant
     valuesFile: home-assistant/home-assistant.values.yml
     priority: -55
