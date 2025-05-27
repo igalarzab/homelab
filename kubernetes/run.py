@@ -110,10 +110,12 @@ if __name__ == '__main__':
 
   apply = commands.add_parser('apply', help='Apply changes to the charts')
   dry_run = commands.add_parser('dry-run', help='Dry Run changes to the charts')
+  destroy = commands.add_parser('destroy', help='Destroy the chart')
   outdated = commands.add_parser('outdated', help='Show outdated charts')
 
   dry_run.add_argument('-n', '--name', help='Filter a specific application by its name')
   apply.add_argument('-n', '--name', help='Filter a specific application by its name')
+  destroy.add_argument('-n', '--name', required=True, help='Filter a specific application by its name')
 
   args = parser.parse_args()
 
@@ -122,6 +124,8 @@ if __name__ == '__main__':
       run_charts('apply', app_name=args.name)
     case 'dry-run':
       run_charts('dry-run', app_name=args.name)
+    case 'destroy':
+      run_charts('destroy', app_name=args.name)
     case 'outdated':
       show_outdated_charts()
     case _:
