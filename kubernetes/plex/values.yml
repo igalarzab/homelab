@@ -1,5 +1,5 @@
 ---
-# yaml-language-server: $schema=https://raw.githubusercontent.com/bjw-s/helm-charts/app-template-3.2.0/charts/other/app-template/values.schema.json
+# yaml-language-server: $schema=https://raw.githubusercontent.com/bjw-s/helm-charts/app-template-4.0.1/charts/other/app-template/values.schema.json
 
 defaultPodOptions:
   terminationGracePeriodSeconds: 30
@@ -72,6 +72,7 @@ ingress:
 
 secrets:
   smb-multimedia-credentials:
+    suffix: smb-multimedia-credentials
     stringData:
       username: ${NAS_SMB_USERNAME}
       password: ${NAS_SMB_PASSWORD}
@@ -101,6 +102,7 @@ persistence:
           - path: /config
   smb-multimedia:
     type: persistentVolumeClaim
+    suffix: smb-multimedia
     storageClass: smb
     accessMode: ReadOnlyMany
     size: ${NAS_SMB_SIZE}
@@ -113,6 +115,7 @@ rawResources:
   smb-multimedia:
     apiVersion: v1
     kind: PersistentVolume
+    suffix: smb-multimedia
     annotations:
       pv.kubernetes.io/provisioned-by: smb.csi.k8s.io
     spec:

@@ -1,5 +1,5 @@
 ---
-# yaml-language-server: $schema=https://raw.githubusercontent.com/bjw-s/helm-charts/app-template-3.2.0/charts/other/app-template/values.schema.json
+# yaml-language-server: $schema=https://raw.githubusercontent.com/bjw-s/helm-charts/app-template-4.0.1/charts/other/app-template/values.schema.json
 
 defaultPodOptions:
   terminationGracePeriodSeconds: 30
@@ -67,6 +67,7 @@ service:
 
 secrets:
   users:
+    suffix: users
     stringData:
       # FIXME: The full crypt() hash uses $ symbols and those cannot be escaped in the .env file because of golang's os.Expand()
       # Because of it, we are storing the first blocks of the hashes here (these are not critical secrets anyway)
