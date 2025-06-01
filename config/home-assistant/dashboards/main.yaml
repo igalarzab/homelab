@@ -61,6 +61,9 @@ views:
         show_header_toggle: false
         state_color: true
         entities:
+          - entity: switch.entrance_controller_wall_gang_left
+            name: Entrance Lights
+            icon: mdi:lightbulb
           - entity: switch.living_room_controller_wall_gang_one
             name: Dining Table Lights
             icon: mdi:lightbulb
