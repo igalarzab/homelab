@@ -3,6 +3,7 @@ availability:
   enabled: true
 devices: devices.yaml
 device_options: {}
+groups: groups.yaml
 advanced:
   channel: 25
   last_seen: ISO_8601
