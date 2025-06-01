@@ -36,46 +36,46 @@ bathroom_lights:
   name: Bathroom Lights
   icon: mdi:lightbulb-group-outline
   entities:
-    - switch.bathroom_controller_wall_switch_left
-    - switch.bathroom_controller_wall_switch_right
+    - switch.bathroom_controller_wall_gang_left
+    - switch.bathroom_controller_wall_gang_right
 
 bedroom_lights:
   name: Bedroom Lights
   icon: mdi:lightbulb-group-outline
   entities:
-    - switch.bedroom_controller_wall_switch_one
+    - switch.bedroom_controller_wall_gang_one
     - light.bedroom_light_bed
 
 entrance_lights:
   name: Entrance Lights
   icon: mdi:lightbulb-group-outline
   entities:
-    - switch.entrance_controller_wall_switch_left
+    - switch.entrance_controller_wall_gang_left
 
 hall_lights:
   name: Hall Lights
   icon: mdi:lightbulb-group-outline
   entities:
-    - switch.living_room_controller_wall_switch_three
+    - switch.living_room_controller_wall_gang_three
 
 kitchen_lights:
   name: Kitchen Lights
   icon: mdi:lightbulb-group-outline
   entities:
-    - switch.kitchen_controller_wall_switch_right
+    - switch.kitchen_controller_wall_gang_right
 
 living_room_lights:
   name: Living Room Lights
   icon: mdi:lightbulb-group-outline
   entities:
-    - switch.living_room_controller_wall_switch_one
-    - switch.living_room_controller_wall_switch_two
+    - switch.living_room_controller_wall_gang_one
+    - switch.living_room_controller_wall_gang_two
 
 office_lights:
   name: Office Lights
   icon: mdi:lightbulb-group-outline
   entities:
-    - switch.office_controller_wall_switch_one
+    - switch.office_controller_wall_gang_one
 
 home_lights:
   name: Home Lights

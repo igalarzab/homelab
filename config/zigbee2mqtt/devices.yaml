@@ -112,7 +112,7 @@
 
 # Aqara Motion Sensors
 '0x00158d00066933ab':
-  friendly_name: 'entrance/motion'
+  friendly_name: entrance/motion
   occupancy_timeout: 15
   filtered_attributes: ['device_temperature', 'linkquality', 'power_outage_count', 'trigger_count', 'voltage']
   homeassistant:
@@ -120,7 +120,7 @@
     device:
       suggested_area: Entrance
 '0x00158d000669412a':
-  friendly_name: 'kitchen/motion'
+  friendly_name: kitchen/motion
   occupancy_timeout: 15
   filtered_attributes: ['device_temperature', 'linkquality', 'power_outage_count', 'trigger_count', 'voltage']
   homeassistant:
@@ -128,7 +128,7 @@
     device:
       suggested_area: Kitchen
 '0x00158d0006e45a7e':
-  friendly_name: 'bathroom/motion'
+  friendly_name: bathroom/motion
   occupancy_timeout: 15
   filtered_attributes: ['device_temperature', 'linkquality', 'power_outage_count', 'trigger_count', 'voltage']
   homeassistant:
@@ -136,7 +136,7 @@
     device:
       suggested_area: Bathroom
 '0x00158d0006695335':
-  friendly_name: 'bedroom/motion'
+  friendly_name: bedroom/motion
   occupancy_timeout: 15
   filtered_attributes: ['device_temperature', 'linkquality', 'power_outage_count', 'trigger_count', 'voltage']
   homeassistant:
@@ -183,22 +183,6 @@
     name: Bedroom Thermometer
     device:
       suggested_area: Bedroom
-'0xa4c13811dcd50973':
-  friendly_name: terrace/plant_thermometer
-  filtered_attributes: ['battery_state', 'linkquality', 'temperature_unit']
-  homeassistant:
-    name: Terrace Plant Thermometer
-    device:
-      suggested_area: Terrace
-
-# IR Blasters
-'0x8c65a3fffeb3ee1c':
-  friendly_name: living_room/ir_controller
-  filtered_attributes: ['linkquality']
-  homeassistant:
-    name: Living Room IR Controller
-    device:
-      suggested_area: Living Room
 
 # Phillips Hue Switches
 '0x001788010b59c0e5':
@@ -232,9 +216,13 @@
     device:
       suggested_area: Bathroom
     switch_left:
-      name: Switch Left
+      object_id: gang_left
     switch_right:
-      name: Switch Right
+      object_id: gang_right
+    gang_left:
+      name: Gang Left
+    gang_right:
+      name: Gang Right
 '0x54ef441000d68ffc':
   friendly_name: entrance/controller_wall
   filtered_attributes: ['device_temperature', 'linkquality', 'power_outage_count', 'power_outage_memory']
@@ -243,9 +231,13 @@
     device:
       suggested_area: Entrance
     switch_left:
-      name: Switch Left
+      object_id: gang_left
     switch_right:
-      name: Switch Right
+      object_id: gang_right
+    gang_left:
+      name: Gang Left
+    gang_right:
+      name: Gang Right
 '0x54ef441000d68889':
   friendly_name: kitchen/controller_wall
   filtered_attributes: ['device_temperature', 'linkquality', 'power_outage_count', 'power_outage_memory']
@@ -254,30 +246,34 @@
     device:
       suggested_area: Kitchen
     switch_left:
-      name: Switch Left
+      object_id: gang_left
     switch_right:
-      name: Switch Right
+      object_id: gang_right
+    gang_left:
+      name: Gang Left
+    gang_right:
+      name: Gang Right
 
 # Aqara Switch Z1 Pro
 '0x54ef441000bc376b':
-  friendly_name: 'bedroom/controller_wall'
+  friendly_name: bedroom/controller_wall
   filtered_attributes: ['device_temperature', 'linkquality', 'power_outage_count', 'trigger_count', 'voltage']
   homeassistant:
     name: Bedroom Controller Wall
     device:
       suggested_area: Bedroom
     switch_top:
-      object_id: switch_one
+      object_id: gang_one
     switch_center:
-      object_id: switch_two
+      object_id: gang_two
     switch_bottom:
-      object_id: switch_three
-    switch_one:
-      name: Switch One
-    switch_two:
-      name: Switch Two
-    switch_three:
-      name: Switch Three
+      object_id: gang_three
+    gang_one:
+      name: Gang One
+    gang_two:
+      name: Gang Two
+    gang_three:
+      name: Gang Three
 '0x54ef441000bc590f':
   friendly_name: living_room/controller_wall
   filtered_attributes: ['device_temperature', 'linkquality', 'power_outage_count', 'trigger_count', 'voltage']
@@ -286,17 +282,17 @@
     device:
       suggested_area: Living Room
     switch_top:
-      object_id: switch_one
+      object_id: gang_one
     switch_center:
-      object_id: switch_two
+      object_id: gang_two
     switch_bottom:
-      object_id: switch_three
-    switch_one:
-      name: Switch One
-    switch_two:
-      name: Switch Two
-    switch_three:
-      name: Switch Three
+      object_id: gang_three
+    gang_one:
+      name: Gang One
+    gang_two:
+      name: Gang Two
+    gang_three:
+      name: Gang Three
 '0x54ef441000bed284':
   friendly_name: office/controller_wall
   filtered_attributes: ['device_temperature', 'linkquality', 'power_outage_count', 'trigger_count', 'voltage']
@@ -305,17 +301,17 @@
     device:
       suggested_area: Office
     switch_top:
-      object_id: switch_one
+      object_id: gang_one
     switch_center:
-      object_id: switch_two
+      object_id: gang_two
     switch_bottom:
-      object_id: switch_three
-    switch_one:
-      name: Switch One
-    switch_two:
-      name: Switch Two
-    switch_three:
-      name: Switch Three
+      object_id: gang_three
+    gang_one:
+      name: Gang One
+    gang_two:
+      name: Gang Two
+    gang_three:
+      name: Gang Three
 
 # Ikea Lights
 '0x287681fffef1e8cc':

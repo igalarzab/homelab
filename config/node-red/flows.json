@@ -3820,7 +3820,7 @@
         "exposeAsEntityConfig": "",
         "entities": {
             "entity": [
-                "switch.entrance_controller_wall_switch_right"
+                "switch.entrance_controller_wall_gang_right"
             ],
             "substring": [],
             "regex": []
@@ -3916,7 +3916,7 @@
         "areaId": [],
         "deviceId": [],
         "entityId": [
-            "switch.entrance_controller_wall_switch_right"
+            "switch.entrance_controller_wall_gang_right"
         ],
         "labelId": [],
         "data": "",
@@ -3947,7 +3947,7 @@
         "areaId": [],
         "deviceId": [],
         "entityId": [
-            "switch.living_room_controller_wall_switch_one"
+            "switch.living_room_controller_wall_gang_one"
         ],
         "labelId": [],
         "data": "",
@@ -4312,7 +4312,7 @@
             },
             {
                 "name": "SWITCH",
-                "value": "switch.kitchen_controller_wall_switch_left",
+                "value": "switch.kitchen_controller_wall_gang_left",
                 "type": "str"
             }
         ],
@@ -5629,7 +5629,7 @@
         "areaId": [],
         "deviceId": [],
         "entityId": [
-            "switch.living_room_controller_wall_switch_one"
+            "switch.living_room_controller_wall_gang_one"
         ],
         "labelId": [],
         "data": "",
@@ -5724,7 +5724,7 @@
         "areaId": [],
         "deviceId": [],
         "entityId": [
-            "switch.bedroom_controller_wall_switch_two"
+            "switch.bedroom_controller_wall_gang_two"
         ],
         "labelId": [],
         "data": "",
@@ -5757,7 +5757,7 @@
         "areaId": [],
         "deviceId": [],
         "entityId": [
-            "switch.kitchen_controller_wall_switch_right"
+            "switch.kitchen_controller_wall_gang_right"
         ],
         "labelId": [],
         "data": "",
@@ -5883,9 +5883,9 @@
         "areaId": [],
         "deviceId": [],
         "entityId": [
-            "switch.kitchen_controller_wall_switch_right",
-            "switch.living_room_controller_wall_switch_one",
-            "switch.living_room_controller_wall_switch_two"
+            "switch.kitchen_controller_wall_gang_right",
+            "switch.living_room_controller_wall_gang_one",
+            "switch.living_room_controller_wall_gang_two"
         ],
         "labelId": [],
         "data": "",
@@ -6398,7 +6398,7 @@
             },
             {
                 "name": "SWITCH",
-                "value": "switch.office_controller_wall_switch_two",
+                "value": "switch.office_controller_wall_gang_two",
                 "type": "str"
             }
         ],
@@ -7861,7 +7861,7 @@
             },
             {
                 "name": "SWITCH",
-                "value": "switch.bedroom_controller_wall_switch_three",
+                "value": "switch.bedroom_controller_wall_gang_three",
                 "type": "str"
             }
         ],
@@ -7882,7 +7882,7 @@
             },
             {
                 "name": "SWITCH",
-                "value": "switch.bedroom_controller_wall_switch_two",
+                "value": "switch.bedroom_controller_wall_gang_two",
                 "type": "str"
             }
         ],
@@ -8375,7 +8375,7 @@
         "areaId": [],
         "deviceId": [],
         "entityId": [
-            "switch.bedroom_controller_wall_switch_one"
+            "switch.bedroom_controller_wall_gang_one"
         ],
         "labelId": [],
         "data": "",
@@ -8682,7 +8682,7 @@
         "halt_if": "on",
         "halt_if_type": "str",
         "halt_if_compare": "is",
-        "entity_id": "switch.bedroom_controller_wall_switch_one",
+        "entity_id": "switch.bedroom_controller_wall_gang_one",
         "state_type": "str",
         "blockInputOverrides": false,
         "outputProperties": [
@@ -8730,7 +8730,7 @@
         "areaId": [],
         "deviceId": [],
         "entityId": [
-            "switch.bedroom_controller_wall_switch_one"
+            "switch.bedroom_controller_wall_gang_one"
         ],
         "labelId": [],
         "data": "",
@@ -8761,7 +8761,7 @@
         "areaId": [],
         "deviceId": [],
         "entityId": [
-            "switch.bedroom_controller_wall_switch_two"
+            "switch.bedroom_controller_wall_gang_two"
         ],
         "labelId": [],
         "data": "",
@@ -9022,7 +9022,7 @@
             },
             {
                 "name": "LIGHT_ENTITY",
-                "value": "switch.bedroom_controller_wall_switch_one",
+                "value": "switch.bedroom_controller_wall_gang_one",
                 "type": "str"
             },
             {
@@ -9263,7 +9263,7 @@
         "areaId": [],
         "deviceId": [],
         "entityId": [
-            "switch.bathroom_controller_wall_switch_left"
+            "switch.bathroom_controller_wall_gang_left"
         ],
         "labelId": [],
         "data": "",
@@ -9334,7 +9334,7 @@
         "areaId": [],
         "deviceId": [],
         "entityId": [
-            "switch.bathroom_controller_wall_switch_left"
+            "switch.bathroom_controller_wall_gang_left"
         ],
         "labelId": [],
         "data": "",
@@ -9363,7 +9363,7 @@
         "halt_if": "off",
         "halt_if_type": "str",
         "halt_if_compare": "is",
-        "entity_id": "switch.bathroom_controller_wall_switch_left",
+        "entity_id": "switch.bathroom_controller_wall_gang_left",
         "state_type": "str",
         "blockInputOverrides": false,
         "outputProperties": [
@@ -9869,7 +9869,7 @@
             },
             {
                 "name": "LIGHT_ENTITY",
-                "value": "switch.bathroom_controller_wall_switch_right",
+                "value": "switch.bathroom_controller_wall_gang_right",
                 "type": "str"
             },
             {
@@ -9898,7 +9898,7 @@
         "exposeAsEntityConfig": "",
         "entities": {
             "entity": [
-                "binary_sensor.bathroom_door_shower_contact"
+                "binary_sensor.bathroom_shower_door_contact"
             ],
             "substring": [],
             "regex": []
@@ -9959,7 +9959,7 @@
         "areaId": [],
         "deviceId": [],
         "entityId": [
-            "switch.bathroom_controller_wall_switch_left"
+            "switch.bathroom_controller_wall_gang_left"
         ],
         "labelId": [],
         "data": "",
@@ -9971,8 +9971,8 @@
         "blockInputOverrides": false,
         "domain": "homeassistant",
         "service": "turn_on",
-        "x": 650,
-        "y": 320,
+        "x": 230,
+        "y": 400,
         "wires": [
             [
                 "1868631f528de583"
@@ -10006,8 +10006,8 @@
         "outputProperties": [],
         "entityLocation": "data",
         "entityLocationType": "none",
-        "x": 860,
-        "y": 320,
+        "x": 440,
+        "y": 400,
         "wires": [
             [
                 "0b268b48126875e9"
@@ -10030,7 +10030,7 @@
         "areaId": [],
         "deviceId": [],
         "entityId": [
-            "switch.bathroom_controller_wall_switch_left"
+            "switch.bathroom_controller_wall_gang_left"
         ],
         "labelId": [],
         "data": "",
@@ -10042,8 +10042,8 @@
         "blockInputOverrides": false,
         "domain": "homeassistant",
         "service": "turn_off",
-        "x": 1550,
-        "y": 260,
+        "x": 1130,
+        "y": 340,
         "wires": [
             []
         ]
@@ -10065,8 +10065,8 @@
         "drop": false,
         "allowrate": false,
         "outputs": 1,
-        "x": 1070,
-        "y": 320,
+        "x": 650,
+        "y": 400,
         "wires": [
             [
                 "76a55c798c17d4de"
@@ -10109,8 +10109,8 @@
         "override_payload": "msg",
         "entity_location": "data",
         "override_data": "msg",
-        "x": 1290,
-        "y": 320,
+        "x": 870,
+        "y": 400,
         "wires": [
             [
                 "7463993a07842f80"
@@ -10160,7 +10160,7 @@
         "y": 320,
         "wires": [
             [
-                "7eb6d807b0b45de3"
+                "e77b225b884d97b2"
             ],
             []
         ]
@@ -10176,7 +10176,7 @@
         "halt_if": "on",
         "halt_if_type": "str",
         "halt_if_compare": "is",
-        "entity_id": "switch.bathroom_controller_wall_switch_left",
+        "entity_id": "switch.bathroom_controller_wall_gang_left",
         "state_type": "str",
         "blockInputOverrides": false,
         "outputProperties": [
@@ -10201,8 +10201,8 @@
         "override_payload": "msg",
         "entity_location": "data",
         "override_data": "msg",
-        "x": 1560,
-        "y": 320,
+        "x": 1140,
+        "y": 400,
         "wires": [
             [
                 "b6a7618fa4536b2d"
@@ -10225,7 +10225,7 @@
         "areaId": [],
         "deviceId": [],
         "entityId": [
-            "switch.bathroom_controller_wall_switch_left"
+            "switch.bathroom_controller_wall_gang_left"
         ],
         "labelId": [],
         "data": "",
@@ -10237,8 +10237,8 @@
         "blockInputOverrides": false,
         "domain": "homeassistant",
         "service": "turn_off",
-        "x": 1770,
-        "y": 320,
+        "x": 1330,
+        "y": 400,
         "wires": [
             []
         ]
@@ -10297,6 +10297,51 @@
             [
                 "970e3c72c2362dfd"
             ]
+        ]
+    },
+    {
+        "id": "e77b225b884d97b2",
+        "type": "api-current-state",
+        "z": "c41ab6f93f6c103e",
+        "name": "Fan Off?",
+        "server": "f88bb71a82464dcf",
+        "version": 3,
+        "outputs": 2,
+        "halt_if": "off",
+        "halt_if_type": "str",
+        "halt_if_compare": "is",
+        "entity_id": "switch.bathroom_controller_wall_gang_left",
+        "state_type": "str",
+        "blockInputOverrides": false,
+        "outputProperties": [
+            {
+                "property": "payload",
+                "propertyType": "msg",
+                "value": "",
+                "valueType": "entityState"
+            },
+            {
+                "property": "data",
+                "propertyType": "msg",
+                "value": "",
+                "valueType": "entity"
+            }
+        ],
+        "for": "0",
+        "forType": "num",
+        "forUnits": "minutes",
+        "override_topic": false,
+        "state_location": "payload",
+        "override_payload": "msg",
+        "entity_location": "data",
+        "override_data": "msg",
+        "x": 640,
+        "y": 320,
+        "wires": [
+            [
+                "7eb6d807b0b45de3"
+            ],
+            []
         ]
     },
     {

@@ -61,13 +61,13 @@ views:
         show_header_toggle: false
         state_color: true
         entities:
-          - entity: switch.living_room_controller_wall_switch_one
+          - entity: switch.living_room_controller_wall_gang_one
             name: Dining Table Lights
             icon: mdi:lightbulb
-          - entity: switch.living_room_controller_wall_switch_two
+          - entity: switch.living_room_controller_wall_gang_two
             name: Sofa Lights
             icon: mdi:lightbulb
-          - entity: switch.living_room_controller_wall_switch_three
+          - entity: switch.living_room_controller_wall_gang_three
             name: Hall Lights
             icon: mdi:lightbulb
           - entity: light.living_room_tv_lightstrip
@@ -107,7 +107,7 @@ views:
         show_header_toggle: false
         state_color: true
         entities:
-          - entity: switch.office_controller_wall_switch_one
+          - entity: switch.office_controller_wall_gang_one
             name: Ceiling Light
             icon: mdi:lightbulb
       - type: thermostat
@@ -134,7 +134,7 @@ views:
         show_header_toggle: false
         state_color: true
         entities:
-          - entity: switch.bedroom_controller_wall_switch_one
+          - entity: switch.bedroom_controller_wall_gang_one
             name: Ceiling Light
             icon: mdi:lightbulb
           - entity: light.bedroom_light_bed
@@ -170,10 +170,10 @@ views:
         show_header_toggle: false
         state_color: true
         entities:
-          - entity: switch.bathroom_controller_wall_switch_right
+          - entity: switch.bathroom_controller_wall_gang_right
             name: Ceiling Light
             icon: mdi:lightbulb
-          - entity: switch.bathroom_controller_wall_switch_left
+          - entity: switch.bathroom_controller_wall_gang_left
             name: Fan
             icon: mdi:fan
   - path: switches
