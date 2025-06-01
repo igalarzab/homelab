@@ -157,28 +157,28 @@
 # Aqara Thermometers
 '0x00158d000484ff28':
   friendly_name: living_room/thermometer
-  filtered_attributes: ['linkquality', 'power_outage_count', 'pressure', 'voltage']
+  filtered_attributes: ['linkquality', 'power_outage_count', 'voltage']
   homeassistant:
     name: Living Room Thermometer
     device:
       suggested_area: Living Room
 '0x00158d0006bec2e2':
   friendly_name: office/thermometer
-  filtered_attributes: ['linkquality', 'power_outage_count', 'pressure', 'voltage']
+  filtered_attributes: ['linkquality', 'power_outage_count', 'voltage']
   homeassistant:
     name: Office Thermometer
     device:
       suggested_area: Office
 '0x00158d000ae464b9':
   friendly_name: bathroom/thermometer
-  filtered_attributes: ['linkquality', 'power_outage_count', 'pressure', 'voltage']
+  filtered_attributes: ['linkquality', 'power_outage_count', 'voltage']
   homeassistant:
     name: Bathroom Thermometer
     device:
       suggested_area: Bathroom
 '0x00158d000484feb0':
   friendly_name: bedroom/thermometer
-  filtered_attributes: ['linkquality', 'power_outage_count', 'pressure', 'voltage']
+  filtered_attributes: ['linkquality', 'power_outage_count', 'voltage']
   homeassistant:
     name: Bedroom Thermometer
     device:
