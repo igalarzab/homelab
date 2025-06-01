@@ -328,12 +328,3 @@
     name: Bedroom Light Bed
     device:
       suggested_area: Bedroom
-
-# Others
-'0x00158d0005430faf':
-  friendly_name: 'kitchen/vibration_countersink'
-  filtered_attributes: ['device_temperature', 'linkquality', 'power_outage_count', 'voltage']
-  homeassistant:
-    name: Kintchen Countersink Vibration
-    device:
-      suggested_area: Kitchen
