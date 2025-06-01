@@ -24,8 +24,7 @@ mqtt:
   user: '!secrets.yaml user'
   password: '!secrets.yaml password'
 serial:
-  adapter: ember
-  rtscts: false
   port: tcp://10.31.7.40:6638
   baudrate: 115200
+  adapter: zstack
   disable_led: false
