@@ -13,7 +13,9 @@ views:
         show_forecast: false
       - type: entities
         entities:
+          - entity: input_button.vacuum_home
           - entity: input_button.leave_home
+          - entity: input_button.pre_cool_home
           - entity: input_button.go_to_sleep
           - entity: input_button.wake_up
         title: Actions

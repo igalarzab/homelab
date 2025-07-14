@@ -6,6 +6,14 @@ leave_home:
   name: Leave Home
   icon: mdi:exit-run
 
+pre_cool_home:
+  name: Pre-Cool Home
+  icon: mdi:air-conditioner
+
+vacuum_home:
+  name: Vacuum Home
+  icon: mdi:vacuum
+
 wake_up:
   name: Wake Up
   icon: mdi:bed-clock

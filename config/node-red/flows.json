@@ -5189,9 +5189,9 @@
         "id": "bfb9b8a1c9ec4f4b",
         "type": "comment",
         "z": "751c2276bdb4df53",
-        "name": "AC - Humidity",
+        "name": "AC",
         "info": "",
-        "x": 110,
+        "x": 90,
         "y": 900,
         "wires": []
     },
@@ -5621,7 +5621,7 @@
         "name": "Remote Controllers",
         "info": "",
         "x": 130,
-        "y": 1180,
+        "y": 1320,
         "wires": []
     },
     {
@@ -5637,7 +5637,7 @@
             }
         ],
         "x": 160,
-        "y": 1420,
+        "y": 1560,
         "wires": [
             [
                 "0c2993ef0244d0fa"
@@ -5687,7 +5687,7 @@
         "domain": "switch",
         "service": "toggle",
         "x": 470,
-        "y": 1260,
+        "y": 1400,
         "wires": [
             [
                 "2375ce59f65abe10"
@@ -5707,7 +5707,7 @@
         "areaId": [],
         "deviceId": [],
         "entityId": [
-            "group.living_room_ac_controller"
+            "climate.living_room_left_ac_controller"
         ],
         "labelId": [],
         "data": "",
@@ -5720,7 +5720,7 @@
         "domain": "climate",
         "service": "toggle",
         "x": 430,
-        "y": 1560,
+        "y": 1700,
         "wires": [
             []
         ]
@@ -5751,7 +5751,7 @@
         "domain": "cover",
         "service": "toggle",
         "x": 440,
-        "y": 1620,
+        "y": 1760,
         "wires": [
             []
         ]
@@ -5782,7 +5782,7 @@
         "domain": "switch",
         "service": "toggle",
         "x": 470,
-        "y": 1440,
+        "y": 1580,
         "wires": [
             [
                 "8d41b1d57fa3b081"
@@ -5815,7 +5815,7 @@
         "domain": "switch",
         "service": "toggle",
         "x": 460,
-        "y": 1500,
+        "y": 1640,
         "wires": [
             [
                 "50fe15ad504432bf"
@@ -5848,7 +5848,7 @@
         "domain": "timer",
         "service": "start",
         "x": 730,
-        "y": 1260,
+        "y": 1400,
         "wires": [
             []
         ]
@@ -5879,7 +5879,7 @@
         "domain": "timer",
         "service": "start",
         "x": 710,
-        "y": 1500,
+        "y": 1640,
         "wires": [
             []
         ]
@@ -5910,7 +5910,7 @@
         "domain": "timer",
         "service": "start",
         "x": 730,
-        "y": 1440,
+        "y": 1580,
         "wires": [
             []
         ]
@@ -5943,7 +5943,7 @@
         "domain": "switch",
         "service": "turn_off",
         "x": 450,
-        "y": 1360,
+        "y": 1500,
         "wires": [
             [
                 "4c1e1d209b9cc9a7",
@@ -5977,7 +5977,7 @@
         "domain": "timer",
         "service": "start",
         "x": 730,
-        "y": 1320,
+        "y": 1460,
         "wires": [
             []
         ]
@@ -6008,7 +6008,7 @@
         "domain": "timer",
         "service": "start",
         "x": 710,
-        "y": 1380,
+        "y": 1520,
         "wires": [
             []
         ]
@@ -6159,6 +6159,95 @@
             [
                 "c2eebc508f495c94"
             ]
+        ]
+    },
+    {
+        "id": "335d267d5efdcb6e",
+        "type": "server-state-changed",
+        "z": "751c2276bdb4df53",
+        "name": "Pre-Cool Pressed",
+        "server": "f88bb71a82464dcf",
+        "version": 6,
+        "outputs": 1,
+        "exposeAsEntityConfig": "",
+        "entities": {
+            "entity": [
+                "input_button.pre_cool_home"
+            ],
+            "substring": [],
+            "regex": []
+        },
+        "outputInitially": false,
+        "stateType": "str",
+        "ifState": "",
+        "ifStateType": "str",
+        "ifStateOperator": "is",
+        "outputOnlyOnStateChange": true,
+        "for": "0",
+        "forType": "num",
+        "forUnits": "minutes",
+        "ignorePrevStateNull": false,
+        "ignorePrevStateUnknown": true,
+        "ignorePrevStateUnavailable": true,
+        "ignoreCurrentStateUnknown": true,
+        "ignoreCurrentStateUnavailable": true,
+        "outputProperties": [
+            {
+                "property": "payload",
+                "propertyType": "msg",
+                "value": "",
+                "valueType": "entityState"
+            },
+            {
+                "property": "data",
+                "propertyType": "msg",
+                "value": "",
+                "valueType": "eventData"
+            },
+            {
+                "property": "topic",
+                "propertyType": "msg",
+                "value": "",
+                "valueType": "triggerId"
+            }
+        ],
+        "x": 160,
+        "y": 1160,
+        "wires": [
+            [
+                "a26b1ea89b193642"
+            ]
+        ]
+    },
+    {
+        "id": "a26b1ea89b193642",
+        "type": "api-call-service",
+        "z": "751c2276bdb4df53",
+        "name": "Turn On Living Room AC Left",
+        "server": "f88bb71a82464dcf",
+        "version": 7,
+        "debugenabled": false,
+        "action": "climate.turn_on",
+        "floorId": [],
+        "areaId": [],
+        "deviceId": [],
+        "entityId": [
+            "climate.living_room_left_ac_controller"
+        ],
+        "labelId": [],
+        "data": "",
+        "dataType": "jsonata",
+        "mergeContext": "",
+        "mustacheAltTags": false,
+        "outputProperties": [],
+        "queue": "none",
+        "blockInputOverrides": false,
+        "domain": "climate",
+        "service": "turn_on",
+        "x": 400,
+        "y": 1160,
+        "wires": [
+            []
         ]
     },
     {
@@ -6417,7 +6506,7 @@
         "name": "Lights",
         "info": "",
         "x": 90,
-        "y": 1280,
+        "y": 1380,
         "wires": []
     },
     {
@@ -6427,7 +6516,7 @@
         "name": "Remote Controllers",
         "info": "",
         "x": 130,
-        "y": 980,
+        "y": 1080,
         "wires": []
     },
     {
@@ -6710,7 +6799,7 @@
         "domain": "vacuum",
         "service": "start",
         "x": 760,
-        "y": 840,
+        "y": 880,
         "wires": [
             []
         ]
@@ -6773,7 +6862,7 @@
             }
         ],
         "x": 160,
-        "y": 1100,
+        "y": 1200,
         "wires": [
             [
                 "31cd3317a90a3265"
@@ -6815,7 +6904,7 @@
         "domain": "homeassistant",
         "service": "toggle",
         "x": 370,
-        "y": 1060,
+        "y": 1160,
         "wires": [
             [
                 "5a014c8a6eef66f5"
@@ -6848,7 +6937,7 @@
         "domain": "climate",
         "service": "toggle",
         "x": 370,
-        "y": 1140,
+        "y": 1240,
         "wires": [
             []
         ]
@@ -6936,7 +7025,7 @@
             }
         ],
         "x": 190,
-        "y": 1340,
+        "y": 1440,
         "wires": []
     },
     {
@@ -7182,7 +7271,7 @@
             }
         ],
         "x": 190,
-        "y": 1400,
+        "y": 1500,
         "wires": [
             [
                 "4167842ce9d58bb3"
@@ -7215,7 +7304,7 @@
         "domain": "timer",
         "service": "start",
         "x": 430,
-        "y": 1400,
+        "y": 1500,
         "wires": [
             []
         ]
@@ -7246,7 +7335,7 @@
         "domain": "timer",
         "service": "start",
         "x": 570,
-        "y": 1060,
+        "y": 1160,
         "wires": [
             []
         ]
@@ -7398,6 +7487,64 @@
                 "211bf5dddd5fd4ea"
             ],
             []
+        ]
+    },
+    {
+        "id": "4b9a63a54aec6315",
+        "type": "server-state-changed",
+        "z": "03c58ed96b7b8395",
+        "name": "Vacuum Home Pressed",
+        "server": "f88bb71a82464dcf",
+        "version": 6,
+        "outputs": 1,
+        "exposeAsEntityConfig": "",
+        "entities": {
+            "entity": [
+                "input_button.vacuum_home"
+            ],
+            "substring": [],
+            "regex": []
+        },
+        "outputInitially": false,
+        "stateType": "str",
+        "ifState": "",
+        "ifStateType": "str",
+        "ifStateOperator": "is",
+        "outputOnlyOnStateChange": true,
+        "for": "0",
+        "forType": "num",
+        "forUnits": "minutes",
+        "ignorePrevStateNull": false,
+        "ignorePrevStateUnknown": true,
+        "ignorePrevStateUnavailable": true,
+        "ignoreCurrentStateUnknown": true,
+        "ignoreCurrentStateUnavailable": true,
+        "outputProperties": [
+            {
+                "property": "payload",
+                "propertyType": "msg",
+                "value": "",
+                "valueType": "entityState"
+            },
+            {
+                "property": "data",
+                "propertyType": "msg",
+                "value": "",
+                "valueType": "eventData"
+            },
+            {
+                "property": "topic",
+                "propertyType": "msg",
+                "value": "",
+                "valueType": "triggerId"
+            }
+        ],
+        "x": 180,
+        "y": 920,
+        "wires": [
+            [
+                "3d8e18f5d75109b7"
+            ]
         ]
     },
     {
