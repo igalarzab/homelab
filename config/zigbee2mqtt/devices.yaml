@@ -324,3 +324,13 @@
     name: Bedroom Light Bed
     device:
       suggested_area: Bedroom
+
+
+# Sonoff Electrical Plugs
+'0xa4c13801b0d0ffff':
+  friendly_name: kitchen/coffee_plug
+  filtered_attributes: ['power_on_behavior', 'overload_protection', 'outlet_control_protect', 'linkquality']
+  homeassistant:
+    name: Kitchen Coffee Machine Plug
+    device:
+      suggested_area: Kitchen
