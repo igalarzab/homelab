@@ -10,6 +10,7 @@ namespaces:
   jdownloader:
   keel:
   kube-system:
+  mcps:
   mosquitto:
   plex:
   traefik:
@@ -154,3 +155,10 @@ apps:
     namespace: home-assistant
     valuesFile: home-assistant/home-assistant.values.yml
     priority: -55
+  mcp-weather:
+    <<: *default
+    chart: bjw-s/app-template
+    version: "4.0.1"
+    namespace: mcps
+    valuesFile: mcps/mcp-weather.values.yml
+    priority: -49
