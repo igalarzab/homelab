@@ -4,8 +4,8 @@
   "private": true,
   "dependencies": {
     "@node-red-contrib-themes/theme-collection": "^4.0.11",
-    "node-red-contrib-home-assistant-websocket": "^0.75.0",
-    "node-red-contrib-light-scheduler": "^0.0.18",
+    "node-red-contrib-home-assistant-websocket": "^0.77.2",
+    "node-red-contrib-light-scheduler": "^0.0.19",
     "node-red-contrib-moment": "^5.0.0"
   }
 }
