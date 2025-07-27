@@ -61,6 +61,10 @@ service:
 
 ingress:
   main:
+    annotations:
+      external-dns.alpha.kubernetes.io/hostname: plex.${COMMON_DOMAIN_ROOT}
+      external-dns.alpha.kubernetes.io/target: ${COMMON_DNS_IP}
+      external-dns.alpha.kubernetes.io/ttl: 1m
     hosts:
       - host: "plex.${COMMON_DOMAIN_ROOT}"
         paths:
@@ -137,5 +141,5 @@ rawResources:
           volumeAttributes:
             source: ${NAS_SMB_SOURCE_MULTIMEDIA}
           nodeStageSecretRef:
-            name: "{{- (include \"bjw-s.common.lib.chart.names.fullname\" $) -}}-smb-multimedia-credentials"
+            name: '{{- (include "bjw-s.common.lib.chart.names.fullname" $) -}}-smb-multimedia-credentials'
             namespace: "{{ .Release.Namespace }}"

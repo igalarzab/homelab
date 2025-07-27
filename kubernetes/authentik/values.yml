@@ -8,6 +8,10 @@ authentik:
 server:
   ingress:
     enabled: true
+    annotations:
+      external-dns.alpha.kubernetes.io/hostname: auth.${COMMON_DOMAIN_ROOT}
+      external-dns.alpha.kubernetes.io/target: ${COMMON_DNS_IP}
+      external-dns.alpha.kubernetes.io/ttl: 1m
     hosts:
       - auth.${COMMON_DOMAIN_ROOT}
 

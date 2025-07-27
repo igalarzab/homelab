@@ -76,6 +76,10 @@ service:
 
 ingress:
   main:
+    annotations:
+      external-dns.alpha.kubernetes.io/hostname: ha.${COMMON_DOMAIN_ROOT}
+      external-dns.alpha.kubernetes.io/target: ${COMMON_DNS_IP}
+      external-dns.alpha.kubernetes.io/ttl: 1m
     hosts:
       - host: "ha.${COMMON_DOMAIN_ROOT}"
         paths:
@@ -113,7 +117,7 @@ persistence:
           - path: /config
   secrets:
     type: secret
-    name: "{{- (include \"bjw-s.common.lib.chart.names.fullname\" $) -}}-secrets"
+    name: '{{- (include "bjw-s.common.lib.chart.names.fullname" $) -}}-secrets'
     advancedMounts:
       home-assistant:
         home-assistant:

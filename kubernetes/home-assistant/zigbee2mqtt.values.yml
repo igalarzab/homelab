@@ -73,6 +73,10 @@ service:
 
 ingress:
   main:
+    annotations:
+      external-dns.alpha.kubernetes.io/hostname: z2m.${COMMON_DOMAIN_ROOT}
+      external-dns.alpha.kubernetes.io/target: ${COMMON_DNS_IP}
+      external-dns.alpha.kubernetes.io/ttl: 1m
     hosts:
       - host: "z2m.${COMMON_DOMAIN_ROOT}"
         paths:
@@ -105,7 +109,7 @@ persistence:
           - path: /app/data
   secrets:
     type: secret
-    name: "{{- (include \"bjw-s.common.lib.chart.names.fullname\" $) -}}-secrets"
+    name: '{{- (include "bjw-s.common.lib.chart.names.fullname" $) -}}-secrets'
     advancedMounts:
       zigbee2mqtt:
         zigbee2mqtt:

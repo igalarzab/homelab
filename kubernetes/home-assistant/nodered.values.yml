@@ -71,6 +71,10 @@ service:
 
 ingress:
   main:
+    annotations:
+      external-dns.alpha.kubernetes.io/hostname: nodered.${COMMON_DOMAIN_ROOT}
+      external-dns.alpha.kubernetes.io/target: ${COMMON_DNS_IP}
+      external-dns.alpha.kubernetes.io/ttl: 1m
     hosts:
       - host: "nodered.${COMMON_DOMAIN_ROOT}"
         paths:

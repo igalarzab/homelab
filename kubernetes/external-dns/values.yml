@@ -1,0 +1,6 @@
+policy: sync
+provider:
+  name: cloudflare
+env:
+  - name: CF_API_TOKEN
+    value: ${CLOUDFLARE_API_TOKEN}

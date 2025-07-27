@@ -21,6 +21,7 @@ controllers:
             protocol: TCP
             containerPort: 4200
         env:
+          WEATHER_PROVIDER: openweather
           OPENWEATHER_API_KEY: ${MCP_WEATHER_OW_API_KEY}
         probes:
           liveness:
@@ -58,6 +59,10 @@ service:
 
 ingress:
   main:
+    annotations:
+      external-dns.alpha.kubernetes.io/hostname: mcp-weather.${COMMON_DOMAIN_ROOT}
+      external-dns.alpha.kubernetes.io/target: ${COMMON_DNS_IP}
+      external-dns.alpha.kubernetes.io/ttl: 1m
     hosts:
       - host: "mcp-weather.${COMMON_DOMAIN_ROOT}"
         paths:

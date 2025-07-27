@@ -63,6 +63,10 @@ service:
 
 ingress:
   main:
+    annotations:
+      external-dns.alpha.kubernetes.io/hostname: jd.${COMMON_DOMAIN_ROOT}
+      external-dns.alpha.kubernetes.io/target: ${COMMON_DNS_IP}
+      external-dns.alpha.kubernetes.io/ttl: 1m
     hosts:
       - host: "jd.${COMMON_DOMAIN_ROOT}"
         paths:
@@ -126,5 +130,5 @@ rawResources:
           volumeAttributes:
             source: ${NAS_SMB_SOURCE_DOWNLOADS}/jdownloader
           nodeStageSecretRef:
-            name: "{{- (include \"bjw-s.common.lib.chart.names.fullname\" $) -}}-smb-downloads-credentials"
+            name: '{{- (include "bjw-s.common.lib.chart.names.fullname" $) -}}-smb-downloads-credentials'
             namespace: "{{ .Release.Namespace }}"

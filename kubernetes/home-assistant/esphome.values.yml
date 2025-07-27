@@ -77,6 +77,9 @@ ingress:
   main:
     annotations:
       traefik.ingress.kubernetes.io/router.middlewares: traefik-middlewares-authentik@kubernetescrd
+      external-dns.alpha.kubernetes.io/hostname: esphome.${COMMON_DOMAIN_ROOT}
+      external-dns.alpha.kubernetes.io/target: ${COMMON_DNS_IP}
+      external-dns.alpha.kubernetes.io/ttl: 1m
     hosts:
       - host: "esphome.${COMMON_DOMAIN_ROOT}"
         paths:
@@ -109,7 +112,7 @@ persistence:
           - path: /config
   secrets:
     type: secret
-    name: "{{- (include \"bjw-s.common.lib.chart.names.fullname\" $) -}}-secrets"
+    name: '{{- (include "bjw-s.common.lib.chart.names.fullname" $) -}}-secrets'
     advancedMounts:
       esphome:
         esphome:
