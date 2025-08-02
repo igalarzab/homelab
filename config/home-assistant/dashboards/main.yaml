@@ -44,7 +44,7 @@ views:
           - entity: binary_sensor.bedroom_motion_occupancy
         title: Presence
   - path: living-room
-    title: ''
+    title: ""
     icon: mdi:sofa
     panel: false
     badges: []
@@ -88,6 +88,17 @@ views:
         entity: climate.living_room_left_ac_controller
       - type: thermostat
         entity: climate.living_room_right_ac_controller
+      - type: entities
+        title: Coffee Machine
+        show_header_toggle: false
+        state_color: true
+        entities:
+          - entity: switch.kitchen_coffee_machine_plug
+            icon: mdi:coffee
+          - entity: sensor.kitchen_coffee_machine_plug_voltage
+          - entity: sensor.kitchen_coffee_machine_plug_current
+          - entity: sensor.kitchen_coffee_machine_plug_power
+          - entity: sensor.kitchen_coffee_machine_plug_energy_today
       - type: media-control
         entity: media_player.living_room_speaker
       - type: media-control
@@ -117,8 +128,20 @@ views:
             icon: mdi:lightbulb
       - type: thermostat
         entity: climate.office_ac_controller
+      - type: entities
+        title: 3D Printer
+        show_header_toggle: false
+        state_color: true
+        entities:
+          - entity: switch.office_3d_printer_plug
+            icon: mdi:printer-3d
+          - entity: sensor.office_3d_printer_plug_voltage
+          - entity: sensor.office_3d_printer_plug_current
+          - entity: sensor.office_3d_printer_plug_power
+          - entity: sensor.office_3d_printer_plug_energy_today
       - type: media-control
         entity: media_player.office_speaker
+
   - path: bedroom
     icon: mdi:bed
     badges: []

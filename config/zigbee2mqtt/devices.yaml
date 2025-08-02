@@ -334,3 +334,22 @@
     name: Kitchen Coffee Machine Plug
     device:
       suggested_area: Kitchen
+    energy_today:
+      name: Energy Today
+    energy_yesterday:
+      name: Energy Yesterday
+    energy_month:
+      name: Energy Month
+'0xa4c13801b67effff':
+  friendly_name: office/3dprinter_plug
+  filtered_attributes: ['power_on_behavior', 'overload_protection', 'outlet_control_protect', 'linkquality']
+  homeassistant:
+    name: Office 3D Printer Plug
+    device:
+      suggested_area: Office
+    energy_today:
+      name: Energy Today
+    energy_yesterday:
+      name: Energy Yesterday
+    energy_month:
+      name: Energy Month
