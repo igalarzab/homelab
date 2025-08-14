@@ -353,3 +353,16 @@
       name: Energy Yesterday
     energy_month:
       name: Energy Month
+'0xa4c13801b683ffff':
+  friendly_name: office/computer_plug
+  filtered_attributes: ['power_on_behavior', 'overload_protection', 'outlet_control_protect', 'linkquality']
+  homeassistant:
+    name: Office Computer Plug
+    device:
+      suggested_area: Office
+    energy_today:
+      name: Energy Today
+    energy_yesterday:
+      name: Energy Yesterday
+    energy_month:
+      name: Energy Month
