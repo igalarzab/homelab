@@ -6,3 +6,6 @@ dependencies = [
   "ansible>=11.9.0",
   "kubernetes>=33.1.0",
 ]
+
+[tool.ruff]
+line-length = 100
