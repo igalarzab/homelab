@@ -1,7 +1,6 @@
 #!/usr/bin/env xonsh
 
 apps = [
-    'authentik',
     'cert-manager',
     'home-assistant',
     'jdownloader',
@@ -9,6 +8,7 @@ apps = [
     'kube-system',
     'mosquitto',
     'plex',
+    'pocket-id',
     'traefik',
     'transmission',
 ]

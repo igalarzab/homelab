@@ -3,9 +3,7 @@ metadata:
   maintainer: Jose Galarza
 
 namespaces:
-  authentik:
   cert-manager:
-  changedetection:
   cloudflare-ddns:
   external-dns:
   home-assistant:
@@ -15,10 +13,10 @@ namespaces:
   mcps:
   mosquitto:
   plex:
+  pocket-id:
   traefik:
 
 helmRepos:
-  authentik: https://charts.goauthentik.io
   bitnami: https://charts.bitnami.com/bitnami
   bjw-s: https://bjw-s-labs.github.io/helm-charts
   csi-driver-smb: https://raw.githubusercontent.com/kubernetes-csi/csi-driver-smb/master/charts
@@ -52,7 +50,7 @@ apps:
   multus-cni:
     <<: *default
     chart: bitnami/multus-cni
-    version: "2.2.19"
+    version: "2.2.21"
     namespace: kube-system
     valuesFile: multus-cni/values.yml
     priority: -107
@@ -75,7 +73,7 @@ apps:
   traefik:
     <<: *default
     chart: traefik/traefik
-    version: "v36.3.0"
+    version: "v37.0.0"
     namespace: traefik
     valuesFile: traefik/values.yml
     priority: -98
@@ -89,7 +87,7 @@ apps:
   cloudflare-ddns:
     <<: *default
     chart: bjw-s/app-template
-    version: "4.1.2"
+    version: "4.2.0"
     namespace: cloudflare-ddns
     valuesFile: cloudflare-ddns/values.yml
     priority: -96
@@ -100,73 +98,67 @@ apps:
     namespace: external-dns
     valuesFile: external-dns/values.yml
     priority: -95
-  authentik:
+  pocket-id:
     <<: *default
-    chart: authentik/authentik
-    version: "2025.6.4"
-    namespace: authentik
-    valuesFile: authentik/values.yml
-    priority: -88
+    chart: bjw-s/app-template
+    version: "4.2.0"
+    namespace: pocket-id
+    valuesFile: pocket-id/values.yml
+    priority: -94
   jdownloader:
     <<: *default
     chart: bjw-s/app-template
-    version: "4.1.2"
+    version: "4.2.0"
     namespace: jdownloader
     valuesFile: jdownloader/values.yml
     priority: -78
   plex:
     <<: *default
     chart: bjw-s/app-template
-    version: "4.1.2"
+    version: "4.2.0"
     namespace: plex
     valuesFile: plex/values.yml
     priority: -69
   mosquitto:
     <<: *default
     chart: bjw-s/app-template
-    version: "4.1.2"
+    version: "4.2.0"
     namespace: mosquitto
     valuesFile: mosquitto/values.yml
     priority: -59
   zigbee2mqtt:
     <<: *default
     chart: bjw-s/app-template
-    version: "4.1.2"
+    version: "4.2.0"
     namespace: home-assistant
     valuesFile: home-assistant/zigbee2mqtt.values.yml
     priority: -58
   node-red:
     <<: *default
     chart: bjw-s/app-template
-    version: "4.1.2"
+    version: "4.2.0"
     namespace: home-assistant
     valuesFile: home-assistant/nodered.values.yml
     priority: -57
   esphome:
     <<: *default
     chart: bjw-s/app-template
-    version: "4.1.2"
+    version: "4.2.0"
     namespace: home-assistant
     valuesFile: home-assistant/esphome.values.yml
     priority: -56
   home-assistant:
     <<: *default
     chart: bjw-s/app-template
-    version: "4.1.2"
+    version: "4.2.0"
     namespace: home-assistant
     valuesFile: home-assistant/home-assistant.values.yml
-    priority: -55
-  changedetection:
-    <<: *default
-    chart: bjw-s/app-template
-    version: "4.1.2"
-    namespace: changedetection
-    valuesFile: changedetection/values.yml
     priority: -55
   mcp-weather:
     <<: *default
     chart: bjw-s/app-template
-    version: "4.1.2"
+    version: "4.2.0"
     namespace: mcps
     valuesFile: mcps/mcp-weather.values.yml
     priority: -49
+    enabled: false

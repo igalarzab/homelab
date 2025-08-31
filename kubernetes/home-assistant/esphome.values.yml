@@ -21,8 +21,6 @@ controllers:
           tag: "${DOCKER_TAG__HOME_ASSISTANT__DEPLOYMENT__ESPHOME__0}"
         env:
           TZ: ${COMMON_TZ}
-          USERNAME: esphome
-          PASSWORD: ${ESPHOME_PASSWORD}
         ports:
           - name: http
             protocol: TCP
@@ -76,7 +74,7 @@ service:
 ingress:
   main:
     annotations:
-      traefik.ingress.kubernetes.io/router.middlewares: traefik-middlewares-authentik@kubernetescrd
+      traefik.ingress.kubernetes.io/router.middlewares: traefik-oidc-smarthome@kubernetescrd
       external-dns.alpha.kubernetes.io/hostname: esphome.${COMMON_DOMAIN_ROOT}
       external-dns.alpha.kubernetes.io/target: ${COMMON_DNS_IP}
       external-dns.alpha.kubernetes.io/ttl: 1m
