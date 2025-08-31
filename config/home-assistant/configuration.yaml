@@ -25,6 +25,11 @@ http:
     - ::1
     - 10.0.0.0/8
 
+auth_oidc:
+  client_id: !secret openid_client_id
+  client_secret: !secret openid_client_secret
+  discovery_url: !secret openid_discovery_url
+
 default_config:
 logger: !include others/logger.yaml
 recorder: !include others/recorder.yaml
