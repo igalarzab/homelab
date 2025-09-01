@@ -65,6 +65,18 @@ controllers:
             git clone ${HOMELAB_REPO} /repo &&
             chown -R 1000:100 /repo &&
             cp -R /repo/${HOMELAB_HA_CONFIG}/{.,}* /config
+      # macvlan doesn't allow communication back to the host, so we route it through eth0
+      fix-routes:
+        image:
+          repository: busybox
+          tag: latest
+        securityContext:
+          capabilities:
+            add: ["NET_ADMIN"]
+        command: ["/bin/sh", "-c"]
+        args:
+          - |
+            ip route replace ${MULTUS_VLAN_SERVER_HOST_IP}/32 dev eth0 || true
 
 service:
   home-assistant:
