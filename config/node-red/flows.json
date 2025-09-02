@@ -4320,11 +4320,6 @@
                 "type": "str"
             },
             {
-                "name": "DISABLED_WHEN_SLEEPING",
-                "value": "true",
-                "type": "bool"
-            },
-            {
                 "name": "MANUAL_TIMER",
                 "value": "timer.kitchen_automatic_lights_timer",
                 "type": "str"
