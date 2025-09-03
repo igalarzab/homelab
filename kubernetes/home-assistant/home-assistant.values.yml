@@ -56,15 +56,15 @@ controllers:
     initContainers:
       git:
         image:
-          repository: bitnami/git
+          repository: alpine/git
           tag: latest
-        command: ["/bin/bash"]
+        command: ["/bin/sh"]
         args:
           - -c
           - >-
             git clone ${HOMELAB_REPO} /repo &&
             chown -R 1000:100 /repo &&
-            cp -R /repo/${HOMELAB_HA_CONFIG}/{.,}* /config
+            cp -av /repo/${HOMELAB_HA_CONFIG}/. /config
       # macvlan doesn't allow communication back to the host, so we route it through eth0
       fix-routes:
         image:

@@ -48,14 +48,14 @@ controllers:
     initContainers:
       git:
         image:
-          repository: bitnami/git
+          repository: alpine/git
           tag: latest
-        command: ["/bin/bash"]
+        command: ["/bin/sh"]
         args:
           - -c
           - >-
             git clone ${HOMELAB_REPO} /repo &&
-            mv /repo/${HOMELAB_MOSQUITTO_CONFIG}/{.,}* /mosquitto/config/
+            cp -av /repo/${HOMELAB_MOSQUITTO_CONFIG}/. /mosquitto/config
 
 service:
   mosquitto:
@@ -87,7 +87,7 @@ persistence:
           - path: /mosquitto/config
   users:
     type: secret
-    name: "{{- (include \"bjw-s.common.lib.chart.names.fullname\" $) -}}-users"
+    name: '{{- (include "bjw-s.common.lib.chart.names.fullname" $) -}}-users'
     advancedMounts:
       mosquitto:
         mosquitto:

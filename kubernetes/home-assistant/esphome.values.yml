@@ -53,15 +53,15 @@ controllers:
     initContainers:
       git:
         image:
-          repository: bitnami/git
+          repository: alpine/git
           tag: latest
-        command: ["/bin/bash"]
+        command: ["/bin/sh"]
         args:
           - -c
           - >-
             git clone ${HOMELAB_REPO} /repo &&
             chown -R root:root /repo &&
-            cp -R /repo/${HOMELAB_ESPHOME_CONFIG}/{.,}* /config
+            cp -av /repo/${HOMELAB_ESPHOME_CONFIG}/. /config
 
 service:
   esphome:

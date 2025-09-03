@@ -53,15 +53,15 @@ controllers:
     initContainers:
       git:
         image:
-          repository: bitnami/git
+          repository: alpine/git
           tag: latest
-        command: ["/bin/bash"]
+        command: ["/bin/sh"]
         args:
           - -c
           - >-
             git clone ${HOMELAB_REPO} /repo &&
             chown -R 1000:100 /repo &&
-            cp -R /repo/${HOMELAB_ZIGBEE_CONFIG}/{.,}* /app/data
+            cp -av /repo/${HOMELAB_ZIGBEE_CONFIG}/. /app/data
 
 service:
   zigbee2mqtt:

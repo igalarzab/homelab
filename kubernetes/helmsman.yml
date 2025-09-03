@@ -12,6 +12,7 @@ namespaces:
   kube-system:
   mcps:
   mosquitto:
+  n8n:
   plex:
   pocket-id:
   traefik:
@@ -105,6 +106,13 @@ apps:
     namespace: pocket-id
     valuesFile: pocket-id/values.yml
     priority: -94
+  n8n:
+    <<: *default
+    chart: bjw-s/app-template
+    version: "4.2.0"
+    namespace: n8n
+    valuesFile: n8n/values.yml
+    priority: -79
   jdownloader:
     <<: *default
     chart: bjw-s/app-template
