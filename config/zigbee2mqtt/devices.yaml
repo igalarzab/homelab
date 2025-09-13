@@ -359,6 +359,16 @@
     name: Bedroom Light Bed
     device:
       suggested_area: Bedroom
+"0x8c8b48fffe0fb720":
+  friendly_name: office/light_rack
+  transition: ""
+  color_sync: true
+  state_action: false
+  filtered_attributes: ["linkquality"]
+  homeassistant:
+    name: Office Light Rack
+    device:
+      suggested_area: Office
 
 # Sonoff Electrical Plugs
 "0xa4c13801b0d0ffff":

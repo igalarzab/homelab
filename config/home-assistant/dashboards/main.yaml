@@ -126,6 +126,9 @@ views:
           - entity: switch.office_controller_wall_gang_one
             name: Ceiling Light
             icon: mdi:lightbulb
+          - entity: light.office_light_rack
+            name: Rack Light
+            icon: mdi:lightbulb
       - type: thermostat
         entity: climate.office_ac_controller
       - type: entities

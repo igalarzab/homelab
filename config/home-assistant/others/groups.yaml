@@ -76,6 +76,7 @@ office_lights:
   icon: mdi:lightbulb-group-outline
   entities:
     - switch.office_controller_wall_gang_one
+    - light.office_light_rack
 
 home_lights:
   name: Home Lights
