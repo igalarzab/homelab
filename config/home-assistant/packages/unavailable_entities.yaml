@@ -33,3 +33,4 @@ group:
       - conversation.home_assistant
       - tts.google_en_com
       - stt.home_assistant_cloud
+      - media_player.bedroom_tv
