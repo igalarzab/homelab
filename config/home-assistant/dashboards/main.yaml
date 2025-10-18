@@ -132,6 +132,17 @@ views:
       - type: thermostat
         entity: climate.office_ac_controller
       - type: entities
+        title: Computer
+        show_header_toggle: false
+        state_color: true
+        entities:
+          - entity: switch.office_computer_plug
+            icon: mdi:laptop
+          - entity: sensor.office_computer_plug_voltage
+          - entity: sensor.office_computer_plug_current
+          - entity: sensor.office_computer_plug_power
+          - entity: sensor.office_computer_plug_energy_today
+      - type: entities
         title: 3D Printer
         show_header_toggle: false
         state_color: true
