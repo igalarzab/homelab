@@ -9,7 +9,7 @@ advanced:
   log_level: info
   log_output:
     - console
-  network_key: '!secrets.yaml network_key'
+  network_key: "!secrets.yaml network_key"
   pan_id: 3776
   timestamp_format: YYYY-MM-DDTHH:mm:ssZ
   transmit_power: 20
@@ -20,11 +20,13 @@ homeassistant:
   enabled: true
 mqtt:
   base_topic: zigbee2mqtt
-  server: '!secrets.yaml server'
-  user: '!secrets.yaml user'
-  password: '!secrets.yaml password'
+  server: "!secrets.yaml server"
+  user: "!secrets.yaml user"
+  password: "!secrets.yaml password"
 serial:
   port: tcp://10.31.7.40:6638
   baudrate: 115200
   adapter: zstack
   disable_led: false
+  advanced:
+    transmit_power: 20

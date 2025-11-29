@@ -39,7 +39,7 @@ views:
         entities:
           - entity: binary_sensor.entrance_motion_occupancy
           - entity: binary_sensor.kitchen_motion_occupancy
-          - entity: binary_sensor.office_motion_occupancy
+          - entity: binary_sensor.office_hub_presence
           - entity: binary_sensor.bathroom_motion_occupancy
           - entity: binary_sensor.bedroom_motion_occupancy
         title: Presence
@@ -115,9 +115,9 @@ views:
         show_state: true
         entities:
           - entity: binary_sensor.office_door_contact
-          - entity: sensor.office_motion_illuminance
-          - entity: sensor.office_thermometer_temperature
-          - entity: sensor.office_thermometer_humidity
+          - entity: sensor.office_hub_illuminance
+          - entity: sensor.office_hub_temperature
+          - entity: sensor.office_hub_humidity
       - type: entities
         title: Lights
         show_header_toggle: false

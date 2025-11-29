@@ -1,4 +1,5 @@
 # Aqara Door/Window Sensors
+# ff
 "0x00158d0001e0a23e":
   friendly_name: entrance/door
   filtered_attributes:
@@ -158,30 +159,6 @@
     name: Bedroom Motion
     device:
       suggested_area: Bedroom
-
-# Linptech Presence Sensor
-"0xa49e69fffe90929b":
-  friendly_name: office/motion
-  debounce: 1
-  filtered_attributes:
-    [
-      "battery_low",
-      "device_temperature",
-      "fading_time",
-      "linkquality",
-      "motion_detection_distance",
-      "motion_detection_sensitivity",
-      "power_outage_count",
-      "presence_keep_time",
-      "static_detection_sensitivity",
-      "tamper",
-      "trigger_count",
-      "voltage",
-    ]
-  homeassistant:
-    name: Office Motion
-    device:
-      suggested_area: Office
 
 # Aqara Thermometers
 "0x00158d000484ff28":
@@ -427,3 +404,12 @@
       name: Energy Yesterday
     energy_month:
       name: Energy Month
+
+# Aqara FP300
+"0x54ef44100146d362":
+  friendly_name: office/hub
+  illuminance_raw: false
+  homeassistant:
+    name: Office Hub
+    device:
+      suggested_area: Office

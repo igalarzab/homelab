@@ -6266,7 +6266,7 @@
         "exposeAsEntityConfig": "",
         "entities": {
             "entity": [
-                "binary_sensor.office_motion_occupancy"
+                "binary_sensor.office_hub_presence"
             ],
             "substring": [],
             "regex": []
@@ -6387,7 +6387,7 @@
         "exposeAsEntityConfig": "",
         "entities": {
             "entity": [
-                "binary_sensor.office_motion_occupancy"
+                "binary_sensor.office_hub_presence"
             ],
             "substring": [],
             "regex": []
@@ -6546,7 +6546,7 @@
         "exposeAsEntityConfig": "",
         "entities": {
             "entity": [
-                "sensor.office_thermometer_temperature"
+                "sensor.office_hub_temperature"
             ],
             "substring": [],
             "regex": []
@@ -6605,7 +6605,7 @@
         "halt_if": "on",
         "halt_if_type": "str",
         "halt_if_compare": "is",
-        "entity_id": "binary_sensor.office_motion_occupancy",
+        "entity_id": "binary_sensor.office_hub_presence",
         "state_type": "str",
         "blockInputOverrides": false,
         "outputProperties": [
@@ -6948,7 +6948,7 @@
         "halt_if": "$entities('input_number.too_hot').state",
         "halt_if_type": "jsonata",
         "halt_if_compare": "gte",
-        "entity_id": "sensor.office_thermometer_temperature",
+        "entity_id": "sensor.office_hub_temperature",
         "state_type": "str",
         "blockInputOverrides": false,
         "outputProperties": [
@@ -6990,12 +6990,12 @@
         "env": [
             {
                 "name": "MOTION_SENSOR",
-                "value": "binary_sensor.office_motion_occupancy",
+                "value": "binary_sensor.office_hub_presence",
                 "type": "str"
             },
             {
                 "name": "BRIGHTNESS_SENSOR",
-                "value": "sensor.office_motion_illuminance",
+                "value": "sensor.office_hub_illuminance",
                 "type": "str"
             },
             {
