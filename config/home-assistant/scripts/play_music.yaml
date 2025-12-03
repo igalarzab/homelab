@@ -10,22 +10,21 @@ play_music:
         target:
           entity:
             domain: media_player
-    player_name:
-      description: Player name where to run the music
-      example: Home Speakers
-    volume_level:
+    volume:
       description: Volume of the speakers
-      example: 0.15
+      example: 20
     playlist:
       description: ID of the playlist to play
       example: spotify:playlist:37i9dQZF1DX889U0CL85jj
   sequence:
-    - service: media_player.volume_set
+    - service: spotcast.play_media
       data:
-        entity_id: '{{ player_id }}'
-        volume_level: '{{ volume_level|default("0.2") }}'
-    - service: spotcast.start
-      data:
-        device_name: '{{ player_name }}'
-        uri: '{{ playlist|default("spotify:playlist:37i9dQZEVXbugIqiYDsIOW") }}'
-        random_song: true
+        spotify_uri: '{{ playlist|default("spotify:playlist:37i9dQZEVXbugIqiYDsIOW") }}'
+        media_player:
+          entity_id: "{{ player_id }}"
+        data:
+          shuffle: true
+          repeat: "context"
+          volume: '{{ volume|default(20) }}'
+
+

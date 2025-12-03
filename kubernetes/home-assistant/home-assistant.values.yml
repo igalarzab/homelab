@@ -113,9 +113,6 @@ secrets:
         ha_home_longitude: ${HA_HOME_LONGITUDE}
         ha_home_elevation: ${HA_HOME_ELEVATION}
 
-        spotcast_sp_dc: ${HA_SPOTCAST_SP_DC}
-        spotcast_sp_key: ${HA_SPOTCAST_SP_KEY}
-
         openid_client_id: ${HA_OPENID_CLIENT_ID}
         openid_client_secret: ${HA_OPENID_CLIENT_SECRET}
         openid_discovery_url: ${HA_OPENID_DISCOVERY_URL}
