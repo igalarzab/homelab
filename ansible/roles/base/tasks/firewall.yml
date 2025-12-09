@@ -1,0 +1,33 @@
+---
+- name: Install ufw
+  become: true
+  package:
+    state: present
+    name: ufw
+
+- name: Allow SSH (port 22)
+  become: true
+  community.general.ufw:
+    rule: allow
+    port: "22"
+    proto: tcp
+
+- name: Allow HTTP (port 80)
+  become: true
+  community.general.ufw:
+    rule: allow
+    port: "80"
+    proto: tcp
+
+- name: Allow HTTPS (port 443)
+  become: true
+  community.general.ufw:
+    rule: allow
+    port: "443"
+    proto: tcp
+
+- name: Enable UFW
+  become: true
+  community.general.ufw:
+    state: enabled
+    default: deny

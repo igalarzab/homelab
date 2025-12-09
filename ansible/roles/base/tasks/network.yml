@@ -1,5 +1,4 @@
 ---
-
 - name: Install basic network packages
   become: true
   package:
@@ -8,3 +7,31 @@
       - dnsutils
       - net-tools
       - nfs-common
+
+- name: Install fail2ban
+  become: true
+  package:
+    state: present
+    name: fail2ban
+
+- name: Configure fail2ban for SSH
+  become: true
+  notify: restart fail2ban
+  copy:
+    dest: /etc/fail2ban/jail.local
+    content: |
+      [DEFAULT]
+      bantime = 3600
+      findtime = 600
+      maxretry = 5
+
+      [sshd]
+      enabled = true
+      port = ssh
+
+- name: Enable and start fail2ban service
+  become: true
+  service:
+    name: fail2ban
+    state: started
+    enabled: true

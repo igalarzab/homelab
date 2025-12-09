@@ -1,5 +1,4 @@
 ---
-
 - name: restart containerd
   become: true
   service:

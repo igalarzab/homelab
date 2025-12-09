@@ -1,0 +1,8 @@
+---
+- hosts: jupyter
+  gather_facts: yes
+  vars:
+    enable_ufw: true
+  roles:
+    - role: base
+    - role: containerd
