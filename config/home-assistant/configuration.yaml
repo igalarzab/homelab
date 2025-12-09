@@ -46,5 +46,5 @@ input_boolean: !include devices/input_booleans.yaml
 input_button: !include devices/input_buttons.yaml
 input_number: !include devices/input_numbers.yaml
 media_player: !include devices/media_players.yaml
-sensor: !include devices/sensors.yaml
+template: !include devices/templates.yaml
 timer: !include devices/timers.yaml
