@@ -1,18 +1,49 @@
 ---
+#
+# Remote server configuration
+#
 
-- name: Ensure .kube directory exists
+- name: Ensure .kube directory exists on remote server
   file:
     path: ~/.kube
     state: directory
     mode: "0755"
 
-- name: Copy the kubectl config
+- name: Get current user name from remote config
+  become: true
+  shell: kubectl --kubeconfig=/etc/kubernetes/admin.conf config view -o jsonpath='{.users[0].name}'
+  register: current_user
+  changed_when: false
+
+- name: Rename user to admin@hostname in remote config
+  become: true
+  shell: sed -i 's/kubernetes-admin/admin@{{ ansible_hostname }}/g' /etc/kubernetes/admin.conf
+  when: current_user.stdout == 'kubernetes-admin'
+
+- name: Get current context name from remote config
+  become: true
+  shell: kubectl --kubeconfig=/etc/kubernetes/admin.conf config current-context
+  register: current_context
+  changed_when: false
+
+- name: Rename context to hostname in remote config
+  become: true
+  shell: kubectl --kubeconfig=/etc/kubernetes/admin.conf config rename-context "{{ current_context.stdout }}" {{ ansible_hostname }}
+  when: current_context.stdout != ansible_hostname
+
+- name: Copy kubectl config to remote user
   become: true
   copy:
     src: /etc/kubernetes/admin.conf
     dest: "{{ ansible_env.HOME }}/.kube/config"
+    owner: "{{ ansible_user_id }}"
+    group: "{{ ansible_user_gid }}"
     mode: "0644"
     remote_src: true
+
+#
+# Local machine configuration
+#
 
 - name: Ensure .kube directory exists locally
   delegate_to: localhost
@@ -21,23 +52,35 @@
     state: directory
     mode: "0700"
 
-- name: Check if .kube/config exists locally
+- name: Check if cluster already exists in local kubeconfig
   delegate_to: localhost
-  register: kubeconfig_result
-  stat:
-    path: ~/.kube/config
+  shell: kubectl config get-clusters | grep -q "^{{ cluster_name }}$"
+  register: cluster_exists
+  changed_when: false
+  failed_when: false
 
-- name: Download .kube/config file locally if not present
-  become: true
-  when: not kubeconfig_result.stat.exists
-  fetch:
-    src: /etc/kubernetes/admin.conf
-    dest: ~/.kube/config
-    flat: true
+- name: Download and merge kubeconfig locally
+  when: cluster_exists.rc != 0
+  block:
+    - name: Download admin.conf to temporary location
+      become: true
+      fetch:
+        src: /etc/kubernetes/admin.conf
+        dest: /tmp/kubernetes-admin.conf
+        flat: true
 
-- name: Set .kube/config permissions
+    - name: Merge cluster configuration into local kubeconfig
+      delegate_to: localhost
+      shell: |
+        KUBECONFIG=~/.kube/config:/tmp/kubernetes-admin.conf kubectl config view --flatten > /tmp/merged-config
+        mv /tmp/merged-config ~/.kube/config
+        chmod 0600 ~/.kube/config
+        rm -f /tmp/kubernetes-admin.conf
+      args:
+        executable: /bin/bash
+
+- name: Set context to the cluster
   delegate_to: localhost
-  file:
-    path: ~/.kube/config
-    state: file
-    mode: "0600"
+  shell: kubectl config use-context {{ ansible_hostname }}
+  changed_when: false
+  failed_when: false

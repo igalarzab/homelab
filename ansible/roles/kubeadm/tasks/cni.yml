@@ -1,6 +1,4 @@
 ---
-
-
 - name: Ensure CNI folder exists
   become: true
   file:
@@ -10,7 +8,7 @@
     group: root
     mode: "0755"
 
-- name: Copy CNI plugin
+- name: Copy CNI plugin config
   become: true
   template:
     src: cni.conflist.j2
@@ -18,13 +16,13 @@
     owner: root
     group: root
     mode: "0644"
+  notify: restart containerd
 
 - name: Allow to run pods on control plane
   command: kubectl taint nodes --all node-role.kubernetes.io/control-plane-
   register: taint_result
   changed_when: "'untainted' in taint_result.stdout"
-  failed_when: >
-    (taint_result.rc not in [0, 1] and not (taint_result.rc == 1 and 'not found' in taint_result.stdout))
+  failed_when: taint_result.rc != 0 and 'not found' not in taint_result.stderr
   until: taint_result is not failed
   retries: 12
   delay: 5

@@ -1,5 +1,4 @@
 ---
-
 - name: Checking Operative System (only Debian compatible)
   meta: end_play
   when: ansible_os_family != 'Debian'

@@ -1,5 +1,4 @@
 ---
-
 - name: Ensure k8s volumes directory exists
   become: true
   file:

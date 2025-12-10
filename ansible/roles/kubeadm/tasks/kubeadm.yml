@@ -1,5 +1,4 @@
 ---
-
 - name: Ensure kubernetes directory exists
   become: true
   file:

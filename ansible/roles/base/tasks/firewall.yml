@@ -26,6 +26,13 @@
     port: "443"
     proto: tcp
 
+- name: Allow unprivileged HTTPS (port 6443)
+  become: true
+  community.general.ufw:
+    rule: allow
+    port: "6443"
+    proto: tcp
+
 - name: Enable UFW
   become: true
   community.general.ufw:

@@ -3,6 +3,7 @@
   gather_facts: yes
   vars:
     enable_ufw: false
+    k8s_api_server_san: "{{ saturn_k8s_api_server_san }}"
   roles:
     - role: base
     - role: containerd

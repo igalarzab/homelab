@@ -3,6 +3,8 @@
   gather_facts: yes
   vars:
     enable_ufw: true
+    k8s_api_server_san: "{{ jupyter_k8s_api_server_san }}"
   roles:
     - role: base
     - role: containerd
+    - role: kubeadm

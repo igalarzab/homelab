@@ -6,5 +6,6 @@ k8s_apt_key_path: /usr/share/keyrings/kubernetes-apt-keyring.gpg
 k8s_apt_repo_url: "https://pkgs.k8s.io/core:/stable:/v{{ k8s_apt_version }}/deb"
 k8s_apt_key_url: "{{ k8s_apt_repo_url }}/Release.key"
 
+cluster_name: "{{ ansible_hostname }}"
 pod_cidr_ipv4: 10.92.0.0/16
 services_cidr_ipv4: 10.96.0.0/16
