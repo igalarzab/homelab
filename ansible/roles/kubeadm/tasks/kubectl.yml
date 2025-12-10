@@ -17,7 +17,7 @@
 
 - name: Rename user to admin@hostname in remote config
   become: true
-  shell: sed -i 's/kubernetes-admin/admin@{{ ansible_hostname }}/g' /etc/kubernetes/admin.conf
+  shell: sed -i 's/kubernetes-admin/admin@{{ cluster_name }}/g' /etc/kubernetes/admin.conf
   when: current_user.stdout == 'kubernetes-admin'
 
 - name: Get current context name from remote config
@@ -28,8 +28,8 @@
 
 - name: Rename context to hostname in remote config
   become: true
-  shell: kubectl --kubeconfig=/etc/kubernetes/admin.conf config rename-context "{{ current_context.stdout }}" {{ ansible_hostname }}
-  when: current_context.stdout != ansible_hostname
+  shell: kubectl --kubeconfig=/etc/kubernetes/admin.conf config rename-context "{{ current_context.stdout }}" {{ cluster_name }}
+  when: current_context.stdout != cluster_name
 
 - name: Copy kubectl config to remote user
   become: true
@@ -81,6 +81,6 @@
 
 - name: Set context to the cluster
   delegate_to: localhost
-  shell: kubectl config use-context {{ ansible_hostname }}
+  shell: kubectl config use-context {{ cluster_name }}
   changed_when: false
   failed_when: false

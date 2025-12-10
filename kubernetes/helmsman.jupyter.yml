@@ -1,0 +1,72 @@
+metadata:
+  org: github.com/igalarzab/homelab
+  maintainer: Jose Galarza
+
+namespaces:
+  cert-manager:
+  external-dns:
+  keel:
+  kube-system:
+  pocket-id:
+  traefik:
+
+helmRepos:
+  bjw-s: https://bjw-s-labs.github.io/helm-charts
+  external-dns: https://kubernetes-sigs.github.io/external-dns/
+  metrics-server: https://kubernetes-sigs.github.io/metrics-server/
+  jetstack: https://charts.jetstack.io
+  keel: https://charts.keel.sh
+  traefik: https://traefik.github.io/charts
+
+appsTemplates:
+  default: &default
+    enabled: true
+    protected: false
+    test: false
+    wait: true
+
+apps:
+  metrics-server:
+    <<: *default
+    chart: metrics-server/metrics-server
+    version: "3.13.0"
+    namespace: kube-system
+    valuesFile: metrics-server/values.yml
+    priority: -109
+  # cert-manager:
+  #   <<: *default
+  #   chart: jetstack/cert-manager
+  #   version: "v1.19.1"
+  #   namespace: cert-manager
+  #   valuesFile: cert-manager/values.yml
+  #   priority: -99
+  #   hooks:
+  #     postInstall: cert-manager/post-install.yml
+  # traefik:
+  #   <<: *default
+  #   chart: traefik/traefik
+  #   version: "v37.1.2"
+  #   namespace: traefik
+  #   valuesFile: traefik/values.yml
+  #   priority: -98
+  # keel:
+  #   <<: *default
+  #   chart: keel/keel
+  #   version: "1.0.5"
+  #   namespace: keel
+  #   valuesFile: keel/values.yml
+  #   priority: -97
+  # external-dns:
+  #   <<: *default
+  #   chart: external-dns/external-dns
+  #   version: "1.19.0"
+  #   namespace: external-dns
+  #   valuesFile: external-dns/values.yml
+  #   priority: -96
+  # pocket-id:
+  #   <<: *default
+  #   chart: bjw-s/app-template
+  #   version: "4.4.0"
+  #   namespace: pocket-id
+  #   valuesFile: pocket-id/values.yml
+  #   priority: -95

@@ -60,14 +60,10 @@ def get_docker_tag(env_name: str) -> str:
 
     match type:
         case "deployment":
-            deploy: k8s_client.V1Deployment = k8s_apps_api.read_namespaced_deployment(
-                name, ns
-            )
+            deploy: k8s_client.V1Deployment = k8s_apps_api.read_namespaced_deployment(name, ns)
             image = deploy.spec.template.spec.containers[int(container_no)].image
         case "statefulset":
-            sts: k8s_client.V1StatefulSet = k8s_apps_api.read_namespaced_stateful_set(
-                name, ns
-            )
+            sts: k8s_client.V1StatefulSet = k8s_apps_api.read_namespaced_stateful_set(name, ns)
             image = sts.spec.template.spec.containers[int(container_no)].image
         case _:
             raise ValueError("Unconfigured k8s type: " + type)
@@ -94,11 +90,20 @@ def configure_env() -> dict[str, str]:
 #
 
 
-def run_charts(mode: Literal["dry-run", "apply"], *, app_name=None):
-    k8s_config.load_kube_config()
+def run_charts(mode: Literal["dry-run", "apply"], cluster_name, *, app_name=None):
+    helmsman_file = SELF_PATH.joinpath(f"helmsman.{cluster_name}.yml")
+    if not helmsman_file.exists():
+        raise SystemExit(f"Error: Helmsman file not found: {helmsman_file}")
+
+    try:
+        k8s_config.load_kube_config(context=cluster_name)
+    except k8s_config.ConfigException as e:
+        raise SystemExit(f"Error: Kubernetes context '{cluster_name}' not found: {e}")
+
     my_env = configure_env()
 
     base_command = [f"--{mode}", "--subst-env-values", "--show-diff"]
+    base_command += ["-f", f"helmsman.{cluster_name}.yml"]
 
     if app_name:
         base_command += ["--target", app_name]
@@ -116,30 +121,30 @@ def show_outdated_charts():
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(prog="Helmsman Runner")
+    parser.add_argument("cluster", help="The Kubernetes cluster to use")
+
     commands = parser.add_subparsers(dest="command")
 
     apply = commands.add_parser("apply", help="Apply changes to the charts")
-    dry_run = commands.add_parser("dry-run", help="Dry Run changes to the charts")
-    destroy = commands.add_parser("destroy", help="Destroy the chart")
-    outdated = commands.add_parser("outdated", help="Show outdated charts")
+    apply.add_argument("-n", "--name", help="Filter an app by name")
 
-    dry_run.add_argument(
-        "-n", "--name", help="Filter a specific application by its name"
-    )
-    apply.add_argument("-n", "--name", help="Filter a specific application by its name")
-    destroy.add_argument(
-        "-n", "--name", required=True, help="Filter a specific application by its name"
-    )
+    dry_run = commands.add_parser("dry-run", help="Dry Run changes to the charts")
+    dry_run.add_argument("-n", "--name", help="Filter an app by name")
+
+    destroy = commands.add_parser("destroy", help="Destroy the chart")
+    destroy.add_argument("-n", "--name", help="Filter an app by name", required=True)
+
+    outdated = commands.add_parser("outdated", help="Show outdated charts")
 
     args = parser.parse_args()
 
     match args.command:
         case "apply":
-            run_charts("apply", app_name=args.name)
+            run_charts("apply", cluster_name=args.cluster, app_name=args.name)
         case "dry-run":
-            run_charts("dry-run", app_name=args.name)
+            run_charts("dry-run", cluster_name=args.cluster, app_name=args.name)
         case "destroy":
-            run_charts("destroy", app_name=args.name)
+            run_charts("destroy", cluster_name=args.cluster, app_name=args.name)
         case "outdated":
             show_outdated_charts()
         case _:
