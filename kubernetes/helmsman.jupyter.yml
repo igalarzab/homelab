@@ -36,35 +36,35 @@ apps:
     namespace: kube-system
     valuesFile: metrics-server/values.yml
     priority: -109
-  # cert-manager:
-  #   <<: *default
-  #   chart: jetstack/cert-manager
-  #   version: "v1.19.1"
-  #   namespace: cert-manager
-  #   valuesFile: cert-manager/values.yml
-  #   priority: -99
-  #   hooks:
-  #     postInstall: cert-manager/post-install.yml
+  cert-manager:
+    <<: *default
+    chart: jetstack/cert-manager
+    version: "v1.19.1"
+    namespace: cert-manager
+    valuesFile: cert-manager/values.yml
+    priority: -99
+    hooks:
+      postInstall: cert-manager/post-install.yml
+  external-dns:
+    <<: *default
+    chart: external-dns/external-dns
+    version: "1.19.0"
+    namespace: external-dns
+    valuesFile: external-dns/values.yml
+    priority: -98
   # traefik:
   #   <<: *default
   #   chart: traefik/traefik
   #   version: "v37.1.2"
   #   namespace: traefik
   #   valuesFile: traefik/values.yml
-  #   priority: -98
+  #   priority: -97
   # keel:
   #   <<: *default
   #   chart: keel/keel
   #   version: "1.0.5"
   #   namespace: keel
   #   valuesFile: keel/values.yml
-  #   priority: -97
-  # external-dns:
-  #   <<: *default
-  #   chart: external-dns/external-dns
-  #   version: "1.19.0"
-  #   namespace: external-dns
-  #   valuesFile: external-dns/values.yml
   #   priority: -96
   # pocket-id:
   #   <<: *default

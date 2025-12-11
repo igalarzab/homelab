@@ -26,6 +26,8 @@ def helmsman_run(cluster_name: str, *args, env=None):
 
     base_cmd = ["helmsman", "--no-banner"]
     base_cmd += ["-f", helmsman_file]
+    base_cmd += ["-e", SELF_PATH.joinpath(".env")]
+    base_cmd += ["-e", SELF_PATH.joinpath(f".env.{cluster_name}")]
 
     if not env:
         env = os.environ.copy()
