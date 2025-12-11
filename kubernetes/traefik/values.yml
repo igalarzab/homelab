@@ -35,19 +35,7 @@ service:
 
 providers:
   kubernetesCRD:
-    allowCrossNamespace: true # Access Middlewares in other namespaces
-  kubernetesGateway:
-    enabled: true
-
-gateway:
-  enabled: true
-  annotations:
-    external-dns.alpha.kubernetes.io/target: ${COMMON_DNS_IP}
-    external-dns.alpha.kubernetes.io/ttl: "60"
-  listeners:
-    web:
-      namespacePolicy:
-        from: All
+    allowCrossNamespace: true
 
 extraObjects:
   - |
