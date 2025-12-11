@@ -62,18 +62,21 @@ service:
 
 ingress:
   main:
-    annotations:
-      external-dns.alpha.kubernetes.io/hostname: auth.${COMMON_DOMAIN_ROOT}
-      external-dns.alpha.kubernetes.io/target: ${COMMON_DNS_IP}
-      external-dns.alpha.kubernetes.io/ttl: 1m
-    hosts:
-      - host: "auth.${COMMON_DOMAIN_ROOT}"
-        paths:
-          - path: /
-            pathType: Prefix
-            service:
-              identifier: pocket-id
-              port: http
+    enabled: false
+
+route:
+  main:
+    kind: HTTPRoute
+    parentRefs:
+      - name: traefik-gateway
+        namespace: traefik
+        sectionName: web
+    hostnames:
+      - "auth.${COMMON_DOMAIN_ROOT}"
+    rules:
+      - backendRefs:
+          - identifier: pocket-id
+            port: 80
 
 persistence:
   config:

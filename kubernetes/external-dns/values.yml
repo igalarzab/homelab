@@ -4,3 +4,10 @@ provider:
 env:
   - name: CF_API_TOKEN
     value: ${CLOUDFLARE_API_TOKEN}
+
+sources:
+  - ingress
+  - gateway-httproute
+
+txtOwnerId: ${COMMON_CLUSTER_NAME}
+txtPrefix: ${COMMON_CLUSTER_NAME}-
