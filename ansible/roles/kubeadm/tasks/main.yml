@@ -6,6 +6,10 @@
 - name: Running networking tasks
   import_tasks: network.yml
 
+- name: Configure firewall
+  import_tasks: firewall.yml
+  when: enable_ufw
+
 - name: Installing packages
   import_tasks: packages.yml
 

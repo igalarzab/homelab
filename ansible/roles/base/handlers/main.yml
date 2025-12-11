@@ -10,3 +10,8 @@
   service:
     name: fail2ban
     state: restarted
+
+- name: reload ufw
+  become: true
+  community.general.ufw:
+    state: reloaded

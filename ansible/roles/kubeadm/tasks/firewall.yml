@@ -1,0 +1,17 @@
+---
+- name: Allow connections to the kube-api-server (port 6443)
+  become: true
+  notify: reload ufw
+  community.general.ufw:
+    rule: allow
+    port: "6443"
+    proto: tcp
+
+- name: Allow connections to the metrics-server (port 10250)
+  become: true
+  notify: reload ufw
+  community.general.ufw:
+    rule: allow
+    port: "10250"
+    proto: tcp
+    src: 10.0.0.0/8

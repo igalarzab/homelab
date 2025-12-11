@@ -86,4 +86,4 @@
 
 - name: Configure firewall
   import_tasks: firewall.yml
-  when: enable_ufw | default(false)
+  when: enable_ufw

@@ -7,6 +7,7 @@
 
 - name: Allow SSH (port 22)
   become: true
+  notify: reload ufw
   community.general.ufw:
     rule: allow
     port: "22"
@@ -14,6 +15,7 @@
 
 - name: Allow HTTP (port 80)
   become: true
+  notify: reload ufw
   community.general.ufw:
     rule: allow
     port: "80"
@@ -21,16 +23,10 @@
 
 - name: Allow HTTPS (port 443)
   become: true
+  notify: reload ufw
   community.general.ufw:
     rule: allow
     port: "443"
-    proto: tcp
-
-- name: Allow unprivileged HTTPS (port 6443)
-  become: true
-  community.general.ufw:
-    rule: allow
-    port: "6443"
     proto: tcp
 
 - name: Enable UFW

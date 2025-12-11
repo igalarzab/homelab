@@ -1,4 +1,6 @@
 ---
+enable_ufw: false
+
 k8s_apt_version: "1.34"
 k8s_full_version: "1.34.2"
 
