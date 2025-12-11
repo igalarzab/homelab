@@ -2,6 +2,9 @@ metadata:
   org: github.com/igalarzab/homelab
   maintainer: Jose Galarza
 
+settings:
+  kubeContext: saturn
+
 namespaces:
   cert-manager:
   cloudflare-ddns:
@@ -10,7 +13,6 @@ namespaces:
   jdownloader:
   keel:
   kube-system:
-  mcps:
   mosquitto:
   n8n:
   plex:
@@ -44,7 +46,7 @@ apps:
   csi-driver-proxmox:
     <<: *default
     chart: oci://ghcr.io/sergelogvinov/charts/proxmox-csi-plugin
-    version: "0.3.16"
+    version: "0.5.1"
     namespace: kube-system
     valuesFile: csi-driver-proxmox/values.yml
     priority: -108
@@ -65,7 +67,7 @@ apps:
   cert-manager:
     <<: *default
     chart: jetstack/cert-manager
-    version: "v1.19.1"
+    version: "v1.19.2"
     namespace: cert-manager
     valuesFile: cert-manager/values.yml
     priority: -99
@@ -74,7 +76,7 @@ apps:
   traefik:
     <<: *default
     chart: traefik/traefik
-    version: "v37.1.2"
+    version: "v37.4.0"
     namespace: traefik
     valuesFile: traefik/values.yml
     priority: -98
@@ -88,7 +90,7 @@ apps:
   cloudflare-ddns:
     <<: *default
     chart: bjw-s/app-template
-    version: "4.4.0"
+    version: "4.5.0"
     namespace: cloudflare-ddns
     valuesFile: cloudflare-ddns/values.yml
     priority: -96
@@ -102,71 +104,63 @@ apps:
   pocket-id:
     <<: *default
     chart: bjw-s/app-template
-    version: "4.4.0"
+    version: "4.5.0"
     namespace: pocket-id
     valuesFile: pocket-id/values.yml
     priority: -94
   n8n:
     <<: *default
     chart: bjw-s/app-template
-    version: "4.4.0"
+    version: "4.5.0"
     namespace: n8n
     valuesFile: n8n/values.yml
     priority: -79
   jdownloader:
     <<: *default
     chart: bjw-s/app-template
-    version: "4.4.0"
+    version: "4.5.0"
     namespace: jdownloader
     valuesFile: jdownloader/values.yml
     priority: -78
   plex:
     <<: *default
     chart: bjw-s/app-template
-    version: "4.4.0"
+    version: "4.5.0"
     namespace: plex
     valuesFile: plex/values.yml
     priority: -69
   mosquitto:
     <<: *default
     chart: bjw-s/app-template
-    version: "4.4.0"
+    version: "4.5.0"
     namespace: mosquitto
     valuesFile: mosquitto/values.yml
     priority: -59
   zigbee2mqtt:
     <<: *default
     chart: bjw-s/app-template
-    version: "4.4.0"
+    version: "4.5.0"
     namespace: home-assistant
     valuesFile: home-assistant/zigbee2mqtt.values.yml
     priority: -58
   node-red:
     <<: *default
     chart: bjw-s/app-template
-    version: "4.4.0"
+    version: "4.5.0"
     namespace: home-assistant
     valuesFile: home-assistant/nodered.values.yml
     priority: -57
   esphome:
     <<: *default
     chart: bjw-s/app-template
-    version: "4.4.0"
+    version: "4.5.0"
     namespace: home-assistant
     valuesFile: home-assistant/esphome.values.yml
     priority: -56
   home-assistant:
     <<: *default
     chart: bjw-s/app-template
-    version: "4.4.0"
+    version: "4.5.0"
     namespace: home-assistant
     valuesFile: home-assistant/home-assistant.values.yml
     priority: -55
-  mcp-weather:
-    <<: *default
-    chart: bjw-s/app-template
-    version: "4.4.0"
-    namespace: mcps
-    valuesFile: mcps/mcp-weather.values.yml
-    priority: -49
-    enabled: false

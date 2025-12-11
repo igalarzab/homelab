@@ -18,9 +18,14 @@ SELF_PATH = pathlib.Path(__file__).parent.resolve()
 #
 
 
-def helmsman_run(*args, env=None):
+def helmsman_run(cluster_name: str, *args, env=None):
+    helmsman_file = SELF_PATH.joinpath(f"helmsman.{cluster_name}.yml")
+
+    if not helmsman_file.exists():
+        raise SystemExit(f"Error: Helmsman file not found: {helmsman_file}")
+
     base_cmd = ["helmsman", "--no-banner"]
-    base_cmd += ["-f", SELF_PATH.joinpath("helmsman.yml")]
+    base_cmd += ["-f", helmsman_file]
 
     if not env:
         env = os.environ.copy()
@@ -91,10 +96,6 @@ def configure_env() -> dict[str, str]:
 
 
 def run_charts(mode: Literal["dry-run", "apply"], cluster_name, *, app_name=None):
-    helmsman_file = SELF_PATH.joinpath(f"helmsman.{cluster_name}.yml")
-    if not helmsman_file.exists():
-        raise SystemExit(f"Error: Helmsman file not found: {helmsman_file}")
-
     try:
         k8s_config.load_kube_config(context=cluster_name)
     except k8s_config.ConfigException as e:
@@ -103,16 +104,15 @@ def run_charts(mode: Literal["dry-run", "apply"], cluster_name, *, app_name=None
     my_env = configure_env()
 
     base_command = [f"--{mode}", "--subst-env-values", "--show-diff"]
-    base_command += ["-f", f"helmsman.{cluster_name}.yml"]
 
     if app_name:
         base_command += ["--target", app_name]
 
-    helmsman_run(*base_command, env=my_env)
+    helmsman_run(cluster_name, *base_command, env=my_env)
 
 
-def show_outdated_charts():
-    helmsman_run("--check-for-chart-updates")
+def show_outdated_charts(cluster_name):
+    helmsman_run(cluster_name, "--check-for-chart-updates")
 
 
 #
@@ -146,6 +146,6 @@ if __name__ == "__main__":
         case "destroy":
             run_charts("destroy", cluster_name=args.cluster, app_name=args.name)
         case "outdated":
-            show_outdated_charts()
+            show_outdated_charts(cluster_name=args.cluster)
         case _:
             parser.print_help()

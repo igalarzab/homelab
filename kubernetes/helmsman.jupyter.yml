@@ -2,6 +2,9 @@ metadata:
   org: github.com/igalarzab/homelab
   maintainer: Jose Galarza
 
+settings:
+  kubeContext: jupyter
+
 namespaces:
   cert-manager:
   external-dns:
@@ -66,7 +69,7 @@ apps:
   # pocket-id:
   #   <<: *default
   #   chart: bjw-s/app-template
-  #   version: "4.4.0"
+  #   version: "4.5.0"
   #   namespace: pocket-id
   #   valuesFile: pocket-id/values.yml
   #   priority: -95
