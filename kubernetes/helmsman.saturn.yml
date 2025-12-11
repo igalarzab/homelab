@@ -22,6 +22,7 @@ namespaces:
 helmRepos:
   bitnami: https://charts.bitnami.com/bitnami
   bjw-s: https://bjw-s-labs.github.io/helm-charts
+  containeroo: https://charts.containeroo.ch
   csi-driver-smb: https://raw.githubusercontent.com/kubernetes-csi/csi-driver-smb/master/charts
   external-dns: https://kubernetes-sigs.github.io/external-dns/
   metrics-server: https://kubernetes-sigs.github.io/metrics-server/
@@ -43,27 +44,33 @@ apps:
     version: "v1.19.1"
     namespace: kube-system
     priority: -109
+  csi-driver-hostpath:
+    <<: *default
+    chart: containeroo/local-path-provisioner
+    version: "0.0.33"
+    namespace: kube-system
+    priority: -108
   csi-driver-proxmox:
     <<: *default
     chart: oci://ghcr.io/sergelogvinov/charts/proxmox-csi-plugin
     version: "0.5.1"
     namespace: kube-system
     valuesFile: csi-driver-proxmox/values.yml
-    priority: -108
+    priority: -107
   multus-cni:
     <<: *default
     chart: bitnami/multus-cni
     version: "2.2.21"
     namespace: kube-system
     valuesFile: multus-cni/values.yml
-    priority: -107
+    priority: -106
   metrics-server:
     <<: *default
     chart: metrics-server/metrics-server
     version: "3.13.0"
     namespace: kube-system
     valuesFile: metrics-server/values.yml
-    priority: -106
+    priority: -105
   cert-manager:
     <<: *default
     chart: jetstack/cert-manager
@@ -73,40 +80,40 @@ apps:
     priority: -99
     hooks:
       postInstall: cert-manager/post-install.yml
-  traefik:
-    <<: *default
-    chart: traefik/traefik
-    version: "v37.4.0"
-    namespace: traefik
-    valuesFile: traefik/values.yml
-    priority: -98
-  keel:
-    <<: *default
-    chart: keel/keel
-    version: "1.0.5"
-    namespace: keel
-    valuesFile: keel/values.yml
-    priority: -97
-  cloudflare-ddns:
-    <<: *default
-    chart: bjw-s/app-template
-    version: "4.5.0"
-    namespace: cloudflare-ddns
-    valuesFile: cloudflare-ddns/values.yml
-    priority: -96
   external-dns:
     <<: *default
     chart: external-dns/external-dns
     version: "1.19.0"
     namespace: external-dns
     valuesFile: external-dns/values.yml
-    priority: -95
+    priority: -98
+  traefik:
+    <<: *default
+    chart: traefik/traefik
+    version: "v37.4.0"
+    namespace: traefik
+    valuesFile: traefik/values.yml
+    priority: -97
   pocket-id:
     <<: *default
     chart: bjw-s/app-template
     version: "4.5.0"
     namespace: pocket-id
     valuesFile: pocket-id/values.yml
+    priority: -96
+  keel:
+    <<: *default
+    chart: keel/keel
+    version: "1.0.5"
+    namespace: keel
+    valuesFile: keel/values.yml
+    priority: -95
+  cloudflare-ddns:
+    <<: *default
+    chart: bjw-s/app-template
+    version: "4.5.0"
+    namespace: cloudflare-ddns
+    valuesFile: cloudflare-ddns/values.yml
     priority: -94
   n8n:
     <<: *default

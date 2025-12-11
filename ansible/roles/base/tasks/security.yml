@@ -1,0 +1,9 @@
+---
+- name: Allow adm group to use sudo without password
+  become: true
+  lineinfile:
+    path: /etc/sudoers.d/adm-nopasswd
+    line: "%adm ALL=(ALL) NOPASSWD: ALL"
+    create: true
+    mode: "0440"
+    validate: visudo -cf %s

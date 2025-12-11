@@ -84,6 +84,9 @@
 - name: Running SSH hardening tasks
   import_tasks: ssh.yml
 
+- name: Running security tasks
+  import_tasks: security.yml
+
 - name: Configure firewall
   import_tasks: firewall.yml
   when: enable_ufw

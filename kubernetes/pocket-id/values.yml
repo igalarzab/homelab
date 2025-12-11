@@ -4,6 +4,10 @@
 controllers:
   pocket-id:
     type: statefulset
+    pod:
+      securityContext:
+        fsGroup: 100
+        fsGroupChangePolicy: OnRootMismatch
     containers:
       pocket-id:
         securityContext:
@@ -73,9 +77,10 @@ ingress:
 
 persistence:
   config:
-    type: hostPath
-    hostPath: ${COMMON_VOLUMES_PATH}/pocket-id/
-    hostPathType: DirectoryOrCreate
+    type: persistentVolumeClaim
+    storageClass: local-path
+    accessMode: ReadWriteOnce
+    size: 1Gi
     advancedMounts:
       pocket-id:
         pocket-id:

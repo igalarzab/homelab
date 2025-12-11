@@ -11,7 +11,7 @@ insecureRegistry: true
 ingress:
   enabled: true
   annotations:
-    traefik.ingress.kubernetes.io/router.middlewares: traefik-oidc-smarthome@kubernetescrd
+    traefik.ingress.kubernetes.io/router.middlewares: traefik-oidc-pocketid@kubernetescrd
     external-dns.alpha.kubernetes.io/hostname: keel.${COMMON_DOMAIN_ROOT}
     external-dns.alpha.kubernetes.io/target: ${COMMON_DNS_IP}
     external-dns.alpha.kubernetes.io/ttl: 1m
@@ -20,10 +20,19 @@ ingress:
       paths:
         - /
 
+podSecurityContext:
+  fsGroup: 100
+  fsGroupChangePolicy: OnRootMismatch
+
+containerSecurityContext:
+  runAsUser: 1000
+  runAsGroup: 100
+  readOnlyRootFilesystem: true
+
 service:
   enabled: true
   type: ClusterIP
 
 persistence:
   enabled: true
-  storageClass: proxmox-data
+  storageClass: local-path

@@ -22,3 +22,11 @@
     - { name: "net.ipv4.conf.all.rp_filter", value: "1" }
     - { name: "net.bridge.bridge-nf-call-iptables", value: "1" }
     - { name: "net.bridge.bridge-nf-call-ip6tables", value: "1" }
+
+- name: Remove ipv6 nameserver entries from /etc/resolv.conf
+  become: true
+  replace:
+    path: /etc/resolv.conf
+    regexp: '^nameserver\s+[a-zA-Z0-9\:]+\s*$'
+    replace: ""
+    backup: yes

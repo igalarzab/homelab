@@ -19,7 +19,6 @@ else
 fi
 
 ansible-playbook \
-    --ask-become-pass \
     --inventory hosts.ini \
     --user "$REMOTE_USER" \
     --extra-vars "@vars.yaml" \

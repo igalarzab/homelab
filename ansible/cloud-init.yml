@@ -1,8 +1,12 @@
 #cloud-config
 users:
   - name: igalarzab
-    groups: users, admin
-    sudo: ALL=(ALL) NOPASSWD:ALL
+    groups: users, adm
     shell: /bin/bash
     ssh_authorized_keys:
       - <public_ssh_key>
+
+write_files:
+  - path: /etc/sudoers.d/adm-nopasswd
+    content: "%adm ALL=(ALL) NOPASSWD: ALL"
+    permissions: "0440"

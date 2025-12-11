@@ -15,6 +15,7 @@ namespaces:
 
 helmRepos:
   bjw-s: https://bjw-s-labs.github.io/helm-charts
+  containeroo: https://charts.containeroo.ch
   external-dns: https://kubernetes-sigs.github.io/external-dns/
   metrics-server: https://kubernetes-sigs.github.io/metrics-server/
   jetstack: https://charts.jetstack.io
@@ -29,17 +30,23 @@ appsTemplates:
     wait: true
 
 apps:
+  csi-driver-hostpath:
+    <<: *default
+    chart: containeroo/local-path-provisioner
+    version: "0.0.33"
+    namespace: kube-system
+    priority: -109
   metrics-server:
     <<: *default
     chart: metrics-server/metrics-server
     version: "3.13.0"
     namespace: kube-system
     valuesFile: metrics-server/values.yml
-    priority: -109
+    priority: -108
   cert-manager:
     <<: *default
     chart: jetstack/cert-manager
-    version: "v1.19.1"
+    version: "v1.19.2"
     namespace: cert-manager
     valuesFile: cert-manager/values.yml
     priority: -99
@@ -52,24 +59,24 @@ apps:
     namespace: external-dns
     valuesFile: external-dns/values.yml
     priority: -98
-  # traefik:
-  #   <<: *default
-  #   chart: traefik/traefik
-  #   version: "v37.1.2"
-  #   namespace: traefik
-  #   valuesFile: traefik/values.yml
-  #   priority: -97
-  # keel:
-  #   <<: *default
-  #   chart: keel/keel
-  #   version: "1.0.5"
-  #   namespace: keel
-  #   valuesFile: keel/values.yml
-  #   priority: -96
-  # pocket-id:
-  #   <<: *default
-  #   chart: bjw-s/app-template
-  #   version: "4.5.0"
-  #   namespace: pocket-id
-  #   valuesFile: pocket-id/values.yml
-  #   priority: -95
+  traefik:
+    <<: *default
+    chart: traefik/traefik
+    version: "v37.4.0"
+    namespace: traefik
+    valuesFile: traefik/values.yml
+    priority: -97
+  pocket-id:
+    <<: *default
+    chart: bjw-s/app-template
+    version: "4.5.0"
+    namespace: pocket-id
+    valuesFile: pocket-id/values.yml
+    priority: -96
+  keel:
+    <<: *default
+    chart: keel/keel
+    version: "1.0.5"
+    namespace: keel
+    valuesFile: keel/values.yml
+    priority: -95

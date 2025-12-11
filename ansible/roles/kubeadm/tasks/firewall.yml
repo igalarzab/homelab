@@ -1,4 +1,12 @@
 ---
+- name: Set DEFAULT_FORWARD_POLICY=ACCEPT in UFW
+  become: true
+  notify: reload ufw
+  ansible.builtin.lineinfile:
+    path: /etc/default/ufw
+    regexp: "^DEFAULT_FORWARD_POLICY="
+    line: 'DEFAULT_FORWARD_POLICY="ACCEPT"'
+
 - name: Allow connections to the kube-api-server (port 6443)
   become: true
   notify: reload ufw
@@ -14,4 +22,31 @@
     rule: allow
     port: "10250"
     proto: tcp
-    src: 10.0.0.0/8
+    from_ip: 10.0.0.0/8
+
+- name: Allow any traffic in on cni0
+  become: true
+  notify: reload ufw
+  community.general.ufw:
+    rule: allow
+    interface: cni0
+    direction: in
+
+- name: Allow any traffic out on cni0
+  become: true
+  notify: reload ufw
+  community.general.ufw:
+    rule: allow
+    interface: cni0
+    direction: out
+
+- name: Allow routed traffic from pods to internet (all ports)
+  become: true
+  notify: reload ufw
+  community.general.ufw:
+    rule: allow
+    route: yes
+    interface_in: cni0
+    interface_out: "{{ ansible_default_ipv4.interface }}"
+    from_ip: "{{ pod_cidr_ipv4 }}"
+    to_ip: "any"
