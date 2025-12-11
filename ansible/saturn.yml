@@ -5,6 +5,7 @@
     enable_ufw: false
     cluster_name: saturn
     k8s_api_server_san: "{{ saturn_k8s_api_server_san }}"
+    kubelet_custom_resolv_conf: false
   roles:
     - role: base
     - role: containerd

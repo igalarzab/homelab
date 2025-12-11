@@ -5,6 +5,7 @@
     enable_ufw: true
     cluster_name: jupyter
     k8s_api_server_san: "{{ jupyter_k8s_api_server_san }}"
+    kubelet_custom_resolv_conf: true
   roles:
     - role: base
     - role: containerd

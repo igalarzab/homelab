@@ -1,0 +1,9 @@
+storageClass:
+  create: true
+  provisionerName: rancher.io/local-path
+  pathPattern: "{{ .PVC.Name }}/{{ .PVName }}"
+
+nodePathMap:
+  - node: DEFAULT_PATH_FOR_NON_LISTED_NODES
+    paths:
+      - ${COMMON_VOLUMES_PATH}

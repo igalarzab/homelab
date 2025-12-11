@@ -23,10 +23,12 @@
     - { name: "net.bridge.bridge-nf-call-iptables", value: "1" }
     - { name: "net.bridge.bridge-nf-call-ip6tables", value: "1" }
 
-- name: Remove ipv6 nameserver entries from /etc/resolv.conf
+- name: Copy nameservers config for kubelet
   become: true
-  replace:
-    path: /etc/resolv.conf
-    regexp: '^nameserver\s+[a-zA-Z0-9\:]+\s*$'
-    replace: ""
-    backup: yes
+  when: kubelet_custom_resolv_conf
+  template:
+    src: nameservers.conf
+    dest: /etc/kubernetes/resolv.conf
+    owner: root
+    group: root
+    mode: "0644"

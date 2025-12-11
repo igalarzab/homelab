@@ -35,7 +35,10 @@ apps:
     chart: containeroo/local-path-provisioner
     version: "0.0.33"
     namespace: kube-system
+    valuesFile: csi-driver-hostpath/values.yml
     priority: -109
+    hooks:
+      postInstall: csi-driver-hostpath/post-install.yml
   metrics-server:
     <<: *default
     chart: metrics-server/metrics-server
@@ -52,6 +55,7 @@ apps:
     priority: -99
     hooks:
       postInstall: cert-manager/post-install.yml
+      postUpgrade: cert-manager/post-install.yml
   external-dns:
     <<: *default
     chart: external-dns/external-dns

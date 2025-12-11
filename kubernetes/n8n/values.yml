@@ -92,9 +92,10 @@ ingress:
 
 persistence:
   config:
-    type: hostPath
-    hostPath: ${COMMON_VOLUMES_PATH}/n8n/
-    hostPathType: DirectoryOrCreate
+    type: persistentVolumeClaim
+    storageClass: local-persistent-path
+    accessMode: ReadWriteOncePod
+    size: 1Gi
     advancedMounts:
       n8n:
         n8n:

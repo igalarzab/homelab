@@ -78,8 +78,8 @@ ingress:
 persistence:
   config:
     type: persistentVolumeClaim
-    storageClass: local-path
-    accessMode: ReadWriteOnce
+    storageClass: local-persistent-path
+    accessMode: ReadWriteOncePod
     size: 1Gi
     advancedMounts:
       pocket-id:

@@ -41,3 +41,6 @@ kind: KubeProxyConfiguration
 
 apiVersion: kubelet.config.k8s.io/v1beta1
 kind: KubeletConfiguration
+{% if kubelet_custom_resolv_conf %}
+resolvConf: /etc/kubernetes/resolv.conf
+{% endif %}
