@@ -35,8 +35,18 @@ def helmsman_run(cluster_name: str, *args, env=None):
     subprocess.run(base_cmd + list(args), env=env)
 
 
-def get_all_docker_tags() -> dict[str, str]:
+def parse_env_var(value: str) -> tuple[str, str]:
+    if "=" not in value:
+        raise argparse.ArgumentTypeError(f"Invalid format '{value}'. Expected KEY=VALUE")
+
+    key, val = value.split("=", 1)
+
+    return key, val
+
+
+def get_all_docker_tags(extra_env: dict[str, str] | None = None) -> dict[str, str]:
     running_tags: dict[str, str] = {}
+    extra_env = extra_env or {}
 
     for fpath in glob.glob(str(SELF_PATH.joinpath("**")), recursive=True):
         if os.path.isfile(fpath):
@@ -44,13 +54,14 @@ def get_all_docker_tags() -> dict[str, str]:
                 env_names = re.findall(r"DOCKER_TAG__[\w_-]+", f.read())
 
             for env_name in env_names:
+                if env_name in extra_env:
+                    running_tags[env_name] = extra_env[env_name]
+                    continue
+
                 try:
                     running_tags[env_name] = get_docker_tag(env_name)
-                except Exception as e:
-                    print(type(e).__name__, " - ", e)
-                    running_tags[env_name] = input(
-                        f"Error retrieving tag {env_name}, input manually: "
-                    ).strip()
+                except Exception:
+                    pass
 
     return running_tags
 
@@ -83,8 +94,8 @@ def get_docker_tag(env_name: str) -> str:
     return tag
 
 
-def configure_env() -> dict[str, str]:
-    tags = get_all_docker_tags()
+def configure_env(extra_env: dict[str, str] | None = None) -> dict[str, str]:
+    tags = get_all_docker_tags(extra_env)
 
     my_env = os.environ.copy()
     my_env.update(tags)
@@ -97,13 +108,13 @@ def configure_env() -> dict[str, str]:
 #
 
 
-def run_charts(mode: Literal["dry-run", "apply"], cluster_name, *, app_name=None):
+def run_charts(mode: Literal["dry-run", "apply"], *, cluster_name, app_name=None, extra_env=None):
     try:
         k8s_config.load_kube_config(context=cluster_name)
     except k8s_config.ConfigException as e:
         raise SystemExit(f"Error: Kubernetes context '{cluster_name}' not found: {e}")
 
-    my_env = configure_env()
+    my_env = configure_env(extra_env)
 
     base_command = [f"--{mode}", "--subst-env-values", "--show-diff"]
 
@@ -124,6 +135,14 @@ def show_outdated_charts(cluster_name):
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(prog="Helmsman Runner")
     parser.add_argument("cluster", help="The Kubernetes cluster to use")
+    parser.add_argument(
+        "-e",
+        "--env",
+        type=parse_env_var,
+        action="append",
+        default=[],
+        help="Set environment variable (KEY=VALUE), can be used multiple times",
+    )
 
     commands = parser.add_subparsers(dest="command")
 
@@ -142,9 +161,11 @@ if __name__ == "__main__":
 
     match args.command:
         case "apply":
-            run_charts("apply", cluster_name=args.cluster, app_name=args.name)
+            env_vars = dict(args.env)
+            run_charts("apply", cluster_name=args.cluster, app_name=args.name, extra_env=env_vars)
         case "dry-run":
-            run_charts("dry-run", cluster_name=args.cluster, app_name=args.name)
+            env_vars = dict(args.env)
+            run_charts("dry-run", cluster_name=args.cluster, app_name=args.name, extra_env=env_vars)
         case "destroy":
             run_charts("destroy", cluster_name=args.cluster, app_name=args.name)
         case "outdated":
