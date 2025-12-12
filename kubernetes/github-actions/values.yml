@@ -1,0 +1,42 @@
+---
+# yaml-language-server: $schema=https://raw.githubusercontent.com/bjw-s/helm-charts/app-template-4.5.0/charts/other/app-template/values.schema.json
+
+# No controllers needed - this chart only creates RBAC and secret resources
+controllers: {}
+
+serviceAccount:
+  github-actions:
+    staticToken: true
+
+rbac:
+  roles:
+    github-actions:
+      type: ClusterRole
+      rules:
+        - apiGroups: [""]
+          verbs: ["get", "list", "watch", "create", "update", "patch", "delete"]
+          resources:
+            - configmaps
+            - secrets
+            - services
+            - persistentvolumeclaims
+        - apiGroups: ["apps"]
+          verbs: ["get", "list", "watch", "create", "update", "patch", "delete"]
+          resources:
+            - deployments
+            - statefulsets
+            - daemonsets
+            - replicasets
+        - apiGroups: ["batch"]
+          verbs: ["get", "list", "watch", "create", "update", "patch", "delete"]
+          resources:
+            - jobs
+            - cronjobs
+        - apiGroups: ["networking.k8s.io"]
+          verbs: ["get", "list", "watch", "create", "update", "patch", "delete"]
+          resources:
+            - ingresses
+        - apiGroups: ["gateway.networking.k8s.io"]
+          verbs: ["get", "list", "watch", "create", "update", "patch", "delete"]
+          resources:
+            - httproutes

@@ -8,6 +8,7 @@ settings:
 namespaces:
   cert-manager:
   external-dns:
+  github-actions:
   keel:
   kube-system:
   pocket-id:
@@ -84,3 +85,10 @@ apps:
     namespace: keel
     valuesFile: keel/values.yml
     priority: -95
+  github-actions:
+    <<: *default
+    chart: bjw-s/app-template
+    version: "4.5.0"
+    namespace: github-actions
+    valuesFile: github-actions/values.yml
+    priority: -59

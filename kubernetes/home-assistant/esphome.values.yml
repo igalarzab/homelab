@@ -76,7 +76,7 @@ ingress:
     annotations:
       traefik.ingress.kubernetes.io/router.middlewares: traefik-oidc-pocketid@kubernetescrd
       external-dns.alpha.kubernetes.io/hostname: esphome.${COMMON_DOMAIN_ROOT}
-      external-dns.alpha.kubernetes.io/target: ${COMMON_DNS_IP}
+      external-dns.alpha.kubernetes.io/target: k8s.${COMMON_DOMAIN_ROOT}
       external-dns.alpha.kubernetes.io/ttl: 1m
     hosts:
       - host: "esphome.${COMMON_DOMAIN_ROOT}"
