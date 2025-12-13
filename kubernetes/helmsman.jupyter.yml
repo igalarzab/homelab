@@ -7,6 +7,7 @@ settings:
 
 namespaces:
   cert-manager:
+  datastores:
   external-dns:
   github-actions:
   keel:
@@ -92,3 +93,17 @@ apps:
     namespace: github-actions
     valuesFile: github-actions/values.yml
     priority: -59
+  postgresql:
+    <<: *default
+    chart: bjw-s/app-template
+    version: "4.5.0"
+    namespace: datastores
+    valuesFile: datastores/postgresql.yml
+    priority: -58
+  redis:
+    <<: *default
+    chart: bjw-s/app-template
+    version: "4.5.0"
+    namespace: datastores
+    valuesFile: datastores/redis.yml
+    priority: -57

@@ -1,0 +1,71 @@
+---
+# yaml-language-server: $schema=https://raw.githubusercontent.com/bjw-s/helm-charts/app-template-4.5.0/charts/other/app-template/values.schema.json
+
+controllers:
+  postgresql:
+    type: statefulset
+    pod:
+      securityContext:
+        fsGroup: 999
+        fsGroupChangePolicy: OnRootMismatch
+    containers:
+      postgresql:
+        image:
+          repository: postgres
+          tag: "18.1-alpine"
+        env:
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: "${DATASTORE_POSTGRESQL_PASSWORD}"
+          POSTGRES_DB: postgres
+          PGDATA: /var/lib/postgresql/data/pgdata
+        ports:
+          - name: postgres
+            protocol: TCP
+            containerPort: 5432
+        probes:
+          liveness:
+            enabled: true
+            custom: true
+            spec:
+              exec:
+                command:
+                  - pg_isready
+                  - -U
+                  - postgres
+              initialDelaySeconds: 30
+              periodSeconds: 10
+              timeoutSeconds: 5
+              failureThreshold: 6
+          readiness:
+            enabled: true
+            custom: true
+            spec:
+              exec:
+                command:
+                  - pg_isready
+                  - -U
+                  - postgres
+              initialDelaySeconds: 5
+              periodSeconds: 10
+              timeoutSeconds: 5
+              failureThreshold: 6
+
+service:
+  postgresql:
+    controller: postgresql
+    ports:
+      postgres:
+        port: 5432
+        protocol: TCP
+        targetPort: postgres
+
+persistence:
+  data:
+    type: persistentVolumeClaim
+    storageClass: local-persistent-path
+    accessMode: ReadWriteOncePod
+    size: 10Gi
+    advancedMounts:
+      postgresql:
+        postgresql:
+          - path: /var/lib/postgresql/data

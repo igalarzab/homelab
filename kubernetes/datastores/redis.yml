@@ -1,0 +1,77 @@
+---
+# yaml-language-server: $schema=https://raw.githubusercontent.com/bjw-s/helm-charts/app-template-4.5.0/charts/other/app-template/values.schema.json
+
+controllers:
+  redis:
+    type: statefulset
+    pod:
+      securityContext:
+        fsGroup: 999
+        fsGroupChangePolicy: OnRootMismatch
+    containers:
+      redis:
+        image:
+          repository: redis
+          tag: "8.4.0-alpine"
+        args:
+          - redis-server
+          - --appendonly
+          - "yes"
+          - --save
+          - "60"
+          - "1"
+          - --requirepass
+          - $$(REDIS_PASSWORD)
+        env:
+          REDIS_PASSWORD: "${DATASTORE_REDIS_PASSWORD}"
+        ports:
+          - name: redis
+            protocol: TCP
+            containerPort: 6379
+        probes:
+          liveness:
+            enabled: true
+            custom: true
+            spec:
+              exec:
+                command:
+                  - sh
+                  - -c
+                  - redis-cli -a $$REDIS_PASSWORD ping
+              initialDelaySeconds: 10
+              periodSeconds: 10
+              timeoutSeconds: 5
+              failureThreshold: 6
+          readiness:
+            enabled: true
+            custom: true
+            spec:
+              exec:
+                command:
+                  - sh
+                  - -c
+                  - redis-cli -a $$REDIS_PASSWORD ping
+              initialDelaySeconds: 5
+              periodSeconds: 10
+              timeoutSeconds: 5
+              failureThreshold: 6
+
+service:
+  redis:
+    controller: redis
+    ports:
+      redis:
+        port: 6379
+        protocol: TCP
+        targetPort: redis
+
+persistence:
+  data:
+    type: persistentVolumeClaim
+    storageClass: local-persistent-path
+    accessMode: ReadWriteOnce
+    size: 10Gi
+    advancedMounts:
+      redis:
+        redis:
+          - path: /data
