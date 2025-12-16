@@ -7,7 +7,7 @@ defaultPodOptions:
 controllers:
   n8n:
     type: deployment
-    strategy: RollingUpdate
+    strategy: Recreate
     annotations:
       keel.sh/policy: major
       keel.sh/trigger: poll
