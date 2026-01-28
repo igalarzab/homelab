@@ -1,0 +1,92 @@
+---
+# yaml-language-server: $schema=https://raw.githubusercontent.com/bjw-s/helm-charts/app-template-4.5.0/charts/other/app-template/values.schema.json
+
+defaultPodOptions:
+  terminationGracePeriodSeconds: 30
+
+controllers:
+  mmwave-configurator:
+    type: deployment
+    annotations:
+      keel.sh/policy: minor
+      keel.sh/trigger: poll
+      keel.sh/pollSchedule: "@midnight"
+    containers:
+      mmwave-configurator:
+        image:
+          repository: everythingsmarthome/everything-presence-mmwave-configurator
+          tag: "${DOCKER_TAG__HOME_ASSISTANT__DEPLOYMENT__MMWAVE_CONFIGURATOR__0}"
+        env:
+          TZ: ${COMMON_TZ}
+          HA_BASE_URL: "https://ha.${COMMON_DOMAIN_ROOT}"
+        envFrom:
+          - secretRef:
+              name: mmwave-configurator
+        ports:
+          - name: http
+            protocol: TCP
+            containerPort: 42069
+        probes:
+          liveness:
+            enabled: true
+            custom: true
+            spec:
+              initialDelaySeconds: 5
+              periodSeconds: 10
+              timeoutSeconds: 2
+              successThreshold: 1
+              failureThreshold: 5
+              httpGet:
+                path: /
+                port: http
+          readiness:
+            enabled: true
+            custom: true
+            spec:
+              initialDelaySeconds: 5
+              periodSeconds: 10
+              timeoutSeconds: 2
+              successThreshold: 1
+              failureThreshold: 5
+              httpGet:
+                path: /
+                port: http
+
+service:
+  mmwave-configurator:
+    controller: mmwave-configurator
+    ports:
+      http:
+        port: 80
+        targetPort: http
+
+ingress:
+  main:
+    annotations:
+      traefik.ingress.kubernetes.io/router.middlewares: traefik-oidc-pocketid@kubernetescrd
+      external-dns.alpha.kubernetes.io/hostname: mmwave.${COMMON_DOMAIN_ROOT}
+      external-dns.alpha.kubernetes.io/target: k8s.${COMMON_DOMAIN_ROOT}
+      external-dns.alpha.kubernetes.io/ttl: 1m
+    hosts:
+      - host: "mmwave.${COMMON_DOMAIN_ROOT}"
+        paths:
+          - path: /
+            pathType: Prefix
+            service:
+              identifier: mmwave-configurator
+              port: http
+
+secrets:
+  secrets:
+    stringData:
+      HA_LONG_LIVED_TOKEN: "${MMWAVE_CONFIGURATOR_HA_LONG_TOKEN}"
+
+persistence:
+  config:
+    type: hostPath
+    hostPath: ${COMMON_VOLUMES_PATH}/mmwave-configurator
+    hostPathType: DirectoryOrCreate
+    advancedMounts:
+      mmwave-configurator:
+        mmwave-configurator:
+          - path: /config

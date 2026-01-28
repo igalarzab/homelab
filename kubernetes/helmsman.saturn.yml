@@ -168,6 +168,13 @@ apps:
     namespace: home-assistant
     valuesFile: home-assistant/esphome.values.yml
     priority: -56
+  mmwave-configurator:
+    <<: *default
+    chart: bjw-s/app-template
+    version: "4.5.0"
+    namespace: home-assistant
+    valuesFile: home-assistant/mmwave-configurator.values.yml
+    priority: -56
   home-assistant:
     <<: *default
     chart: bjw-s/app-template
