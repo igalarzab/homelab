@@ -2,6 +2,7 @@ substitutions:
   name: office-ac
   friendly_name: Office AC
   area: Office
+  remote_temp_sensor: sensor.office_hub_temperature
 
 packages:
   mitsubishi-ac: !include templates/mitsubishi-ac.yaml

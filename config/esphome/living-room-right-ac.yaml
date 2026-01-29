@@ -2,6 +2,7 @@ substitutions:
   name: living-room-right-ac
   friendly_name: Living Room Right AC
   area: Living Room
+  remote_temp_sensor: sensor.living_room_thermometer_temperature
 
 packages:
   mitsubishi-ac: !include templates/mitsubishi-ac.yaml

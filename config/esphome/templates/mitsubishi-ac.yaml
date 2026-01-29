@@ -13,26 +13,29 @@ esphome:
   friendly_name: ${friendly_name}
 
 external_components:
-  - source: github://echavet/MitsubishiCN105ESPHome
+  - source:
+      type: git
+      url: https://github.com/echavet/MitsubishiCN105ESPHome
+      ref: v1.6.7
 
 logger:
   level: INFO
   logs:
-    EVT_SETS : INFO
-    WIFI : INFO
-    MQTT : INFO
-    WRITE_SETTINGS : INFO
-    SETTINGS : INFO
-    STATUS : INFO
+    EVT_SETS: INFO
+    WIFI: INFO
+    MQTT: INFO
+    WRITE_SETTINGS: INFO
+    SETTINGS: INFO
+    STATUS: INFO
     CN105Climate: WARN
     CN105: INFO
     climate: WARN
     sensor: WARN
-    chkSum : INFO
-    WRITE : WARN
-    READ : WARN
+    chkSum: INFO
+    WRITE: WARN
+    READ: WARN
     Header: INFO
-    Decoder : INFO
+    Decoder: INFO
     CONTROL_WANTED_SETTINGS: INFO
 
 wifi:
@@ -67,6 +70,27 @@ time:
 sensor:
   - platform: uptime
     name: Uptime
+  - platform: homeassistant
+    name: "Remote Temperature Sensor"
+    entity_id: ${remote_temp_sensor}
+    internal: false
+    disabled_by_default: true
+    device_class: temperature
+    state_class: measurement
+    unit_of_measurement: "°C"
+    filters:
+      - throttle: 30s
+      - clamp:
+          min_value: 1
+          max_value: 40
+          ignore_out_of_range: true
+    on_value:
+      then:
+        - logger.log:
+            level: INFO
+            format: "Remote temperature received from HA: %.1f C"
+            args: ["x"]
+        - lambda: "id(hp).set_remote_temperature(x);"
 
 text_sensor:
   - platform: wifi_info
@@ -84,9 +108,11 @@ button:
 
 climate:
   - platform: cn105
+    id: hp
     name: "Controller"
     icon: mdi:heat-pump
     update_interval: 1500ms
+    remote_temperature_timeout: 15min
     visual:
       min_temperature: 15
       max_temperature: 35
