@@ -1,4 +1,4 @@
-mode: yaml
+resource_mode: yaml
 dashboards:
   main-dashboard:
     mode: yaml
@@ -6,20 +6,8 @@ dashboards:
     icon: mdi:monitor-dashboard
     show_in_sidebar: true
     filename: dashboards/main.yaml
-  floor-plan:
-    mode: yaml
-    title: Home
-    icon: mdi:floor-plan
-    show_in_sidebar: true
-    filename: dashboards/floor-plan.yaml
-  new-dashboard:
-    mode: yaml
-    title: Home
-    icon: mdi:monitor-dashboard
-    show_in_sidebar: true
-    filename: dashboards/new.yaml
 resources:
-  - url: 'https://fonts.googleapis.com/css?family=Raleway'
+  - url: "https://fonts.googleapis.com/css?family=Raleway"
     type: css
   - url: /local/community/config-template-card/config-template-card.js
     type: module
