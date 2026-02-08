@@ -4101,7 +4101,7 @@
         "id": "932d2d2de96d36dc",
         "type": "api-call-service",
         "z": "8b6e3b319b97a18a",
-        "name": "Turn On Living Room AC Left",
+        "name": "Turn On Living Room AC Right",
         "server": "f88bb71a82464dcf",
         "version": 7,
         "debugenabled": false,
@@ -4110,7 +4110,7 @@
         "areaId": [],
         "deviceId": [],
         "entityId": [
-            "climate.living_room_left_ac_controller"
+            "climate.living_room_right_ac_controller"
         ],
         "labelId": [],
         "data": "",
@@ -4122,54 +4122,9 @@
         "blockInputOverrides": false,
         "domain": "climate",
         "service": "turn_on",
-        "x": 1540,
+        "x": 1290,
         "y": 740,
         "wires": [
-            []
-        ]
-    },
-    {
-        "id": "e0a454d5b83a4b80",
-        "type": "api-current-state",
-        "z": "8b6e3b319b97a18a",
-        "name": "Temp Living Room > 26°?",
-        "server": "f88bb71a82464dcf",
-        "version": 3,
-        "outputs": 2,
-        "halt_if": "26",
-        "halt_if_type": "num",
-        "halt_if_compare": "gt",
-        "entity_id": "sensor.living_room_thermometer_temperature",
-        "state_type": "str",
-        "blockInputOverrides": false,
-        "outputProperties": [
-            {
-                "property": "payload",
-                "propertyType": "msg",
-                "value": "",
-                "valueType": "entityState"
-            },
-            {
-                "property": "data",
-                "propertyType": "msg",
-                "value": "",
-                "valueType": "entity"
-            }
-        ],
-        "for": "0",
-        "forType": "num",
-        "forUnits": "minutes",
-        "override_topic": false,
-        "state_location": "payload",
-        "override_payload": "msg",
-        "entity_location": "data",
-        "override_data": "msg",
-        "x": 1270,
-        "y": 740,
-        "wires": [
-            [
-                "932d2d2de96d36dc"
-            ],
             []
         ]
     },
@@ -4214,7 +4169,7 @@
         "wires": [
             [],
             [
-                "e0a454d5b83a4b80"
+                "932d2d2de96d36dc"
             ]
         ]
     },
@@ -5693,7 +5648,7 @@
         "id": "b1c09774694667f7",
         "type": "api-call-service",
         "z": "751c2276bdb4df53",
-        "name": "Toggle AC",
+        "name": "Toggle Right AC",
         "server": "f88bb71a82464dcf",
         "version": 7,
         "debugenabled": false,
@@ -5702,7 +5657,7 @@
         "areaId": [],
         "deviceId": [],
         "entityId": [
-            "climate.living_room_left_ac_controller"
+            "climate.living_room_right_ac_controller"
         ],
         "labelId": [],
         "data": "",
@@ -5714,7 +5669,7 @@
         "blockInputOverrides": false,
         "domain": "climate",
         "service": "toggle",
-        "x": 430,
+        "x": 440,
         "y": 1700,
         "wires": [
             []
@@ -6218,7 +6173,7 @@
         "id": "a26b1ea89b193642",
         "type": "api-call-service",
         "z": "751c2276bdb4df53",
-        "name": "Turn On Living Room AC Left",
+        "name": "Turn On Living Room AC Right",
         "server": "f88bb71a82464dcf",
         "version": 7,
         "debugenabled": false,
@@ -6227,7 +6182,7 @@
         "areaId": [],
         "deviceId": [],
         "entityId": [
-            "climate.living_room_left_ac_controller"
+            "climate.living_room_right_ac_controller"
         ],
         "labelId": [],
         "data": "",
@@ -6239,7 +6194,7 @@
         "blockInputOverrides": false,
         "domain": "climate",
         "service": "turn_on",
-        "x": 400,
+        "x": 410,
         "y": 1160,
         "wires": [
             []
@@ -6743,7 +6698,7 @@
         "id": "442e056c51b2b92e",
         "type": "inject",
         "z": "03c58ed96b7b8395",
-        "name": "At 16:00",
+        "name": "At 15:00",
         "props": [
             {
                 "p": "payload"
@@ -6754,7 +6709,7 @@
             }
         ],
         "repeat": "",
-        "crontab": "00 16 * * 1,2,3,4,5",
+        "crontab": "00 15 * * 1,2,3,4,5",
         "once": false,
         "onceDelay": 0.1,
         "topic": "",
@@ -7931,7 +7886,7 @@
         "blockInputOverrides": false,
         "domain": "climate",
         "service": "turn_on",
-        "x": 1310,
+        "x": 1050,
         "y": 260,
         "wires": [
             []
@@ -8918,51 +8873,6 @@
         ]
     },
     {
-        "id": "bd9f7115a617b2cc",
-        "type": "api-current-state",
-        "z": "fa6bb9cfa58677c8",
-        "name": "Temp Living Room > 26°?",
-        "server": "f88bb71a82464dcf",
-        "version": 3,
-        "outputs": 2,
-        "halt_if": "26",
-        "halt_if_type": "num",
-        "halt_if_compare": "gt",
-        "entity_id": "sensor.living_room_thermometer_temperature",
-        "state_type": "str",
-        "blockInputOverrides": false,
-        "outputProperties": [
-            {
-                "property": "payload",
-                "propertyType": "msg",
-                "value": "",
-                "valueType": "entityState"
-            },
-            {
-                "property": "data",
-                "propertyType": "msg",
-                "value": "",
-                "valueType": "entity"
-            }
-        ],
-        "for": "0",
-        "forType": "num",
-        "forUnits": "minutes",
-        "override_topic": false,
-        "state_location": "payload",
-        "override_payload": "msg",
-        "entity_location": "data",
-        "override_data": "msg",
-        "x": 1030,
-        "y": 260,
-        "wires": [
-            [
-                "b44d08f8b019f1f7"
-            ],
-            []
-        ]
-    },
-    {
         "id": "e1eabf25edbbf70f",
         "type": "api-current-state",
         "z": "fa6bb9cfa58677c8",
@@ -9422,7 +9332,7 @@
         "wires": [
             [
                 "c03a59b5b2299844",
-                "bd9f7115a617b2cc"
+                "b44d08f8b019f1f7"
             ],
             []
         ]
@@ -10059,7 +9969,7 @@
         "id": "75c9746da7832486",
         "type": "api-call-service",
         "z": "fa6bb9cfa58677c8",
-        "name": "Turn On Living Room AC Left",
+        "name": "Turn On Living Room AC Right",
         "server": "f88bb71a82464dcf",
         "version": 7,
         "debugenabled": false,
@@ -10068,7 +9978,7 @@
         "areaId": [],
         "deviceId": [],
         "entityId": [
-            "climate.living_room_left_ac_controller"
+            "climate.living_room_right_ac_controller"
         ],
         "labelId": [],
         "data": "",
@@ -10080,7 +9990,7 @@
         "blockInputOverrides": false,
         "domain": "climate",
         "service": "turn_on",
-        "x": 1200,
+        "x": 1210,
         "y": 1640,
         "wires": [
             []
