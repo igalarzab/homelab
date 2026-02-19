@@ -75,7 +75,7 @@ apps:
   pocket-id:
     <<: *default
     chart: bjw-s/app-template
-    version: "4.5.0"
+    version: "4.6.2"
     namespace: pocket-id
     valuesFile: pocket-id/values.yml
     priority: -96
@@ -89,21 +89,21 @@ apps:
   github-actions:
     <<: *default
     chart: bjw-s/app-template
-    version: "4.5.0"
+    version: "4.6.2"
     namespace: github-actions
     valuesFile: github-actions/values.yml
     priority: -59
   postgresql:
     <<: *default
     chart: bjw-s/app-template
-    version: "4.5.0"
+    version: "4.6.2"
     namespace: datastores
     valuesFile: datastores/postgresql.yml
     priority: -58
   redis:
     <<: *default
     chart: bjw-s/app-template
-    version: "4.5.0"
+    version: "4.6.2"
     namespace: datastores
     valuesFile: datastores/redis.yml
     priority: -57
