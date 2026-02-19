@@ -6,9 +6,6 @@ ingressRoute:
   dashboard:
     enabled: false
 
-globalArguments:
-  - "--global.checknewversion"
-
 experimental:
   plugins:
     traefik-oidc-auth:
@@ -18,11 +15,12 @@ experimental:
 ports:
   web:
     nodePort: 80
-    redirections:
-      entryPoint:
-        to: websecure
-        scheme: https
-        permanent: true
+    http:
+      redirections:
+        entryPoint:
+          to: websecure
+          scheme: https
+          permanent: true
   websecure:
     nodePort: 443
 
