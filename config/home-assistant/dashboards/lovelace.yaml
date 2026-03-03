@@ -6,6 +6,12 @@ dashboards:
     icon: mdi:monitor-dashboard
     show_in_sidebar: true
     filename: dashboards/main.yaml
+  modern-dashboard:
+    mode: yaml
+    title: Dashboard Modern
+    icon: mdi:view-quilt
+    show_in_sidebar: true
+    filename: dashboards/main-modern.yaml
 resources:
   - url: "https://fonts.googleapis.com/css?family=Raleway"
     type: css
