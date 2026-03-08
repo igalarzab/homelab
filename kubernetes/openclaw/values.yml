@@ -54,6 +54,38 @@ controllers:
               periodSeconds: 10
               timeoutSeconds: 5
               failureThreshold: 3
+      sidecar-chromium:
+        image:
+          repository: chromedp/headless-shell
+          tag: "147.0.7703.0"
+        env:
+          XDG_CACHE_HOME: /tmp
+        securityContext:
+          runAsUser: 1000
+          runAsGroup: 1000
+          runAsNonRoot: true
+          readOnlyRootFilesystem: true
+          allowPrivilegeEscalation: false
+          capabilities:
+            drop:
+              - ALL
+        probes:
+          liveness:
+            type: HTTP
+            spec:
+              path: /json/version
+              port: 9222
+              initialDelaySeconds: 10
+              periodSeconds: 30
+              timeoutSeconds: 5
+              failureThreshold: 6
+          readiness:
+            type: HTTP
+            spec:
+              path: /json/version
+              port: 9222
+              initialDelaySeconds: 5
+              periodSeconds: 10
 
 service:
   openclaw:
@@ -88,3 +120,11 @@ persistence:
       openclaw:
         openclaw:
           - path: /home/node/
+  tmp:
+    type: emptyDir
+    advancedMounts:
+      openclaw:
+        openclaw:
+          - path: /tmp
+        sidecar-chromium:
+          - path: /tmp
