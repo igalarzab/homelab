@@ -7,4 +7,4 @@ volumeBindingMode: WaitForFirstConsumer
 allowVolumeExpansion: true
 reclaimPolicy: Retain
 parameters:
-  pathPattern: "{{ .PVC.Name }}/{{ .PVName }}"
+  pathPattern: "{{ .PVC.Namespace }}/{{ .PVC.Name }}/"

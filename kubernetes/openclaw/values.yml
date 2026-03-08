@@ -1,0 +1,90 @@
+---
+# yaml-language-server: $schema=https://raw.githubusercontent.com/bjw-s/helm-charts/app-template-4.6.2/charts/other/app-template/values.schema.json
+
+defaultPodOptions:
+  terminationGracePeriodSeconds: 30
+  securityContext:
+    fsGroup: 1000
+    fsGroupChangePolicy: OnRootMismatch
+
+controllers:
+  openclaw:
+    type: deployment
+    strategy: Recreate
+    annotations:
+      keel.sh/policy: major
+      keel.sh/trigger: poll
+      keel.sh/pollSchedule: "@midnight"
+    containers:
+      openclaw:
+        image:
+          repository: ghcr.io/openclaw/openclaw
+          tag: "${DOCKER_TAG__OPENCLAW__DEPLOYMENT__OPENCLAW__0}"
+        env:
+          TZ: ${COMMON_TZ}
+        ports:
+          - name: http
+            protocol: TCP
+            containerPort: 18789
+        securityContext:
+          runAsUser: 1000
+          runAsGroup: 1000
+          runAsNonRoot: true
+          readOnlyRootFilesystem: true
+          allowPrivilegeEscalation: false
+          capabilities:
+            drop:
+              - ALL
+        probes:
+          liveness:
+            type: HTTP
+            spec:
+              path: /health
+              port: http
+              initialDelaySeconds: 30
+              periodSeconds: 30
+              timeoutSeconds: 5
+              failureThreshold: 3
+          readiness:
+            type: HTTP
+            spec:
+              path: /health
+              port: http
+              initialDelaySeconds: 10
+              periodSeconds: 10
+              timeoutSeconds: 5
+              failureThreshold: 3
+
+service:
+  openclaw:
+    controller: openclaw
+    ports:
+      http:
+        port: 80
+        targetPort: http
+
+ingress:
+  main:
+    annotations:
+      external-dns.alpha.kubernetes.io/hostname: openclaw.${COMMON_DOMAIN_ROOT}
+      external-dns.alpha.kubernetes.io/target: k8s.${COMMON_DOMAIN_ROOT}
+      external-dns.alpha.kubernetes.io/ttl: 1m
+    hosts:
+      - host: "openclaw.${COMMON_DOMAIN_ROOT}"
+        paths:
+          - path: /
+            pathType: Prefix
+            service:
+              identifier: openclaw
+              port: http
+
+persistence:
+  config:
+    type: persistentVolumeClaim
+    storageClass: local-persistent-path
+    accessMode: ReadWriteOncePod
+    size: 1Gi
+    advancedMounts:
+      openclaw:
+        openclaw:
+          - path: /home/node/

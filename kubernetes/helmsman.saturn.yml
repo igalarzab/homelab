@@ -15,6 +15,7 @@ namespaces:
   kube-system:
   mosquitto:
   n8n:
+  openclaw:
   plex:
   pocket-id:
   traefik:
@@ -53,6 +54,7 @@ apps:
     priority: -109
     hooks:
       postInstall: csi-driver-hostpath/post-install.yml
+      postUpgrade: csi-driver-hostpath/post-install.yml
   csi-driver-proxmox:
     <<: *default
     chart: oci://ghcr.io/sergelogvinov/charts/proxmox-csi-plugin
@@ -126,13 +128,20 @@ apps:
     namespace: n8n
     valuesFile: n8n/values.yml
     priority: -79
+  openclaw:
+    <<: *default
+    chart: bjw-s/app-template
+    version: "4.6.2"
+    namespace: openclaw
+    valuesFile: openclaw/values.yml
+    priority: -78
   jdownloader:
     <<: *default
     chart: bjw-s/app-template
     version: "4.6.2"
     namespace: jdownloader
     valuesFile: jdownloader/values.yml
-    priority: -78
+    priority: -77
   plex:
     <<: *default
     chart: bjw-s/app-template
