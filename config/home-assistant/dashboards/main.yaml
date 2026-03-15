@@ -238,7 +238,7 @@ views:
         entities:
           - entity: sensor.current_version
           - entity: sensor.docker_hub
-          - entity: sensor.unavailable_entities
+          - entity: group.unavailable_entities
         title: Sensors
       - type: entities
         entities:
