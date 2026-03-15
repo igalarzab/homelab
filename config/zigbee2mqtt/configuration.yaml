@@ -26,7 +26,7 @@ mqtt:
 serial:
   port: tcp://10.31.7.40:6638
   baudrate: 115200
-  adapter: zstack
+  adapter: ember
   disable_led: false
   advanced:
     transmit_power: 20
