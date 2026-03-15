@@ -31,6 +31,7 @@ group:
       - tts.google_en_com
       - stt.home_assistant_cloud
       - media_player.bedroom_tv
+      - sensor.disabled_device_entities
 
 automation:
   - id: update_unavailable_entities_group

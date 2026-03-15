@@ -3813,14 +3813,14 @@
         "id": "cbb3944b1318ae9a",
         "type": "server-state-changed",
         "z": "8b6e3b319b97a18a",
-        "name": "Wall Switch Right",
+        "name": "Wall Switch Second",
         "server": "f88bb71a82464dcf",
         "version": 6,
         "outputs": 1,
         "exposeAsEntityConfig": "",
         "entities": {
             "entity": [
-                "switch.entrance_controller_wall_gang_right"
+                "switch.entrance_controller_wall_gang_two"
             ],
             "substring": [],
             "regex": []
@@ -3859,7 +3859,7 @@
                 "valueType": "triggerId"
             }
         ],
-        "x": 160,
+        "x": 170,
         "y": 300,
         "wires": [
             [
@@ -3916,7 +3916,7 @@
         "areaId": [],
         "deviceId": [],
         "entityId": [
-            "switch.entrance_controller_wall_gang_right"
+            "switch.entrance_controller_wall_gang_two"
         ],
         "labelId": [],
         "data": "",
@@ -4174,31 +4174,6 @@
         ]
     },
     {
-        "id": "b8739f8dc7800051",
-        "type": "subflow:2e02acbf157d8262",
-        "z": "8b6e3b319b97a18a",
-        "name": "Wall Switch - Single Left",
-        "env": [
-            {
-                "name": "E1_TOPIC",
-                "value": "entrance/controller_wall",
-                "type": "str"
-            },
-            {
-                "name": "E1_ACTION",
-                "value": "single_left",
-                "type": "str"
-            }
-        ],
-        "x": 190,
-        "y": 1080,
-        "wires": [
-            [
-                "b6340d7128ba40be"
-            ]
-        ]
-    },
-    {
         "id": "cc6f3c55bfdfab1b",
         "type": "api-current-state",
         "z": "8b6e3b319b97a18a",
@@ -4241,6 +4216,31 @@
                 "401f88c5f497a03d"
             ],
             []
+        ]
+    },
+    {
+        "id": "fd098e1c735ea1f5",
+        "type": "subflow:9ae4ced5f6035fca",
+        "z": "8b6e3b319b97a18a",
+        "name": "Wall Switch - Top Button",
+        "env": [
+            {
+                "name": "Z1_TOPIC",
+                "value": "entrance/controller_wall",
+                "type": "str"
+            },
+            {
+                "name": "Z1_ACTION",
+                "value": "single_top",
+                "type": "str"
+            }
+        ],
+        "x": 190,
+        "y": 1080,
+        "wires": [
+            [
+                "b6340d7128ba40be"
+            ]
         ]
     },
     {
@@ -6959,6 +6959,11 @@
                 "type": "str"
             },
             {
+                "name": "COOLDOWN_TIME_SECONDS",
+                "value": "15",
+                "type": "num"
+            },
+            {
                 "name": "DOOR_SENSOR",
                 "value": "binary_sensor.office_door_contact",
                 "type": "str"
@@ -7221,7 +7226,7 @@
             }
         ],
         "x": 190,
-        "y": 1500,
+        "y": 1520,
         "wires": [
             [
                 "4167842ce9d58bb3"
@@ -7254,7 +7259,7 @@
         "domain": "timer",
         "service": "start",
         "x": 430,
-        "y": 1500,
+        "y": 1520,
         "wires": [
             []
         ]
@@ -9509,7 +9514,7 @@
         "areaId": [],
         "deviceId": [],
         "entityId": [
-            "switch.bathroom_controller_wall_gang_left"
+            "switch.bathroom_controller_wall_gang_two"
         ],
         "labelId": [],
         "data": "",
@@ -9580,7 +9585,7 @@
         "areaId": [],
         "deviceId": [],
         "entityId": [
-            "switch.bathroom_controller_wall_gang_left"
+            "switch.bathroom_controller_wall_gang_two"
         ],
         "labelId": [],
         "data": "",
@@ -9609,7 +9614,7 @@
         "halt_if": "off",
         "halt_if_type": "str",
         "halt_if_compare": "is",
-        "entity_id": "switch.bathroom_controller_wall_gang_left",
+        "entity_id": "switch.bathroom_controller_wall_gang_two",
         "state_type": "str",
         "blockInputOverrides": false,
         "outputProperties": [
@@ -10115,8 +10120,13 @@
             },
             {
                 "name": "LIGHT_ENTITY",
-                "value": "switch.bathroom_controller_wall_gang_right",
+                "value": "switch.bathroom_controller_wall_gang_one",
                 "type": "str"
+            },
+            {
+                "name": "COOLDOWN_TIME_SECONDS",
+                "value": "15",
+                "type": "num"
             },
             {
                 "name": "DOOR_SENSOR",
@@ -10205,7 +10215,7 @@
         "areaId": [],
         "deviceId": [],
         "entityId": [
-            "switch.bathroom_controller_wall_gang_left"
+            "switch.bathroom_controller_wall_gang_two"
         ],
         "labelId": [],
         "data": "",
@@ -10276,7 +10286,7 @@
         "areaId": [],
         "deviceId": [],
         "entityId": [
-            "switch.bathroom_controller_wall_gang_left"
+            "switch.bathroom_controller_wall_gang_two"
         ],
         "labelId": [],
         "data": "",
@@ -10422,7 +10432,7 @@
         "halt_if": "on",
         "halt_if_type": "str",
         "halt_if_compare": "is",
-        "entity_id": "switch.bathroom_controller_wall_gang_left",
+        "entity_id": "switch.bathroom_controller_wall_gang_two",
         "state_type": "str",
         "blockInputOverrides": false,
         "outputProperties": [
@@ -10471,7 +10481,7 @@
         "areaId": [],
         "deviceId": [],
         "entityId": [
-            "switch.bathroom_controller_wall_gang_left"
+            "switch.bathroom_controller_wall_gang_two"
         ],
         "labelId": [],
         "data": "",
@@ -10521,31 +10531,6 @@
         ]
     },
     {
-        "id": "54f89c05a38f819b",
-        "type": "subflow:2e02acbf157d8262",
-        "z": "c41ab6f93f6c103e",
-        "name": "Wall Switch - Single Right",
-        "env": [
-            {
-                "name": "E1_TOPIC",
-                "value": "bathroom/controller_wall",
-                "type": "str"
-            },
-            {
-                "name": "E1_ACTION",
-                "value": "single_right",
-                "type": "str"
-            }
-        ],
-        "x": 190,
-        "y": 220,
-        "wires": [
-            [
-                "970e3c72c2362dfd"
-            ]
-        ]
-    },
-    {
         "id": "e77b225b884d97b2",
         "type": "api-current-state",
         "z": "c41ab6f93f6c103e",
@@ -10556,7 +10541,7 @@
         "halt_if": "off",
         "halt_if_type": "str",
         "halt_if_compare": "is",
-        "entity_id": "switch.bathroom_controller_wall_gang_left",
+        "entity_id": "switch.bathroom_controller_wall_gang_two",
         "state_type": "str",
         "blockInputOverrides": false,
         "outputProperties": [
@@ -10588,6 +10573,31 @@
                 "7eb6d807b0b45de3"
             ],
             []
+        ]
+    },
+    {
+        "id": "41ccfe7e4a04542e",
+        "type": "subflow:9ae4ced5f6035fca",
+        "z": "c41ab6f93f6c103e",
+        "name": "Wall Switch - Top Button",
+        "env": [
+            {
+                "name": "Z1_TOPIC",
+                "value": "bathroom/controller_wall",
+                "type": "str"
+            },
+            {
+                "name": "Z1_ACTION",
+                "value": "single_top",
+                "type": "str"
+            }
+        ],
+        "x": 190,
+        "y": 220,
+        "wires": [
+            [
+                "970e3c72c2362dfd"
+            ]
         ]
     },
     {

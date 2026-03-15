@@ -63,7 +63,7 @@ views:
         show_header_toggle: false
         state_color: true
         entities:
-          - entity: switch.entrance_controller_wall_gang_left
+          - entity: switch.entrance_controller_wall_gang_one
             name: Entrance Lights
             icon: mdi:lightbulb
           - entity: switch.living_room_controller_wall_gang_one
@@ -212,10 +212,10 @@ views:
         show_header_toggle: false
         state_color: true
         entities:
-          - entity: switch.bathroom_controller_wall_gang_right
+          - entity: switch.bathroom_controller_wall_gang_one
             name: Ceiling Light
             icon: mdi:lightbulb
-          - entity: switch.bathroom_controller_wall_gang_left
+          - entity: switch.bathroom_controller_wall_gang_two
             name: Fan
             icon: mdi:fan
   - path: switches

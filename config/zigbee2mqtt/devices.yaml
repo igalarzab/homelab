@@ -177,36 +177,6 @@
       suggested_area: Living Room
 
 # Aqara Switches E1
-"0x54ef441000d68d4d":
-  friendly_name: bathroom/controller_wall
-  filtered_attributes: ["device_temperature", "linkquality", "power_outage_count", "power_outage_memory"]
-  homeassistant:
-    name: Bathroom Controller Wall
-    device:
-      suggested_area: Bathroom
-    switch_left:
-      object_id: gang_left
-    switch_right:
-      object_id: gang_right
-    gang_left:
-      name: Gang Left
-    gang_right:
-      name: Gang Right
-"0x54ef441000d68ffc":
-  friendly_name: entrance/controller_wall
-  filtered_attributes: ["device_temperature", "linkquality", "power_outage_count", "power_outage_memory"]
-  homeassistant:
-    name: Entrance Controller Wall
-    device:
-      suggested_area: Entrance
-    switch_left:
-      object_id: gang_left
-    switch_right:
-      object_id: gang_right
-    gang_left:
-      name: Gang Left
-    gang_right:
-      name: Gang Right
 "0x54ef441000d68889":
   friendly_name: kitchen/controller_wall
   filtered_attributes: ["device_temperature", "linkquality", "power_outage_count", "power_outage_memory"]
@@ -269,6 +239,44 @@
     name: Office Controller Wall
     device:
       suggested_area: Office
+    switch_top:
+      object_id: gang_one
+    switch_center:
+      object_id: gang_two
+    switch_bottom:
+      object_id: gang_three
+    gang_one:
+      name: Gang One
+    gang_two:
+      name: Gang Two
+    gang_three:
+      name: Gang Three
+"0x54ef441000bee347":
+  friendly_name: entrance/controller_wall
+  filtered_attributes: ["device_temperature", "linkquality", "power_outage_count", "trigger_count", "voltage"]
+  homeassistant:
+    name: Entrance Controller Wall
+    device:
+      suggested_area: Entrance
+    switch_top:
+      object_id: gang_one
+    switch_center:
+      object_id: gang_two
+    switch_bottom:
+      object_id: gang_three
+    gang_one:
+      name: Gang One
+    gang_two:
+      name: Gang Two
+    gang_three:
+      name: Gang Three
+"0x54ef441000bed10f":
+  friendly_name: bathroom/controller_wall
+  filtered_attributes: ["device_temperature", "linkquality", "power_outage_count", "trigger_count", "voltage"]
+  homeassistant:
+    name: Bathroom Controller Wall
+    device:
+      suggested_area: Bathroom
     switch_top:
       object_id: gang_one
     switch_center:

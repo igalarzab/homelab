@@ -36,8 +36,8 @@ bathroom_lights:
   name: Bathroom Lights
   icon: mdi:lightbulb-group-outline
   entities:
-    - switch.bathroom_controller_wall_gang_left
-    - switch.bathroom_controller_wall_gang_right
+    - switch.bathroom_controller_wall_gang_one
+    - switch.bathroom_controller_wall_gang_two
 
 bedroom_lights:
   name: Bedroom Lights
@@ -50,7 +50,7 @@ entrance_lights:
   name: Entrance Lights
   icon: mdi:lightbulb-group-outline
   entities:
-    - switch.entrance_controller_wall_gang_left
+    - switch.entrance_controller_wall_gang_one
 
 hall_lights:
   name: Hall Lights
