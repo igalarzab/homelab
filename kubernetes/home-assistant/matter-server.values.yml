@@ -1,0 +1,71 @@
+---
+# yaml-language-server: $schema=https://raw.githubusercontent.com/bjw-s/helm-charts/app-template-4.6.2/charts/other/app-template/values.schema.json
+
+defaultPodOptions:
+  terminationGracePeriodSeconds: 30
+
+controllers:
+  matter-server:
+    type: deployment
+    strategy: Recreate
+    annotations:
+      keel.sh/policy: minor
+      keel.sh/trigger: poll
+      keel.sh/pollSchedule: "0 0 4 * * 5" # 4am Fri
+    containers:
+      matter-server:
+        image:
+          repository: ghcr.io/home-assistant-libs/python-matter-server
+          tag: "${DOCKER_TAG__HOME_ASSISTANT__DEPLOYMENT__MATTER_SERVER__0}"
+        args:
+          - --storage-path
+          - /data
+          - --port
+          - "5580"
+        env:
+          TZ: ${COMMON_TZ}
+        ports:
+          - name: ws
+            protocol: TCP
+            containerPort: 5580
+        probes:
+          liveness:
+            enabled: true
+            custom: true
+            spec:
+              initialDelaySeconds: 5
+              periodSeconds: 10
+              timeoutSeconds: 2
+              successThreshold: 1
+              failureThreshold: 5
+              tcpSocket:
+                port: ws
+          readiness:
+            enabled: true
+            custom: true
+            spec:
+              initialDelaySeconds: 5
+              periodSeconds: 10
+              timeoutSeconds: 2
+              successThreshold: 1
+              failureThreshold: 5
+              tcpSocket:
+                port: ws
+
+service:
+  matter-server:
+    controller: matter-server
+    ports:
+      ws:
+        port: 5580
+        targetPort: ws
+
+persistence:
+  data:
+    type: hostPath
+    hostPath: ${COMMON_VOLUMES_PATH}/matter-server
+    hostPathType: DirectoryOrCreate
+    advancedMounts:
+      matter-server:
+        matter-server:
+          - path: /data

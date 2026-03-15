@@ -184,10 +184,17 @@ apps:
     namespace: home-assistant
     valuesFile: home-assistant/mmwave-configurator.values.yml
     priority: -56
+  matter-server:
+    <<: *default
+    chart: bjw-s/app-template
+    version: "4.6.2"
+    namespace: home-assistant
+    valuesFile: home-assistant/matter-server.values.yml
+    priority: -55
   home-assistant:
     <<: *default
     chart: bjw-s/app-template
     version: "4.6.2"
     namespace: home-assistant
     valuesFile: home-assistant/home-assistant.values.yml
-    priority: -55
+    priority: -54
