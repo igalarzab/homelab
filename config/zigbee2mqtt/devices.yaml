@@ -128,14 +128,6 @@
     name: Kitchen Motion
     device:
       suggested_area: Kitchen
-"0x00158d0006e45a7e":
-  friendly_name: bathroom/motion
-  occupancy_timeout: 15
-  filtered_attributes: ["device_temperature", "linkquality", "power_outage_count", "trigger_count", "voltage"]
-  homeassistant:
-    name: Bathroom Motion
-    device:
-      suggested_area: Bathroom
 "0x00158d0006695335":
   friendly_name: bedroom/motion
   occupancy_timeout: 15
@@ -153,13 +145,6 @@
     name: Living Room Thermometer
     device:
       suggested_area: Living Room
-"0x00158d000ae464b9":
-  friendly_name: bathroom/thermometer
-  filtered_attributes: ["linkquality", "power_outage_count", "voltage"]
-  homeassistant:
-    name: Bathroom Thermometer
-    device:
-      suggested_area: Bathroom
 "0x00158d000484feb0":
   friendly_name: bedroom/thermometer
   filtered_attributes: ["linkquality", "power_outage_count", "voltage"]
@@ -381,3 +366,10 @@
     name: Office Hub
     device:
       suggested_area: Office
+"0x54ef44100162860e":
+  friendly_name: bathroom/hub
+  illuminance_raw: false
+  homeassistant:
+    name: Bathroom Hub
+    device:
+      suggested_area: Bathroom
