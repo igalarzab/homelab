@@ -1,5 +1,4 @@
 ---
-
 rules:
   document-start:
     present: true
@@ -19,6 +18,6 @@ rules:
   key-duplicates:
     level: error
   line-length:
-    max: 140
+    max: 180
     allow-non-breakable-words: true
     allow-non-breakable-inline-mappings: true
