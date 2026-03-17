@@ -12,7 +12,7 @@ command_line:
     json_attributes:
       - entities
     value_template: "{{ value_json.entities | length }}"
-    command: "jq '.data.entities |= map(select(.disabled_by? != null) | {entity_id: .entity_id}) | del(.data.deleted_entities) | flatten | .[3]' < .storage/core.entity_registry"
+    command: "jq '.data.entities |= map(select(.disabled_by? != null) | {entity_id: .entity_id}) | del(.data.deleted_entities) | flatten | .[3]' < /config/.storage/core.entity_registry"
 
 template:
   - sensor:
@@ -31,7 +31,6 @@ group:
       - tts.google_en_com
       - stt.home_assistant_cloud
       - media_player.bedroom_tv
-      - sensor.disabled_device_entities
 
 automation:
   - id: update_unavailable_entities_group
