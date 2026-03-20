@@ -3,6 +3,8 @@
 
 defaultPodOptions:
   terminationGracePeriodSeconds: 30
+  annotations:
+    k8s.v1.cni.cncf.io/networks: '[{ "name": "network-vlan-server", "namespace": "kube-system", "mac": "7a:3f:9c:2e:5b:d1" }]'
 
 controllers:
   matter-server:
@@ -22,6 +24,8 @@ controllers:
           - /data
           - --port
           - "5580"
+          - --primary-interface
+          - net1
         env:
           TZ: ${COMMON_TZ}
         ports:

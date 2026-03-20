@@ -1,0 +1,94 @@
+---
+# yaml-language-server: $schema=https://raw.githubusercontent.com/bjw-s/helm-charts/app-template-4.6.2/charts/other/app-template/values.schema.json
+
+defaultPodOptions:
+  terminationGracePeriodSeconds: 30
+  annotations:
+    k8s.v1.cni.cncf.io/networks: '[{ "name": "network-vlan-server", "namespace": "kube-system", "mac": "5e:4a:1b:2c:3d:7f" }]'
+
+controllers:
+  otbr:
+    type: deployment
+    strategy: Recreate
+    annotations:
+      keel.sh/policy: minor
+      keel.sh/trigger: poll
+      keel.sh/pollSchedule: "0 0 4 * * 5" # 4am Fri
+    containers:
+      otbr:
+        image:
+          repository: ghcr.io/ownbee/hass-otbr-docker
+          tag: "${DOCKER_TAG__HOME_ASSISTANT__DEPLOYMENT__OTBR__0}"
+        env:
+          TZ: ${COMMON_TZ}
+          NETWORK_DEVICE: "${OTBR_RADIO_URL}"
+          DEVICE: /tmp/ttyOTBR
+          BAUDRATE: "460800"
+          BACKBONE_IF: net1
+          OTBR_WEB_PORT: "8080"
+          OTBR_REST_PORT: "8081"
+          FIREWALL: "1"
+        securityContext:
+          capabilities:
+            add:
+              - NET_ADMIN
+              - NET_RAW
+        ports:
+          - name: web
+            protocol: TCP
+            containerPort: 8080
+          - name: rest
+            protocol: TCP
+            containerPort: 8081
+        probes:
+          liveness:
+            enabled: true
+            custom: true
+            spec:
+              initialDelaySeconds: 10
+              periodSeconds: 10
+              timeoutSeconds: 2
+              successThreshold: 1
+              failureThreshold: 5
+              tcpSocket:
+                port: rest
+          readiness:
+            enabled: true
+            custom: true
+            spec:
+              initialDelaySeconds: 10
+              periodSeconds: 10
+              timeoutSeconds: 2
+              successThreshold: 1
+              failureThreshold: 5
+              tcpSocket:
+                port: rest
+
+service:
+  otbr:
+    controller: otbr
+    ports:
+      web:
+        port: 8080
+        targetPort: web
+      rest:
+        port: 8081
+        targetPort: rest
+
+persistence:
+  data:
+    type: hostPath
+    hostPath: ${COMMON_VOLUMES_PATH}/otbr
+    hostPathType: DirectoryOrCreate
+    advancedMounts:
+      otbr:
+        otbr:
+          - path: /data/thread
+  tun:
+    type: hostPath
+    hostPath: /dev/net/tun
+    hostPathType: CharDevice
+    advancedMounts:
+      otbr:
+        otbr:
+          - path: /dev/net/tun
