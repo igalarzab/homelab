@@ -120,22 +120,6 @@
     name: Entrance Motion
     device:
       suggested_area: Entrance
-"0x00158d000669412a":
-  friendly_name: kitchen/motion
-  occupancy_timeout: 15
-  filtered_attributes: ["device_temperature", "linkquality", "power_outage_count", "trigger_count", "voltage"]
-  homeassistant:
-    name: Kitchen Motion
-    device:
-      suggested_area: Kitchen
-"0x00158d0006695335":
-  friendly_name: bedroom/motion
-  occupancy_timeout: 15
-  filtered_attributes: ["device_temperature", "linkquality", "power_outage_count", "trigger_count", "voltage"]
-  homeassistant:
-    name: Bedroom Motion
-    device:
-      suggested_area: Bedroom
 
 # Aqara Thermometers
 "0x00158d000484ff28":
@@ -381,3 +365,10 @@
     name: Bathroom Hub
     device:
       suggested_area: Bathroom
+"0x54ef44100163dd60":
+  friendly_name: kitchen/hub
+  illuminance_raw: false
+  homeassistant:
+    name: Kitchen Hub
+    device:
+      suggested_area: Kitchen

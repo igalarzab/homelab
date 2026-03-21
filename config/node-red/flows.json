@@ -4261,12 +4261,12 @@
         "env": [
             {
                 "name": "MOTION_SENSOR",
-                "value": "binary_sensor.kitchen_motion_occupancy",
+                "value": "binary_sensor.kitchen_hub_presence",
                 "type": "str"
             },
             {
                 "name": "BRIGHTNESS_SENSOR",
-                "value": "sensor.kitchen_motion_illuminance",
+                "value": "sensor.kitchen_hub_illuminance",
                 "type": "str"
             },
             {

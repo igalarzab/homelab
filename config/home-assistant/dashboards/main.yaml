@@ -38,7 +38,7 @@ views:
       - type: entities
         entities:
           - entity: binary_sensor.entrance_motion_occupancy
-          - entity: binary_sensor.kitchen_motion_occupancy
+          - entity: binary_sensor.kitchen_hub_presence
           - entity: binary_sensor.office_hub_presence
           - entity: binary_sensor.bathroom_hub_presence
           - entity: binary_sensor.bedroom_motion_occupancy
