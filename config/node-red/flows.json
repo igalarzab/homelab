@@ -4275,6 +4275,16 @@
                 "type": "str"
             },
             {
+                "name": "COOLDOWN_TIME_SECONDS",
+                "value": "15",
+                "type": "num"
+            },
+            {
+                "name": "LIGHT_THRESHOLD",
+                "value": "100",
+                "type": "num"
+            },
+            {
                 "name": "MANUAL_TIMER",
                 "value": "timer.kitchen_automatic_lights_timer",
                 "type": "str"
@@ -8070,7 +8080,8 @@
                 "ec065520cae675a9",
                 "10e767ea0801a3ee",
                 "d723371b6e77c7ea",
-                "19b1aabf7936aae3"
+                "19b1aabf7936aae3",
+                "c7988fa4d2197614"
             ]
         ]
     },
@@ -10093,6 +10104,37 @@
         ]
     },
     {
+        "id": "c7988fa4d2197614",
+        "type": "api-call-service",
+        "z": "fa6bb9cfa58677c8",
+        "name": "Turn On Decent Espresso",
+        "server": "f88bb71a82464dcf",
+        "version": 7,
+        "debugenabled": false,
+        "action": "switch.turn_on",
+        "floorId": [],
+        "areaId": [],
+        "deviceId": [],
+        "entityId": [
+            "switch.decent_espresso_de1on"
+        ],
+        "labelId": [],
+        "data": "",
+        "dataType": "jsonata",
+        "mergeContext": "",
+        "mustacheAltTags": false,
+        "outputProperties": [],
+        "queue": "none",
+        "blockInputOverrides": true,
+        "domain": "switch",
+        "service": "turn_on",
+        "x": 710,
+        "y": 1700,
+        "wires": [
+            []
+        ]
+    },
+    {
         "id": "6eedb26837a07fad",
         "type": "comment",
         "z": "c41ab6f93f6c103e",
@@ -10132,6 +10174,11 @@
                 "name": "DOOR_SENSOR",
                 "value": "binary_sensor.bathroom_door_contact",
                 "type": "str"
+            },
+            {
+                "name": "LIGHT_THRESHOLD",
+                "value": "50",
+                "type": "num"
             },
             {
                 "name": "MANUAL_TIMER",

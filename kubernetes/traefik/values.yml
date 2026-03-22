@@ -23,6 +23,13 @@ ports:
           permanent: true
   websecure:
     nodePort: 443
+  mqtt:
+    port: 1883
+    expose:
+      default: true
+    exposedPort: 1883
+    protocol: TCP
+    nodePort: 1883
 
 service:
   type: NodePort

@@ -65,6 +65,21 @@ service:
         port: 1883
         targetPort: mqtt
 
+rawResources:
+  mqtt-ingressroute:
+    forceRename: mosquitto
+    apiVersion: traefik.io/v1alpha1
+    kind: IngressRouteTCP
+    spec:
+      spec:
+        entryPoints:
+          - mqtt
+        routes:
+          - match: HostSNI(`*`)
+            services:
+              - name: mosquitto
+                port: 1883
+
 secrets:
   users:
     suffix: users
@@ -75,6 +90,7 @@ secrets:
         home-assistant:$$7$$101$$46C1ho60XSvjKEIZ$$${MOSQUITTO_PASSWORDS_HA}
         node-red:$$7$$101$$h51h7FfXn4G1gCOf$$${MOSQUITTO_PASSWORDS_NODERED}
         zigbee2mqtt:$$7$$101$$GNInwfosp2Ucd67f$$${MOSQUITTO_PASSWORDS_ZIGBEE2MQTT}
+        decent-espresso:$$7$$100$$v7XhZr1UIQJKniOE$$${MOSQUITTO_PASSWORDS_DECENT_ESPRESSO}
 
 persistence:
   config:
