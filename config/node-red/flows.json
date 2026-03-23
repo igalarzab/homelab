@@ -4317,7 +4317,7 @@
             },
             {
                 "name": "SWITCH",
-                "value": "switch.kitchen_controller_wall_gang_left",
+                "value": "switch.bathroom_controller_wall_gang_three",
                 "type": "str"
             }
         ],
@@ -5762,7 +5762,7 @@
         "areaId": [],
         "deviceId": [],
         "entityId": [
-            "switch.kitchen_controller_wall_gang_right"
+            "switch.bathroom_controller_wall_gang_one"
         ],
         "labelId": [],
         "data": "",
@@ -5888,7 +5888,7 @@
         "areaId": [],
         "deviceId": [],
         "entityId": [
-            "switch.kitchen_controller_wall_gang_right",
+            "switch.bathroom_controller_wall_gang_one",
             "switch.living_room_controller_wall_gang_one",
             "switch.living_room_controller_wall_gang_two"
         ],

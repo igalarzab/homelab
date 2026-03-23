@@ -62,7 +62,7 @@ kitchen_lights:
   name: Kitchen Lights
   icon: mdi:lightbulb-group-outline
   entities:
-    - switch.kitchen_controller_wall_gang_right
+    - switch.kitchen_controller_wall_gang_one
 
 living_room_lights:
   name: Living Room Lights
