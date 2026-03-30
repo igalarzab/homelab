@@ -4317,7 +4317,7 @@
             },
             {
                 "name": "SWITCH",
-                "value": "switch.bathroom_controller_wall_gang_three",
+                "value": "switch.kitchen_controller_wall_gang_two",
                 "type": "str"
             }
         ],
@@ -4350,30 +4350,30 @@
         "blockInputOverrides": true,
         "domain": "timer",
         "service": "start",
-        "x": 430,
+        "x": 450,
         "y": 180,
         "wires": [
             []
         ]
     },
     {
-        "id": "22669ac5b21be6ab",
-        "type": "subflow:2e02acbf157d8262",
+        "id": "3ba988a5cc5951ad",
+        "type": "subflow:9ae4ced5f6035fca",
         "z": "95eb18db5e77ef4c",
-        "name": "Wall Switch - Single Right",
+        "name": "Wall Controller  - Top Switch",
         "env": [
             {
-                "name": "E1_TOPIC",
+                "name": "Z1_TOPIC",
                 "value": "kitchen/controller_wall",
                 "type": "str"
             },
             {
-                "name": "E1_ACTION",
-                "value": "single_right",
+                "name": "Z1_ACTION",
+                "value": "single_top",
                 "type": "str"
             }
         ],
-        "x": 190,
+        "x": 200,
         "y": 180,
         "wires": [
             [
