@@ -1732,7 +1732,7 @@
         "server": "f88bb71a82464dcf",
         "version": 7,
         "debugenabled": false,
-        "action": "switch.turn_on",
+        "action": "homeassistant.turn_on",
         "floorId": [],
         "areaId": [],
         "deviceId": [],
@@ -1747,7 +1747,7 @@
         "outputProperties": [],
         "queue": "none",
         "blockInputOverrides": false,
-        "domain": "switch",
+        "domain": "homeassistant",
         "service": "turn_on",
         "x": 560,
         "y": 80,
@@ -1765,7 +1765,7 @@
         "server": "f88bb71a82464dcf",
         "version": 7,
         "debugenabled": false,
-        "action": "switch.turn_off",
+        "action": "homeassistant.turn_off",
         "floorId": [],
         "areaId": [],
         "deviceId": [],
@@ -1780,7 +1780,7 @@
         "outputProperties": [],
         "queue": "none",
         "blockInputOverrides": false,
-        "domain": "switch",
+        "domain": "homeassistant",
         "service": "turn_off",
         "x": 560,
         "y": 140,
@@ -1859,7 +1859,7 @@
         "server": "f88bb71a82464dcf",
         "version": 7,
         "debugenabled": false,
-        "action": "light.turn_off",
+        "action": "homeassistant.turn_off",
         "floorId": [],
         "areaId": [],
         "deviceId": [],
@@ -1874,7 +1874,7 @@
         "outputProperties": [],
         "queue": "none",
         "blockInputOverrides": false,
-        "domain": "light",
+        "domain": "homeassistant",
         "service": "turn_off",
         "x": 560,
         "y": 360,
@@ -1892,7 +1892,7 @@
         "server": "f88bb71a82464dcf",
         "version": 7,
         "debugenabled": false,
-        "action": "light.turn_on",
+        "action": "homeassistant.turn_on",
         "floorId": [],
         "areaId": [],
         "deviceId": [],
@@ -1907,7 +1907,7 @@
         "outputProperties": [],
         "queue": "none",
         "blockInputOverrides": false,
-        "domain": "light",
+        "domain": "homeassistant",
         "service": "turn_on",
         "x": 560,
         "y": 280,
@@ -4301,14 +4301,14 @@
         "name": "AC",
         "info": "",
         "x": 90,
-        "y": 280,
+        "y": 380,
         "wires": []
     },
     {
         "id": "c6ccc4ccbf979859",
         "type": "subflow:44754de2761b91b1",
         "z": "95eb18db5e77ef4c",
-        "name": "Wall Switch Left <-> Living Room AC",
+        "name": "Wall Controller - Bottom Switch <-> Living Room AC",
         "env": [
             {
                 "name": "AC",
@@ -4317,12 +4317,12 @@
             },
             {
                 "name": "SWITCH",
-                "value": "switch.kitchen_controller_wall_gang_two",
+                "value": "switch.kitchen_controller_wall_gang_three",
                 "type": "str"
             }
         ],
-        "x": 230,
-        "y": 340,
+        "x": 270,
+        "y": 440,
         "wires": []
     },
     {
@@ -4351,7 +4351,7 @@
         "domain": "timer",
         "service": "start",
         "x": 450,
-        "y": 180,
+        "y": 280,
         "wires": [
             []
         ]
@@ -4374,12 +4374,33 @@
             }
         ],
         "x": 200,
-        "y": 180,
+        "y": 280,
         "wires": [
             [
                 "c8386ee4cdc3545b"
             ]
         ]
+    },
+    {
+        "id": "fd4fdb3cdf097d78",
+        "type": "subflow:a9c82ea585250d5c",
+        "z": "95eb18db5e77ef4c",
+        "name": "Wall Controller - Middle Switch <-> Entrance Light",
+        "env": [
+            {
+                "name": "LIGHT",
+                "value": "group.entrance_lights",
+                "type": "str"
+            },
+            {
+                "name": "SWITCH",
+                "value": "switch.kitchen_controller_wall_gang_two",
+                "type": "str"
+            }
+        ],
+        "x": 270,
+        "y": 200,
+        "wires": []
     },
     {
         "id": "64f52d03bd37dfeb",
@@ -6466,7 +6487,7 @@
         "name": "Lights",
         "info": "",
         "x": 90,
-        "y": 1380,
+        "y": 1640,
         "wires": []
     },
     {
@@ -6492,7 +6513,7 @@
             },
             {
                 "name": "SWITCH",
-                "value": "switch.office_controller_wall_gang_two",
+                "value": "switch.office_controller_wall_gang_three",
                 "type": "str"
             }
         ],
@@ -6822,16 +6843,24 @@
             }
         ],
         "x": 160,
-        "y": 1200,
+        "y": 1360,
         "wires": [
             [
                 "31cd3317a90a3265"
             ],
             [],
-            [],
-            [],
-            [],
-            [],
+            [
+                "a5d516b0d436b916"
+            ],
+            [
+                "4ca160c1973132f4"
+            ],
+            [
+                "a0f59a1581362776"
+            ],
+            [
+                "98bb9328c9005e1d"
+            ],
             [
                 "1eccf985e02339ef"
             ],
@@ -6864,7 +6893,7 @@
         "domain": "homeassistant",
         "service": "toggle",
         "x": 370,
-        "y": 1160,
+        "y": 1180,
         "wires": [
             [
                 "5a014c8a6eef66f5"
@@ -6896,8 +6925,8 @@
         "blockInputOverrides": false,
         "domain": "climate",
         "service": "toggle",
-        "x": 370,
-        "y": 1240,
+        "x": 570,
+        "y": 1500,
         "wires": [
             []
         ]
@@ -6990,7 +7019,7 @@
             }
         ],
         "x": 190,
-        "y": 1440,
+        "y": 1700,
         "wires": []
     },
     {
@@ -7236,7 +7265,7 @@
             }
         ],
         "x": 190,
-        "y": 1520,
+        "y": 1860,
         "wires": [
             [
                 "4167842ce9d58bb3"
@@ -7269,7 +7298,7 @@
         "domain": "timer",
         "service": "start",
         "x": 430,
-        "y": 1520,
+        "y": 1860,
         "wires": [
             []
         ]
@@ -7299,8 +7328,8 @@
         "blockInputOverrides": false,
         "domain": "timer",
         "service": "start",
-        "x": 570,
-        "y": 1160,
+        "x": 590,
+        "y": 1180,
         "wires": [
             []
         ]
@@ -7511,6 +7540,151 @@
                 "3d8e18f5d75109b7"
             ]
         ]
+    },
+    {
+        "id": "a5d516b0d436b916",
+        "type": "api-call-service",
+        "z": "03c58ed96b7b8395",
+        "name": "Increase Office Lamp +20%",
+        "server": "f88bb71a82464dcf",
+        "version": 7,
+        "debugenabled": false,
+        "action": "light.turn_on",
+        "floorId": [],
+        "areaId": [],
+        "deviceId": [],
+        "entityId": [
+            "light.office_light_rack"
+        ],
+        "labelId": [],
+        "data": "{ \"brightness_step_pct\": 20 }",
+        "dataType": "jsonata",
+        "mergeContext": "",
+        "mustacheAltTags": false,
+        "outputProperties": [],
+        "queue": "none",
+        "blockInputOverrides": false,
+        "domain": "light",
+        "service": "turn_on",
+        "x": 620,
+        "y": 1260,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "a0f59a1581362776",
+        "type": "api-call-service",
+        "z": "03c58ed96b7b8395",
+        "name": "Decrease Office Lamp Brightness",
+        "server": "f88bb71a82464dcf",
+        "version": 7,
+        "debugenabled": false,
+        "action": "light.turn_on",
+        "floorId": [],
+        "areaId": [],
+        "deviceId": [],
+        "entityId": [
+            "light.office_light_rack"
+        ],
+        "labelId": [],
+        "data": "{ \"brightness_step_pct\": -20 }",
+        "dataType": "jsonata",
+        "mergeContext": "",
+        "mustacheAltTags": false,
+        "outputProperties": [],
+        "queue": "none",
+        "blockInputOverrides": false,
+        "domain": "light",
+        "service": "turn_on",
+        "x": 640,
+        "y": 1380,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "4ca160c1973132f4",
+        "type": "api-call-service",
+        "z": "03c58ed96b7b8395",
+        "name": "Set Office Lamp to 100%",
+        "server": "f88bb71a82464dcf",
+        "version": 7,
+        "debugenabled": false,
+        "action": "light.turn_on",
+        "floorId": [],
+        "areaId": [],
+        "deviceId": [],
+        "entityId": [
+            "light.office_light_rack"
+        ],
+        "labelId": [],
+        "data": "{ \"brightness_pct\": 100 }",
+        "dataType": "jsonata",
+        "mergeContext": "",
+        "mustacheAltTags": false,
+        "outputProperties": [],
+        "queue": "none",
+        "blockInputOverrides": false,
+        "domain": "light",
+        "service": "turn_on",
+        "x": 610,
+        "y": 1320,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "98bb9328c9005e1d",
+        "type": "api-call-service",
+        "z": "03c58ed96b7b8395",
+        "name": "Turn Office Lamp Light",
+        "server": "f88bb71a82464dcf",
+        "version": 7,
+        "debugenabled": false,
+        "action": "light.turn_off",
+        "floorId": [],
+        "areaId": [],
+        "deviceId": [],
+        "entityId": [
+            "light.office_light_rack"
+        ],
+        "labelId": [],
+        "data": "",
+        "dataType": "jsonata",
+        "mergeContext": "",
+        "mustacheAltTags": false,
+        "outputProperties": [],
+        "queue": "none",
+        "blockInputOverrides": false,
+        "domain": "light",
+        "service": "turn_off",
+        "x": 600,
+        "y": 1440,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "7861011b2c19ff88",
+        "type": "subflow:a9c82ea585250d5c",
+        "z": "03c58ed96b7b8395",
+        "name": "Office Switch Two <-> Office Lamp",
+        "env": [
+            {
+                "name": "LIGHT",
+                "value": "light.office_light_rack",
+                "type": "str"
+            },
+            {
+                "name": "SWITCH",
+                "value": "switch.office_controller_wall_gang_two",
+                "type": "str"
+            }
+        ],
+        "x": 220,
+        "y": 1780,
+        "wires": []
     },
     {
         "id": "21a21c921ce7a64f",
@@ -10241,7 +10415,7 @@
             }
         ],
         "x": 170,
-        "y": 320,
+        "y": 420,
         "wires": [
             [
                 "7d5cfe0a9f238622"
@@ -10275,7 +10449,7 @@
         "domain": "homeassistant",
         "service": "turn_on",
         "x": 230,
-        "y": 400,
+        "y": 500,
         "wires": [
             [
                 "1868631f528de583"
@@ -10310,7 +10484,7 @@
         "entityLocation": "data",
         "entityLocationType": "none",
         "x": 440,
-        "y": 400,
+        "y": 500,
         "wires": [
             [
                 "0b268b48126875e9"
@@ -10346,7 +10520,7 @@
         "domain": "homeassistant",
         "service": "turn_off",
         "x": 1130,
-        "y": 340,
+        "y": 440,
         "wires": [
             []
         ]
@@ -10369,7 +10543,7 @@
         "allowrate": false,
         "outputs": 1,
         "x": 650,
-        "y": 400,
+        "y": 500,
         "wires": [
             [
                 "76a55c798c17d4de"
@@ -10413,7 +10587,7 @@
         "entity_location": "data",
         "override_data": "msg",
         "x": 870,
-        "y": 400,
+        "y": 500,
         "wires": [
             [
                 "7463993a07842f80"
@@ -10460,7 +10634,7 @@
         "entity_location": "data",
         "override_data": "msg",
         "x": 420,
-        "y": 320,
+        "y": 420,
         "wires": [
             [
                 "e77b225b884d97b2"
@@ -10505,7 +10679,7 @@
         "entity_location": "data",
         "override_data": "msg",
         "x": 1140,
-        "y": 400,
+        "y": 500,
         "wires": [
             [
                 "b6a7618fa4536b2d"
@@ -10541,7 +10715,7 @@
         "domain": "homeassistant",
         "service": "turn_off",
         "x": 1330,
-        "y": 400,
+        "y": 500,
         "wires": [
             []
         ]
@@ -10572,7 +10746,7 @@
         "domain": "timer",
         "service": "start",
         "x": 430,
-        "y": 220,
+        "y": 320,
         "wires": [
             []
         ]
@@ -10614,7 +10788,7 @@
         "entity_location": "data",
         "override_data": "msg",
         "x": 640,
-        "y": 320,
+        "y": 420,
         "wires": [
             [
                 "7eb6d807b0b45de3"
@@ -10640,12 +10814,33 @@
             }
         ],
         "x": 190,
-        "y": 220,
+        "y": 320,
         "wires": [
             [
                 "970e3c72c2362dfd"
             ]
         ]
+    },
+    {
+        "id": "2d2a92946c0ed356",
+        "type": "subflow:a9c82ea585250d5c",
+        "z": "c41ab6f93f6c103e",
+        "name": "Bathroom Controller - Bottom Switch <-> Hall Light",
+        "env": [
+            {
+                "name": "LIGHT",
+                "value": "group.hall_lights",
+                "type": "str"
+            },
+            {
+                "name": "SWITCH",
+                "value": "switch.bathroom_controller_wall_gang_three",
+                "type": "str"
+            }
+        ],
+        "x": 270,
+        "y": 240,
+        "wires": []
     },
     {
         "id": "51618521485788e4",
