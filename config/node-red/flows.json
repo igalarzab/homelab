@@ -9448,12 +9448,12 @@
         "env": [
             {
                 "name": "MOTION_SENSOR",
-                "value": "binary_sensor.bedroom_motion_occupancy",
+                "value": "binary_sensor.bedroom_hub_occupancy",
                 "type": "str"
             },
             {
                 "name": "BRIGHTNESS_SENSOR",
-                "value": "sensor.bedroom_motion_illuminance",
+                "value": "sensor.bedroom_hub_illuminance",
                 "type": "str"
             },
             {
@@ -9593,7 +9593,7 @@
         "exposeAsEntityConfig": "",
         "entities": {
             "entity": [
-                "sensor.bedroom_airgradient_carbon_dioxide"
+                "sensor.bedroom_hub_co2"
             ],
             "substring": [],
             "regex": []
@@ -9729,7 +9729,7 @@
         "outputs": 2,
         "entities": {
             "entity": [
-                "sensor.bedroom_airgradient_carbon_dioxide"
+                "sensor.bedroom_hub_co2"
             ],
             "substring": [],
             "regex": []
@@ -10041,7 +10041,7 @@
             }
         ],
         "x": 190,
-        "y": 3260,
+        "y": 3280,
         "wires": [
             [
                 "818e6ff514a1e05c"
@@ -10074,7 +10074,7 @@
         "domain": "timer",
         "service": "start",
         "x": 430,
-        "y": 3260,
+        "y": 3280,
         "wires": [
             []
         ]

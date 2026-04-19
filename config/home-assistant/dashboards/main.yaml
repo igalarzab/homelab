@@ -41,7 +41,7 @@ views:
           - entity: binary_sensor.kitchen_hub_presence
           - entity: binary_sensor.office_hub_presence
           - entity: binary_sensor.bathroom_hub_presence
-          - entity: binary_sensor.bedroom_motion_occupancy
+          - entity: binary_sensor.bedroom_hub_occupancy
         title: Presence
   - path: living-room
     title: ""
@@ -168,9 +168,9 @@ views:
         show_state: true
         entities:
           - entity: binary_sensor.bedroom_door_contact
-          - entity: sensor.bedroom_motion_illuminance
-          - entity: sensor.bedroom_thermometer_temperature
-          - entity: sensor.bedroom_thermometer_humidity
+          - entity: sensor.bedroom_hub_illuminance
+          - entity: sensor.bedroom_hub_temperature
+          - entity: sensor.bedroom_hub_humidity
       - type: entities
         title: Lights
         show_header_toggle: false

@@ -99,7 +99,7 @@ home_inside_motion_presence:
   icon: mdi:run
   entities:
     - binary_sensor.bathroom_hub_presence
-    - binary_sensor.bedroom_motion_occupancy
+    - binary_sensor.bedroom_hub_occupancy
     - binary_sensor.kitchen_hub_presence
     - binary_sensor.office_hub_presence
 
