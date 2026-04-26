@@ -6,21 +6,38 @@ esp32:
   board: esp32doit-devkit-v1
   framework:
     type: esp-idf
-    advanced:
-      minimum_chip_revision: "3.1"
 
 esphome:
   name: ${name}
   area: ${area}
   friendly_name: ${friendly_name}
 
+external_components:
+  - source:
+      type: git
+      url: https://github.com/echavet/MitsubishiCN105ESPHome
+      ref: 2026.3.2
+
 logger:
   level: INFO
   logs:
-    mitsubishi_cn105: INFO
-    mitsubishi_cn105.climate: INFO
+    EVT_SETS: INFO
+    WIFI: INFO
+    MQTT: INFO
+    WRITE_SETTINGS: INFO
+    SETTINGS: INFO
+    STATUS: INFO
+    CN105_CONN: INFO
+    CN105Climate: WARN
+    CN105: INFO
     climate: WARN
     sensor: WARN
+    chkSum: INFO
+    WRITE: WARN
+    READ: WARN
+    Header: INFO
+    Decoder: INFO
+    CONTROL_WANTED_SETTINGS: INFO
 
 wifi:
   ssid: !secret wifi_ssid
@@ -31,9 +48,6 @@ uart:
   baud_rate: 2400
   tx_pin: GPIO17
   rx_pin: GPIO16
-  data_bits: 8
-  parity: EVEN
-  stop_bits: 1
 
 #
 # Home Assistant
@@ -50,9 +64,34 @@ ota:
   - platform: esphome
     password: !secret ac_ota_password
 
+time:
+  - platform: homeassistant
+    id: homeassistant_time
+
 sensor:
   - platform: uptime
     name: Uptime
+  - platform: homeassistant
+    name: "Remote Temperature Sensor"
+    entity_id: ${remote_temp_sensor}
+    internal: false
+    disabled_by_default: true
+    device_class: temperature
+    state_class: measurement
+    unit_of_measurement: "°C"
+    filters:
+      - clamp:
+          min_value: 1
+          max_value: 40
+          ignore_out_of_range: true
+      - throttle: 30s
+    on_value:
+      then:
+        - logger.log:
+            level: INFO
+            format: "Remote temperature received from HA: %.1f C"
+            args: [ "x" ]
+        - lambda: "id(hp).set_remote_temperature(x);"
 
 text_sensor:
   - platform: wifi_info
@@ -69,16 +108,21 @@ button:
     name: Restart
 
 climate:
-  - platform: mitsubishi_cn105
+  - platform: cn105
     id: hp
     name: "Controller"
     icon: mdi:heat-pump
-    uart_id: HP_UART
-    update_interval: 1s
-    current_temperature_min_interval: 60s
+    update_interval: 1500ms
+    remote_temperature_timeout: 15min
     visual:
       min_temperature: 16
       max_temperature: 31
       temperature_step:
         target_temperature: 1.0
         current_temperature: 0.5
+    vertical_vane_select:
+      name: Vertical Vane
+    supports:
+      mode: [ "COOL", "DRY", "FAN_ONLY" ]
+      fan_mode: [ "AUTO", "QUIET", "LOW", "MEDIUM", "HIGH" ]
+      swing_mode: [ "OFF", "VERTICAL" ]
