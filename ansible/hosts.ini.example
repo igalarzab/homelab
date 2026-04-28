@@ -1,3 +1,6 @@
-[servers]
+[saturn]
+HOSTNAME.lan
+
+[jupyter]
 HOSTNAME.lan
 

@@ -47,6 +47,6 @@
     rule: allow
     route: yes
     interface_in: cni0
-    interface_out: "{{ ansible_default_ipv4.interface }}"
+    interface_out: "{{ ansible_facts['default_ipv4']['interface'] }}"
     from_ip: "{{ pod_cidr_ipv4 }}"
     to_ip: "any"

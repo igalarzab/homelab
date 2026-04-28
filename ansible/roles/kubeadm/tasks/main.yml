@@ -1,7 +1,7 @@
 ---
 - name: Checking Operative System (only Debian compatible)
   meta: end_play
-  when: ansible_os_family != 'Debian'
+  when: ansible_facts['os_family'] != 'Debian'
 
 - name: Running networking tasks
   import_tasks: network.yml

@@ -26,7 +26,7 @@ apiServer:
     - 127.0.0.1
     - localhost
     - {{ k8s_api_server_san }}
-    - {{ ansible_default_ipv4.address }}
+    - {{ ansible_facts['default_ipv4']['address'] }}
 networking:
   dnsDomain: cluster.local
   podSubnet: {{ pod_cidr_ipv4 }}
