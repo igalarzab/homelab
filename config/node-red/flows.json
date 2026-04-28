@@ -712,6 +712,93 @@
         }
     },
     {
+        "id": "133548ff3d3c7884",
+        "type": "subflow",
+        "name": "Aqara T1",
+        "info": "",
+        "category": "",
+        "in": [],
+        "out": [
+            {
+                "x": 560,
+                "y": 100,
+                "wires": [
+                    {
+                        "id": "82329486b5155f59",
+                        "port": 0
+                    }
+                ]
+            }
+        ],
+        "env": [
+            {
+                "name": "T1_TOPIC",
+                "type": "str",
+                "value": "",
+                "ui": {
+                    "label": {
+                        "en-US": "Topic"
+                    },
+                    "type": "input",
+                    "opts": {
+                        "types": [
+                            "str",
+                            "env"
+                        ]
+                    }
+                }
+            },
+            {
+                "name": "T1_ACTION",
+                "type": "str",
+                "value": "",
+                "ui": {
+                    "type": "select",
+                    "opts": {
+                        "opts": [
+                            {
+                                "l": {
+                                    "en-US": "Single"
+                                },
+                                "v": "single"
+                            },
+                            {
+                                "l": {
+                                    "en-US": "Double"
+                                },
+                                "v": "double"
+                            },
+                            {
+                                "l": {
+                                    "en-US": "Hold"
+                                },
+                                "v": "hold"
+                            },
+                            {
+                                "l": {
+                                    "en-US": "Release"
+                                },
+                                "v": "release"
+                            }
+                        ]
+                    }
+                }
+            }
+        ],
+        "meta": {},
+        "color": "#DDAA99",
+        "status": {
+            "x": 1120,
+            "y": 180,
+            "wires": [
+                {
+                    "id": "3257015e5427ce6b",
+                    "port": 0
+                }
+            ]
+        }
+    },
+    {
         "id": "f88bb71a82464dcf",
         "type": "server",
         "name": "ha",
@@ -3263,6 +3350,159 @@
         "wires": [
             [
                 "bb3a81fcbf5ffc3d"
+            ]
+        ]
+    },
+    {
+        "id": "889dc6ebfc2ccdf9",
+        "type": "inject",
+        "z": "133548ff3d3c7884",
+        "name": "",
+        "props": [
+            {
+                "p": "topic",
+                "v": "zigbee2mqtt/${T1_TOPIC}",
+                "vt": "env"
+            },
+            {
+                "p": "action",
+                "v": "subscribe",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": true,
+        "onceDelay": 0.1,
+        "topic": "",
+        "x": 110,
+        "y": 140,
+        "wires": [
+            [
+                "760958434a594c6a"
+            ]
+        ]
+    },
+    {
+        "id": "760958434a594c6a",
+        "type": "mqtt in",
+        "z": "133548ff3d3c7884",
+        "name": "${T1_TOPIC}",
+        "topic": "",
+        "qos": "2",
+        "datatype": "auto-detect",
+        "broker": "1031d59e41cceee8",
+        "nl": false,
+        "rap": true,
+        "rh": 0,
+        "inputs": 1,
+        "x": 270,
+        "y": 140,
+        "wires": [
+            [
+                "82329486b5155f59"
+            ]
+        ]
+    },
+    {
+        "id": "82329486b5155f59",
+        "type": "switch",
+        "z": "133548ff3d3c7884",
+        "name": "",
+        "property": "payload.action",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "eq",
+                "v": "T1_ACTION",
+                "vt": "env"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 1,
+        "x": 430,
+        "y": 140,
+        "wires": [
+            [
+                "2da5f5cd73444b9a"
+            ]
+        ]
+    },
+    {
+        "id": "3257015e5427ce6b",
+        "type": "change",
+        "z": "133548ff3d3c7884",
+        "name": "Format",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload.text",
+                "pt": "msg",
+                "to": "$join([payload.text, \": \", payload.time])",
+                "tot": "jsonata"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 1000,
+        "y": 180,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "2da5f5cd73444b9a",
+        "type": "change",
+        "z": "133548ff3d3c7884",
+        "name": "Payload",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "{    \"text\": payload.action,    \"fill\": \"green\",    \"shape\": \"dot\"}",
+                "tot": "jsonata"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 600,
+        "y": 180,
+        "wires": [
+            [
+                "ac249d90ee4bd25e"
+            ]
+        ]
+    },
+    {
+        "id": "ac249d90ee4bd25e",
+        "type": "moment",
+        "z": "133548ff3d3c7884",
+        "name": "",
+        "topic": "",
+        "input": "",
+        "inputType": "date",
+        "inTz": "${TZ}",
+        "adjAmount": 0,
+        "adjType": "days",
+        "adjDir": "add",
+        "format": "Do MMM, H:mm",
+        "locale": "C",
+        "output": "payload.time",
+        "outputType": "msg",
+        "outTz": "${TZ}",
+        "x": 800,
+        "y": 180,
+        "wires": [
+            [
+                "3257015e5427ce6b"
             ]
         ]
     },
@@ -9467,6 +9707,11 @@
                 "type": "bool"
             },
             {
+                "name": "COOLDOWN_TIME_SECONDS",
+                "value": "15",
+                "type": "num"
+            },
+            {
                 "name": "DOOR_SENSOR",
                 "value": "binary_sensor.bedroom_door_contact",
                 "type": "str"
@@ -10415,7 +10660,7 @@
             }
         ],
         "x": 170,
-        "y": 420,
+        "y": 480,
         "wires": [
             [
                 "7d5cfe0a9f238622"
@@ -10449,7 +10694,7 @@
         "domain": "homeassistant",
         "service": "turn_on",
         "x": 230,
-        "y": 500,
+        "y": 560,
         "wires": [
             [
                 "1868631f528de583"
@@ -10484,7 +10729,7 @@
         "entityLocation": "data",
         "entityLocationType": "none",
         "x": 440,
-        "y": 500,
+        "y": 560,
         "wires": [
             [
                 "0b268b48126875e9"
@@ -10520,7 +10765,7 @@
         "domain": "homeassistant",
         "service": "turn_off",
         "x": 1130,
-        "y": 440,
+        "y": 500,
         "wires": [
             []
         ]
@@ -10543,7 +10788,7 @@
         "allowrate": false,
         "outputs": 1,
         "x": 650,
-        "y": 500,
+        "y": 560,
         "wires": [
             [
                 "76a55c798c17d4de"
@@ -10587,7 +10832,7 @@
         "entity_location": "data",
         "override_data": "msg",
         "x": 870,
-        "y": 500,
+        "y": 560,
         "wires": [
             [
                 "7463993a07842f80"
@@ -10634,7 +10879,7 @@
         "entity_location": "data",
         "override_data": "msg",
         "x": 420,
-        "y": 420,
+        "y": 480,
         "wires": [
             [
                 "e77b225b884d97b2"
@@ -10679,7 +10924,7 @@
         "entity_location": "data",
         "override_data": "msg",
         "x": 1140,
-        "y": 500,
+        "y": 560,
         "wires": [
             [
                 "b6a7618fa4536b2d"
@@ -10715,7 +10960,7 @@
         "domain": "homeassistant",
         "service": "turn_off",
         "x": 1330,
-        "y": 500,
+        "y": 560,
         "wires": [
             []
         ]
@@ -10746,7 +10991,7 @@
         "domain": "timer",
         "service": "start",
         "x": 430,
-        "y": 320,
+        "y": 380,
         "wires": [
             []
         ]
@@ -10788,7 +11033,7 @@
         "entity_location": "data",
         "override_data": "msg",
         "x": 640,
-        "y": 420,
+        "y": 480,
         "wires": [
             [
                 "7eb6d807b0b45de3"
@@ -10814,7 +11059,7 @@
             }
         ],
         "x": 190,
-        "y": 320,
+        "y": 380,
         "wires": [
             [
                 "970e3c72c2362dfd"
@@ -10839,8 +11084,64 @@
             }
         ],
         "x": 270,
-        "y": 240,
+        "y": 300,
         "wires": []
+    },
+    {
+        "id": "268b802cda8c6542",
+        "type": "subflow:133548ff3d3c7884",
+        "z": "c41ab6f93f6c103e",
+        "name": "Toilet Switch",
+        "env": [
+            {
+                "name": "T1_TOPIC",
+                "value": "bathroom/toilet_button",
+                "type": "str"
+            },
+            {
+                "name": "T1_ACTION",
+                "value": "single",
+                "type": "str"
+            }
+        ],
+        "x": 150,
+        "y": 220,
+        "wires": [
+            [
+                "029928bc3f37ae40"
+            ]
+        ]
+    },
+    {
+        "id": "029928bc3f37ae40",
+        "type": "api-call-service",
+        "z": "c41ab6f93f6c103e",
+        "name": "Switch Fan",
+        "server": "f88bb71a82464dcf",
+        "version": 7,
+        "debugenabled": false,
+        "action": "homeassistant.toggle",
+        "floorId": [],
+        "areaId": [],
+        "deviceId": [],
+        "entityId": [
+            "switch.bathroom_controller_wall_gang_two"
+        ],
+        "labelId": [],
+        "data": "",
+        "dataType": "jsonata",
+        "mergeContext": "",
+        "mustacheAltTags": false,
+        "outputProperties": [],
+        "queue": "none",
+        "blockInputOverrides": true,
+        "domain": "homeassistant",
+        "service": "toggle",
+        "x": 330,
+        "y": 220,
+        "wires": [
+            []
+        ]
     },
     {
         "id": "51618521485788e4",
