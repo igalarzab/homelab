@@ -218,6 +218,16 @@ views:
           - entity: switch.bathroom_controller_wall_gang_two
             name: Fan
             icon: mdi:fan
+      - type: entities
+        title: Entities
+        show_header_toggle: false
+        state_color: true
+        entities:
+          - entity: sensor.oral_b_battery
+      - type: thermostat
+        entity: climate.bedroom_ac_controller
+      - type: media-control
+        entity: media_player.bedroom_speaker
   - path: switches
     icon: mdi:video-input-svideo
     badges: []

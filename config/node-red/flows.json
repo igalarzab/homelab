@@ -6980,7 +6980,7 @@
             }
         ],
         "repeat": "",
-        "crontab": "00 15 * * 1,2,3,4,5",
+        "crontab": "00 15 * * 1,2,3,4",
         "once": false,
         "onceDelay": 0.1,
         "topic": "",
@@ -7132,8 +7132,8 @@
         "blockInputOverrides": false,
         "domain": "homeassistant",
         "service": "toggle",
-        "x": 370,
-        "y": 1180,
+        "x": 390,
+        "y": 1200,
         "wires": [
             [
                 "5a014c8a6eef66f5"
@@ -7165,8 +7165,8 @@
         "blockInputOverrides": false,
         "domain": "climate",
         "service": "toggle",
-        "x": 570,
-        "y": 1500,
+        "x": 390,
+        "y": 1520,
         "wires": [
             []
         ]
@@ -7568,8 +7568,8 @@
         "blockInputOverrides": false,
         "domain": "timer",
         "service": "start",
-        "x": 590,
-        "y": 1180,
+        "x": 610,
+        "y": 1200,
         "wires": [
             []
         ]
@@ -7806,8 +7806,8 @@
         "blockInputOverrides": false,
         "domain": "light",
         "service": "turn_on",
-        "x": 620,
-        "y": 1260,
+        "x": 440,
+        "y": 1280,
         "wires": [
             []
         ]
@@ -7837,8 +7837,8 @@
         "blockInputOverrides": false,
         "domain": "light",
         "service": "turn_on",
-        "x": 640,
-        "y": 1380,
+        "x": 460,
+        "y": 1400,
         "wires": [
             []
         ]
@@ -7868,8 +7868,8 @@
         "blockInputOverrides": false,
         "domain": "light",
         "service": "turn_on",
-        "x": 610,
-        "y": 1320,
+        "x": 430,
+        "y": 1340,
         "wires": [
             []
         ]
@@ -7899,8 +7899,8 @@
         "blockInputOverrides": false,
         "domain": "light",
         "service": "turn_off",
-        "x": 600,
-        "y": 1440,
+        "x": 420,
+        "y": 1460,
         "wires": [
             []
         ]
@@ -8495,7 +8495,8 @@
                 "10e767ea0801a3ee",
                 "d723371b6e77c7ea",
                 "19b1aabf7936aae3",
-                "c7988fa4d2197614"
+                "c7988fa4d2197614",
+                "aa51e2a42ff30bdf"
             ]
         ]
     },
@@ -10548,7 +10549,39 @@
         "domain": "switch",
         "service": "turn_on",
         "x": 710,
-        "y": 1700,
+        "y": 1680,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "aa51e2a42ff30bdf",
+        "type": "api-call-service",
+        "z": "fa6bb9cfa58677c8",
+        "name": "Cancel Timers",
+        "server": "f88bb71a82464dcf",
+        "version": 7,
+        "debugenabled": false,
+        "action": "timer.cancel",
+        "floorId": [],
+        "areaId": [],
+        "deviceId": [],
+        "entityId": [
+            "group.home_automatic_lights_timers",
+            "timer.bedroom_sleeping"
+        ],
+        "labelId": [],
+        "data": "",
+        "dataType": "jsonata",
+        "mergeContext": "",
+        "mustacheAltTags": false,
+        "outputProperties": [],
+        "queue": "none",
+        "blockInputOverrides": false,
+        "domain": "timer",
+        "service": "cancel",
+        "x": 680,
+        "y": 1740,
         "wires": [
             []
         ]
