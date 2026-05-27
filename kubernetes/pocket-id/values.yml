@@ -4,6 +4,10 @@
 controllers:
   pocket-id:
     type: statefulset
+    annotations:
+      keel.sh/policy: minor
+      keel.sh/trigger: poll
+      keel.sh/pollSchedule: "@midnight"
     pod:
       securityContext:
         fsGroup: 100
@@ -22,6 +26,9 @@ controllers:
           APP_URL: "https://auth.${COMMON_DOMAIN_ROOT}"
           PUID: 1000
           PGID: 100
+        envFrom:
+          - secretRef:
+              name: pocket-id
         ports:
           - name: http
             protocol: TCP
@@ -74,6 +81,11 @@ ingress:
             service:
               identifier: pocket-id
               port: http
+
+secrets:
+  secrets:
+    stringData:
+      ENCRYPTION_KEY: "${POCKETID_ENCRYPTION_KEY}"
 
 persistence:
   config:

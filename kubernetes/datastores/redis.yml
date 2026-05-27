@@ -4,6 +4,10 @@
 controllers:
   redis:
     type: statefulset
+    annotations:
+      keel.sh/policy: minor
+      keel.sh/trigger: poll
+      keel.sh/pollSchedule: "@midnight"
     pod:
       securityContext:
         fsGroup: 999
