@@ -1,8 +1,9 @@
 ---
 enable_ufw: false
 
-k8s_apt_version: "1.35"
-k8s_full_version: "1.35.2"
+k8s_apt_version: "1.36"
+k8s_full_version: "1.36.1"
+k8s_apt_pin_version: "{{ k8s_full_version }}-*"
 
 k8s_apt_key_path: /usr/share/keyrings/kubernetes-apt-keyring.gpg
 k8s_apt_repo_url: "https://pkgs.k8s.io/core:/stable:/v{{ k8s_apt_version }}/deb"

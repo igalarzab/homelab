@@ -13,6 +13,15 @@
     update_cache: true
     filename: k8s
 
+- name: Pin k8s packages
+  become: true
+  template:
+    src: apt-pin.j2
+    dest: /etc/apt/preferences.d/k8s
+    owner: root
+    group: root
+    mode: "0644"
+
 - name: Install k8s packages
   become: true
   notify: restart kubelet
@@ -23,15 +32,6 @@
       - kubectl
       - kubelet
       - kubernetes-cni
-
-- name: Pin k8s packages
-  become: true
-  template:
-    src: apt-pin.j2
-    dest: /etc/apt/preferences.d/k8s
-    owner: root
-    group: root
-    mode: "0644"
 
 - name: Enable the kubelet service
   become: true
