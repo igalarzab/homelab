@@ -13,6 +13,7 @@ namespaces:
   jdownloader:
   keel:
   kube-system:
+  hermes:
   mosquitto:
   n8n:
   openclaw:
@@ -191,3 +192,10 @@ apps:
     namespace: home-assistant
     valuesFile: home-assistant/home-assistant.values.yml
     priority: -63
+  hermes:
+    <<: *default
+    chart: bjw-s/app-template
+    version: "5.0.1"
+    namespace: hermes
+    valuesFile: hermes/values.yml
+    priority: -59

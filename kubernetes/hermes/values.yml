@@ -1,0 +1,120 @@
+---
+# yaml-language-server: $schema=https://raw.githubusercontent.com/bjw-s/helm-charts/app-template-5.0.1/charts/other/app-template/values.schema.json
+
+defaultPodOptions:
+  terminationGracePeriodSeconds: 30
+
+controllers:
+  hermes:
+    type: deployment
+    strategy: Recreate
+    pod:
+      securityContext:
+        fsGroup: 10000
+        fsGroupChangePolicy: OnRootMismatch
+    containers:
+      hermes:
+        image:
+          repository: nousresearch/hermes-agent
+          tag: "${DOCKER_TAG__HERMES__DEPLOYMENT__HERMES__0}"
+        command:
+          - /usr/bin/tini
+          - -g
+          - --
+          - /bin/bash
+          - -lc
+        args:
+          - >-
+            /opt/hermes/.venv/bin/python -c 'from pathlib import Path; p =
+            Path("/opt/hermes/.venv/lib/python3.13/site-packages/openai/lib/_parsing/_responses.py");
+            s = p.read_text(); p.write_text(s.replace("for output in response.output:",
+            "for output in (response.output or []):"))' &&
+            exec /opt/hermes/docker/entrypoint.sh gateway run
+        env:
+          TZ: ${COMMON_TZ}
+          HERMES_UID: "10000"
+          HERMES_GID: "10000"
+          HERMES_API_CALL_STALE_TIMEOUT: "60"
+          HERMES_DASHBOARD: "1"
+          HERMES_DASHBOARD_HOST: 0.0.0.0
+        ports:
+          - name: gateway
+            protocol: TCP
+            containerPort: 8642
+          - name: dashboard
+            protocol: TCP
+            containerPort: 9119
+        probes:
+          liveness:
+            enabled: true
+            custom: true
+            spec:
+              initialDelaySeconds: 30
+              periodSeconds: 10
+              timeoutSeconds: 3
+              successThreshold: 1
+              failureThreshold: 6
+              tcpSocket:
+                port: dashboard
+          readiness:
+            enabled: true
+            custom: true
+            spec:
+              initialDelaySeconds: 30
+              periodSeconds: 10
+              timeoutSeconds: 3
+              successThreshold: 1
+              failureThreshold: 6
+              tcpSocket:
+                port: dashboard
+    initContainers:
+      permissions:
+        image:
+          repository: busybox
+          tag: latest
+        command: ["/bin/sh"]
+        args:
+          - -c
+          - >-
+            chown -R 10000:10000 /opt/data &&
+            find /opt/data -type d -exec chmod 0755 {} + &&
+            find /opt/data -type f -exec chmod 0640 {} +
+
+service:
+  hermes:
+    controller: hermes
+    ports:
+      gateway:
+        port: 8642
+        targetPort: gateway
+      dashboard:
+        port: 9119
+        targetPort: dashboard
+
+ingress:
+  main:
+    annotations:
+      traefik.ingress.kubernetes.io/router.middlewares: traefik-oidc-pocketid@kubernetescrd
+      external-dns.alpha.kubernetes.io/hostname: hermes.${COMMON_DOMAIN_ROOT}
+      external-dns.alpha.kubernetes.io/target: k8s.${COMMON_DOMAIN_ROOT}
+      external-dns.alpha.kubernetes.io/ttl: 1m
+    hosts:
+      - host: "hermes.${COMMON_DOMAIN_ROOT}"
+        paths:
+          - path: /
+            pathType: Prefix
+            service:
+              identifier: hermes
+              port: dashboard
+
+persistence:
+  data:
+    type: hostPath
+    hostPath: ${COMMON_VOLUMES_PATH}/hermes
+    hostPathType: DirectoryOrCreate
+    advancedMounts:
+      hermes:
+        permissions:
+          - path: /opt/data
+        hermes:
+          - path: /opt/data
