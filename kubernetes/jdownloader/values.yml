@@ -130,7 +130,7 @@ rawResources:
           driver: smb.csi.k8s.io
           volumeHandle: nas#jdownloader#downloads-jdownloader
           volumeAttributes:
-            source: ${NAS_SMB_SOURCE_DOWNLOADS}/jdownloader
+            source: ${NAS_SMB_SOURCE_DOWNLOADS}
           nodeStageSecretRef:
             name: '{{- (include "bjw-s.common.lib.chart.names.fullname" $) -}}-smb-downloads-credentials'
             namespace: "{{ .Release.Namespace }}"

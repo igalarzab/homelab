@@ -73,7 +73,7 @@ apps:
   metrics-server:
     <<: *default
     chart: metrics-server/metrics-server
-    version: "3.13.0"
+    version: "3.13.1"
     namespace: kube-system
     valuesFile: metrics-server/values.yml
     priority: -95
@@ -97,7 +97,7 @@ apps:
   traefik:
     <<: *default
     chart: traefik/traefik
-    version: "v40.2.0"
+    version: "v40.3.0"
     namespace: traefik
     valuesFile: traefik/values.yml
     priority: -87
