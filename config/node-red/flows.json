@@ -8050,7 +8050,6 @@
                 "32c7c71ecd2dbd46",
                 "aff1cc67187cc2cc",
                 "0f56b2703068833f",
-                "6151e9658f45cdf0",
                 "efec944ea44f7e8e"
             ]
         ]
@@ -8348,7 +8347,7 @@
         "domain": "climate",
         "service": "turn_off",
         "x": 1290,
-        "y": 1000,
+        "y": 940,
         "wires": [
             []
         ]
@@ -8390,7 +8389,7 @@
         "entity_location": "data",
         "override_data": "msg",
         "x": 1050,
-        "y": 1020,
+        "y": 960,
         "wires": [
             [],
             [
@@ -8493,7 +8492,6 @@
             [
                 "ec065520cae675a9",
                 "10e767ea0801a3ee",
-                "d723371b6e77c7ea",
                 "19b1aabf7936aae3",
                 "c7988fa4d2197614",
                 "aa51e2a42ff30bdf"
@@ -9385,7 +9383,7 @@
         "entity_location": "data",
         "override_data": "msg",
         "x": 1050,
-        "y": 1160,
+        "y": 1100,
         "wires": [
             [
                 "8e760635a748b647",
@@ -9420,7 +9418,7 @@
         "domain": "switch",
         "service": "turn_off",
         "x": 1300,
-        "y": 1120,
+        "y": 1060,
         "wires": [
             []
         ]
@@ -9451,7 +9449,7 @@
         "domain": "switch",
         "service": "turn_on",
         "x": 1290,
-        "y": 1180,
+        "y": 1120,
         "wires": [
             []
         ]
@@ -9600,7 +9598,7 @@
         "domain": "homeassistant",
         "service": "turn_off",
         "x": 1300,
-        "y": 1060,
+        "y": 1000,
         "wires": [
             []
         ]
@@ -10111,134 +10109,6 @@
         ]
     },
     {
-        "id": "d723371b6e77c7ea",
-        "type": "api-call-service",
-        "z": "fa6bb9cfa58677c8",
-        "name": "AirGradient screen brigthness to 100",
-        "server": "f88bb71a82464dcf",
-        "version": 7,
-        "debugenabled": false,
-        "action": "number.set_value",
-        "floorId": [],
-        "areaId": [],
-        "deviceId": [],
-        "entityId": [
-            "number.bedroom_airgradient_display_brightness"
-        ],
-        "labelId": [],
-        "data": "{\"value\":100}",
-        "dataType": "json",
-        "mergeContext": "",
-        "mustacheAltTags": false,
-        "outputProperties": [],
-        "queue": "none",
-        "blockInputOverrides": false,
-        "domain": "number",
-        "service": "set_value",
-        "x": 750,
-        "y": 1520,
-        "wires": [
-            [
-                "a5db56a5752c68fc"
-            ]
-        ]
-    },
-    {
-        "id": "a5db56a5752c68fc",
-        "type": "api-call-service",
-        "z": "fa6bb9cfa58677c8",
-        "name": "AirGradient led brigthness to 100",
-        "server": "f88bb71a82464dcf",
-        "version": 7,
-        "debugenabled": false,
-        "action": "number.set_value",
-        "floorId": [],
-        "areaId": [],
-        "deviceId": [],
-        "entityId": [
-            "number.bedroom_airgradient_led_bar_brightness"
-        ],
-        "labelId": [],
-        "data": "{\"value\":100}",
-        "dataType": "json",
-        "mergeContext": "",
-        "mustacheAltTags": false,
-        "outputProperties": [],
-        "queue": "none",
-        "blockInputOverrides": false,
-        "domain": "number",
-        "service": "set_value",
-        "x": 1080,
-        "y": 1520,
-        "wires": [
-            []
-        ]
-    },
-    {
-        "id": "6151e9658f45cdf0",
-        "type": "api-call-service",
-        "z": "fa6bb9cfa58677c8",
-        "name": "AirGradient screen brigthness to 0",
-        "server": "f88bb71a82464dcf",
-        "version": 7,
-        "debugenabled": false,
-        "action": "number.set_value",
-        "floorId": [],
-        "areaId": [],
-        "deviceId": [],
-        "entityId": [
-            "number.bedroom_airgradient_display_brightness"
-        ],
-        "labelId": [],
-        "data": "{\"value\":0}",
-        "dataType": "json",
-        "mergeContext": "",
-        "mustacheAltTags": false,
-        "outputProperties": [],
-        "queue": "none",
-        "blockInputOverrides": false,
-        "domain": "number",
-        "service": "set_value",
-        "x": 1100,
-        "y": 940,
-        "wires": [
-            [
-                "b3e5dc23230bd3e8"
-            ]
-        ]
-    },
-    {
-        "id": "b3e5dc23230bd3e8",
-        "type": "api-call-service",
-        "z": "fa6bb9cfa58677c8",
-        "name": "AirGradient led brigthness to 0",
-        "server": "f88bb71a82464dcf",
-        "version": 7,
-        "debugenabled": false,
-        "action": "number.set_value",
-        "floorId": [],
-        "areaId": [],
-        "deviceId": [],
-        "entityId": [
-            "number.bedroom_airgradient_led_bar_brightness"
-        ],
-        "labelId": [],
-        "data": "{\"value\":0}",
-        "dataType": "json",
-        "mergeContext": "",
-        "mustacheAltTags": false,
-        "outputProperties": [],
-        "queue": "none",
-        "blockInputOverrides": false,
-        "domain": "number",
-        "service": "set_value",
-        "x": 1410,
-        "y": 940,
-        "wires": [
-            []
-        ]
-    },
-    {
         "id": "efec944ea44f7e8e",
         "type": "api-call-service",
         "z": "fa6bb9cfa58677c8",
@@ -10362,7 +10232,7 @@
         "entity_location": "data",
         "override_data": "msg",
         "x": 700,
-        "y": 1620,
+        "y": 1540,
         "wires": [
             [
                 "ebedfcd69743eaf6"
@@ -10396,7 +10266,7 @@
         "domain": "climate",
         "service": "turn_off",
         "x": 1180,
-        "y": 1580,
+        "y": 1500,
         "wires": [
             []
         ]
@@ -10427,7 +10297,7 @@
         "domain": "climate",
         "service": "turn_on",
         "x": 1210,
-        "y": 1640,
+        "y": 1560,
         "wires": [
             []
         ]
@@ -10469,7 +10339,7 @@
         "entity_location": "data",
         "override_data": "msg",
         "x": 940,
-        "y": 1620,
+        "y": 1540,
         "wires": [
             [
                 "6f4b3737e042a5b9",
@@ -10549,7 +10419,7 @@
         "domain": "switch",
         "service": "turn_on",
         "x": 710,
-        "y": 1680,
+        "y": 1600,
         "wires": [
             []
         ]
@@ -10581,7 +10451,7 @@
         "domain": "timer",
         "service": "cancel",
         "x": 680,
-        "y": 1740,
+        "y": 1660,
         "wires": [
             []
         ]
