@@ -15,7 +15,6 @@ namespaces:
   kube-system:
   hermes:
   mosquitto:
-  n8n:
   openclaw:
   plex:
   pocket-id:
@@ -59,7 +58,7 @@ apps:
   csi-driver-proxmox:
     <<: *default
     chart: oci://ghcr.io/sergelogvinov/charts/proxmox-csi-plugin
-    version: "0.5.7"
+    version: "0.5.9"
     namespace: kube-system
     valuesFile: csi-driver-proxmox/values.yml
     priority: -97
@@ -80,7 +79,7 @@ apps:
   cert-manager:
     <<: *default
     chart: jetstack/cert-manager
-    version: "v1.20.2"
+    version: "v1.20.3"
     namespace: cert-manager
     valuesFile: cert-manager/values.yml
     priority: -89
@@ -97,7 +96,7 @@ apps:
   traefik:
     <<: *default
     chart: traefik/traefik
-    version: "v40.3.0"
+    version: "v41.0.1"
     namespace: traefik
     valuesFile: traefik/values.yml
     priority: -87
@@ -199,3 +198,10 @@ apps:
     namespace: hermes
     valuesFile: hermes/values.yml
     priority: -59
+  openclaw:
+    <<: *default
+    chart: bjw-s/app-template
+    version: "5.0.1"
+    namespace: openclaw
+    valuesFile: openclaw/values.yml
+    priority: -58

@@ -7,6 +7,8 @@ defaultPodOptions:
 controllers:
   zigbee2mqtt:
     type: statefulset
+    pod:
+      hostUsers: false
     annotations:
       keel.sh/policy: minor
       keel.sh/trigger: poll

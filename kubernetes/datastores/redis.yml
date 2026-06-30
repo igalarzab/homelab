@@ -9,6 +9,7 @@ controllers:
       keel.sh/trigger: poll
       keel.sh/pollSchedule: "@midnight"
     pod:
+      hostUsers: false
       securityContext:
         fsGroup: 999
         fsGroupChangePolicy: OnRootMismatch

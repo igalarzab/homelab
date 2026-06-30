@@ -10,6 +10,8 @@ controllers:
   otbr:
     type: deployment
     strategy: Recreate
+    pod:
+      hostUsers: true # OTBR needs host user IDs for network and radio device access.
     annotations:
       keel.sh/policy: minor
       keel.sh/trigger: poll

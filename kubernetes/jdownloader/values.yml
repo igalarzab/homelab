@@ -8,6 +8,8 @@ controllers:
   jdownloader:
     type: deployment
     strategy: Recreate
+    pod:
+      hostUsers: true # SMB CSI volumes fail idmapped mounts, so JDownloader cannot disable host users.
     annotations:
       keel.sh/policy: major
       keel.sh/trigger: poll
