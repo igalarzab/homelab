@@ -7,3 +7,5 @@ nodePathMap:
   - node: DEFAULT_PATH_FOR_NON_LISTED_NODES
     paths:
       - ${COMMON_VOLUMES_PATH}
+
+hostUsers: true # The hostPath provisioner needs host user IDs for volume ownership.

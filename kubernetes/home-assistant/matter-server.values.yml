@@ -10,6 +10,8 @@ controllers:
   matter-server:
     type: deployment
     strategy: Recreate
+    pod:
+      hostUsers: false
     annotations:
       keel.sh/policy: minor
       keel.sh/trigger: poll

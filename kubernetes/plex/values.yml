@@ -9,6 +9,8 @@ defaultPodOptions:
 controllers:
   plex:
     type: statefulset
+    pod:
+      hostUsers: true # Quick Sync /dev/dri passthrough needs host user IDs.
     containers:
       plex:
         image:

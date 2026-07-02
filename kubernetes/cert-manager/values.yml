@@ -1,6 +1,9 @@
 crds:
   enabled: true
 
+global:
+  hostUsers: false
+
 prometheus:
   enabled: false
 

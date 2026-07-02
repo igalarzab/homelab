@@ -2,6 +2,9 @@ ingressClass:
   enabled: true
   isDefaultClass: true
 
+deployment:
+  hostUsers: false
+
 ingressRoute:
   dashboard:
     enabled: false

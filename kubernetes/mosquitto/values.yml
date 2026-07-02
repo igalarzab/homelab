@@ -7,6 +7,8 @@ defaultPodOptions:
 controllers:
   mosquitto:
     type: deployment
+    pod:
+      hostUsers: false
     annotations:
       keel.sh/policy: minor
       keel.sh/trigger: poll

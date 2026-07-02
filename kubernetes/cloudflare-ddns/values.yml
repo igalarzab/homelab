@@ -7,6 +7,8 @@ defaultPodOptions:
 controllers:
   cloudflare-ddns:
     type: deployment
+    pod:
+      hostUsers: false
     annotations:
       keel.sh/policy: minor
       keel.sh/trigger: poll
@@ -20,6 +22,7 @@ controllers:
           CLOUDFLARE_API_TOKEN: ${CLOUDFLARE_DDNS_TOKEN}
           DOMAINS: ${CLOUDFLARE_DDNS_DOMAINS}
           IP6_PROVIDER: none
+          TTL: "60"
         securityContext:
           runAsUser: 1000
           runAsGroup: 1000
