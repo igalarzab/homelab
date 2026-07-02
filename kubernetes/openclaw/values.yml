@@ -1,0 +1,96 @@
+---
+# yaml-language-server: $schema=https://raw.githubusercontent.com/bjw-s/helm-charts/app-template-5.0.1/charts/other/app-template/values.schema.json
+
+defaultPodOptions:
+  terminationGracePeriodSeconds: 30
+
+controllers:
+  openclaw:
+    type: deployment
+    strategy: Recreate
+    pod:
+      hostUsers: false
+      securityContext:
+        fsGroup: 100
+        fsGroupChangePolicy: OnRootMismatch
+    containers:
+      openclaw:
+        image:
+          repository: ghcr.io/openclaw/openclaw
+          tag: 2026.6.10
+        command:
+          - openclaw
+        args:
+          - gateway
+          - run
+          - --allow-unconfigured
+          - --bind
+          - lan
+          - --port
+          - "18789"
+        env:
+          TZ: ${COMMON_TZ}
+          HOME: /config
+          OPENCLAW_STATE_DIR: /config/.openclaw
+          OPENCLAW_GATEWAY_TOKEN: ${OPENCLAW_GATEWAY_TOKEN}
+        ports:
+          - name: http
+            protocol: TCP
+            containerPort: 18789
+        probes:
+          liveness:
+            enabled: true
+            custom: true
+            spec:
+              initialDelaySeconds: 30
+              periodSeconds: 10
+              timeoutSeconds: 3
+              successThreshold: 1
+              failureThreshold: 6
+              tcpSocket:
+                port: http
+          readiness:
+            enabled: true
+            custom: true
+            spec:
+              initialDelaySeconds: 30
+              periodSeconds: 10
+              timeoutSeconds: 3
+              successThreshold: 1
+              failureThreshold: 6
+              tcpSocket:
+                port: http
+
+service:
+  openclaw:
+    controller: openclaw
+    ports:
+      http:
+        port: 18789
+        targetPort: http
+
+ingress:
+  main:
+    annotations:
+      traefik.ingress.kubernetes.io/router.middlewares: traefik-oidc-pocketid@kubernetescrd
+      external-dns.alpha.kubernetes.io/hostname: openclaw.${COMMON_DOMAIN_ROOT}
+      external-dns.alpha.kubernetes.io/target: k8s.${COMMON_DOMAIN_ROOT}
+      external-dns.alpha.kubernetes.io/ttl: 1m
+    hosts:
+      - host: "openclaw.${COMMON_DOMAIN_ROOT}"
+        paths:
+          - path: /
+            pathType: Prefix
+            service:
+              identifier: openclaw
+              port: http
+
+persistence:
+  config:
+    type: hostPath
+    hostPath: ${COMMON_VOLUMES_PATH}/openclaw
+    hostPathType: DirectoryOrCreate
+    advancedMounts:
+      openclaw:
+        openclaw:
+          - path: /config
