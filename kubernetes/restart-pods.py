@@ -2,13 +2,14 @@
 
 import json
 import subprocess
-from typing import Any, Sequence
+from collections.abc import Sequence
+from typing import Any
 
 
 def run_kubectl(cmd: Sequence[str]) -> dict[str, Any]:
     cmd = list(cmd) + ["-o", "json"]
 
-    result = subprocess.run(cmd, capture_output=True, text=True)
+    result = subprocess.run(cmd, capture_output=True, text=True, check=False)
 
     if result.returncode != 0:
         raise ValueError(f"Command {' '.join(cmd)} failed with error: {result.stderr}")
@@ -17,7 +18,7 @@ def run_kubectl(cmd: Sequence[str]) -> dict[str, Any]:
 
 
 def get_all_namespaces() -> list[str]:
-    ns_data = run_kubectl("kubectl get namespaces".split())
+    ns_data = run_kubectl(["kubectl", "get", "namespaces"])
     return [ns["metadata"]["name"] for ns in ns_data.get("items", [])]
 
 

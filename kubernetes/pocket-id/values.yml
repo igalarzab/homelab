@@ -91,7 +91,7 @@ secrets:
 persistence:
   config:
     type: persistentVolumeClaim
-    storageClass: local-persistent-path
+    storageClass: local-path-retain
     accessMode: ReadWriteOncePod
     size: 1Gi
     advancedMounts:

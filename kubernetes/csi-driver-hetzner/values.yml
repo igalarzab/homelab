@@ -1,0 +1,8 @@
+controller:
+  hcloudToken:
+    value: ${CSI_DRIVER_HETZNER_TOKEN}
+
+storageClasses:
+  - name: hetzner-retain
+    defaultStorageClass: false
+    reclaimPolicy: Retain

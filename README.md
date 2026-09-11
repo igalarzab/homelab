@@ -1,206 +1,147 @@
-# 🏠 Homelab
+# Homelab
 
-A comprehensive Kubernetes-based homelab setup that provides infrastructure automation, home
-automation, and media services through containerized applications.
+Kubernetes infrastructure, home automation, and media services, with Talos managing
+the operating system and Kubernetes components. Helmsman manages the applications.
 
-## 🚀 Overview
+## Architecture
 
-This homelab combines Kubernetes orchestration with home automation capabilities, featuring:
+| Layer                           | Tools and configuration                                       |
+| ------------------------------- | ------------------------------------------------------------- |
+| Operating system and Kubernetes | Talos machine configuration and `talosctl`                    |
+| Persistent storage              | Local volumes and Hetzner, Proxmox, or SMB CSI drivers        |
+| Networking                      | Traefik ingress and Multus for additional pod networks        |
+| Certificates and DNS            | cert-manager, External DNS, and Cloudflare                    |
+| Authentication                  | Pocket ID                                                     |
+| Monitoring and updates          | Metrics Server and Keel                                       |
+| Home automation                 | Home Assistant, ESPHome, Node-RED, Zigbee2MQTT, and Mosquitto |
+| Media and downloads             | Plex and JDownloader                                          |
 
-- **Infrastructure**: Kubernetes cluster with storage, networking, and security components
-- **Home Automation**: Home Assistant ecosystem with ESPHome, Node-RED, and Zigbee2MQTT
-- **Media Services**: Plex media server and JDownloader
-- **Monitoring & Management**: Automated deployments, certificate management, and DNS
+Each cluster has its own Talos inputs, credentials, and Helm release manifest.
+Storage drivers and applications are selected in that cluster's manifest. Servers
+and VMs are provisioned outside this repository.
 
-## 🏗️ Architecture
+## Project structure
 
-The setup consists of three main components:
-
-### 1. 📦 Kubernetes Infrastructure
-- **Container Runtime**: containerd with custom configuration
-- **Storage**: Proxmox CSI driver for persistent volumes
-- **Networking**: Multus CNI, Traefik ingress controller
-- **Security**: cert-manager for TLS certificates, PocketID for authentication
-- **Monitoring**: Metrics server, Keel for automated updates
-
-### 2. 🏡 Home Automation Stack
-- **Home Assistant**: Central home automation hub
-- **ESPHome**: Custom firmware for ESP-based devices (AC controllers)
-- **Node-RED**: Visual flow-based automation
-- **Zigbee2MQTT**: Zigbee device integration
-- **Mosquitto**: MQTT broker for IoT communication
-
-### 3. 🎬 Media & Downloads
-- **Plex**: Media streaming server
-- **JDownloader**: Automated download management
-
-## 📁 Project Structure
-
-```
+```text
 homelab/
-├── ansible/                   # Server provisioning and K8s setup
-│   ├── roles/
-│   │   ├── base/              # Base system configuration
-│   │   ├── containerd/        # Container runtime setup
-│   │   └── kubeadm/           # Kubernetes cluster initialization
-│   └── server.yml             # Main playbook
-├── config/                    # Application configurations
-│   ├── esphome/               # ESP device configs for AC control
-│   ├── home-assistant/        # HA configuration and automations
-│   ├── mosquitto/             # MQTT broker settings
-│   ├── node-red/              # Node-RED flows and settings
-│   └── zigbee2mqtt/           # Zigbee device mappings
-└── kubernetes/                # Kubernetes manifests and Helm values
-    ├── helmsman.yml           # Helm chart orchestration
-    ├── run.py                 # Deployment automation script
-    └── */values.yml           # Individual service configurations
+  talos/
+    generate.sh                   # Generate and validate machine configuration
+    <cluster>/
+      cluster.env                 # Endpoints, disk, image, and pinned versions
+      schematic.yml               # Talos Image Factory customizations
+      patches/
+        common.yml                # Cluster-wide machine configuration
+        controlplane.yml          # Control-plane configuration
+      secrets.yaml                # Local credentials, ignored by Git
+      generated/                  # Generated configuration, ignored by Git
+  kubernetes/
+    helmsman.<cluster>.yml        # Helm releases for each cluster
+    .env                          # Shared application settings
+    .env.<cluster>                # Local overrides and secrets, ignored by Git
+    run.py                        # Application deployment commands
+    <service>/                    # Helm values and supporting manifests
+  config/
+    esphome/                      # Device firmware configuration
+    home-assistant/               # Dashboards, automations, and integrations
+    mosquitto/                    # MQTT configuration
+    node-red/                     # Flows and settings
+    zigbee2mqtt/                  # Zigbee configuration and device mappings
+  ansible/                        # Legacy Ubuntu and kubeadm provisioning
 ```
 
-## 🛠️ Prerequisites
+## Prerequisites
 
-- Python 3.13+
-- Kubernetes cluster access
-- Ansible for server provisioning
-- Helm 3.x
-- Helmsman for chart management
+- Python and `uv`
+- `talosctl`, `kubectl`, Helm, and Helmsman
 
-## 🚀 Quick Start
+## Set up a new workstation
 
-### 1. 📋 Setup Dependencies
+These steps restore access to an existing cluster after cloning the repository.
+Run commands from the repository root. Replace `your-cluster-name` with a directory
+name under `talos/` and use the same shell for the following commands:
 
 ```bash
-# Install Python dependencies
+CLUSTER=your-cluster-name
 uv sync
 ```
 
-### 2. ⚙️ Configure Ansible Variables
+### Restore credentials and generate configuration
+
+Restore the original cluster secrets from your secure backup:
 
 ```bash
-cp ansible/vars.yaml.example ansible/vars.yaml
-cp ansible/hosts.ini.example ansible/hosts.ini
-
-# Edit vars.yaml with your specific configuration
-vim ansible/vars.yaml
+install -m 600 /path/to/backup/secrets.yaml "talos/$CLUSTER/secrets.yaml"
+./talos/generate.sh "$CLUSTER"
 ```
 
-### 3. 🔧 Provision Servers
+The script recreates `talos/<cluster>/generated/controlplane.yaml` and
+`talos/<cluster>/generated/talosconfig`, configures the local Talos client, and
+validates the machine configuration. Generation only writes local files.
+
+### Restore Kubernetes access
+
+Fetch the admin kubeconfig from the running cluster and name its context to match
+the deployment configuration:
 
 ```bash
-cd ansible
-./run.sh
+talosctl --talosconfig "talos/$CLUSTER/generated/talosconfig" \
+  --context "$CLUSTER" kubeconfig --force-context-name "$CLUSTER"
+
+kubectl --context "$CLUSTER" get nodes
 ```
 
-### 4. 🎯 Deploy Applications
+This merges the context into `~/.kube/config`. There is no need to apply machine
+configuration or bootstrap an existing cluster when setting up a workstation.
+
+### Restore application settings
+
+Restore the cluster's environment file, which contains application credentials and
+overrides for the shared settings in `kubernetes/.env`:
+
+```bash
+install -m 600 /path/to/backup/cluster.env "kubernetes/.env.$CLUSTER"
+```
+
+## Deploy applications
+
+From the repository root, enter the Kubernetes directory. The first argument to
+`run.py` selects the Kubernetes context, Helm release manifest, and environment file:
 
 ```bash
 cd kubernetes
 
-# Dry run to check configuration
-python run.py dry-run
+# Review the deployment plan
+uv run python run.py "$CLUSTER" dry-run
 
-# Apply all applications
-python run.py apply
+# Apply the configured releases
+uv run python run.py "$CLUSTER" apply
 
-# Deploy specific application
-python run.py apply -n home-assistant
+# Deploy one configured application
+uv run python run.py "$CLUSTER" apply -n home-assistant
 
-# Check for outdated charts
-python run.py outdated
+# Check for chart updates
+uv run python run.py "$CLUSTER" outdated
 ```
 
-## 🔧 Configuration
+## Change Talos configuration
 
-### 🏠 Home Assistant Setup
+Edit the selected cluster's inputs or patches, regenerate the configuration, and
+review the diff before applying it. The [Talos guide](talos/README.md) describes the
+commands and how to add another cluster.
 
-The Home Assistant configuration includes:
+Talos and Kubernetes upgrades are separate lifecycle operations. Recovering a lost
+server also requires infrastructure provisioning and backups of Kubernetes state
+and application data; generating machine configuration does not restore that data.
 
-- **Dashboards**: Floor plan, main dashboard, and Lovelace UI
-- **Automations**: Theme switching, pre-cooling schedules
-- **Devices**: Input controls, sensors, media players, timers
-- **Integrations**: ESPHome AC controllers, Zigbee devices, Spotify
+## Customize services
 
-### 🌡️ ESPHome Devices
+To add an application:
 
-Pre-configured templates for Mitsubishi AC units in:
-- Bedroom
-- Living room (left and right units)
-- Office
+1. Create its Helm values under `kubernetes/<service>/`.
+2. Add a release to `kubernetes/helmsman.<cluster>.yml`.
+3. Review and apply it with `run.py`, using `-n <release-name>` to select the release.
 
-### 📊 Monitoring & Updates
-
-- **Keel**: Automated container image updates
-- **External DNS**: Automatic DNS record management with Cloudflare
-- **Metrics Server**: Resource monitoring for Kubernetes
-
-## 📚 Usage Examples
-
-### 🎯 Application Management
-
-```bash
-# Deploy only Home Assistant stack
-python run.py apply -n home-assistant
-python run.py apply -n zigbee2mqtt
-python run.py apply -n node-red
-python run.py apply -n esphome
-
-# Update a specific service
-python run.py apply -n plex
-
-# Remove an application
-python run.py destroy -n jdownloader
-```
-
-### 🏠 Home Assistant Features
-
-- **Climate Control**: Automated AC management through ESPHome
-- **Lighting**: Zigbee-based smart lighting with automation
-- **Media**: Spotify integration with multi-room audio
-- **Monitoring**: System sensors and device status tracking
-
-## 🔧 Customization
-
-### 🎨 Adding New Services
-
-1. Create Helm values file in `kubernetes/{service}/values.yml`
-2. Add entry to `kubernetes/helmsman.yml`
-3. Deploy using `python run.py apply -n {service}`
-
-### 🏡 Home Assistant Extensions
-
-1. Add configuration files to `config/home-assistant/`
-2. Update container volumes in `kubernetes/home-assistant/home-assistant.values.yml`
-3. Redeploy Home Assistant
-
-### 📱 ESPHome Devices
-
-1. Create device config in `config/esphome/{device}.yaml`
-2. Use existing templates from `config/esphome/templates/`
-3. Deploy through ESPHome dashboard
-
-## 🛡️ Security
-
-- **TLS Certificates**: Automated Let's Encrypt certificates via cert-manager
-- **Authentication**: PocketID for SSO across services
-- **Network Policies**: Isolated namespaces for different service stacks
-- **Secret Management**: Kubernetes secrets for sensitive configuration
-
-## 📈 Monitoring
-
-The homelab includes comprehensive monitoring through:
-
-- **Kubernetes Metrics**: Resource usage and cluster health
-- **Application Health**: Service availability and performance
-- **Home Automation**: Device status and automation execution
-- **Infrastructure**: Network, storage, and compute metrics
-
-## 🤝 Contributing
-
-This is a personal homelab configuration, but feel free to:
-
-1. Fork the repository for your own homelab setup
-2. Adapt configurations to your specific needs
-3. Share improvements and optimizations
-
-## 📄 License
-
-This project is for personal use. Feel free to adapt and modify for your own homelab needs.
+Application settings live in `config/`. Home Assistant includes dashboards,
+automations, scripts, and device definitions. ESPHome includes Mitsubishi AC
+controller configurations and shared templates. Update the relevant configuration
+and redeploy the application when needed.

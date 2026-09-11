@@ -74,7 +74,7 @@ service:
 ingress:
   main:
     annotations:
-      traefik.ingress.kubernetes.io/router.middlewares: traefik-oidc-pocketid@kubernetescrd
+      traefik.ingress.kubernetes.io/router.middlewares: traefik_oidc-pocketid@kubernetescrd
       external-dns.alpha.kubernetes.io/hostname: nodered.${COMMON_DOMAIN_ROOT}
       external-dns.alpha.kubernetes.io/target: k8s.${COMMON_DOMAIN_ROOT}
       external-dns.alpha.kubernetes.io/ttl: 1m

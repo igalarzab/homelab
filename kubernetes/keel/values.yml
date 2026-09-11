@@ -11,7 +11,7 @@ insecureRegistry: true
 ingress:
   enabled: true
   annotations:
-    traefik.ingress.kubernetes.io/router.middlewares: traefik-oidc-pocketid@kubernetescrd
+    traefik.ingress.kubernetes.io/router.middlewares: traefik_oidc-pocketid@kubernetescrd
     external-dns.alpha.kubernetes.io/hostname: keel.${COMMON_DOMAIN_ROOT}
     external-dns.alpha.kubernetes.io/target: k8s.${COMMON_DOMAIN_ROOT}
     external-dns.alpha.kubernetes.io/ttl: 1m
@@ -35,4 +35,4 @@ service:
 
 persistence:
   enabled: true
-  storageClass: local-path
+  storageClass: local-path-delete

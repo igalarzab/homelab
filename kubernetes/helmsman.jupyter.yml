@@ -14,8 +14,16 @@ namespaces:
   kube-system:
   pocket-id:
   traefik:
+    # Host ports require an exception; retain restricted policy warnings and auditing.
+    labels:
+      pod-security.kubernetes.io/enforce: privileged
+      pod-security.kubernetes.io/warn: restricted
+      pod-security.kubernetes.io/warn-version: latest
+      pod-security.kubernetes.io/audit: restricted
+      pod-security.kubernetes.io/audit-version: latest
 
 helmRepos:
+  hcloud: https://charts.hetzner.cloud
   bjw-s: https://bjw-s-labs.github.io/helm-charts
   containeroo: https://charts.containeroo.ch
   external-dns: https://kubernetes-sigs.github.io/external-dns/
@@ -32,78 +40,70 @@ appsTemplates:
     wait: true
 
 apps:
-  csi-driver-hostpath:
+  local-path-provisioner:
     <<: *default
     chart: containeroo/local-path-provisioner
-    version: "0.0.33"
+    version: "0.0.38"
     namespace: kube-system
-    valuesFile: csi-driver-hostpath/values.yml
-    priority: -109
+    valuesFile: local-path-provisioner/values.yml
     hooks:
-      postInstall: csi-driver-hostpath/post-install.yml
+      postInstall: local-path-provisioner/post-install.yml
+      postUpgrade: local-path-provisioner/post-install.yml
+  csi-driver-hetzner:
+    <<: *default
+    chart: hcloud/hcloud-csi
+    version: "2.23.0"
+    namespace: kube-system
+    valuesFile: csi-driver-hetzner/values.yml
   metrics-server:
     <<: *default
     chart: metrics-server/metrics-server
-    version: "3.13.0"
+    version: "3.14.0"
     namespace: kube-system
     valuesFile: metrics-server/values.yml
-    priority: -108
   cert-manager:
     <<: *default
     chart: jetstack/cert-manager
-    version: "v1.19.2"
+    version: "v1.21.1"
     namespace: cert-manager
     valuesFile: cert-manager/values.yml
-    priority: -99
     hooks:
       postInstall: cert-manager/post-install.yml
       postUpgrade: cert-manager/post-install.yml
   external-dns:
     <<: *default
     chart: external-dns/external-dns
-    version: "1.19.0"
+    version: "1.21.1"
     namespace: external-dns
     valuesFile: external-dns/values.yml
-    priority: -98
   traefik:
     <<: *default
     chart: traefik/traefik
-    version: "v37.4.0"
+    version: "41.5.0"
     namespace: traefik
     valuesFile: traefik/values.yml
-    priority: -97
   pocket-id:
     <<: *default
     chart: bjw-s/app-template
-    version: "5.0.1"
+    version: "5.1.0"
     namespace: pocket-id
     valuesFile: pocket-id/values.yml
-    priority: -96
-  keel:
-    <<: *default
-    chart: keel/keel
-    version: "1.0.5"
-    namespace: keel
-    valuesFile: keel/values.yml
-    priority: -95
   github-actions:
     <<: *default
     chart: bjw-s/app-template
-    version: "5.0.1"
+    version: "5.1.0"
     namespace: github-actions
     valuesFile: github-actions/values.yml
     priority: -59
   postgresql:
     <<: *default
     chart: bjw-s/app-template
-    version: "5.0.1"
+    version: "5.1.0"
     namespace: datastores
     valuesFile: datastores/postgresql.yml
-    priority: -58
   redis:
     <<: *default
     chart: bjw-s/app-template
-    version: "5.0.1"
+    version: "5.1.0"
     namespace: datastores
     valuesFile: datastores/redis.yml
-    priority: -57

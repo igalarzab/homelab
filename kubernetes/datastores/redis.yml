@@ -1,13 +1,9 @@
 ---
-# yaml-language-server: $schema=https://raw.githubusercontent.com/bjw-s/helm-charts/app-template-5.0.1/charts/other/app-template/values.schema.json
+# yaml-language-server: $schema=https://raw.githubusercontent.com/bjw-s/helm-charts/app-template-5.1.0/charts/other/app-template/values.schema.json
 
 controllers:
   redis:
     type: statefulset
-    annotations:
-      keel.sh/policy: minor
-      keel.sh/trigger: poll
-      keel.sh/pollSchedule: "@midnight"
     pod:
       hostUsers: false
       securityContext:
@@ -25,6 +21,8 @@ controllers:
           - --save
           - "60"
           - "1"
+          - --maxmemory-policy
+          - noeviction
           - --requirepass
           - $$(REDIS_PASSWORD)
         env:
@@ -42,7 +40,7 @@ controllers:
                 command:
                   - sh
                   - -c
-                  - redis-cli -a $$REDIS_PASSWORD ping
+                  - REDISCLI_AUTH="$$REDIS_PASSWORD" redis-cli -e ping
               initialDelaySeconds: 10
               periodSeconds: 10
               timeoutSeconds: 5
@@ -55,7 +53,7 @@ controllers:
                 command:
                   - sh
                   - -c
-                  - redis-cli -a $$REDIS_PASSWORD ping
+                  - REDISCLI_AUTH="$$REDIS_PASSWORD" redis-cli -e ping
               initialDelaySeconds: 5
               periodSeconds: 10
               timeoutSeconds: 5
@@ -73,7 +71,7 @@ service:
 persistence:
   data:
     type: persistentVolumeClaim
-    storageClass: local-persistent-path
+    storageClass: local-path-retain
     accessMode: ReadWriteOnce
     size: 10Gi
     advancedMounts:

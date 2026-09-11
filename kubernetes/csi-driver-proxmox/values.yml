@@ -7,7 +7,7 @@ config:
       region: homelab
 
 storageClass:
-  - name: proxmox-data
+  - name: proxmox-delete
     storage: local-volumes
     fstype: ext4
     reclaimPolicy: Delete

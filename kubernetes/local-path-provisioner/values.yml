@@ -1,5 +1,7 @@
 storageClass:
   create: true
+  name: local-path-delete
+  reclaimPolicy: Delete
   provisionerName: rancher.io/local-path
   pathPattern: "{{ .PVC.Namespace }}/{{ .PVC.Name }}/"
 

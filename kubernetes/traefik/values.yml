@@ -5,6 +5,16 @@ ingressClass:
 deployment:
   hostUsers: false
 
+updateStrategy:
+  type: RollingUpdate
+  rollingUpdate:
+    maxSurge: 0
+    maxUnavailable: 1
+
+podSecurityContext:
+  seccompProfile:
+    type: RuntimeDefault
+
 ingressRoute:
   dashboard:
     enabled: false
@@ -16,26 +26,43 @@ experimental:
       version: v0.18.0
 
 ports:
+  traefik:
+    http: &httpSecurity
+      aliasHeadersStrategy: delete
+      encodedCharacters:
+        allowEncodedSlash: false
+        allowEncodedBackSlash: false
+        allowEncodedNullCharacter: false
+        allowEncodedSemicolon: false
+        allowEncodedPercent: false
+        allowEncodedQuestionMark: false
+        allowEncodedHash: false
+  metrics:
+    http: *httpSecurity
   web:
-    nodePort: 80
+    hostPort: 80
     http:
+      <<: *httpSecurity
       redirections:
         entryPoint:
           to: websecure
           scheme: https
           permanent: true
   websecure:
-    nodePort: 443
+    hostPort: 443
+    http: *httpSecurity
   mqtt:
     port: 1883
     expose:
       default: true
     exposedPort: 1883
     protocol: TCP
-    nodePort: 1883
+    hostPort: 1883
+    http: *httpSecurity
 
 service:
-  type: NodePort
+  spec:
+    type: ClusterIP
   annotations:
     external-dns.alpha.kubernetes.io/hostname: k8s.${COMMON_DOMAIN_ROOT}
     external-dns.alpha.kubernetes.io/target: ${COMMON_DNS_IP}
@@ -43,7 +70,8 @@ service:
 
 providers:
   kubernetesCRD:
-    allowCrossNamespace: true
+    allowCrossNamespace: false
+    safeNaming: true
 
 extraObjects:
   - |

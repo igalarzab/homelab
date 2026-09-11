@@ -5,12 +5,13 @@ REMOTE_USER="${REMOTE_USER:-$USER}"
 # Parse command line arguments
 if [ -z "$1" ]; then
     echo "Error: Playbook parameter is required"
-    echo "Usage: ./run.sh [jupyter|saturn]"
+    echo "Usage: ./run.sh saturn"
     exit 1
 fi
 
 if [ "$1" == "jupyter" ]; then
-    PLAYBOOK="jupyter.yml"
+    echo "Error: Jupyter now uses Talos. See ../talos/README.md."
+    exit 1
 elif [ "$1" == "saturn" ]; then
     PLAYBOOK="saturn.yml"
 else

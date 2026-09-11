@@ -13,9 +13,7 @@ namespaces:
   jdownloader:
   keel:
   kube-system:
-  hermes:
   mosquitto:
-  openclaw:
   plex:
   pocket-id:
   traefik:
@@ -42,47 +40,41 @@ apps:
   csi-driver-smb:
     <<: *default
     chart: csi-driver-smb/csi-driver-smb
-    version: "v1.20.1"
+    version: "1.20.3"
     namespace: kube-system
-    priority: -99
-  csi-driver-hostpath:
+  local-path-provisioner:
     <<: *default
     chart: containeroo/local-path-provisioner
-    version: "0.0.37"
+    version: "0.0.38"
     namespace: kube-system
-    valuesFile: csi-driver-hostpath/values.yml
-    priority: -98
+    valuesFile: local-path-provisioner/values.yml
     hooks:
-      postInstall: csi-driver-hostpath/post-install.yml
-      postUpgrade: csi-driver-hostpath/post-install.yml
+      postInstall: local-path-provisioner/post-install.yml
+      postUpgrade: local-path-provisioner/post-install.yml
   csi-driver-proxmox:
     <<: *default
     chart: oci://ghcr.io/sergelogvinov/charts/proxmox-csi-plugin
-    version: "0.5.9"
+    version: "0.5.12"
     namespace: kube-system
     valuesFile: csi-driver-proxmox/values.yml
-    priority: -97
   multus-cni:
     <<: *default
     chart: bitnami/multus-cni
     version: "2.2.21"
     namespace: kube-system
     valuesFile: multus-cni/values.yml
-    priority: -96
   metrics-server:
     <<: *default
     chart: metrics-server/metrics-server
-    version: "3.13.1"
+    version: "3.14.0"
     namespace: kube-system
     valuesFile: metrics-server/values.yml
-    priority: -95
   cert-manager:
     <<: *default
     chart: jetstack/cert-manager
-    version: "v1.20.3"
+    version: "v1.21.1"
     namespace: cert-manager
     valuesFile: cert-manager/values.yml
-    priority: -89
     hooks:
       postInstall: cert-manager/post-install.yml
       postUpgrade: cert-manager/post-install.yml
@@ -92,116 +84,87 @@ apps:
     version: "1.21.1"
     namespace: external-dns
     valuesFile: external-dns/values.yml
-    priority: -88
   traefik:
     <<: *default
     chart: traefik/traefik
-    version: "v41.0.1"
+    version: "41.5.0"
     namespace: traefik
     valuesFile: traefik/values.yml
-    priority: -87
   pocket-id:
     <<: *default
     chart: bjw-s/app-template
-    version: "5.0.1"
+    version: "5.1.0"
     namespace: pocket-id
     valuesFile: pocket-id/values.yml
-    priority: -86
   keel:
     <<: *default
     chart: keel/keel
-    version: "1.2.0"
+    version: "1.2.2"
     namespace: keel
     valuesFile: keel/values.yml
-    priority: -85
   cloudflare-ddns:
     <<: *default
     chart: bjw-s/app-template
-    version: "5.0.1"
+    version: "5.1.0"
     namespace: cloudflare-ddns
     valuesFile: cloudflare-ddns/values.yml
-    priority: -84
   plex:
     <<: *default
     chart: bjw-s/app-template
-    version: "5.0.1"
+    version: "5.1.0"
     namespace: plex
     valuesFile: plex/values.yml
-    priority: -79
   jdownloader:
     <<: *default
     chart: bjw-s/app-template
-    version: "5.0.1"
+    version: "5.1.0"
     namespace: jdownloader
     valuesFile: jdownloader/values.yml
-    priority: -78
   mosquitto:
     <<: *default
     chart: bjw-s/app-template
-    version: "5.0.1"
+    version: "5.1.0"
     namespace: mosquitto
     valuesFile: mosquitto/values.yml
-    priority: -69
   zigbee2mqtt:
     <<: *default
     chart: bjw-s/app-template
-    version: "5.0.1"
+    version: "5.1.0"
     namespace: home-assistant
     valuesFile: home-assistant/zigbee2mqtt.values.yml
-    priority: -68
   node-red:
     <<: *default
     chart: bjw-s/app-template
-    version: "5.0.1"
+    version: "5.1.0"
     namespace: home-assistant
     valuesFile: home-assistant/nodered.values.yml
-    priority: -67
   esphome:
     <<: *default
     chart: bjw-s/app-template
-    version: "5.0.1"
+    version: "5.1.0"
     namespace: home-assistant
     valuesFile: home-assistant/esphome.values.yml
-    priority: -66
   mmwave-configurator:
     <<: *default
     chart: bjw-s/app-template
-    version: "5.0.1"
+    version: "5.1.0"
     namespace: home-assistant
     valuesFile: home-assistant/mmwave-configurator.values.yml
-    priority: -66
   otbr:
     <<: *default
     chart: bjw-s/app-template
-    version: "5.0.1"
+    version: "5.1.0"
     namespace: home-assistant
     valuesFile: home-assistant/otbr.values.yml
-    priority: -65
   matter-server:
     <<: *default
     chart: bjw-s/app-template
-    version: "5.0.1"
+    version: "5.1.0"
     namespace: home-assistant
     valuesFile: home-assistant/matter-server.values.yml
-    priority: -64
   home-assistant:
     <<: *default
     chart: bjw-s/app-template
-    version: "5.0.1"
+    version: "5.1.0"
     namespace: home-assistant
     valuesFile: home-assistant/home-assistant.values.yml
-    priority: -63
-  hermes:
-    <<: *default
-    chart: bjw-s/app-template
-    version: "5.0.1"
-    namespace: hermes
-    valuesFile: hermes/values.yml
-    priority: -59
-  openclaw:
-    <<: *default
-    chart: bjw-s/app-template
-    version: "5.0.1"
-    namespace: openclaw
-    valuesFile: openclaw/values.yml
-    priority: -58
