@@ -10,7 +10,7 @@ if [ -z "$1" ]; then
 fi
 
 if [ "$1" == "jupyter" ]; then
-    echo "Error: Jupyter now uses Talos. See ../talos/README.md."
+    echo "Error: Jupyter now uses Talos. See ../README.md."
     exit 1
 elif [ "$1" == "saturn" ]; then
     PLAYBOOK="saturn.yml"
