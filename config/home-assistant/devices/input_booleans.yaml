@@ -6,6 +6,10 @@ holidays:
   name: Holidays Mode
   icon: mdi:beach
 
+jose_travelling:
+  name: Jose Travelling
+  icon: mdi:wallet-travel
+
 home_ac_automations:
   name: Home AC Automations
   initial: 'on'
