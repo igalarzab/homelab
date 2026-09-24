@@ -1,0 +1,1417 @@
+---
+title: Home
+views:
+  - title: Home
+    path: home
+    icon: mdi:home-outline
+    type: sections
+    max_columns: 3
+    header:
+      layout: responsive
+      badges_position: bottom
+      card:
+        type: markdown
+        text_only: true
+        content: |-
+          {% set hour = now().hour %}
+          # Good {{ 'morning' if 5 <= hour < 12 else 'afternoon' if 12 <= hour < 18 else 'evening' }}{{ ', ' ~ user if user is defined else '' }}
+          {{ now().strftime('%A, %-d %B') }}. Your home, room by room.
+    badges:
+      - type: entity
+        entity: person.jose
+        show_state: true
+        name: Iñaki
+        show_name: true
+        show_entity_picture: true
+      - type: entity
+        entity: input_boolean.guests
+        show_state: true
+        name: Guests
+        show_name: true
+        color: teal
+        visibility:
+          - condition: state
+            entity: input_boolean.guests
+            state: 'on'
+      - type: entity
+        entity: input_boolean.holidays
+        show_state: true
+        name: Holiday mode
+        show_name: true
+        color: blue
+        visibility:
+          - condition: state
+            entity: input_boolean.holidays
+            state: 'on'
+      - type: entity
+        entity: sensor.unavailable_entities
+        show_state: true
+        name: Unavailable
+        show_name: true
+        color: orange
+        visibility:
+          - condition: numeric_state
+            entity: sensor.unavailable_entities
+            above: 0
+        tap_action:
+          action: navigate
+          navigation_path: /modern-dashboard/settings
+    sections:
+      - type: grid
+        background:
+          color: '#CE922F'
+          opacity: 8
+        cards:
+          - type: heading
+            heading: Living room
+            heading_style: title
+            icon: mdi:sofa-outline
+            tap_action:
+              action: navigate
+              navigation_path: /modern-dashboard/living-room
+            badges:
+              - type: entity
+                entity: sensor.living_room_thermometer_humidity
+                show_state: true
+          - type: tile
+            entity: sensor.living_room_thermometer_temperature
+            name: Temperature
+            color: amber
+            features:
+              - type: trend-graph
+                hours_to_show: 12
+                detail: false
+            grid_options:
+              columns: 12
+          - type: tile
+            entity: switch.living_room_controller_wall_gang_one
+            name: Dining lights
+            icon: mdi:lightbulb-outline
+            color: amber
+            tap_action:
+              action: toggle
+            hold_action:
+              action: more-info
+          - type: tile
+            entity: switch.living_room_controller_wall_gang_two
+            name: Sofa lights
+            icon: mdi:lightbulb-outline
+            color: amber
+            tap_action:
+              action: toggle
+            hold_action:
+              action: more-info
+      - type: grid
+        background:
+          color: '#2F9B80'
+          opacity: 8
+        cards:
+          - type: heading
+            heading: Kitchen
+            heading_style: title
+            icon: mdi:countertop-outline
+            tap_action:
+              action: navigate
+              navigation_path: /modern-dashboard/kitchen
+            badges:
+              - type: entity
+                entity: binary_sensor.kitchen_hub_presence
+                show_state: true
+                color: state
+          - type: tile
+            entity: sensor.kitchen_coffee_machine_plug_power
+            name: Coffee machine power
+            color: teal
+            features:
+              - type: trend-graph
+                hours_to_show: 12
+                detail: false
+            grid_options:
+              columns: 12
+          - type: tile
+            entity: switch.kitchen_controller_wall_gang_one
+            name: Ceiling light
+            icon: mdi:lightbulb-outline
+            color: amber
+            tap_action:
+              action: toggle
+            hold_action:
+              action: more-info
+          - type: tile
+            entity: switch.kitchen_coffee_machine_plug
+            name: Coffee machine
+            icon: mdi:coffee-outline
+            color: teal
+      - type: grid
+        background:
+          color: '#5089C6'
+          opacity: 8
+        cards:
+          - type: heading
+            heading: Office
+            heading_style: title
+            icon: mdi:desk
+            tap_action:
+              action: navigate
+              navigation_path: /modern-dashboard/office
+            badges:
+              - type: entity
+                entity: sensor.office_hub_humidity
+                show_state: true
+          - type: tile
+            entity: sensor.office_hub_temperature
+            name: Temperature
+            color: blue
+            features:
+              - type: trend-graph
+                hours_to_show: 12
+                detail: false
+            grid_options:
+              columns: 12
+          - type: tile
+            entity: switch.office_controller_wall_gang_one
+            name: Ceiling light
+            icon: mdi:lightbulb-outline
+            color: amber
+            tap_action:
+              action: toggle
+            hold_action:
+              action: more-info
+          - type: tile
+            entity: light.office_light_rack
+            name: Rack light
+            icon: mdi:led-strip-variant
+            color: amber
+            tap_action:
+              action: toggle
+            hold_action:
+              action: more-info
+      - type: grid
+        background:
+          color: '#9471BD'
+          opacity: 8
+        cards:
+          - type: heading
+            heading: Bedroom
+            heading_style: title
+            icon: mdi:bed-king-outline
+            tap_action:
+              action: navigate
+              navigation_path: /modern-dashboard/bedroom
+            badges:
+              - type: entity
+                entity: sensor.bedroom_hub_humidity
+                show_state: true
+          - type: tile
+            entity: sensor.bedroom_hub_temperature
+            name: Temperature
+            color: purple
+            features:
+              - type: trend-graph
+                hours_to_show: 12
+                detail: false
+            grid_options:
+              columns: 12
+          - type: tile
+            entity: switch.bedroom_controller_wall_gang_one
+            name: Ceiling light
+            icon: mdi:lightbulb-outline
+            color: amber
+            tap_action:
+              action: toggle
+            hold_action:
+              action: more-info
+          - type: tile
+            entity: light.bedroom_light_bed
+            name: Bed light
+            icon: mdi:lamp-outline
+            color: amber
+            tap_action:
+              action: toggle
+            hold_action:
+              action: more-info
+      - type: grid
+        background:
+          color: '#39A4B4'
+          opacity: 8
+        cards:
+          - type: heading
+            heading: Bathroom
+            heading_style: title
+            icon: mdi:shower-head
+            tap_action:
+              action: navigate
+              navigation_path: /modern-dashboard/bathroom
+            badges:
+              - type: entity
+                entity: sensor.bathroom_hub_temperature
+                show_state: true
+          - type: tile
+            entity: sensor.bathroom_hub_humidity
+            name: Humidity
+            color: cyan
+            features:
+              - type: trend-graph
+                hours_to_show: 12
+                detail: false
+            grid_options:
+              columns: 12
+          - type: tile
+            entity: switch.bathroom_controller_wall_gang_one
+            name: Ceiling light
+            icon: mdi:lightbulb-outline
+            color: amber
+            tap_action:
+              action: toggle
+            hold_action:
+              action: more-info
+          - type: tile
+            entity: switch.bathroom_controller_wall_gang_two
+            name: Extractor fan
+            icon: mdi:fan
+            color: cyan
+            tap_action:
+              action: toggle
+            hold_action:
+              action: more-info
+      - type: grid
+        background:
+          color: '#8291A4'
+          opacity: 8
+        cards:
+          - type: heading
+            heading: Entrance & hall
+            heading_style: title
+            icon: mdi:door-open
+            tap_action:
+              action: navigate
+              navigation_path: /modern-dashboard/entrance
+            badges:
+              - type: entity
+                entity: binary_sensor.entrance_motion_occupancy
+                show_state: true
+                color: state
+          - type: tile
+            entity: binary_sensor.entrance_door_contact
+            name: Front door
+            color: orange
+            grid_options:
+              columns: 12
+          - type: tile
+            entity: switch.entrance_controller_wall_gang_one
+            name: Entrance light
+            icon: mdi:lightbulb-outline
+            color: amber
+            tap_action:
+              action: toggle
+            hold_action:
+              action: more-info
+          - type: tile
+            entity: switch.living_room_controller_wall_gang_three
+            name: Hall light
+            icon: mdi:lightbulb-outline
+            color: amber
+            tap_action:
+              action: toggle
+            hold_action:
+              action: more-info
+      - type: grid
+        cards:
+          - type: heading
+            heading: Daily routines
+            heading_style: title
+            icon: mdi:gesture-tap-button
+          - type: tile
+            entity: input_button.wake_up
+            name: Wake up
+            icon: mdi:weather-sunset-up
+            color: amber
+            hide_state: true
+            tap_action:
+              action: perform-action
+              perform_action: input_button.press
+              target:
+                entity_id: input_button.wake_up
+            icon_tap_action:
+              action: perform-action
+              perform_action: input_button.press
+              target:
+                entity_id: input_button.wake_up
+          - type: tile
+            entity: input_button.go_to_sleep
+            name: Good night
+            icon: mdi:weather-night
+            color: purple
+            hide_state: true
+            tap_action:
+              action: perform-action
+              perform_action: input_button.press
+              target:
+                entity_id: input_button.go_to_sleep
+            icon_tap_action:
+              action: perform-action
+              perform_action: input_button.press
+              target:
+                entity_id: input_button.go_to_sleep
+          - type: tile
+            entity: input_button.pre_cool_home
+            name: Pre-cool home
+            icon: mdi:snowflake
+            color: blue
+            hide_state: true
+            tap_action:
+              action: perform-action
+              perform_action: input_button.press
+              target:
+                entity_id: input_button.pre_cool_home
+            icon_tap_action:
+              action: perform-action
+              perform_action: input_button.press
+              target:
+                entity_id: input_button.pre_cool_home
+          - type: tile
+            entity: input_button.vacuum_home
+            name: Clean home
+            icon: mdi:robot-vacuum
+            color: teal
+            hide_state: true
+            tap_action:
+              action: perform-action
+              perform_action: input_button.press
+              target:
+                entity_id: input_button.vacuum_home
+            icon_tap_action:
+              action: perform-action
+              perform_action: input_button.press
+              target:
+                entity_id: input_button.vacuum_home
+          - type: tile
+            entity: input_button.leave_home
+            name: Leave home
+            icon: mdi:exit-run
+            color: grey
+            hide_state: true
+            tap_action:
+              action: perform-action
+              perform_action: input_button.press
+              target:
+                entity_id: input_button.leave_home
+            icon_tap_action:
+              action: perform-action
+              perform_action: input_button.press
+              target:
+                entity_id: input_button.leave_home
+          - type: tile
+            entity: input_boolean.guests
+            name: Guest mode
+            icon: mdi:account-multiple-outline
+            color: teal
+      - type: grid
+        cards:
+          - type: heading
+            heading: Today
+            heading_style: title
+            icon: mdi:weather-partly-cloudy
+          - type: clock
+            clock_size: medium
+            time_zone: Asia/Singapore
+            show_seconds: false
+            no_background: true
+            grid_options:
+              columns: 12
+          - type: tile
+            entity: weather.forecast_home
+            name: At home
+            features:
+              - type: temperature-forecast
+                days_to_show: 5
+            grid_options:
+              columns: 12
+      - type: grid
+        cards:
+          - type: heading
+            heading: House status
+            heading_style: title
+            icon: mdi:home-heart
+            tap_action:
+              action: navigate
+              navigation_path: /modern-dashboard/settings
+          - type: tile
+            entity: input_boolean.home_vacuumed
+            name: Cleaned today
+            icon: mdi:robot-vacuum
+            color: teal
+            icon_tap_action:
+              action: more-info
+          - type: tile
+            entity: input_boolean.home_locked
+            name: Away mode
+            icon: mdi:home-export-outline
+            color: blue
+            icon_tap_action:
+              action: more-info
+          - type: tile
+            entity: sensor.unavailable_entities
+            name: Unavailable devices
+            icon: mdi:lan-disconnect
+            color: orange
+            grid_options:
+              columns: 12
+          - type: entity-filter
+            entities:
+              - entity: binary_sensor.entrance_door_contact
+                name: Front door
+              - entity: binary_sensor.living_room_door_left_contact
+                name: Living room left door
+              - entity: binary_sensor.living_room_door_right_contact
+                name: Living room right door
+              - entity: binary_sensor.office_window_centre_contact
+                name: Office centre window
+              - entity: binary_sensor.office_window_right_contact
+                name: Office right window
+              - entity: binary_sensor.bedroom_window_left_contact
+                name: Bedroom left window
+              - entity: binary_sensor.bedroom_window_right_contact
+                name: Bedroom right window
+            conditions:
+              - condition: state
+                state: 'on'
+            show_empty: false
+            card:
+              type: entities
+              title: Open doors & windows
+              show_header_toggle: false
+              state_color: true
+            grid_options:
+              columns: 12
+  - title: Living room
+    path: living-room
+    icon: mdi:sofa-outline
+    type: sections
+    subview: true
+    back_path: /modern-dashboard/home
+    max_columns: 3
+    header:
+      layout: start
+      card:
+        type: markdown
+        text_only: true
+        content: |-
+          # Living room
+          Lighting, curtains and a comfortable place to unwind.
+    sections:
+      - type: grid
+        background:
+          color: '#CE922F'
+          opacity: 8
+        cards:
+          - type: heading
+            heading: Lighting & curtains
+            heading_style: title
+            icon: mdi:lightbulb-group-outline
+          - type: tile
+            entity: switch.living_room_controller_wall_gang_one
+            name: Dining lights
+            icon: mdi:lightbulb-outline
+            color: amber
+            tap_action:
+              action: toggle
+            hold_action:
+              action: more-info
+          - type: tile
+            entity: switch.living_room_controller_wall_gang_two
+            name: Sofa lights
+            icon: mdi:lightbulb-outline
+            color: amber
+            tap_action:
+              action: toggle
+            hold_action:
+              action: more-info
+          - type: tile
+            entity: light.living_room_tv_lightstrip
+            name: TV lightstrip
+            color: amber
+            features:
+              - type: light-brightness
+            grid_options:
+              columns: 12
+          - type: tile
+            entity: cover.living_room_curtains
+            name: Curtains
+            icon: mdi:curtains
+            color: teal
+            features:
+              - type: cover-open-close
+              - type: cover-position
+            grid_options:
+              columns: 12
+      - type: grid
+        cards:
+          - type: heading
+            heading: Climate
+            heading_style: title
+            icon: mdi:thermometer
+          - type: tile
+            entity: sensor.living_room_thermometer_temperature
+            name: Temperature
+            color: amber
+            features:
+              - type: trend-graph
+                hours_to_show: 12
+                detail: false
+            grid_options:
+              columns: 12
+          - type: tile
+            entity: climate.living_room_left_ac_controller
+            name: Left air conditioner
+            icon: mdi:air-conditioner
+            color: blue
+            features:
+              - type: target-temperature
+              - type: climate-hvac-modes
+                style: dropdown
+            grid_options:
+              columns: 12
+          - type: tile
+            entity: climate.living_room_right_ac_controller
+            name: Right air conditioner
+            icon: mdi:air-conditioner
+            color: blue
+            features:
+              - type: target-temperature
+              - type: climate-hvac-modes
+                style: dropdown
+            grid_options:
+              columns: 12
+      - type: grid
+        cards:
+          - type: heading
+            heading: Media & doors
+            heading_style: title
+            icon: mdi:play-circle-outline
+          - type: media-control
+            entity: media_player.living_room_speaker
+            grid_options:
+              columns: 12
+          - type: media-control
+            entity: media_player.living_room_media_center
+            grid_options:
+              columns: 12
+          - type: tile
+            entity: binary_sensor.living_room_door_left_contact
+            name: Left door
+            color: orange
+          - type: tile
+            entity: binary_sensor.living_room_door_right_contact
+            name: Right door
+            color: orange
+    badges:
+      - type: entity
+        entity: sensor.living_room_thermometer_temperature
+        show_state: true
+        name: Temperature
+        show_name: true
+      - type: entity
+        entity: sensor.living_room_thermometer_humidity
+        show_state: true
+        name: Humidity
+        show_name: true
+  - title: Kitchen
+    path: kitchen
+    icon: mdi:countertop-outline
+    type: sections
+    subview: true
+    back_path: /modern-dashboard/home
+    max_columns: 3
+    header:
+      layout: start
+      card:
+        type: markdown
+        text_only: true
+        content: |-
+          # Kitchen
+          Lights, coffee and power use.
+    sections:
+      - type: grid
+        background:
+          color: '#2F9B80'
+          opacity: 8
+        cards:
+          - type: heading
+            heading: In the kitchen
+            heading_style: title
+            icon: mdi:countertop-outline
+          - type: tile
+            entity: switch.kitchen_controller_wall_gang_one
+            name: Ceiling light
+            icon: mdi:lightbulb-outline
+            color: amber
+            tap_action:
+              action: toggle
+            hold_action:
+              action: more-info
+          - type: tile
+            entity: binary_sensor.kitchen_hub_presence
+            name: Presence
+            color: teal
+          - type: tile
+            entity: sensor.kitchen_hub_illuminance
+            name: Daylight
+            color: teal
+            features:
+              - type: trend-graph
+                hours_to_show: 12
+                detail: false
+            grid_options:
+              columns: 12
+      - type: grid
+        cards:
+          - type: heading
+            heading: Coffee
+            heading_style: title
+            icon: mdi:coffee-outline
+          - type: tile
+            entity: switch.kitchen_coffee_machine_plug
+            name: Coffee machine
+            icon: mdi:coffee-outline
+            color: teal
+            features:
+              - type: toggle
+            features_position: inline
+            grid_options:
+              columns: 12
+          - type: tile
+            entity: sensor.kitchen_coffee_machine_plug_power
+            name: Power now
+            color: teal
+            features:
+              - type: trend-graph
+                hours_to_show: 12
+                detail: false
+            grid_options:
+              columns: 12
+          - type: tile
+            entity: sensor.kitchen_coffee_machine_plug_energy_today
+            name: Energy today
+            icon: mdi:lightning-bolt-outline
+            color: teal
+            grid_options:
+              columns: 12
+      - type: grid
+        cards:
+          - type: heading
+            heading: Details
+            heading_style: title
+            icon: mdi:information-outline
+          - type: entities
+            title: Coffee machine supply
+            show_header_toggle: false
+            state_color: true
+            entities:
+              - entity: sensor.kitchen_coffee_machine_plug_voltage
+                name: Voltage
+              - entity: sensor.kitchen_coffee_machine_plug_current
+                name: Current
+            grid_options:
+              columns: 12
+          - type: tile
+            entity: timer.kitchen_automatic_lights_timer
+            name: Automatic lights timer
+            grid_options:
+              columns: 12
+  - title: Office
+    path: office
+    icon: mdi:desk
+    type: sections
+    subview: true
+    back_path: /modern-dashboard/home
+    max_columns: 3
+    header:
+      layout: start
+      card:
+        type: markdown
+        text_only: true
+        content: |-
+          # Office
+          Lighting, cooling and the workbench.
+    sections:
+      - type: grid
+        background:
+          color: '#5089C6'
+          opacity: 8
+        cards:
+          - type: heading
+            heading: Lighting & climate
+            heading_style: title
+            icon: mdi:desk
+          - type: tile
+            entity: switch.office_controller_wall_gang_one
+            name: Ceiling light
+            icon: mdi:lightbulb-outline
+            color: amber
+            tap_action:
+              action: toggle
+            hold_action:
+              action: more-info
+          - type: tile
+            entity: binary_sensor.office_hub_presence
+            name: Presence
+            color: blue
+          - type: tile
+            entity: light.office_light_rack
+            name: Rack light
+            color: amber
+            features:
+              - type: light-brightness
+            grid_options:
+              columns: 12
+          - type: tile
+            entity: sensor.office_hub_temperature
+            name: Temperature
+            color: blue
+            features:
+              - type: trend-graph
+                hours_to_show: 12
+                detail: false
+            grid_options:
+              columns: 12
+          - type: tile
+            entity: climate.office_ac_controller
+            name: Air conditioner
+            icon: mdi:air-conditioner
+            color: blue
+            features:
+              - type: target-temperature
+              - type: climate-hvac-modes
+                style: dropdown
+            grid_options:
+              columns: 12
+      - type: grid
+        cards:
+          - type: heading
+            heading: Workbench
+            heading_style: title
+            icon: mdi:power-plug-outline
+          - type: tile
+            entity: switch.office_computer_plug
+            name: Computer power
+            icon: mdi:desktop-tower-monitor
+            color: blue
+            icon_tap_action:
+              action: more-info
+          - type: tile
+            entity: switch.office_3d_printer_plug
+            name: 3D printer power
+            icon: mdi:printer-3d-nozzle-outline
+            color: blue
+            icon_tap_action:
+              action: more-info
+          - type: tile
+            entity: sensor.office_computer_plug_power
+            name: Computer power now
+            color: blue
+            features:
+              - type: trend-graph
+                hours_to_show: 12
+                detail: false
+            grid_options:
+              columns: 12
+          - type: tile
+            entity: sensor.office_3d_printer_plug_power
+            name: 3D printer power now
+            color: blue
+            features:
+              - type: trend-graph
+                hours_to_show: 12
+                detail: false
+            grid_options:
+              columns: 12
+          - type: tile
+            entity: sensor.office_computer_plug_energy_today
+            name: Computer today
+          - type: tile
+            entity: sensor.office_3d_printer_plug_energy_today
+            name: 3D printer today
+      - type: grid
+        cards:
+          - type: heading
+            heading: Media & room status
+            heading_style: title
+            icon: mdi:speaker
+          - type: media-control
+            entity: media_player.office_speaker
+            grid_options:
+              columns: 12
+          - type: tile
+            entity: binary_sensor.office_door_contact
+            name: Door
+            color: orange
+          - type: tile
+            entity: sensor.office_hub_illuminance
+            name: Daylight
+            color: amber
+          - type: tile
+            entity: binary_sensor.office_window_centre_contact
+            name: Centre window
+            color: orange
+          - type: tile
+            entity: binary_sensor.office_window_right_contact
+            name: Right window
+            color: orange
+          - type: entities
+            title: Power supply
+            show_header_toggle: false
+            state_color: true
+            entities:
+              - entity: sensor.office_computer_plug_voltage
+                name: Computer voltage
+              - entity: sensor.office_computer_plug_current
+                name: Computer current
+              - entity: sensor.office_3d_printer_plug_voltage
+                name: 3D printer voltage
+              - entity: sensor.office_3d_printer_plug_current
+                name: 3D printer current
+            grid_options:
+              columns: 12
+    badges:
+      - type: entity
+        entity: sensor.office_hub_temperature
+        show_state: true
+        name: Temperature
+        show_name: true
+      - type: entity
+        entity: sensor.office_hub_humidity
+        show_state: true
+        name: Humidity
+        show_name: true
+  - title: Bedroom
+    path: bedroom
+    icon: mdi:bed-king-outline
+    type: sections
+    subview: true
+    back_path: /modern-dashboard/home
+    max_columns: 3
+    header:
+      layout: start
+      card:
+        type: markdown
+        text_only: true
+        content: |-
+          # Bedroom
+          Settle in, dim the lights and close the curtains.
+    sections:
+      - type: grid
+        background:
+          color: '#9471BD'
+          opacity: 8
+        cards:
+          - type: heading
+            heading: Lighting & curtains
+            heading_style: title
+            icon: mdi:lamp-outline
+          - type: tile
+            entity: switch.bedroom_controller_wall_gang_one
+            name: Ceiling light
+            icon: mdi:lightbulb-outline
+            color: amber
+            tap_action:
+              action: toggle
+            hold_action:
+              action: more-info
+          - type: tile
+            entity: binary_sensor.bedroom_hub_occupancy
+            name: Presence
+            color: purple
+          - type: tile
+            entity: light.bedroom_light_bed
+            name: Bed light
+            color: amber
+            features:
+              - type: light-brightness
+            grid_options:
+              columns: 12
+          - type: tile
+            entity: cover.bedroom_curtains
+            name: Curtains
+            icon: mdi:curtains
+            color: teal
+            features:
+              - type: cover-open-close
+              - type: cover-position
+            grid_options:
+              columns: 12
+      - type: grid
+        cards:
+          - type: heading
+            heading: Climate & sleep
+            heading_style: title
+            icon: mdi:weather-night
+          - type: tile
+            entity: sensor.bedroom_hub_temperature
+            name: Temperature
+            color: purple
+            features:
+              - type: trend-graph
+                hours_to_show: 12
+                detail: false
+            grid_options:
+              columns: 12
+          - type: tile
+            entity: climate.bedroom_ac_controller
+            name: Air conditioner
+            icon: mdi:air-conditioner
+            color: blue
+            features:
+              - type: target-temperature
+              - type: climate-hvac-modes
+                style: dropdown
+            grid_options:
+              columns: 12
+          - type: tile
+            entity: input_button.go_to_sleep
+            name: Good night
+            icon: mdi:weather-night
+            color: purple
+            hide_state: true
+            tap_action:
+              action: perform-action
+              perform_action: input_button.press
+              target:
+                entity_id: input_button.go_to_sleep
+            icon_tap_action:
+              action: perform-action
+              perform_action: input_button.press
+              target:
+                entity_id: input_button.go_to_sleep
+          - type: tile
+            entity: input_button.wake_up
+            name: Wake up
+            icon: mdi:weather-sunset-up
+            color: amber
+            hide_state: true
+            tap_action:
+              action: perform-action
+              perform_action: input_button.press
+              target:
+                entity_id: input_button.wake_up
+            icon_tap_action:
+              action: perform-action
+              perform_action: input_button.press
+              target:
+                entity_id: input_button.wake_up
+          - type: tile
+            entity: timer.bedroom_sleeping
+            name: Sleep timer
+            grid_options:
+              columns: 12
+      - type: grid
+        cards:
+          - type: heading
+            heading: Media & room status
+            heading_style: title
+            icon: mdi:speaker
+          - type: media-control
+            entity: media_player.bedroom_speaker
+            grid_options:
+              columns: 12
+          - type: tile
+            entity: binary_sensor.bedroom_door_contact
+            name: Door
+            color: orange
+          - type: tile
+            entity: sensor.bedroom_hub_illuminance
+            name: Daylight
+            color: amber
+          - type: tile
+            entity: binary_sensor.bedroom_window_left_contact
+            name: Left window
+            color: orange
+          - type: tile
+            entity: binary_sensor.bedroom_window_right_contact
+            name: Right window
+            color: orange
+    badges:
+      - type: entity
+        entity: sensor.bedroom_hub_temperature
+        show_state: true
+        name: Temperature
+        show_name: true
+      - type: entity
+        entity: sensor.bedroom_hub_humidity
+        show_state: true
+        name: Humidity
+        show_name: true
+  - title: Bathroom
+    path: bathroom
+    icon: mdi:shower-head
+    type: sections
+    subview: true
+    back_path: /modern-dashboard/home
+    max_columns: 3
+    header:
+      layout: start
+      card:
+        type: markdown
+        text_only: true
+        content: |-
+          # Bathroom
+          Lighting, ventilation and room conditions.
+    sections:
+      - type: grid
+        background:
+          color: '#39A4B4'
+          opacity: 8
+        cards:
+          - type: heading
+            heading: Lighting & ventilation
+            heading_style: title
+            icon: mdi:shower-head
+          - type: tile
+            entity: switch.bathroom_controller_wall_gang_one
+            name: Ceiling light
+            icon: mdi:lightbulb-outline
+            color: amber
+            tap_action:
+              action: toggle
+            hold_action:
+              action: more-info
+          - type: tile
+            entity: switch.bathroom_controller_wall_gang_two
+            name: Extractor fan
+            icon: mdi:fan
+            color: cyan
+            tap_action:
+              action: toggle
+            hold_action:
+              action: more-info
+          - type: tile
+            entity: sensor.bathroom_hub_humidity
+            name: Humidity
+            color: cyan
+            features:
+              - type: trend-graph
+                hours_to_show: 12
+                detail: false
+            grid_options:
+              columns: 12
+      - type: grid
+        cards:
+          - type: heading
+            heading: Room conditions
+            heading_style: title
+            icon: mdi:water-percent
+          - type: tile
+            entity: sensor.bathroom_hub_temperature
+            name: Temperature
+            color: cyan
+            features:
+              - type: trend-graph
+                hours_to_show: 12
+                detail: false
+            grid_options:
+              columns: 12
+          - type: tile
+            entity: binary_sensor.bathroom_hub_presence
+            name: Presence
+            color: cyan
+          - type: tile
+            entity: binary_sensor.bathroom_door_contact
+            name: Door
+            color: orange
+          - type: tile
+            entity: sensor.bathroom_hub_illuminance
+            name: Daylight
+            color: amber
+            grid_options:
+              columns: 12
+      - type: grid
+        cards:
+          - type: heading
+            heading: Details
+            heading_style: title
+            icon: mdi:information-outline
+          - type: tile
+            entity: sensor.oral_b_battery
+            name: Toothbrush battery
+            icon: mdi:toothbrush-electric
+            color: cyan
+            features:
+              - type: bar-gauge
+                min: 0
+                max: 100
+            grid_options:
+              columns: 12
+          - type: tile
+            entity: timer.bathroom_automatic_lights_timer
+            name: Automatic lights timer
+            grid_options:
+              columns: 12
+    badges:
+      - type: entity
+        entity: sensor.bathroom_hub_temperature
+        show_state: true
+        name: Temperature
+        show_name: true
+      - type: entity
+        entity: sensor.bathroom_hub_humidity
+        show_state: true
+        name: Humidity
+        show_name: true
+  - title: Entrance & hall
+    path: entrance
+    icon: mdi:door-open
+    type: sections
+    subview: true
+    back_path: /modern-dashboard/home
+    max_columns: 3
+    header:
+      layout: start
+      card:
+        type: markdown
+        text_only: true
+        content: |-
+          # Entrance & hall
+          The front door, arrival lights and leaving home.
+    sections:
+      - type: grid
+        background:
+          color: '#8291A4'
+          opacity: 8
+        cards:
+          - type: heading
+            heading: Arrival
+            heading_style: title
+            icon: mdi:door-open
+          - type: tile
+            entity: binary_sensor.entrance_door_contact
+            name: Front door
+            color: orange
+            grid_options:
+              columns: 12
+          - type: tile
+            entity: switch.entrance_controller_wall_gang_one
+            name: Entrance light
+            icon: mdi:lightbulb-outline
+            color: amber
+            tap_action:
+              action: toggle
+            hold_action:
+              action: more-info
+          - type: tile
+            entity: switch.living_room_controller_wall_gang_three
+            name: Hall light
+            icon: mdi:lightbulb-outline
+            color: amber
+            tap_action:
+              action: toggle
+            hold_action:
+              action: more-info
+          - type: tile
+            entity: binary_sensor.entrance_motion_occupancy
+            name: Motion
+            color: blue
+            grid_options:
+              columns: 12
+      - type: grid
+        cards:
+          - type: heading
+            heading: Heading out
+            heading_style: title
+            icon: mdi:exit-run
+          - type: tile
+            entity: input_button.leave_home
+            name: Leave home
+            icon: mdi:exit-run
+            color: blue
+            hide_state: true
+            tap_action:
+              action: perform-action
+              perform_action: input_button.press
+              target:
+                entity_id: input_button.leave_home
+            icon_tap_action:
+              action: perform-action
+              perform_action: input_button.press
+              target:
+                entity_id: input_button.leave_home
+          - type: tile
+            entity: input_boolean.home_locked
+            name: Away mode
+            icon: mdi:home-export-outline
+            color: blue
+            icon_tap_action:
+              action: more-info
+          - type: tile
+            entity: sensor.entrance_motion_illuminance
+            name: Daylight
+            color: blue-grey
+            features:
+              - type: trend-graph
+                hours_to_show: 12
+                detail: false
+            grid_options:
+              columns: 12
+      - type: grid
+        cards:
+          - type: heading
+            heading: Automatic lighting
+            heading_style: title
+            icon: mdi:timer-outline
+          - type: tile
+            entity: timer.entrance_automatic_lights_timer
+            name: Entrance timer
+            grid_options:
+              columns: 12
+          - type: tile
+            entity: timer.hall_automatic_lights_timer
+            name: Hall timer
+            grid_options:
+              columns: 12
+  - title: House
+    path: settings
+    icon: mdi:tune-variant
+    type: sections
+    max_columns: 3
+    header:
+      layout: start
+      card:
+        type: markdown
+        text_only: true
+        content: |-
+          # House settings
+          Modes, automation controls and device health.
+    sections:
+      - type: grid
+        cards:
+          - type: heading
+            heading: Modes
+            heading_style: title
+            icon: mdi:home-account
+          - type: tile
+            entity: input_boolean.guests
+            name: Guests
+            icon: mdi:account-multiple-outline
+            color: teal
+          - type: tile
+            entity: input_boolean.holidays
+            name: Holiday mode
+            icon: mdi:beach
+            color: blue
+          - type: tile
+            entity: input_boolean.jose_travelling
+            name: Travelling
+            icon: mdi:airplane
+            color: blue
+          - type: tile
+            entity: input_boolean.home_locked
+            name: Away mode
+            icon: mdi:home-export-outline
+            color: blue
+          - type: tile
+            entity: input_boolean.home_vacuumed
+            name: Cleaned today
+            icon: mdi:robot-vacuum
+            color: teal
+      - type: grid
+        cards:
+          - type: heading
+            heading: Automations
+            heading_style: title
+            icon: mdi:auto-fix
+          - type: tile
+            entity: input_boolean.home_ac_automations
+            name: Automatic cooling
+            icon: mdi:air-conditioner
+            color: blue
+            features:
+              - type: toggle
+            features_position: inline
+            grid_options:
+              columns: 12
+          - type: tile
+            entity: input_boolean.home_light_automations
+            name: Automatic lighting
+            icon: mdi:lightbulb-auto-outline
+            color: amber
+            features:
+              - type: toggle
+            features_position: inline
+            grid_options:
+              columns: 12
+          - type: tile
+            entity: input_number.too_hot
+            name: Cooling threshold
+            icon: mdi:thermometer
+            color: orange
+            features:
+              - type: numeric-input
+            grid_options:
+              columns: 12
+      - type: grid
+        cards:
+          - type: heading
+            heading: Device health
+            heading_style: title
+            icon: mdi:heart-pulse
+          - type: tile
+            entity: sensor.unavailable_entities
+            name: Unavailable devices
+            icon: mdi:lan-disconnect
+            color: orange
+            grid_options:
+              columns: 12
+          - type: markdown
+            title: Devices needing attention
+            content: |-
+              {% set count = states('sensor.unavailable_entities') | int(-1) %}
+              {% set devices = state_attr('group.unavailable_entities', 'entity_id') or [] %}
+              {% if count < 0 %}
+              Device availability is not ready yet.
+              {% elif devices | length > 0 %}
+              {% for entity in devices %}
+              - {{ state_attr(entity, 'friendly_name') or entity }}
+              {% endfor %}
+              {% elif count > 0 %}
+              The device list is updating.
+              {% else %}
+              No unavailable devices reported.
+              {% endif %}
+            grid_options:
+              columns: 12
+          - type: tile
+            entity: sensor.current_version
+            name: Installed version
+            grid_options:
+              columns: 12
+      - type: grid
+        cards:
+          - type: heading
+            heading: Timers
+            heading_style: title
+            icon: mdi:timer-outline
+          - type: entities
+            title: Automatic lights
+            show_header_toggle: false
+            state_color: true
+            entities:
+              - entity: timer.entrance_automatic_lights_timer
+                name: Entrance
+              - entity: timer.hall_automatic_lights_timer
+                name: Hall
+              - entity: timer.living_room_automatic_lights_timer
+                name: Living room
+              - entity: timer.kitchen_automatic_lights_timer
+                name: Kitchen
+              - entity: timer.office_automatic_lights_timer
+                name: Office
+              - entity: timer.bedroom_automatic_lights_timer
+                name: Bedroom
+              - entity: timer.bathroom_automatic_lights_timer
+                name: Bathroom
+            grid_options:
+              columns: 12
+          - type: tile
+            entity: timer.bedroom_sleeping
+            name: Sleep timer
+            grid_options:
+              columns: 12
