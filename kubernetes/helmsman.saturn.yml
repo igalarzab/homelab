@@ -6,7 +6,6 @@ settings:
   kubeContext: saturn
 
 namespaces:
-  changedetection:
   cert-manager:
   cloudflare-ddns:
   datastores:
@@ -112,7 +111,6 @@ apps:
     valuesFile: datastores/postgresql.yml
     set:
       persistence.data.storageClass: proxmox-retain
-      persistence.data.accessMode: ReadWriteOnce
   pocket-id:
     <<: *default
     priority: -1
@@ -120,6 +118,8 @@ apps:
     version: "5.2.1"
     namespace: pocket-id
     valuesFile: pocket-id/values.yml
+    set:
+      persistence.config.storageClass: "local-path-retain"
   keel:
     <<: *default
     chart: keel/keel
@@ -129,12 +129,8 @@ apps:
     hooks:
       preInstall: keel/oauth2-proxy-secret.yml
       preUpgrade: keel/oauth2-proxy-secret.yml
-  changedetection:
-    <<: *default
-    chart: bjw-s/app-template
-    version: "4.5.0"
-    namespace: changedetection
-    valuesFile: changedetection/values.yml
+    set:
+      persistence.storageClass: "local-path-delete"
   cloudflare-ddns:
     <<: *default
     chart: bjw-s/app-template

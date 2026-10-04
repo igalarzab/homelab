@@ -1,5 +1,5 @@
 ---
-# yaml-language-server: $schema=https://raw.githubusercontent.com/bjw-s/helm-charts/app-template-5.1.0/charts/other/app-template/values.schema.json
+# yaml-language-server: $schema=https://raw.githubusercontent.com/bjw-s/helm-charts/app-template-5.2.1/charts/other/app-template/values.schema.json
 
 controllers:
   redis:
@@ -13,7 +13,7 @@ controllers:
       redis:
         image:
           repository: redis
-          tag: "8.4.0-alpine"
+          tag: "8.10.2-alpine"
         args:
           - redis-server
           - --appendonly
@@ -71,7 +71,6 @@ service:
 persistence:
   data:
     type: persistentVolumeClaim
-    storageClass: local-path-retain
     accessMode: ReadWriteOnce
     size: 10Gi
     advancedMounts:

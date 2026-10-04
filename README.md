@@ -133,6 +133,24 @@ uv run python run.py "$CLUSTER" apply -n home-assistant
 uv run python run.py "$CLUSTER" outdated
 ```
 
+The runner exits with Helmsman's error status if a command fails.
+
+### Restart workloads with restarted pods
+
+The script requires a cluster argument and scans every namespace in that Kubernetes context. For pods with
+a container `restartCount` greater than zero, it restarts their owning Deployment,
+StatefulSet, or DaemonSet. Each affected workload is restarted once per run.
+
+From `kubernetes/`:
+
+```bash
+# Restart affected workloads across the selected cluster
+uv run python restart-pods.py saturn
+```
+
+This rolls out all pods in each affected workload, including those with no restarts.
+The script submits the restarts without waiting for the rollouts to finish.
+
 ## Change Talos configuration
 
 Edit the selected cluster's inputs or patches, regenerate the configuration, and
@@ -170,6 +188,11 @@ To add an application:
 1. Create its Helm values under `kubernetes/<service>/`.
 2. Add a release to `kubernetes/helmsman.<cluster>.yml`.
 3. Review and apply it with `run.py`, using `-n <release-name>` to select the release.
+
+Keep application and provider configuration in their values files. Use small
+Helmsman overrides for settings that need a cluster-specific choice, such as
+storage classes and volume access modes. Keep network definitions and hardware
+configuration together with the service that uses them.
 
 Application settings live in `config/`. Home Assistant includes dashboards,
 automations, scripts, and device definitions. ESPHome includes Mitsubishi AC

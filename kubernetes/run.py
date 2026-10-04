@@ -6,7 +6,9 @@ import os
 import pathlib
 import re
 import subprocess
-from typing import Literal
+from typing import Literal, cast
+
+from kubernetes.config.config_exception import ConfigException
 
 from kubernetes import client as k8s_client
 from kubernetes import config as k8s_config
@@ -18,21 +20,24 @@ SELF_PATH = pathlib.Path(__file__).parent.resolve()
 #
 
 
-def helmsman_run(cluster_name: str, *args, env=None):
+def helmsman_run(cluster_name: str, *args: str, env: dict[str, str] | None = None) -> None:
     helmsman_file = SELF_PATH.joinpath(f"helmsman.{cluster_name}.yml")
 
     if not helmsman_file.exists():
         raise SystemExit(f"Error: Helmsman file not found: {helmsman_file}")
 
     base_cmd = ["helmsman", "--no-banner"]
-    base_cmd += ["-f", helmsman_file]
-    base_cmd += ["-e", SELF_PATH.joinpath(".env")]
-    base_cmd += ["-e", SELF_PATH.joinpath(f".env.{cluster_name}")]
+    base_cmd += ["-f", str(helmsman_file)]
+    base_cmd += ["-e", str(SELF_PATH.joinpath(".env"))]
+    base_cmd += ["-e", str(SELF_PATH.joinpath(f".env.{cluster_name}"))]
 
-    if not env:
+    if env is None:
         env = os.environ.copy()
 
-    subprocess.run(base_cmd + list(args), env=env)
+    result = subprocess.run(base_cmd + list(args), check=False, env=env)
+
+    if result.returncode:
+        raise SystemExit(result.returncode)
 
 
 def parse_env_var(value: str) -> tuple[str, str]:
@@ -50,7 +55,7 @@ def get_all_docker_tags(extra_env: dict[str, str] | None = None) -> dict[str, st
 
     for fpath in glob.glob(str(SELF_PATH.joinpath("**")), recursive=True):
         if os.path.isfile(fpath):
-            with open(SELF_PATH.joinpath(fpath), "r") as f:
+            with open(fpath, encoding="utf-8") as f:
                 env_names = re.findall(r"DOCKER_TAG__[\w_-]+", f.read())
 
             for env_name in env_names:
@@ -70,25 +75,40 @@ def get_docker_tag(env_name: str) -> str:
     k8s_apps_api = k8s_client.AppsV1Api()
 
     try:
-        ns, type, name, container_no = [
+        ns, workload_type, name, container_no = [
             v.lower().replace("_", "-") for v in env_name.split("__")[1:]
         ]
-    except Exception:
-        raise ValueError("Invalid format of tag: " + env_name)
+    except ValueError as exc:
+        raise ValueError("Invalid format of tag: " + env_name) from exc
 
-    match type:
+    workload: k8s_client.V1Deployment | k8s_client.V1StatefulSet
+
+    match workload_type:
         case "deployment":
-            deploy: k8s_client.V1Deployment = k8s_apps_api.read_namespaced_deployment(name, ns)
-            image = deploy.spec.template.spec.containers[int(container_no)].image
+            workload = cast(
+                k8s_client.V1Deployment, k8s_apps_api.read_namespaced_deployment(name, ns)
+            )
         case "statefulset":
-            sts: k8s_client.V1StatefulSet = k8s_apps_api.read_namespaced_stateful_set(name, ns)
-            image = sts.spec.template.spec.containers[int(container_no)].image
+            workload = cast(
+                k8s_client.V1StatefulSet, k8s_apps_api.read_namespaced_stateful_set(name, ns)
+            )
         case _:
-            raise ValueError("Unconfigured k8s type: " + type)
+            raise ValueError("Unconfigured k8s type: " + workload_type)
 
-    try:
-        tag = image.split(":")[1]
-    except Exception:
+    spec = workload.spec
+    if spec is None or spec.template is None or spec.template.spec is None:
+        raise ValueError(f"Missing pod specification for {workload_type}/{name}")
+
+    containers = spec.template.spec.containers
+    if not containers:
+        raise ValueError(f"No containers for {workload_type}/{name}")
+
+    image = containers[int(container_no)].image
+    if not isinstance(image, str) or not image:
+        raise ValueError(f"Missing container image for {workload_type}/{name}")
+
+    _, separator, tag = image.rsplit("/", 1)[-1].partition(":")
+    if not separator or not tag:
         raise ValueError("No tag value in image: " + image)
 
     return tag
@@ -108,11 +128,17 @@ def configure_env(extra_env: dict[str, str] | None = None) -> dict[str, str]:
 #
 
 
-def run_charts(mode: Literal["dry-run", "apply"], *, cluster_name, app_name=None, extra_env=None):
+def run_charts(
+    mode: Literal["dry-run", "apply", "destroy"],
+    *,
+    cluster_name: str,
+    app_name: str | None = None,
+    extra_env: dict[str, str] | None = None,
+) -> None:
     try:
         k8s_config.load_kube_config(context=cluster_name)
-    except k8s_config.ConfigException as e:
-        raise SystemExit(f"Error: Kubernetes context '{cluster_name}' not found: {e}")
+    except ConfigException as exc:
+        raise SystemExit(f"Error: Kubernetes context '{cluster_name}' not found: {exc}") from exc
 
     my_env = configure_env(extra_env)
 
@@ -124,7 +150,7 @@ def run_charts(mode: Literal["dry-run", "apply"], *, cluster_name, app_name=None
     helmsman_run(cluster_name, *base_command, env=my_env)
 
 
-def show_outdated_charts(cluster_name):
+def show_outdated_charts(cluster_name: str) -> None:
     helmsman_run(cluster_name, "--check-for-chart-updates")
 
 
