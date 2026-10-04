@@ -22,6 +22,11 @@ controllers:
           DATABASE_URL: "postgresql://metamcp:$$(METAMCP_POSTGRES_PASSWORD)@postgresql.datastores.svc.cluster.local:5432/metamcp"
           APP_URL: "https://metamcp.${COMMON_DOMAIN_ROOT}"
           NEXT_PUBLIC_APP_URL: "https://metamcp.${COMMON_DOMAIN_ROOT}"
+          OIDC_DISCOVERY_URL: "https://auth.${COMMON_DOMAIN_ROOT}/.well-known/openid-configuration"
+          OIDC_AUTHORIZATION_URL: "https://auth.${COMMON_DOMAIN_ROOT}/authorize"
+          OIDC_PROVIDER_ID: oidc
+          OIDC_SCOPES: "openid email profile"
+          OIDC_PKCE: "true"
           TRANSFORM_LOCALHOST_TO_DOCKER_INTERNAL: "false"
         envFrom:
           - secretRef:
@@ -91,3 +96,5 @@ secrets:
     stringData:
       METAMCP_POSTGRES_PASSWORD: "${METAMCP_POSTGRES_PASSWORD}"
       BETTER_AUTH_SECRET: "${METAMCP_BETTER_AUTH_SECRET}"
+      OIDC_CLIENT_ID: "${POCKETID_CLIENT_ID}"
+      OIDC_CLIENT_SECRET: "${POCKETID_CLIENT_SECRET}"
