@@ -74,5 +74,6 @@ automation:
                 | rejectattr('last_changed', 'ge', ignore_ts)
                 | rejectattr('entity_id', 'search', 'spotcast')
                 | rejectattr('entity_id', 'search', 'oura')
+                | rejectattr('entity_id', 'search', 'setebos')
                 | selectattr('state', 'in', ['unknown', 'unavailable'])
                 | map(attribute='entity_id') | list | sort }}
