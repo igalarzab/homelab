@@ -6,14 +6,17 @@ settings:
   kubeContext: saturn
 
 namespaces:
+  changedetection:
   cert-manager:
   cloudflare-ddns:
+  datastores:
   external-dns:
   home-assistant:
   jdownloader:
   keel:
   kube-system:
   mosquitto:
+  metamcp:
   plex:
   pocket-id:
   traefik:
@@ -35,15 +38,19 @@ appsTemplates:
     protected: false
     test: false
     wait: true
+    # -3: storage/network, -2: infrastructure, -1: shared services, 0: applications
+    priority: 0
 
 apps:
   csi-driver-smb:
     <<: *default
+    priority: -3
     chart: csi-driver-smb/csi-driver-smb
     version: "1.20.3"
     namespace: kube-system
   local-path-provisioner:
     <<: *default
+    priority: -3
     chart: containeroo/local-path-provisioner
     version: "0.0.38"
     namespace: kube-system
@@ -53,26 +60,30 @@ apps:
       postUpgrade: local-path-provisioner/post-install.yml
   csi-driver-proxmox:
     <<: *default
+    priority: -3
     chart: oci://ghcr.io/sergelogvinov/charts/proxmox-csi-plugin
     version: "0.5.12"
     namespace: kube-system
     valuesFile: csi-driver-proxmox/values.yml
   multus-cni:
     <<: *default
+    priority: -3
     chart: bitnami/multus-cni
     version: "2.2.21"
     namespace: kube-system
     valuesFile: multus-cni/values.yml
   metrics-server:
     <<: *default
+    priority: -2
     chart: metrics-server/metrics-server
     version: "3.14.0"
     namespace: kube-system
     valuesFile: metrics-server/values.yml
   cert-manager:
     <<: *default
+    priority: -2
     chart: jetstack/cert-manager
-    version: "v1.21.1"
+    version: "v1.21.2"
     namespace: cert-manager
     valuesFile: cert-manager/values.yml
     hooks:
@@ -80,91 +91,124 @@ apps:
       postUpgrade: cert-manager/post-install.yml
   external-dns:
     <<: *default
+    priority: -2
     chart: external-dns/external-dns
-    version: "1.21.1"
+    version: "1.23.0"
     namespace: external-dns
     valuesFile: external-dns/values.yml
   traefik:
     <<: *default
+    priority: -1
     chart: traefik/traefik
-    version: "41.5.0"
+    version: "41.6.1"
     namespace: traefik
     valuesFile: traefik/values.yml
+  postgresql:
+    <<: *default
+    priority: -1
+    chart: bjw-s/app-template
+    version: "5.2.1"
+    namespace: datastores
+    valuesFile: datastores/postgresql.yml
+    set:
+      persistence.data.storageClass: proxmox-retain
+      persistence.data.accessMode: ReadWriteOnce
   pocket-id:
     <<: *default
+    priority: -1
     chart: bjw-s/app-template
-    version: "5.1.0"
+    version: "5.2.1"
     namespace: pocket-id
     valuesFile: pocket-id/values.yml
   keel:
     <<: *default
     chart: keel/keel
-    version: "1.2.2"
+    version: "1.2.3"
     namespace: keel
     valuesFile: keel/values.yml
+  changedetection:
+    <<: *default
+    chart: bjw-s/app-template
+    version: "4.5.0"
+    namespace: changedetection
+    valuesFile: changedetection/values.yml
   cloudflare-ddns:
     <<: *default
     chart: bjw-s/app-template
-    version: "5.1.0"
+    version: "5.2.1"
     namespace: cloudflare-ddns
     valuesFile: cloudflare-ddns/values.yml
   plex:
     <<: *default
     chart: bjw-s/app-template
-    version: "5.1.0"
+    version: "5.2.1"
     namespace: plex
     valuesFile: plex/values.yml
   jdownloader:
     <<: *default
     chart: bjw-s/app-template
-    version: "5.1.0"
+    version: "5.2.1"
     namespace: jdownloader
     valuesFile: jdownloader/values.yml
   mosquitto:
     <<: *default
+    priority: -1
     chart: bjw-s/app-template
-    version: "5.1.0"
+    version: "5.2.1"
     namespace: mosquitto
     valuesFile: mosquitto/values.yml
+  metamcp:
+    <<: *default
+    chart: bjw-s/app-template
+    version: "5.2.1"
+    namespace: metamcp
+    valuesFile: metamcp/values.yml
+    hooks:
+      preInstall: metamcp/provision-database.yml
+      successCondition: Complete
+      successTimeout: 180s
+      deleteOnSuccess: true
   zigbee2mqtt:
     <<: *default
     chart: bjw-s/app-template
-    version: "5.1.0"
+    version: "5.2.1"
     namespace: home-assistant
     valuesFile: home-assistant/zigbee2mqtt.values.yml
   node-red:
     <<: *default
     chart: bjw-s/app-template
-    version: "5.1.0"
+    version: "5.2.1"
     namespace: home-assistant
     valuesFile: home-assistant/nodered.values.yml
   esphome:
     <<: *default
     chart: bjw-s/app-template
-    version: "5.1.0"
+    version: "5.2.1"
     namespace: home-assistant
     valuesFile: home-assistant/esphome.values.yml
   mmwave-configurator:
     <<: *default
     chart: bjw-s/app-template
-    version: "5.1.0"
+    version: "5.2.1"
     namespace: home-assistant
     valuesFile: home-assistant/mmwave-configurator.values.yml
   otbr:
     <<: *default
+    priority: -1
     chart: bjw-s/app-template
-    version: "5.1.0"
+    version: "5.2.1"
     namespace: home-assistant
     valuesFile: home-assistant/otbr.values.yml
   matter-server:
     <<: *default
+    priority: -1
     chart: bjw-s/app-template
-    version: "5.1.0"
+    version: "5.2.1"
     namespace: home-assistant
     valuesFile: home-assistant/matter-server.values.yml
   home-assistant:
     <<: *default
     chart: bjw-s/app-template
-    version: "5.1.0"
+    version: "5.2.1"
     namespace: home-assistant
     valuesFile: home-assistant/home-assistant.values.yml

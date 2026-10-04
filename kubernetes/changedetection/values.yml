@@ -1,0 +1,117 @@
+---
+controllers:
+  changedetection:
+    annotations:
+      keel.sh/policy: major
+      keel.sh/pollSchedule: '@midnight'
+      keel.sh/trigger: poll
+    containers:
+      browserless:
+        env:
+          HOST: 127.0.0.1
+          CONCURRENT: '2'
+          TIMEOUT: '300000'
+        image:
+          repository: ghcr.io/browserless/chromium
+          tag: "${DOCKER_TAG__CHANGEDETECTION__DEPLOYMENT__CHANGEDETECTION__0}"
+        ports:
+        - containerPort: 3000
+          name: browserless
+        probes:
+          readiness:
+            enabled: true
+            custom: true
+            spec:
+              exec:
+                command:
+                - node
+                - -e
+                - fetch('http://127.0.0.1:3000/pressure').then(r=>process.exit(r.ok?0:1)).catch(()=>process.exit(1))
+              timeoutSeconds: 5
+              periodSeconds: 10
+              failureThreshold: 3
+          startup:
+            enabled: true
+            custom: true
+            spec:
+              exec:
+                command:
+                - node
+                - -e
+                - fetch('http://127.0.0.1:3000/pressure').then(r=>process.exit(r.ok?0:1)).catch(()=>process.exit(1))
+              timeoutSeconds: 5
+              periodSeconds: 10
+              failureThreshold: 30
+      changedetection:
+        env:
+          PGID: 100
+          PLAYWRIGHT_DRIVER_URL: ws://127.0.0.1:3000/chromium?blockAds=true&launch=%7B%22stealth%22%3Atrue%2C%22acceptInsecureCerts%22%3Atrue%7D
+          PUID: 1000
+          TZ: ${COMMON_TZ}
+        image:
+          repository: linuxserver/changedetection.io
+          tag: "${DOCKER_TAG__CHANGEDETECTION__DEPLOYMENT__CHANGEDETECTION__1}"
+        ports:
+        - containerPort: 5000
+          name: http
+          protocol: TCP
+        probes:
+          liveness:
+            custom: true
+            enabled: true
+            spec:
+              failureThreshold: 5
+              httpGet:
+                path: /
+                port: http
+              initialDelaySeconds: 10
+              periodSeconds: 10
+              successThreshold: 1
+              timeoutSeconds: 2
+          readiness:
+            custom: true
+            enabled: true
+            spec:
+              failureThreshold: 5
+              httpGet:
+                path: /
+                port: http
+              initialDelaySeconds: 10
+              periodSeconds: 10
+              successThreshold: 1
+              timeoutSeconds: 2
+    replicas: 1
+    type: deployment
+    strategy: Recreate
+defaultPodOptions:
+  terminationGracePeriodSeconds: 30
+ingress:
+  main:
+    annotations:
+      external-dns.kubernetes.io/hostname: cd.${COMMON_DOMAIN_ROOT}
+      external-dns.kubernetes.io/target: k8s.${COMMON_DOMAIN_ROOT}
+      external-dns.kubernetes.io/ttl: 5m
+    hosts:
+    - host: cd.${COMMON_DOMAIN_ROOT}
+      paths:
+      - path: /
+        pathType: Prefix
+        service:
+          identifier: changedetection
+          port: http
+persistence:
+  config:
+    advancedMounts:
+      changedetection:
+        changedetection:
+        - path: /config
+    hostPath: ${COMMON_VOLUMES_PATH}/changedetection
+    hostPathType: DirectoryOrCreate
+    type: hostPath
+service:
+  changedetection:
+    controller: changedetection
+    ports:
+      http:
+        port: 5000
+        targetPort: http

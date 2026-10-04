@@ -1,0 +1,93 @@
+---
+# yaml-language-server: $schema=https://raw.githubusercontent.com/bjw-s/helm-charts/app-template-5.1.0/charts/other/app-template/values.schema.json
+
+controllers:
+  app:
+    type: deployment
+    replicas: 1
+    strategy: Recreate
+    pod:
+      hostUsers: false
+    containers:
+      app:
+        image:
+          repository: ghcr.io/metatool-ai/metamcp
+          tag: "2.4.22"
+        env:
+          NODE_ENV: production
+          POSTGRES_HOST: postgresql.datastores.svc.cluster.local
+          POSTGRES_PORT: "5432"
+          POSTGRES_USER: metamcp
+          POSTGRES_DB: metamcp
+          DATABASE_URL: "postgresql://metamcp:$$(METAMCP_POSTGRES_PASSWORD)@postgresql.datastores.svc.cluster.local:5432/metamcp"
+          APP_URL: "https://metamcp.${COMMON_DOMAIN_ROOT}"
+          NEXT_PUBLIC_APP_URL: "https://metamcp.${COMMON_DOMAIN_ROOT}"
+          TRANSFORM_LOCALHOST_TO_DOCKER_INTERNAL: "false"
+        envFrom:
+          - secretRef:
+              identifier: metamcp
+        ports:
+          - name: http
+            protocol: TCP
+            containerPort: 12008
+        probes:
+          startup:
+            enabled: true
+            custom: true
+            spec:
+              httpGet:
+                path: /health
+                port: http
+              periodSeconds: 5
+              timeoutSeconds: 3
+              failureThreshold: 60
+          readiness:
+            enabled: true
+            custom: true
+            spec:
+              httpGet:
+                path: /health
+                port: http
+              periodSeconds: 10
+              timeoutSeconds: 3
+          liveness:
+            enabled: true
+            custom: true
+            spec:
+              httpGet:
+                path: /health
+                port: http
+              periodSeconds: 10
+              timeoutSeconds: 3
+
+service:
+  app:
+    controller: app
+    ports:
+      http:
+        port: 12008
+        targetPort: http
+
+ingress:
+  main:
+    enabled: true
+    className: traefik
+    annotations:
+      traefik.ingress.kubernetes.io/router.middlewares: traefik_oidc-pocketid@kubernetescrd
+      external-dns.kubernetes.io/hostname: metamcp.${COMMON_DOMAIN_ROOT}
+      external-dns.kubernetes.io/target: k8s.${COMMON_DOMAIN_ROOT}
+      external-dns.kubernetes.io/ttl: 1m
+    hosts:
+      - host: "metamcp.${COMMON_DOMAIN_ROOT}"
+        paths:
+          - path: /
+            pathType: Prefix
+            service:
+              identifier: app
+              port: http
+
+secrets:
+  metamcp:
+    stringData:
+      METAMCP_POSTGRES_PASSWORD: "${METAMCP_POSTGRES_PASSWORD}"
+      BETTER_AUTH_SECRET: "${METAMCP_BETTER_AUTH_SECRET}"

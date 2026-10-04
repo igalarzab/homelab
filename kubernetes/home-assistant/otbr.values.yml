@@ -27,6 +27,8 @@ controllers:
           DEVICE: /tmp/ttyOTBR
           BAUDRATE: "460800"
           BACKBONE_IF: net1
+          OTBR_WEB: "1"
+          NAT64: "1"
           OTBR_WEB_PORT: "8080"
           OTBR_REST_PORT: "8081"
           FIREWALL: "1"

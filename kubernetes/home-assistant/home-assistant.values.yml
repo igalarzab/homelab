@@ -59,7 +59,7 @@ controllers:
       git:
         image:
           repository: alpine/git
-          tag: latest
+          tag: "2.54.0"
         command: ["/bin/sh"]
         args:
           - -c
@@ -71,7 +71,7 @@ controllers:
       fix-routes:
         image:
           repository: busybox
-          tag: latest
+          tag: "1.38.0"
         securityContext:
           capabilities:
             add: ["NET_ADMIN"]
@@ -91,9 +91,9 @@ service:
 ingress:
   main:
     annotations:
-      external-dns.alpha.kubernetes.io/hostname: ha.${COMMON_DOMAIN_ROOT}
-      external-dns.alpha.kubernetes.io/target: k8s.${COMMON_DOMAIN_ROOT}
-      external-dns.alpha.kubernetes.io/ttl: 1m
+      external-dns.kubernetes.io/hostname: ha.${COMMON_DOMAIN_ROOT}
+      external-dns.kubernetes.io/target: k8s.${COMMON_DOMAIN_ROOT}
+      external-dns.kubernetes.io/ttl: 1m
     hosts:
       - host: "ha.${COMMON_DOMAIN_ROOT}"
         paths:

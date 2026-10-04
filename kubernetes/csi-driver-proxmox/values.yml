@@ -12,3 +12,8 @@ storageClass:
     fstype: ext4
     reclaimPolicy: Delete
     ssd: true
+  - name: proxmox-retain
+    storage: local-volumes
+    fstype: ext4
+    reclaimPolicy: Retain
+    ssd: true

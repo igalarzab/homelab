@@ -7,7 +7,7 @@ defaultPodOptions:
 controllers:
   node-red:
     type: deployment
-    strategy: RollingUpdate
+    strategy: Recreate
     pod:
       hostUsers: false
     annotations:
@@ -54,7 +54,7 @@ controllers:
       git:
         image:
           repository: alpine/git
-          tag: latest
+          tag: "2.54.0"
         command: ["/bin/sh"]
         args:
           - -c
@@ -75,9 +75,9 @@ ingress:
   main:
     annotations:
       traefik.ingress.kubernetes.io/router.middlewares: traefik_oidc-pocketid@kubernetescrd
-      external-dns.alpha.kubernetes.io/hostname: nodered.${COMMON_DOMAIN_ROOT}
-      external-dns.alpha.kubernetes.io/target: k8s.${COMMON_DOMAIN_ROOT}
-      external-dns.alpha.kubernetes.io/ttl: 1m
+      external-dns.kubernetes.io/hostname: nodered.${COMMON_DOMAIN_ROOT}
+      external-dns.kubernetes.io/target: k8s.${COMMON_DOMAIN_ROOT}
+      external-dns.kubernetes.io/ttl: 1m
     hosts:
       - host: "nodered.${COMMON_DOMAIN_ROOT}"
         paths:

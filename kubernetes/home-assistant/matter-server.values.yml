@@ -19,7 +19,7 @@ controllers:
     containers:
       matter-server:
         image:
-          repository: ghcr.io/home-assistant-libs/python-matter-server
+          repository: ghcr.io/matter-js/python-matter-server
           tag: "${DOCKER_TAG__HOME_ASSISTANT__DEPLOYMENT__MATTER_SERVER__0}"
         args:
           - --storage-path

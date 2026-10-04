@@ -71,9 +71,9 @@ service:
 ingress:
   main:
     annotations:
-      external-dns.alpha.kubernetes.io/hostname: auth.${COMMON_DOMAIN_ROOT}
-      external-dns.alpha.kubernetes.io/target: k8s.${COMMON_DOMAIN_ROOT}
-      external-dns.alpha.kubernetes.io/ttl: 1m
+      external-dns.kubernetes.io/hostname: auth.${COMMON_DOMAIN_ROOT}
+      external-dns.kubernetes.io/target: k8s.${COMMON_DOMAIN_ROOT}
+      external-dns.kubernetes.io/ttl: 1m
     hosts:
       - host: "auth.${COMMON_DOMAIN_ROOT}"
         paths:

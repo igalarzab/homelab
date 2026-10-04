@@ -64,9 +64,9 @@ service:
   spec:
     type: ClusterIP
   annotations:
-    external-dns.alpha.kubernetes.io/hostname: k8s.${COMMON_DOMAIN_ROOT}
-    external-dns.alpha.kubernetes.io/target: ${COMMON_DNS_IP}
-    external-dns.alpha.kubernetes.io/ttl: 1m
+    external-dns.kubernetes.io/hostname: k8s.${COMMON_DOMAIN_ROOT}
+    external-dns.kubernetes.io/target: ${COMMON_DNS_IP}
+    external-dns.kubernetes.io/ttl: 1m
 
 providers:
   kubernetesCRD:

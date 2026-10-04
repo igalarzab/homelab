@@ -63,8 +63,7 @@ service:
 persistence:
   data:
     type: persistentVolumeClaim
-    storageClass: hetzner-retain
-    accessMode: ReadWriteOncePod
+    accessMode: ReadWriteOnce
     size: 10Gi
     advancedMounts:
       postgresql:

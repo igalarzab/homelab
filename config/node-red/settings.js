@@ -102,7 +102,7 @@ module.exports = {
          * See https://github.com/node-red-contrib-themes/theme-collection for
          * a collection of themes to chose from.
          */
-        theme: "dark-scroll",
+        theme: "dark-modern",
 
         palette: {},
 

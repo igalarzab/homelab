@@ -38,10 +38,13 @@ appsTemplates:
     protected: false
     test: false
     wait: true
+    # -3: storage/network/RBAC, -2: infrastructure, -1: shared services, 0: applications
+    priority: 0
 
 apps:
   local-path-provisioner:
     <<: *default
+    priority: -3
     chart: containeroo/local-path-provisioner
     version: "0.0.38"
     namespace: kube-system
@@ -51,18 +54,21 @@ apps:
       postUpgrade: local-path-provisioner/post-install.yml
   csi-driver-hetzner:
     <<: *default
+    priority: -3
     chart: hcloud/hcloud-csi
     version: "2.23.0"
     namespace: kube-system
     valuesFile: csi-driver-hetzner/values.yml
   metrics-server:
     <<: *default
+    priority: -2
     chart: metrics-server/metrics-server
     version: "3.14.0"
     namespace: kube-system
     valuesFile: metrics-server/values.yml
   cert-manager:
     <<: *default
+    priority: -2
     chart: jetstack/cert-manager
     version: "v1.21.1"
     namespace: cert-manager
@@ -72,37 +78,45 @@ apps:
       postUpgrade: cert-manager/post-install.yml
   external-dns:
     <<: *default
+    priority: -2
     chart: external-dns/external-dns
-    version: "1.21.1"
+    version: "1.23.0"
     namespace: external-dns
     valuesFile: external-dns/values.yml
   traefik:
     <<: *default
+    priority: -1
     chart: traefik/traefik
     version: "41.5.0"
     namespace: traefik
     valuesFile: traefik/values.yml
   pocket-id:
     <<: *default
+    priority: -1
     chart: bjw-s/app-template
     version: "5.1.0"
     namespace: pocket-id
     valuesFile: pocket-id/values.yml
   github-actions:
     <<: *default
+    priority: -3
     chart: bjw-s/app-template
     version: "5.1.0"
     namespace: github-actions
     valuesFile: github-actions/values.yml
-    priority: -59
   postgresql:
     <<: *default
+    priority: -1
     chart: bjw-s/app-template
     version: "5.1.0"
     namespace: datastores
     valuesFile: datastores/postgresql.yml
+    set:
+      persistence.data.storageClass: hetzner-retain
+      persistence.data.accessMode: ReadWriteOncePod
   redis:
     <<: *default
+    priority: -1
     chart: bjw-s/app-template
     version: "5.1.0"
     namespace: datastores
