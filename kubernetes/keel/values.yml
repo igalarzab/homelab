@@ -1,7 +1,25 @@
 basicauth:
+  enabled: false
+
+auth:
+  mode: external-proxy
+  proxyUserHeader: X-Forwarded-User
+  proxyLogoutURL: /oauth2/sign_out?rd=/
+
+oauth2Proxy:
   enabled: true
-  user: ${KEEL_USERNAME}
-  password: "${KEEL_PASSWORD}"
+  existingSecret: keel-oauth2-proxy
+  extraArgs:
+    - --provider=oidc
+    - --oidc-issuer-url=https://auth.${COMMON_DOMAIN_ROOT}
+    - --redirect-url=https://keel.${COMMON_DOMAIN_ROOT}/oauth2/callback
+    - --email-domain=*
+    - --scope=openid profile email
+    - --prefer-email-to-user=true
+    - --cookie-secure=true
+    - --cookie-name=__Host-keel
+    - --code-challenge-method=S256
+    - --skip-provider-button=true
 
 helmProvider:
   enabled: false
@@ -11,7 +29,6 @@ insecureRegistry: true
 ingress:
   enabled: true
   annotations:
-    traefik.ingress.kubernetes.io/router.middlewares: traefik_oidc-pocketid@kubernetescrd
     external-dns.kubernetes.io/hostname: keel.${COMMON_DOMAIN_ROOT}
     external-dns.kubernetes.io/target: k8s.${COMMON_DOMAIN_ROOT}
     external-dns.kubernetes.io/ttl: 1m

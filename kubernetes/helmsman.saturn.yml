@@ -126,6 +126,9 @@ apps:
     version: "1.2.3"
     namespace: keel
     valuesFile: keel/values.yml
+    hooks:
+      preInstall: keel/oauth2-proxy-secret.yml
+      preUpgrade: keel/oauth2-proxy-secret.yml
   changedetection:
     <<: *default
     chart: bjw-s/app-template
