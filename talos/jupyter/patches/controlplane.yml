@@ -3,3 +3,8 @@ apiVersion: v1alpha1
 kind: KubeNodeConfig
 taints:
   $patch: delete
+---
+apiVersion: v1alpha1
+kind: HostnameConfig
+hostname: europa
+auto: off
