@@ -1,5 +1,5 @@
 ---
-# yaml-language-server: $schema=https://raw.githubusercontent.com/bjw-s/helm-charts/app-template-5.1.0/charts/other/app-template/values.schema.json
+# yaml-language-server: $schema=https://raw.githubusercontent.com/bjw-s/helm-charts/app-template-5.2.1/charts/other/app-template/values.schema.json
 
 controllers:
   app:
@@ -74,6 +74,17 @@ service:
         targetPort: http
 
 ingress:
+  mcp:
+    enabled: true
+    className: traefik
+    hosts:
+      - host: "metamcp.${COMMON_DOMAIN_ROOT}"
+        paths:
+          - path: /metamcp
+            pathType: Prefix
+            service:
+              identifier: app
+              port: http
   main:
     enabled: true
     className: traefik

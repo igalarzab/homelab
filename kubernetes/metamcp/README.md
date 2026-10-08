@@ -1,4 +1,6 @@
-# Pocket ID login
+# MetaMCP
+
+## Dashboard access
 
 MetaMCP reuses the cluster's `POCKETID_CLIENT_ID` and `POCKETID_CLIENT_SECRET`.
 The credentials are provided through the MetaMCP Kubernetes Secret.
@@ -24,3 +26,11 @@ Settings** as needed:
   confirming Pocket ID works. This removes the password fallback.
 
 These switches are stored in MetaMCP's database, separately from Helm values.
+
+## Endpoints access
+
+All `/metamcp/<endpoint-name>` routes use a separate ingress without the Pocket
+ID middleware, including endpoints created later through the UI. MetaMCP
+enforces each endpoint's configured API key or OAuth authentication. Keep at
+least one authentication method enabled on endpoints that require protection.
+Disabling both makes that endpoint anonymous. The UI remains behind Pocket ID.
