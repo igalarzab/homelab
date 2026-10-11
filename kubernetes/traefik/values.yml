@@ -20,6 +20,7 @@ ingressRoute:
     enabled: false
 
 experimental:
+  abortOnPluginFailure: true
   plugins:
     traefik-oidc-auth:
       moduleName: github.com/sevensolutions/traefik-oidc-auth
