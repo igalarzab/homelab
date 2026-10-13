@@ -7096,18 +7096,10 @@
                 "31cd3317a90a3265"
             ],
             [],
-            [
-                "a5d516b0d436b916"
-            ],
-            [
-                "4ca160c1973132f4"
-            ],
-            [
-                "a0f59a1581362776"
-            ],
-            [
-                "98bb9328c9005e1d"
-            ],
+            [],
+            [],
+            [],
+            [],
             [
                 "1eccf985e02339ef"
             ],
@@ -7787,151 +7779,6 @@
                 "3d8e18f5d75109b7"
             ]
         ]
-    },
-    {
-        "id": "a5d516b0d436b916",
-        "type": "api-call-service",
-        "z": "03c58ed96b7b8395",
-        "name": "Increase Office Lamp +20%",
-        "server": "f88bb71a82464dcf",
-        "version": 7,
-        "debugenabled": false,
-        "action": "light.turn_on",
-        "floorId": [],
-        "areaId": [],
-        "deviceId": [],
-        "entityId": [
-            "light.office_light_rack"
-        ],
-        "labelId": [],
-        "data": "{ \"brightness_step_pct\": 20 }",
-        "dataType": "jsonata",
-        "mergeContext": "",
-        "mustacheAltTags": false,
-        "outputProperties": [],
-        "queue": "none",
-        "blockInputOverrides": false,
-        "domain": "light",
-        "service": "turn_on",
-        "x": 440,
-        "y": 1280,
-        "wires": [
-            []
-        ]
-    },
-    {
-        "id": "a0f59a1581362776",
-        "type": "api-call-service",
-        "z": "03c58ed96b7b8395",
-        "name": "Decrease Office Lamp Brightness",
-        "server": "f88bb71a82464dcf",
-        "version": 7,
-        "debugenabled": false,
-        "action": "light.turn_on",
-        "floorId": [],
-        "areaId": [],
-        "deviceId": [],
-        "entityId": [
-            "light.office_light_rack"
-        ],
-        "labelId": [],
-        "data": "{ \"brightness_step_pct\": -20 }",
-        "dataType": "jsonata",
-        "mergeContext": "",
-        "mustacheAltTags": false,
-        "outputProperties": [],
-        "queue": "none",
-        "blockInputOverrides": false,
-        "domain": "light",
-        "service": "turn_on",
-        "x": 460,
-        "y": 1400,
-        "wires": [
-            []
-        ]
-    },
-    {
-        "id": "4ca160c1973132f4",
-        "type": "api-call-service",
-        "z": "03c58ed96b7b8395",
-        "name": "Set Office Lamp to 100%",
-        "server": "f88bb71a82464dcf",
-        "version": 7,
-        "debugenabled": false,
-        "action": "light.turn_on",
-        "floorId": [],
-        "areaId": [],
-        "deviceId": [],
-        "entityId": [
-            "light.office_light_rack"
-        ],
-        "labelId": [],
-        "data": "{ \"brightness_pct\": 100 }",
-        "dataType": "jsonata",
-        "mergeContext": "",
-        "mustacheAltTags": false,
-        "outputProperties": [],
-        "queue": "none",
-        "blockInputOverrides": false,
-        "domain": "light",
-        "service": "turn_on",
-        "x": 430,
-        "y": 1340,
-        "wires": [
-            []
-        ]
-    },
-    {
-        "id": "98bb9328c9005e1d",
-        "type": "api-call-service",
-        "z": "03c58ed96b7b8395",
-        "name": "Turn Office Lamp Light",
-        "server": "f88bb71a82464dcf",
-        "version": 7,
-        "debugenabled": false,
-        "action": "light.turn_off",
-        "floorId": [],
-        "areaId": [],
-        "deviceId": [],
-        "entityId": [
-            "light.office_light_rack"
-        ],
-        "labelId": [],
-        "data": "",
-        "dataType": "jsonata",
-        "mergeContext": "",
-        "mustacheAltTags": false,
-        "outputProperties": [],
-        "queue": "none",
-        "blockInputOverrides": false,
-        "domain": "light",
-        "service": "turn_off",
-        "x": 420,
-        "y": 1460,
-        "wires": [
-            []
-        ]
-    },
-    {
-        "id": "7861011b2c19ff88",
-        "type": "subflow:a9c82ea585250d5c",
-        "z": "03c58ed96b7b8395",
-        "name": "Office Switch Two <-> Office Lamp",
-        "env": [
-            {
-                "name": "LIGHT",
-                "value": "light.office_light_rack",
-                "type": "str"
-            },
-            {
-                "name": "SWITCH",
-                "value": "switch.office_controller_wall_gang_two",
-                "type": "str"
-            }
-        ],
-        "x": 220,
-        "y": 1780,
-        "wires": []
     },
     {
         "id": "21a21c921ce7a64f",

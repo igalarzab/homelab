@@ -718,14 +718,6 @@ views:
               action: toggle
             hold_action:
               action: more-info
-          - type: tile
-            entity: light.office_light_rack
-            name: Rack light
-            icon: mdi:led-strip-variant
-            tap_action:
-              action: toggle
-            hold_action:
-              action: more-info
       - type: grid
         cards:
           - type: heading
@@ -1777,13 +1769,6 @@ views:
             grid_options:
               columns: 12
           - type: tile
-            entity: light.office_light_rack
-            name: Rack light
-            features:
-              - type: light-brightness
-            grid_options:
-              columns: 12
-          - type: tile
             entity: sensor.office_hub_temperature
             name: Temperature
             features:
@@ -1805,63 +1790,6 @@ views:
           - type: tile
             entity: sensor.office_hub_illuminance
             name: Daylight
-            grid_options:
-              columns: 12
-      - type: grid
-        cards:
-          - type: heading
-            heading: Workbench
-            heading_style: title
-            icon: mdi:power-plug-outline
-          - type: tile
-            entity: switch.office_computer_plug
-            name: Computer power
-            icon: mdi:desktop-tower-monitor
-            icon_tap_action:
-              action: more-info
-          - type: tile
-            entity: switch.office_3d_printer_plug
-            name: 3D printer power
-            icon: mdi:printer-3d-nozzle-outline
-            icon_tap_action:
-              action: more-info
-          - type: tile
-            entity: sensor.office_computer_plug_power
-            name: Computer power now
-            features:
-              - type: trend-graph
-                hours_to_show: 12
-                detail: false
-            grid_options:
-              columns: 12
-          - type: tile
-            entity: sensor.office_3d_printer_plug_power
-            name: 3D printer power now
-            features:
-              - type: trend-graph
-                hours_to_show: 12
-                detail: false
-            grid_options:
-              columns: 12
-          - type: tile
-            entity: sensor.office_computer_plug_energy_today
-            name: Computer today
-          - type: tile
-            entity: sensor.office_3d_printer_plug_energy_today
-            name: 3D printer today
-          - type: entities
-            title: Power supply
-            show_header_toggle: false
-            state_color: true
-            entities:
-              - entity: sensor.office_computer_plug_voltage
-                name: Computer voltage
-              - entity: sensor.office_computer_plug_current
-                name: Computer current
-              - entity: sensor.office_3d_printer_plug_voltage
-                name: 3D printer voltage
-              - entity: sensor.office_3d_printer_plug_current
-                name: 3D printer current
             grid_options:
               columns: 12
   - title: Bathroom

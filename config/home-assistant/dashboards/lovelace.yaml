@@ -1,4 +1,3 @@
-resource_mode: yaml
 dashboards:
   main-dashboard:
     mode: yaml
@@ -6,14 +5,3 @@ dashboards:
     icon: mdi:monitor-dashboard
     show_in_sidebar: true
     filename: dashboards/main.yaml
-resources:
-  - url: "https://fonts.googleapis.com/css?family=Raleway"
-    type: css
-  - url: /local/community/config-template-card/config-template-card.js
-    type: module
-  - url: /local/community/decluttering-card/decluttering-card.js
-    type: module
-  - url: /local/community/button-card/button-card.js
-    type: module
-  - url: /local/community/light-entity-card/light-entity-card.js
-    type: module
