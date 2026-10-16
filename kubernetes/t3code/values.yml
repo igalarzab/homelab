@@ -26,6 +26,8 @@ controllers:
           tag: "${T3CODE_IMAGE_TAG}"
         env:
           TZ: ${COMMON_TZ}
+          T3CODE_CHANNEL: stable
+          T3CODE_UPDATE_ON_START: "true"
         securityContext:
           allowPrivilegeEscalation: false
           readOnlyRootFilesystem: true
@@ -47,7 +49,7 @@ controllers:
                 command: [curl, -fsS, -o, /dev/null, "http://127.0.0.1:3773/"]
               periodSeconds: 5
               timeoutSeconds: 3
-              failureThreshold: 60
+              failureThreshold: 120
           readiness:
             enabled: true
             custom: true
