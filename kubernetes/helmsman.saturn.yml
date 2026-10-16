@@ -1,3 +1,4 @@
+---
 metadata:
   org: github.com/igalarzab/homelab
   maintainer: Jose Galarza
@@ -18,6 +19,14 @@ namespaces:
   metamcp:
   plex:
   pocket-id:
+  t3code:
+    # Chrome's sandbox needs syscalls blocked by RuntimeDefault.
+    labels:
+      pod-security.kubernetes.io/enforce: privileged
+      pod-security.kubernetes.io/warn: restricted
+      pod-security.kubernetes.io/warn-version: latest
+      pod-security.kubernetes.io/audit: restricted
+      pod-security.kubernetes.io/audit-version: latest
   traefik:
 
 helmRepos:
@@ -167,6 +176,17 @@ apps:
       successCondition: Complete
       successTimeout: 180s
       deleteOnSuccess: true
+  t3code:
+    <<: *default
+    # Enable after publishing the workspace image.
+    enabled: false
+    chart: bjw-s/app-template
+    version: "5.2.1"
+    namespace: t3code
+    valuesFile: t3code/values.yml
+    set:
+      persistence.home.storageClass: proxmox-retain
+      persistence.workspace.storageClass: proxmox-retain
   zigbee2mqtt:
     <<: *default
     chart: bjw-s/app-template

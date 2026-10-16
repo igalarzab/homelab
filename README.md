@@ -198,3 +198,7 @@ Application settings live in `config/`. Home Assistant includes dashboards,
 automations, scripts, and device definitions. ESPHome includes Mitsubishi AC
 controller configurations and shared templates. Update the relevant configuration
 and redeploy the application when needed.
+
+The [T3 Code workspace recipe](kubernetes/t3code/README.md) provides a persistent
+Codex development environment on Saturn, accessed through T3 Connect. Build and
+publish its image before enabling the release.
