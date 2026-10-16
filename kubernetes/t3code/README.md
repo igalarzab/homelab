@@ -38,7 +38,7 @@ building on an Apple Silicon Mac:
 
 ```bash
 docker buildx build --platform linux/amd64 \
-  --tag ghcr.io/igalarzab/homelab-t3code:base-1 \
+  --tag ghcr.io/igalarzab/t3code:base-1 \
   --push kubernetes/t3code
 ```
 
@@ -230,11 +230,11 @@ fallback, existing configuration, pre-upgrade snapshots, and installation errors
 They use a fake installer and run without network access:
 
 ```bash
-docker build --tag homelab-t3code:test kubernetes/t3code
+docker build --tag t3code:test kubernetes/t3code
 docker run --rm -i --network none --read-only \
   --cap-drop ALL --security-opt no-new-privileges \
   --tmpfs /home/node:uid=1000,gid=1000,mode=0700,exec --tmpfs /tmp \
-  homelab-t3code:test python3 - < kubernetes/t3code/test_entrypoint.py
+  t3code:test python3 - < kubernetes/t3code/test_entrypoint.py
 ```
 
 The executable home mount models the PVC, where installed tool binaries run.
