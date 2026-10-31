@@ -34,10 +34,13 @@ container runtimes.
 
 The playbook does not enable a host firewall: UFW stays off unless you set
 `base_enable_ufw: true`, which also opens ports 80 and 443. Filter traffic with
-the Proxmox firewall instead. Allow SSH from your workstation or LAN and block
-everything else.
+the Proxmox firewall instead. Allow SSH and TCP port 3773 from your workstation
+or LAN and block everything else.
 
-T3 listens on `127.0.0.1:3773` and is reached through T3 Connect or an SSH tunnel.
+T3 listens on `t3code_host:3773`, with `t3code_host` defaulting to the VM's
+primary IPv4 address detected by Ansible. This assumes the default route uses
+the LAN interface. Override it with the LAN address if another interface owns
+the default route. You can also use T3 Connect or an SSH tunnel.
 Ports published by project containers listen on all interfaces by default, so
 either bind them to `127.0.0.1` in Compose or cover them in the Proxmox firewall.
 
@@ -86,7 +89,8 @@ Override these in the inventory or with `--extra-vars`:
 | `t3code_workspace` | `{{ t3code_home }}/workspace` | Directory for repositories |
 | `t3code_data_dir` | `{{ t3code_home }}/.local/share/t3` | T3 state, exported as `T3CODE_HOME` |
 | `t3code_channel` | `stable` | `stable` or `nightly`, used for the first install only |
-| `t3code_port` | `3773` | Loopback port for `t3 serve` |
+| `t3code_host` | Primary IPv4 address detected by Ansible | LAN address for `t3 serve` |
+| `t3code_port` | `3773` | Listening port for `t3 serve` |
 | `t3code_tools` | Latest Node LTS, pnpm, Python, and uv | mise tools to bootstrap |
 | `t3code_browser_setup` | `false` | Rerun T3's browser setup on an existing install |
 
@@ -127,7 +131,7 @@ second one would fight over the same T3 home and port.
 To connect without T3 Connect, open a tunnel from your Mac:
 
 ```bash
-ssh -N -L 3773:127.0.0.1:3773 igalarzab@192.0.2.20
+ssh -N -L 3773:192.0.2.20:3773 igalarzab@192.0.2.20
 ```
 
 In another SSH session, run `sudo -iu t3code` and `t3 pair`, then paste the

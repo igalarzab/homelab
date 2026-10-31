@@ -15,7 +15,7 @@ Environment="SHELL=/bin/bash"
 Environment="T3CODE_HOME={{ t3code_data_dir }}"
 Environment="NPM_CONFIG_PREFIX={{ t3code_home }}/.local"
 Environment="PATH={{ t3code_home }}/.local/bin:{{ t3code_home }}/.local/share/mise/shims:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"
-ExecStart={{ t3code_home }}/.local/bin/t3 serve --host 127.0.0.1 --port {{ t3code_port }} {{ t3code_workspace }}
+ExecStart={{ t3code_home }}/.local/bin/t3 serve --host {{ t3code_host }} --port {{ t3code_port }} {{ t3code_workspace }}
 Restart=on-failure
 RestartSec=10
 TimeoutStopSec=60

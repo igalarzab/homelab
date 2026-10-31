@@ -83,6 +83,6 @@
   delay: 5
   when: not ansible_check_mode
   ansible.builtin.uri:
-    url: "http://127.0.0.1:{{ t3code_port }}/"
+    url: "http://{{ t3code_host }}:{{ t3code_port }}/"
     status_code: 200
     use_proxy: false
