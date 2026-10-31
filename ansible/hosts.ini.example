@@ -2,4 +2,5 @@
 HOSTNAME.lan
 
 [t3code]
-HOSTNAME.lan ansible_user=USERNAME
+# Drop ansible_become_exe on Ubuntu 24.04, which has no sudo-rs
+HOSTNAME.lan ansible_user=USERNAME ansible_become_exe=sudo.ws

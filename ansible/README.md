@@ -55,8 +55,12 @@ administrator username in the `t3code` group:
 
 ```ini
 [t3code]
-192.0.2.20 ansible_user=igalarzab
+192.0.2.20 ansible_user=igalarzab ansible_become_exe=sudo.ws
 ```
+
+Ubuntu 25.10 and later use sudo-rs, whose password prompt Ansible does not
+recognize. `ansible_become_exe=sudo.ws` switches to the original sudo, which is
+still installed. Leave it out on 24.04.
 
 Connect once over SSH to verify and accept the host key, then apply:
 
