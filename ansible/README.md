@@ -62,12 +62,13 @@ Connect once over SSH to verify and accept the host key, then apply:
 
 ```bash
 ssh igalarzab@192.0.2.20
-uv run ansible-playbook -i ansible/hosts.ini ansible/t3code.yml
+./ansible/run.sh t3code
 ```
 
-Add `--ask-become-pass` if sudo needs a password. Run from the repository root:
-`ansible/ansible.cfg` disables host-key checking and is only meant for the legacy
-`run.sh`. The first run downloads the tools and T3 and takes a few minutes. It
+Arguments after the playbook name go to `ansible-playbook`, so add
+`--ask-become-pass` if sudo needs a password. `ansible/ansible.cfg` disables
+host-key checking for Saturn, but `run.sh` turns it back on for this playbook.
+The first run downloads the tools and T3 and takes a few minutes. It
 ends by waiting up to three minutes for T3 to answer HTTP requests.
 
 ### Variables
@@ -174,7 +175,7 @@ can only be detected after that. If the first preview reports missing libraries,
 run the setup again:
 
 ```bash
-uv run ansible-playbook -i ansible/hosts.ini ansible/t3code.yml -e t3code_browser_setup=true
+./ansible/run.sh t3code -e t3code_browser_setup=true
 ```
 
 Restart `t3code` afterwards if it installed fonts.
