@@ -6,11 +6,11 @@ t3code_channel: stable
 t3code_port: 3773
 t3code_browser_setup: false
 t3code_tools:
-  - tool: "node@24"
+  - tool: "node@lts"
     command: node
-  - tool: "pnpm@10"
+  - tool: "pnpm@latest"
     command: pnpm
-  - tool: "python@3"
+  - tool: "python@latest"
     command: python
   - tool: "uv@latest"
     command: uv

@@ -81,10 +81,10 @@ Override these in the inventory or with `--extra-vars`:
 | `t3code_workspace` | `{{ t3code_home }}/workspace` | Directory for repositories |
 | `t3code_channel` | `stable` | `stable` or `nightly`, used for the first install only |
 | `t3code_port` | `3773` | Loopback port for `t3 serve` |
-| `t3code_tools` | Node 24, pnpm 10, Python 3, uv | mise tools to bootstrap |
+| `t3code_tools` | Latest Node LTS, pnpm, Python, and uv | mise tools to bootstrap |
 | `t3code_browser_setup` | `false` | Rerun T3's browser setup on an existing install |
 
-Each `t3code_tools` entry has a mise `tool` request, such as `node@24`, and the
+Each `t3code_tools` entry has a mise `tool` request, such as `node@lts`, and the
 `command` its shim provides, such as `node`. A tool is skipped once its shim
 exists, so later version changes made with mise are kept. Use `[]` to skip the
 bootstrap.
