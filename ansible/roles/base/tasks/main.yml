@@ -1,51 +1,77 @@
 ---
 - name: Checking Operative System (only Debian compatible)
-  meta: end_play
+  ansible.builtin.meta: end_play
   when: ansible_facts['os_family'] != 'Debian'
 
 - name: Set the main gid to the users group
   become: true
-  user:
+  ansible.builtin.user:
     name: "{{ ansible_facts['user_id'] }}"
     group: users
 
 - name: Delete the default user group
   become: true
-  group:
+  ansible.builtin.group:
     name: "{{ ansible_facts['user_id'] }}"
     state: absent
 
 - name: Re-run facts
-  setup:
+  ansible.builtin.setup:
 
 - name: Update apt repos
   become: true
-  apt: update_cache=yes force_apt_get=yes cache_valid_time=3600
+  ansible.builtin.apt:
+    update_cache: true
+    force_apt_get: true
+    cache_valid_time: 3600
 
 - name: Upgrade all apt packages
   become: true
-  apt: upgrade=full
+  ansible.builtin.apt:
+    upgrade: full
 
+# The full upgrade above already keeps installed packages current
 - name: Install base packages
   become: true
-  package:
-    state: latest
+  ansible.builtin.package:
+    state: present
     name:
       - apt-transport-https
       - ca-certificates
       - curl
+      - git
       - gpg
+      - jq
       - libseccomp2
       - lm-sensors
       - locales
+      - openssh-client
       - pigz
+      - python3
       - qemu-guest-agent
+      - ripgrep
+      - rsync
       - tar
+      - tmux
       - tree
       - unattended-upgrades
       - unzip
       - util-linux
       - vim
+      - zip
+
+- name: Check for the QEMU guest agent channel
+  ansible.builtin.stat:
+    path: /dev/virtio-ports/org.qemu.guest_agent.0
+  register: base_guest_agent_channel
+
+- name: Enable the guest agent on Proxmox QEMU guests
+  become: true
+  ansible.builtin.systemd_service:
+    name: qemu-guest-agent
+    enabled: true
+    state: started
+  when: base_guest_agent_channel.stat.exists
 
 - name: Install locales
   become: true
@@ -56,11 +82,11 @@
     - en_US.UTF-8
     - en_GB.UTF-8
     - es_ES.UTF-8
-    - "{{ locale }}"
+    - "{{ base_locale }}"
 
 - name: Customize the motd message
   become: true
-  file:
+  ansible.builtin.file:
     path: /etc/update-motd.d/{{ item.file }}
     state: absent
   loop:
@@ -69,25 +95,29 @@
 
 - name: Disable swap
   become: true
-  command: swapoff -a
-  when: ansible_facts['memory_mb']['swap']['total'] > 0
+  changed_when: true
+  ansible.builtin.command: swapoff -a
+  when:
+    - base_disable_swap
+    - ansible_facts['memory_mb']['swap']['total'] > 0
 
 - name: Disable swap permanently
   become: true
-  replace:
+  ansible.builtin.replace:
     path: /etc/fstab
-    regexp: '^([^#].*?\sswap\s+sw\s+.*)$'
-    replace: '# \1'
+    regexp: "^([^#].*?\\sswap\\s+sw\\s+.*)$"
+    replace: "# \\1"
+  when: base_disable_swap
 
 - name: Running networking tasks
-  import_tasks: network.yml
+  ansible.builtin.import_tasks: network.yml
 
 - name: Running SSH hardening tasks
-  import_tasks: ssh.yml
+  ansible.builtin.import_tasks: ssh.yml
 
 - name: Running security tasks
-  import_tasks: security.yml
+  ansible.builtin.import_tasks: security.yml
 
 - name: Configure firewall
-  import_tasks: firewall.yml
-  when: enable_ufw
+  ansible.builtin.import_tasks: firewall.yml
+  when: base_enable_ufw

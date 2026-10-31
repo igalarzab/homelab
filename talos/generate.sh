@@ -26,6 +26,7 @@ if [[ ! -f "$cluster_dir/cluster.env" ]]; then
   exit 1
 fi
 
+# shellcheck source=/dev/null  # The cluster is chosen at runtime
 source "$cluster_dir/cluster.env"
 
 : "${TALOSCTL_VERSION:?Set TALOSCTL_VERSION in cluster.env}"

@@ -1,0 +1,46 @@
+---
+name: Lint
+
+on:
+  pull_request:
+  push:
+    branches:
+      - main
+
+permissions:
+  contents: read
+
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+
+      - uses: astral-sh/setup-uv@v10.3.3
+
+      - name: Install dependencies
+        run: uv sync --locked
+
+      # Later steps run even if an earlier linter fails, so one run reports everything
+      - name: yamllint
+        run: uv run yamllint --strict .
+
+      - name: ansible-lint
+        if: ${{ !cancelled() }}
+        run: uv run ansible-lint ansible
+
+      - name: ruff check
+        if: ${{ !cancelled() }}
+        run: uv run ruff check .
+
+      - name: ruff format
+        if: ${{ !cancelled() }}
+        run: uv run ruff format --check .
+
+      - name: shellcheck
+        if: ${{ !cancelled() }}
+        run: git ls-files -z '*.sh' | xargs -0 uv run shellcheck
+
+      - name: actionlint
+        if: ${{ !cancelled() }}
+        run: uv run actionlint

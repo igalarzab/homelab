@@ -1,7 +1,8 @@
 # Homelab
 
-Kubernetes infrastructure, home automation, and media services, with Talos managing
-the operating system and Kubernetes components. Helmsman manages the applications.
+Kubernetes infrastructure, development VMs, home automation, and media services.
+Talos manages Kubernetes nodes, Helmsman manages cluster applications, and Ansible
+configures dedicated development VMs.
 
 ## Architecture
 
@@ -46,7 +47,7 @@ homelab/
     mosquitto/                    # MQTT configuration
     node-red/                     # Flows and settings
     zigbee2mqtt/                  # Zigbee configuration and device mappings
-  ansible/                        # Legacy Ubuntu and kubeadm provisioning
+  ansible/                        # T3 development VM and legacy kubeadm provisioning
 ```
 
 ## Prerequisites
@@ -198,3 +199,23 @@ Application settings live in `config/`. Home Assistant includes dashboards,
 automations, scripts, and device definitions. ESPHome includes Mitsubishi AC
 controller configurations and shared templates. Update the relevant configuration
 and redeploy the application when needed.
+
+The [T3 Code VM playbook](ansible/README.md) configures a dedicated Ubuntu VM on
+Proxmox with T3, user-owned development tools, and Docker Compose. Create the VM
+first, add it to the `t3code` group in `ansible/hosts.ini`, then apply the
+playbook.
+
+## Lint
+
+GitHub Actions runs these checks on every pull request and on pushes to `main`.
+`uv sync` installs the same pinned versions, so you can run them locally from
+the repository root:
+
+```bash
+uv run yamllint --strict .
+uv run ansible-lint ansible
+uv run ruff check .
+uv run ruff format --check .
+git ls-files -z '*.sh' | xargs -0 uv run shellcheck
+uv run actionlint
+```

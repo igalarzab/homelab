@@ -1,7 +1,7 @@
 ---
 - name: Ensure CNI folder exists
   become: true
-  file:
+  ansible.builtin.file:
     path: /etc/cni/net.d
     state: directory
     owner: root
@@ -10,19 +10,19 @@
 
 - name: Copy CNI plugin config
   become: true
-  template:
+  ansible.builtin.template:
     src: cni.conflist.j2
     dest: /etc/cni/net.d/10-containerd-net.conflist
     owner: root
     group: root
     mode: "0644"
-  notify: restart containerd
+  notify: containerd_restart
 
 - name: Allow to run pods on control plane
-  command: kubectl taint nodes --all node-role.kubernetes.io/control-plane-
-  register: taint_result
-  changed_when: "'untainted' in taint_result.stdout"
-  failed_when: taint_result.rc != 0 and 'not found' not in taint_result.stderr
-  until: taint_result is not failed
+  ansible.builtin.command: kubectl taint nodes --all node-role.kubernetes.io/control-plane-
+  register: kubeadm_taint_result
+  changed_when: "'untainted' in kubeadm_taint_result.stdout"
+  failed_when: kubeadm_taint_result.rc != 0 and 'not found' not in kubeadm_taint_result.stderr
+  until: kubeadm_taint_result is not failed
   retries: 12
   delay: 5

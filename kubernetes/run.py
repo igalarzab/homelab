@@ -6,6 +6,7 @@ import os
 import pathlib
 import re
 import subprocess
+import sys
 from typing import Literal, cast
 
 from kubernetes.config.config_exception import ConfigException
@@ -65,8 +66,10 @@ def get_all_docker_tags(extra_env: dict[str, str] | None = None) -> dict[str, st
 
                 try:
                     running_tags[env_name] = get_docker_tag(env_name)
-                except Exception:
-                    pass
+                except k8s_client.ApiException as exc:
+                    print(f"Skipping {env_name}: {exc.status} {exc.reason}", file=sys.stderr)
+                except (IndexError, ValueError) as exc:
+                    print(f"Skipping {env_name}: {exc}", file=sys.stderr)
 
     return running_tags
 

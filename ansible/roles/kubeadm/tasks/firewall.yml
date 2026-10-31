@@ -1,7 +1,7 @@
 ---
 - name: Set DEFAULT_FORWARD_POLICY=ACCEPT in UFW
   become: true
-  notify: reload ufw
+  notify: kubeadm_reload_ufw
   ansible.builtin.lineinfile:
     path: /etc/default/ufw
     regexp: "^DEFAULT_FORWARD_POLICY="
@@ -9,7 +9,7 @@
 
 - name: Allow connections to the kube-api-server (port 6443)
   become: true
-  notify: reload ufw
+  notify: kubeadm_reload_ufw
   community.general.ufw:
     rule: allow
     port: "6443"
@@ -17,7 +17,7 @@
 
 - name: Allow connections to the metrics-server (port 10250)
   become: true
-  notify: reload ufw
+  notify: kubeadm_reload_ufw
   community.general.ufw:
     rule: allow
     port: "10250"
@@ -26,7 +26,7 @@
 
 - name: Allow any traffic in on cni0
   become: true
-  notify: reload ufw
+  notify: kubeadm_reload_ufw
   community.general.ufw:
     rule: allow
     interface: cni0
@@ -34,7 +34,7 @@
 
 - name: Allow any traffic out on cni0
   become: true
-  notify: reload ufw
+  notify: kubeadm_reload_ufw
   community.general.ufw:
     rule: allow
     interface: cni0
@@ -42,11 +42,11 @@
 
 - name: Allow routed traffic from pods to internet (all ports)
   become: true
-  notify: reload ufw
+  notify: kubeadm_reload_ufw
   community.general.ufw:
     rule: allow
-    route: yes
+    route: true
     interface_in: cni0
     interface_out: "{{ ansible_facts['default_ipv4']['interface'] }}"
-    from_ip: "{{ pod_cidr_ipv4 }}"
+    from_ip: "{{ kubeadm_pod_cidr_ipv4 }}"
     to_ip: "any"

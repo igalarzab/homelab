@@ -1,3 +1,4 @@
+---
 policy: sync
 provider:
   name: cloudflare

@@ -55,9 +55,7 @@ def get_workloads_with_restarted_pods(cluster: str, namespace: str) -> set[str]:
                 continue
 
             if owner_kind == "replicaset":
-                rs_data = run_kubectl(
-                    cluster, ["get", "replicaset", owner_name, "-n", namespace]
-                )
+                rs_data = run_kubectl(cluster, ["get", "replicaset", owner_name, "-n", namespace])
                 for rs_owner in rs_data.get("metadata", {}).get("ownerReferences", []):
                     if rs_owner.get("kind", "").lower() == "deployment" and rs_owner.get("name"):
                         restarted_workloads.add(f"deployment/{rs_owner['name']}")
@@ -73,7 +71,9 @@ def restart_workload(cluster: str, workload: str, namespace: str) -> None:
 
 
 def main() -> None:
-    parser = argparse.ArgumentParser(description="Restart workloads with restarted pods cluster-wide")
+    parser = argparse.ArgumentParser(
+        description="Restart workloads with restarted pods cluster-wide"
+    )
     parser.add_argument("cluster", help="The Kubernetes context to use")
     args = parser.parse_args()
 
@@ -88,7 +88,9 @@ def main() -> None:
             restart_workload(args.cluster, workload, namespace)
             restart_count += 1
 
-    print(f"Submitted restarts for {restart_count} workload(s) across {len(namespaces)} namespace(s).")
+    print(
+        f"Submitted restarts for {restart_count} workload(s) across {len(namespaces)} namespace(s)."
+    )
 
 
 if __name__ == "__main__":

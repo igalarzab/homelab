@@ -1,4 +1,7 @@
 ---
+ignore: |
+  .venv/
+
 rules:
   document-start:
     present: true

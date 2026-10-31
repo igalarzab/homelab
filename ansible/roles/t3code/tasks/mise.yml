@@ -1,0 +1,43 @@
+---
+- name: Install the external repository manager
+  become: true
+  ansible.builtin.apt:
+    name: extrepo
+    state: present
+    update_cache: true
+    cache_valid_time: 3600
+
+- name: Enable the mise APT repository
+  become: true
+  register: t3code_mise_repository
+  ansible.builtin.command:
+    creates: /etc/apt/sources.list.d/extrepo_mise.sources
+    argv:
+      - extrepo
+      - enable
+      - mise
+
+- name: Install mise from APT
+  become: true
+  ansible.builtin.apt:
+    name: mise
+    state: present
+    update_cache: true
+    cache_valid_time: "{{ 0 if t3code_mise_repository.changed else 3600 }}"
+
+- name: Bootstrap language tools without replacing existing selections
+  become: true
+  become_user: "{{ t3code_user }}"
+  environment:
+    HOME: "{{ t3code_home }}"
+    PATH: "{{ t3code_home }}/.local/bin:/usr/local/bin:/usr/bin:/bin"
+  ansible.builtin.command:
+    argv:
+      - /usr/bin/mise
+      - use
+      - --global
+      - --yes
+      - "{{ item.tool }}"
+    chdir: "{{ t3code_home }}"
+    creates: "{{ t3code_home }}/.local/share/mise/shims/{{ item.command }}"
+  loop: "{{ t3code_tools }}"

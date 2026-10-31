@@ -1,3 +1,4 @@
+---
 ingressClass:
   enabled: true
   isDefaultClass: true

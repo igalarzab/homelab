@@ -1,13 +1,13 @@
 ---
 - name: Install ufw
   become: true
-  package:
+  ansible.builtin.package:
     state: present
     name: ufw
 
 - name: Allow SSH (port 22)
   become: true
-  notify: reload ufw
+  notify: base_reload_ufw
   community.general.ufw:
     rule: allow
     port: "22"
@@ -15,7 +15,7 @@
 
 - name: Enable UFW
   become: true
-  notify: reload ufw
+  notify: base_reload_ufw
   community.general.ufw:
     state: enabled
     default: deny
@@ -23,14 +23,14 @@
 
 - name: Allow outgoing by default
   become: true
-  notify: reload ufw
+  notify: base_reload_ufw
   community.general.ufw:
     default: allow
     direction: outgoing
 
 - name: Allow HTTP (port 80)
   become: true
-  notify: reload ufw
+  notify: base_reload_ufw
   community.general.ufw:
     rule: allow
     port: "80"
@@ -38,7 +38,7 @@
 
 - name: Allow HTTPS (port 443)
   become: true
-  notify: reload ufw
+  notify: base_reload_ufw
   community.general.ufw:
     rule: allow
     port: "443"

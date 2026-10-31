@@ -1,0 +1,10 @@
+---
+- name: Configure a T3 Code development VM
+  hosts: t3code
+  gather_facts: true
+  vars:
+    base_disable_swap: false
+  roles:
+    - role: base
+    - role: docker
+    - role: t3code

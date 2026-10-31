@@ -1,0 +1,88 @@
+---
+# A launcher left behind by an interrupted install fails here and is reinstalled
+- name: Check whether T3 Code is installed and runs
+  become: true
+  become_user: "{{ t3code_user }}"
+  environment:
+    HOME: "{{ t3code_home }}"
+    T3CODE_HOME: "{{ t3code_data_dir }}"
+  register: t3code_version
+  changed_when: false
+  failed_when: false
+  check_mode: false
+  ansible.builtin.command:
+    argv:
+      - timeout
+      - 60s
+      - "{{ t3code_home }}/.local/bin/t3"
+      - --version
+
+- name: Install T3 Code as the development user
+  become: true
+  become_user: "{{ t3code_user }}"
+  environment:
+    HOME: "{{ t3code_home }}"
+    PATH: "{{ t3code_home }}/.local/bin:/usr/local/bin:/usr/bin:/bin"
+  when: t3code_version.rc != 0
+  block:
+    - name: Download the official T3 Code installer
+      ansible.builtin.get_url:
+        url: https://t3.codes/install.sh
+        dest: "{{ t3code_home }}/.cache/t3-install.sh"
+        mode: "0600"
+        force: true
+        timeout: 30
+
+    - name: Install T3 Code
+      changed_when: true
+      notify: t3code_restart
+      ansible.builtin.command:
+        argv:
+          - timeout
+          - --kill-after=5s
+          - 600s
+          - sh
+          - "{{ t3code_home }}/.cache/t3-install.sh"
+        chdir: "{{ t3code_home }}"
+      environment:
+        T3CODE_HOME: "{{ t3code_data_dir }}"
+        T3CODE_CHANNEL: "{{ t3code_channel }}"
+        T3CODE_INSTALL_BIN_DIR: "{{ t3code_home }}/.local/bin"
+
+  always:
+    - name: Remove the T3 Code installer
+      ansible.builtin.file:
+        path: "{{ t3code_home }}/.cache/t3-install.sh"
+        state: absent
+
+- name: Configure Chrome dependencies and sandbox
+  ansible.builtin.import_tasks: chrome.yml
+
+- name: Install the T3 Code system service
+  become: true
+  notify: t3code_restart
+  ansible.builtin.template:
+    src: t3code.service.j2
+    dest: /etc/systemd/system/t3code.service
+    mode: "0644"
+
+- name: Apply service changes before checking readiness
+  ansible.builtin.meta: flush_handlers
+
+- name: Enable and start T3 Code
+  become: true
+  ansible.builtin.systemd_service:
+    name: t3code
+    enabled: true
+    state: started
+
+- name: Wait for T3 Code to serve requests
+  register: t3code_health
+  until: t3code_health.status == 200
+  retries: 36
+  delay: 5
+  when: not ansible_check_mode
+  ansible.builtin.uri:
+    url: "http://127.0.0.1:{{ t3code_port }}/"
+    status_code: 200
+    use_proxy: false

@@ -1,0 +1,17 @@
+---
+t3code_user: t3code
+t3code_home: "/home/{{ t3code_user }}"
+t3code_workspace: "{{ t3code_home }}/workspace"
+t3code_data_dir: "{{ t3code_home }}/.local/share/t3"
+t3code_channel: stable
+t3code_port: 3773
+t3code_browser_setup: false
+t3code_tools:
+  - tool: "node@lts"
+    command: node
+  - tool: "pnpm@latest"
+    command: pnpm
+  - tool: "python@latest"
+    command: python
+  - tool: "uv@latest"
+    command: uv

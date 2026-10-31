@@ -26,8 +26,8 @@
 
 - name: Copy nameservers config for kubelet
   become: true
-  when: kubelet_custom_resolv_conf
-  template:
+  when: kubeadm_kubelet_custom_resolv_conf
+  ansible.builtin.template:
     src: nameservers.conf
     dest: /etc/kubernetes/resolv.conf
     owner: root

@@ -1,14 +1,14 @@
 ---
-enable_ufw: false
+kubeadm_enable_ufw: false
 
-k8s_apt_version: "1.36"
-k8s_full_version: "1.36.1"
-k8s_apt_pin_version: "{{ k8s_full_version }}-*"
+kubeadm_apt_version: "1.36"
+kubeadm_full_version: "1.36.1"
+kubeadm_apt_pin_version: "{{ kubeadm_full_version }}-*"
 
-k8s_apt_key_path: /usr/share/keyrings/kubernetes-apt-keyring.gpg
-k8s_apt_repo_url: "https://pkgs.k8s.io/core:/stable:/v{{ k8s_apt_version }}/deb"
-k8s_apt_key_url: "{{ k8s_apt_repo_url }}/Release.key"
+kubeadm_apt_key_path: /usr/share/keyrings/kubernetes-apt-keyring.gpg
+kubeadm_apt_repo_url: "https://pkgs.k8s.io/core:/stable:/v{{ kubeadm_apt_version }}/deb"
+kubeadm_apt_key_url: "{{ kubeadm_apt_repo_url }}/Release.key"
 
-cluster_name: "{{ ansible_facts['hostname'] }}"
-pod_cidr_ipv4: 10.92.0.0/16
-services_cidr_ipv4: 10.96.0.0/16
+kubeadm_cluster_name: "{{ ansible_facts['hostname'] }}"
+kubeadm_pod_cidr_ipv4: 10.92.0.0/16
+kubeadm_services_cidr_ipv4: 10.96.0.0/16

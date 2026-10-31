@@ -1,3 +1,4 @@
+---
 storageClass:
   create: true
   name: local-path-delete

@@ -1,3 +1,4 @@
+---
 play_music:
   alias: Play Music
   icon: mdi:music
@@ -26,5 +27,3 @@ play_music:
           shuffle: true
           repeat: "context"
           volume: '{{ volume|default(20) }}'
-
-

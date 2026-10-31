@@ -11,7 +11,7 @@
       "ipam": {
         "type": "host-local",
         "ranges": [
-          [{ "subnet": "{{ pod_cidr_ipv4 }}" }]
+          [{ "subnet": "{{ kubeadm_pod_cidr_ipv4 }}" }]
         ],
         "routes": [
           { "dst": "0.0.0.0/0" }

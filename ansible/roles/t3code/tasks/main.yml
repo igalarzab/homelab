@@ -1,0 +1,92 @@
+---
+- name: Install development tools
+  become: true
+  ansible.builtin.apt:
+    update_cache: true
+    cache_valid_time: 3600
+    state: present
+    name:
+      - acl
+      - build-essential
+      - pkg-config
+      - python3-debian
+
+- name: Configure the GitHub CLI repository
+  become: true
+  register: t3code_gh_repository
+  ansible.builtin.deb822_repository:
+    name: github-cli
+    types: deb
+    uris: https://cli.github.com/packages
+    suites: stable
+    components: main
+    signed_by: https://cli.github.com/packages/githubcli-archive-keyring.gpg
+
+- name: Install the GitHub CLI
+  become: true
+  ansible.builtin.apt:
+    name: gh
+    state: present
+    update_cache: true
+    cache_valid_time: "{{ 0 if t3code_gh_repository.changed else 3600 }}"
+
+- name: Create the development user with Docker access
+  become: true
+  ansible.builtin.user:
+    name: "{{ t3code_user }}"
+    group: users
+    groups: docker
+    append: true
+    home: "{{ t3code_home }}"
+    shell: /bin/bash
+    create_home: true
+
+- name: Create the workspace and tool directories
+  become: true
+  ansible.builtin.file:
+    path: "{{ item.path }}"
+    state: directory
+    owner: "{{ t3code_user }}"
+    group: users
+    mode: "{{ item.mode | default('0755') }}"
+  loop:
+    - path: "{{ t3code_home }}"
+    - path: "{{ t3code_workspace }}"
+    - path: "{{ t3code_home }}/.local/bin"
+    - path: "{{ t3code_home }}/.local/share"
+    - path: "{{ t3code_home }}/.cache"
+    - path: "{{ t3code_home }}/.config"
+    # Ansible's remote_tmp for tasks run as the development user
+    - path: "{{ t3code_home }}/.ansible/tmp"
+      mode: "0700"
+    # T3's database and sign-in tokens
+    - path: "{{ t3code_data_dir }}"
+      mode: "0700"
+  loop_control:
+    label: "{{ item.path }}"
+
+- name: Install mise and language tools
+  ansible.builtin.import_tasks: mise.yml
+
+# Ubuntu's skeleton .profile already adds ~/.local/bin to PATH and sources .bashrc
+- name: Configure login and interactive shells for the development user
+  become: true
+  become_user: "{{ t3code_user }}"
+  ansible.builtin.blockinfile:
+    path: "{{ t3code_home }}/{{ item.file }}"
+    create: true
+    mode: "0644"
+    marker: "# {mark} ANSIBLE T3 CODE ENVIRONMENT"
+    block: "{{ item.block }}"
+  loop:
+    - file: .profile
+      block: |
+        export NPM_CONFIG_PREFIX="$HOME/.local"
+        export T3CODE_HOME="{{ t3code_data_dir }}"
+        eval "$(/usr/bin/mise activate bash --shims)"
+    - file: .bashrc
+      block: |
+        eval "$(/usr/bin/mise activate bash)"
+
+- name: Install and configure T3 Code
+  ansible.builtin.import_tasks: t3code.yml

@@ -1,30 +1,32 @@
 ---
-- name: Get docker apt key
+# The repository entry references this dearmored key path, so keep producing it here
+- name: Get docker apt key  # noqa: command-instead-of-module
   become: true
-  shell: "curl -fsSL {{ docker_apt_key_url }} | gpg --dearmor -o {{ docker_apt_key_path }}"
+  ansible.builtin.shell: "set -o pipefail && curl -fsSL {{ containerd_docker_apt_key_url }} | gpg --dearmor -o {{ containerd_docker_apt_key_path }}"
   args:
-    creates: "{{ docker_apt_key_path }}"
+    creates: "{{ containerd_docker_apt_key_path }}"
+    executable: /bin/bash
 
 - name: Add docker repository
   become: true
-  apt_repository:
-    repo: "deb [signed-by={{ docker_apt_key_path }}] {{ docker_apt_repo_url }}"
+  ansible.builtin.apt_repository:
+    repo: "deb [signed-by={{ containerd_docker_apt_key_path }}] {{ containerd_docker_apt_repo_url }}"
     state: present
     filename: k8s
     update_cache: true
 
 - name: Install containerd packages
   become: true
-  notify: restart containerd
-  package:
-    state: latest
+  notify: containerd_restart
+  ansible.builtin.package:
+    state: present
     name:
       - containerd.io
 
 - name: Store containerd config
   become: true
-  notify: restart containerd
-  template:
+  notify: containerd_restart
+  ansible.builtin.template:
     src: templates/containerd-config.toml.j2
     dest: /etc/containerd/config.toml
     owner: root
@@ -33,8 +35,8 @@
 
 - name: Store crictl config
   become: true
-  notify: restart containerd
-  template:
+  notify: containerd_restart
+  ansible.builtin.template:
     src: templates/crictl.yaml.j2
     dest: /etc/crictl.yaml
     owner: root
@@ -43,11 +45,11 @@
 
 - name: Enable containerd service
   become: true
-  service:
+  ansible.builtin.service:
     name: containerd
     state: started
-    enabled: yes
+    enabled: true
 
 - name: Restart containerd now
   become: true
-  meta: flush_handlers
+  ansible.builtin.meta: flush_handlers
