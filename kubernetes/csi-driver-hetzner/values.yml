@@ -1,3 +1,4 @@
+---
 controller:
   hcloudToken:
     value: ${CSI_DRIVER_HETZNER_TOKEN}

@@ -1,3 +1,4 @@
+---
 - platform: universal
   name: Living Room Media Center
   unique_id: living_room_media_center

@@ -1,3 +1,4 @@
+---
 extraDeploy:
   - |
     apiVersion: "k8s.cni.cncf.io/v1"

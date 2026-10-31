@@ -1,3 +1,4 @@
+---
 - alias: Set theme based on the system theme
   mode: single
   triggers:

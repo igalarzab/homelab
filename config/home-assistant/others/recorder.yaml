@@ -1,3 +1,4 @@
+---
 exclude:
   entities:
     - automation.system_refresh_unavailable_entities

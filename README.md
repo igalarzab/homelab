@@ -204,3 +204,21 @@ The [T3 Code VM playbook](ansible/README.md) configures a dedicated Ubuntu VM on
 Proxmox with T3, user-owned development tools, and Docker Compose. Create the VM
 first, add it to the `t3code` group in `ansible/hosts.ini`, then apply the
 playbook.
+
+## Lint
+
+GitHub Actions runs these checks on every pull request and on pushes to `main`.
+`uv sync` installs the same pinned versions, so you can run them locally from
+the repository root:
+
+```bash
+uv run yamllint --strict .
+uv run ansible-lint ansible
+uv run ruff check .
+uv run ruff format --check .
+git ls-files -z '*.sh' | xargs -0 uv run shellcheck
+uv run actionlint
+```
+
+Zigbee2MQTT rewrites its `configuration.yaml` and `devices.yaml`, so yamllint
+skips them.
