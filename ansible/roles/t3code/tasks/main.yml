@@ -93,5 +93,20 @@
         export T3CODE_HOME="{{ t3code_data_dir }}"
         eval "$(/usr/bin/mise activate bash)"
 
+- name: Install coding agent CLIs
+  ansible.builtin.include_tasks: provider.yml
+  loop:
+    - name: Codex
+      command: codex
+      installer_url: https://chatgpt.com/codex/install.sh
+      interpreter: sh
+    - name: Claude Code
+      command: claude
+      installer_url: https://claude.ai/install.sh
+      interpreter: bash
+  loop_control:
+    loop_var: t3code_provider
+    label: "{{ t3code_provider.name }}"
+
 - name: Install and configure T3 Code
   ansible.builtin.import_tasks: t3code.yml

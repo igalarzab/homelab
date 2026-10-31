@@ -1,0 +1,58 @@
+---
+- name: Install provider as the development user - {{ t3code_provider.name }}
+  become: true
+  become_user: "{{ t3code_user }}"
+  environment:
+    HOME: "{{ t3code_home }}"
+    PATH: "{{ t3code_home }}/.local/bin:/usr/local/bin:/usr/bin:/bin"
+    CODEX_NON_INTERACTIVE: "true"
+  block:
+    - name: Check provider installation - {{ t3code_provider.name }}
+      register: t3code_provider_version
+      changed_when: false
+      failed_when: false
+      check_mode: false
+      ansible.builtin.command:
+        argv:
+          - timeout
+          - 60s
+          - "{{ t3code_home }}/.local/bin/{{ t3code_provider.command }}"
+          - --version
+
+    - name: Install missing or broken provider - {{ t3code_provider.name }}
+      when: t3code_provider_version.rc != 0
+      block:
+        - name: Download official provider installer - {{ t3code_provider.name }}
+          ansible.builtin.get_url:
+            url: "{{ t3code_provider.installer_url }}"
+            dest: "{{ t3code_home }}/.cache/{{ t3code_provider.command }}-install.sh"
+            mode: "0600"
+            force: true
+            timeout: 30
+
+        - name: Run provider installer - {{ t3code_provider.name }}
+          changed_when: true
+          ansible.builtin.command:
+            argv:
+              - timeout
+              - --kill-after=5s
+              - 600s
+              - "{{ t3code_provider.interpreter }}"
+              - "{{ t3code_home }}/.cache/{{ t3code_provider.command }}-install.sh"
+            chdir: "{{ t3code_home }}"
+
+        - name: Verify provider installation - {{ t3code_provider.name }}
+          changed_when: false
+          when: not ansible_check_mode
+          ansible.builtin.command:
+            argv:
+              - timeout
+              - 60s
+              - "{{ t3code_home }}/.local/bin/{{ t3code_provider.command }}"
+              - --version
+
+      always:
+        - name: Remove provider installer - {{ t3code_provider.name }}
+          ansible.builtin.file:
+            path: "{{ t3code_home }}/.cache/{{ t3code_provider.command }}-install.sh"
+            state: absent

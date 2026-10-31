@@ -16,7 +16,8 @@ The playbook applies three roles in order:
   Ubuntu's Docker, containerd, or runc packages, or `podman-docker`, are
   already installed.
 - `t3code`: creates the `t3code` user and its workspace, installs mise and the
-  language tools, installs T3, and installs its native systemd user service.
+  language tools, Codex CLI, Claude Code, and T3, and installs T3's native
+  systemd user service.
   Lingering keeps it running after logout and starts it at boot.
 
 Kubernetes provisioning stays in the separate `saturn.yml` playbook.
@@ -158,8 +159,20 @@ An SSH tunnel is another option when your Mac cannot reach port 3773 directly:
 ssh -N -L 3773:192.0.2.20:3773 igalarzab@192.0.2.20
 ```
 
-Inside T3, use **Connect with ChatGPT** in the provider settings for Codex, and
-set provider permissions there. Authenticate GitHub from a T3 terminal:
+The playbook installs Codex CLI and Claude Code in `~/.local/bin` using their
+native installers. It skips working installations and reinstalls missing or
+broken binaries. It does not sign in or manage provider credentials.
+
+As `t3code`, sign in to each CLI and follow its browser instructions:
+
+```bash
+codex login --device-auth
+claude auth login
+```
+
+Alternatively, use **Connect with ChatGPT** in T3's provider settings for Codex.
+Enable the providers and set their permissions there. Authenticate GitHub from
+a T3 terminal:
 
 ```bash
 gh auth login --hostname github.com --git-protocol https --web
@@ -229,7 +242,8 @@ and keep any additional environment variables outside the managed block in
 
 Other components:
 
-- Codex: update it from T3's provider settings.
+- Codex and Claude Code: update them from T3's provider settings. Reapplying
+  Ansible keeps working versions.
 - Language tools: run `mise upgrade` as `t3code` while builds are idle.
   Projects can pin their own versions in their mise config.
 - mise, Docker, and OS packages: updated through APT, either by hand or by
