@@ -1,3 +1,4 @@
 ---
 locale: "en_US.UTF-8"
 enable_ufw: false
+disable_swap: true

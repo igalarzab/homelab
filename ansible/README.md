@@ -7,9 +7,11 @@ Docker Engine with Compose and Buildx is available for project services.
 The playbook applies three roles in order:
 
 - `base`: upgrades APT packages, installs common tools (Git, ripgrep, jq, tmux),
-  configures locales, fail2ban, and SSH hardening, and disables swap. It also
-  changes your administrator account's primary group to `users` and starts the
-  QEMU guest agent when Proxmox provides its channel. Saturn uses this role too.
+  and configures locales, fail2ban, and SSH hardening. It also changes your
+  administrator account's primary group to `users` and starts the QEMU guest
+  agent when Proxmox provides its channel. Saturn uses this role too, with swap
+  disabled for Kubernetes. This playbook sets `disable_swap: false` so builds
+  can use swap.
 - `docker`: installs Docker from the official repository. It refuses to run if
   distribution Docker, Podman, or containerd packages are already installed.
 - `t3code`: creates the `t3code` user and its workspace, installs mise and the
@@ -65,7 +67,7 @@ uv run ansible-playbook -i ansible/hosts.ini ansible/t3code.yml
 Add `--ask-become-pass` if sudo needs a password. Run from the repository root:
 `ansible/ansible.cfg` disables host-key checking and is only meant for the legacy
 `run.sh`. The first run downloads the tools and T3 and takes a few minutes. It
-ends by waiting for T3 to answer HTTP requests.
+ends by waiting up to three minutes for T3 to answer HTTP requests.
 
 ### Variables
 
@@ -143,7 +145,8 @@ mise is installed from its APT repository through `extrepo`. Language tools are
 installed in the development user's home. Login shells get the mise shims,
 interactive shells run `mise activate bash`, and `npm install -g` writes to
 `~/.local`. The service sets its own `PATH`, which includes the mise shims.
-Ubuntu's `python3` stays in place for Ansible.
+Ubuntu's `python3` stays in place for Ansible. `gh` comes from GitHub's APT
+repository, so it stays current with OS upgrades.
 
 T3 runs with `UMask=0077`, and the home and workspace are `0700`. Files created
 by agents can only be read by `t3code`. Containers that run as a different
@@ -175,8 +178,9 @@ Restart `t3code` afterwards if it installed fonts.
 ## Updates
 
 The service runs `t3 serve` from the installed launcher. Restarts never update
-T3. To update it, finish active work, then run the official installer as the
-development user:
+T3, and the playbook reinstalls it only when `t3 --version` fails, for example
+after an interrupted install. To update it, finish active work, then run the
+official installer as the development user:
 
 ```bash
 sudo systemctl stop t3code

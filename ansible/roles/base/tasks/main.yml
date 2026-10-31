@@ -91,7 +91,9 @@
 - name: Disable swap
   become: true
   command: swapoff -a
-  when: ansible_facts['memory_mb']['swap']['total'] > 0
+  when:
+    - disable_swap
+    - ansible_facts['memory_mb']['swap']['total'] > 0
 
 - name: Disable swap permanently
   become: true
@@ -99,6 +101,7 @@
     path: /etc/fstab
     regexp: '^([^#].*?\sswap\s+sw\s+.*)$'
     replace: '# \1'
+  when: disable_swap
 
 - name: Running networking tasks
   import_tasks: network.yml
