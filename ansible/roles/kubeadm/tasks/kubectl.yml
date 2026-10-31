@@ -4,36 +4,59 @@
 #
 
 - name: Ensure .kube directory exists on remote server
-  file:
+  ansible.builtin.file:
     path: ~/.kube
     state: directory
     mode: "0755"
 
 - name: Get current user name from remote config
   become: true
-  shell: kubectl --kubeconfig=/etc/kubernetes/admin.conf config view -o jsonpath='{.users[0].name}'
-  register: current_user
+  ansible.builtin.command:
+    argv:
+      - kubectl
+      - --kubeconfig=/etc/kubernetes/admin.conf
+      - config
+      - view
+      - -o
+      - jsonpath={.users[0].name}
+  register: kubeadm_current_user
   changed_when: false
 
 - name: Rename user to admin@hostname in remote config
   become: true
-  shell: sed -i 's/kubernetes-admin/admin@{{ cluster_name }}/g' /etc/kubernetes/admin.conf
-  when: current_user.stdout == 'kubernetes-admin'
+  ansible.builtin.replace:
+    path: /etc/kubernetes/admin.conf
+    regexp: kubernetes-admin
+    replace: "admin@{{ kubeadm_cluster_name }}"
+  when: kubeadm_current_user.stdout == 'kubernetes-admin'
 
 - name: Get current context name from remote config
   become: true
-  shell: kubectl --kubeconfig=/etc/kubernetes/admin.conf config current-context
-  register: current_context
+  ansible.builtin.command:
+    argv:
+      - kubectl
+      - --kubeconfig=/etc/kubernetes/admin.conf
+      - config
+      - current-context
+  register: kubeadm_current_context
   changed_when: false
 
 - name: Rename context to hostname in remote config
   become: true
-  shell: kubectl --kubeconfig=/etc/kubernetes/admin.conf config rename-context "{{ current_context.stdout }}" {{ cluster_name }}
-  when: current_context.stdout != cluster_name
+  changed_when: true
+  ansible.builtin.command:
+    argv:
+      - kubectl
+      - --kubeconfig=/etc/kubernetes/admin.conf
+      - config
+      - rename-context
+      - "{{ kubeadm_current_context.stdout }}"
+      - "{{ kubeadm_cluster_name }}"
+  when: kubeadm_current_context.stdout != kubeadm_cluster_name
 
 - name: Copy kubectl config to remote user
   become: true
-  copy:
+  ansible.builtin.copy:
     src: /etc/kubernetes/admin.conf
     dest: "{{ ansible_facts['env']['HOME'] }}/.kube/config"
     owner: "{{ ansible_facts['user_id'] }}"
@@ -47,31 +70,36 @@
 
 - name: Ensure .kube directory exists locally
   delegate_to: localhost
-  file:
+  ansible.builtin.file:
     path: ~/.kube
     state: directory
     mode: "0700"
 
 - name: Check if cluster already exists in local kubeconfig
   delegate_to: localhost
-  shell: kubectl config get-clusters | grep -q "^{{ cluster_name }}$"
-  register: cluster_exists
+  ansible.builtin.command:
+    argv:
+      - kubectl
+      - config
+      - get-clusters
+  register: kubeadm_local_clusters
   changed_when: false
   failed_when: false
 
 - name: Download and merge kubeconfig locally
-  when: cluster_exists.rc != 0
+  when: kubeadm_cluster_name not in (kubeadm_local_clusters.stdout_lines | default([]))
   block:
     - name: Download admin.conf to temporary location
       become: true
-      fetch:
+      ansible.builtin.fetch:
         src: /etc/kubernetes/admin.conf
         dest: /tmp/kubernetes-admin.conf
         flat: true
 
     - name: Merge cluster configuration into local kubeconfig
       delegate_to: localhost
-      shell: |
+      changed_when: true
+      ansible.builtin.shell: |
         KUBECONFIG=~/.kube/config:/tmp/kubernetes-admin.conf kubectl config view --flatten > /tmp/merged-config
         mv /tmp/merged-config ~/.kube/config
         chmod 0600 ~/.kube/config
@@ -81,6 +109,11 @@
 
 - name: Set context to the cluster
   delegate_to: localhost
-  shell: kubectl config use-context {{ cluster_name }}
+  ansible.builtin.command:
+    argv:
+      - kubectl
+      - config
+      - use-context
+      - "{{ kubeadm_cluster_name }}"
   changed_when: false
   failed_when: false

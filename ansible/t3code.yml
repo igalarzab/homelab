@@ -3,7 +3,7 @@
   hosts: t3code
   gather_facts: true
   vars:
-    disable_swap: false
+    base_disable_swap: false
   roles:
     - role: base
     - role: docker

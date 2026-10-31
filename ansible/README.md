@@ -9,9 +9,9 @@ The playbook applies three roles in order:
 - `base`: upgrades APT packages, installs common tools (Git, ripgrep, jq, tmux),
   and configures locales, fail2ban, and SSH hardening. It also changes your
   administrator account's primary group to `users` and starts the QEMU guest
-  agent when Proxmox provides its channel. Saturn uses this role too, with swap
-  disabled for Kubernetes. This playbook sets `disable_swap: false` so builds
-  can use swap.
+  agent when Proxmox provides its channel. Saturn uses this role too, with
+  swap disabled for Kubernetes. This playbook sets `base_disable_swap: false`
+  so builds can use swap.
 - `docker`: installs Docker from the official repository. It refuses to run if
   Ubuntu's Docker, containerd, or runc packages, or `podman-docker`, are
   already installed.
@@ -33,8 +33,8 @@ container runtimes.
 ## Network access
 
 The playbook does not enable a host firewall: UFW stays off unless you set
-`enable_ufw: true`, which also opens ports 80 and 443. Filter traffic with the
-Proxmox firewall instead. Allow SSH from your workstation or LAN and block
+`base_enable_ufw: true`, which also opens ports 80 and 443. Filter traffic with
+the Proxmox firewall instead. Allow SSH from your workstation or LAN and block
 everything else.
 
 T3 listens on `127.0.0.1:3773` and is reached through T3 Connect or an SSH tunnel.

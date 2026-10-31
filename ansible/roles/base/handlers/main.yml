@@ -2,14 +2,14 @@
 - name: Restart SSH
   listen: base_restart_ssh
   become: true
-  service:
+  ansible.builtin.service:
     name: ssh
     state: restarted
 
 - name: Restart fail2ban
   listen: base_restart_fail2ban
   become: true
-  service:
+  ansible.builtin.service:
     name: fail2ban
     state: restarted
 

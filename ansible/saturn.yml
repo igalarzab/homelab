@@ -1,11 +1,13 @@
 ---
-- hosts: saturn
-  gather_facts: yes
+- name: Configure the Saturn kubeadm node
+  hosts: saturn
+  gather_facts: true
   vars:
-    enable_ufw: false
-    cluster_name: saturn
-    k8s_api_server_san: "{{ saturn_k8s_api_server_san }}"
-    kubelet_custom_resolv_conf: false
+    base_enable_ufw: false
+    kubeadm_enable_ufw: false
+    kubeadm_cluster_name: saturn
+    kubeadm_api_server_san: "{{ saturn_k8s_api_server_san }}"
+    kubeadm_kubelet_custom_resolv_conf: false
   roles:
     - role: base
     - role: containerd

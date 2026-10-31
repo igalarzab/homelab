@@ -1,4 +1,4 @@
 ---
-locale: "en_US.UTF-8"
-enable_ufw: false
-disable_swap: true
+base_locale: "en_US.UTF-8"
+base_enable_ufw: false
+base_disable_swap: true

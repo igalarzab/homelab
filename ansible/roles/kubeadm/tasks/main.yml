@@ -1,26 +1,26 @@
 ---
 - name: Checking Operative System (only Debian compatible)
-  meta: end_play
+  ansible.builtin.meta: end_play
   when: ansible_facts['os_family'] != 'Debian'
 
 - name: Running networking tasks
-  import_tasks: network.yml
+  ansible.builtin.import_tasks: network.yml
 
 - name: Configure firewall
-  import_tasks: firewall.yml
-  when: enable_ufw
+  ansible.builtin.import_tasks: firewall.yml
+  when: kubeadm_enable_ufw
 
 - name: Installing packages
-  import_tasks: packages.yml
+  ansible.builtin.import_tasks: packages.yml
 
 - name: Installing cluster
-  import_tasks: kubeadm.yml
+  ansible.builtin.import_tasks: kubeadm.yml
 
 - name: Configuring kubectl
-  import_tasks: kubectl.yml
+  ansible.builtin.import_tasks: kubectl.yml
 
 - name: Load CNI plugin
-  import_tasks: cni.yml
+  ansible.builtin.import_tasks: cni.yml
 
 - name: Do extra stuff (non critical)
-  import_tasks: extras.yml
+  ansible.builtin.import_tasks: extras.yml

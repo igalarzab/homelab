@@ -45,8 +45,8 @@
   notify: kubeadm_reload_ufw
   community.general.ufw:
     rule: allow
-    route: yes
+    route: true
     interface_in: cni0
     interface_out: "{{ ansible_facts['default_ipv4']['interface'] }}"
-    from_ip: "{{ pod_cidr_ipv4 }}"
+    from_ip: "{{ kubeadm_pod_cidr_ipv4 }}"
     to_ip: "any"

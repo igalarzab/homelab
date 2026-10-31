@@ -2,6 +2,6 @@
 - name: Restart containerd
   listen: containerd_restart
   become: true
-  service:
+  ansible.builtin.service:
     name: containerd
     state: restarted

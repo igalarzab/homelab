@@ -2,7 +2,7 @@
 - name: Restart kubelet
   listen: kubeadm_restart_kubelet
   become: true
-  service:
+  ansible.builtin.service:
     name: kubelet
     state: restarted
 
