@@ -77,8 +77,9 @@ Override these in the inventory or with `--extra-vars`:
 | Variable | Default | Purpose |
 | --- | --- | --- |
 | `t3code_user` | `t3code` | Development account |
-| `t3code_home` | `/home/{{ t3code_user }}` | Its home directory and T3 state |
+| `t3code_home` | `/home/{{ t3code_user }}` | Its home directory |
 | `t3code_workspace` | `{{ t3code_home }}/workspace` | Directory for repositories |
+| `t3code_data_dir` | `{{ t3code_home }}/.local/share/t3` | T3 state, exported as `T3CODE_HOME` |
 | `t3code_channel` | `stable` | `stable` or `nightly`, used for the first install only |
 | `t3code_port` | `3773` | Loopback port for `t3 serve` |
 | `t3code_tools` | Latest Node LTS, pnpm, Python, and uv | mise tools to bootstrap |
@@ -89,8 +90,8 @@ Each `t3code_tools` entry has a mise `tool` request, such as `node@lts`, and the
 exists, so later version changes made with mise are kept. Use `[]` to skip the
 bootstrap.
 
-Choose the user, home, and workspace before the first run. The playbook does
-not move existing data when they change.
+Choose the user, home, workspace, and data directory before the first run. The
+playbook does not move existing data when they change.
 
 Reapplying keeps your tools, credentials, and T3 state, but it is not a no-op.
 The base role upgrades every APT package, including Docker, and changes to the
@@ -145,7 +146,9 @@ live under `/home/t3code`, never in the inventory.
 mise is installed from its APT repository through `extrepo`. Language tools are
 installed in the development user's home. Login shells get the mise shims,
 interactive shells run `mise activate bash`, and `npm install -g` writes to
-`~/.local`. The service sets its own `PATH`, which includes the mise shims.
+`~/.local`. T3 keeps its state in `~/.local/share/t3` instead of `~/.t3`: login
+shells and the service both set `T3CODE_HOME`. The service sets its own `PATH`,
+which includes the mise shims.
 Ubuntu's `python3` stays in place for Ansible. `gh` comes from GitHub's APT
 repository, so it stays current with OS upgrades.
 
@@ -163,8 +166,8 @@ credentials decide what else it can reach.
 The playbook runs `t3 browser setup` as root until it succeeds once, then
 records that in `/var/lib/t3code-browser-setup.done`. The command installs the
 Chrome sandbox AppArmor profile, missing libraries, and fonts, and leaves the
-sandbox enabled. Afterwards the playbook gives any root-owned files in `~/.t3`
-back to `t3code`.
+sandbox enabled. Afterwards the playbook gives any root-owned files in the T3
+data directory back to `t3code`.
 
 T3 downloads Chrome when the first browser tab opens, so some missing libraries
 can only be detected after that. If the first preview reports missing libraries,

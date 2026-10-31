@@ -55,7 +55,8 @@
     - "{{ t3code_home }}/.local/bin"
     - "{{ t3code_home }}/.cache"
     - "{{ t3code_home }}/.config"
-    - "{{ t3code_home }}/.t3"
+    - "{{ t3code_home }}/.local/share"
+    - "{{ t3code_data_dir }}"
 
 - name: Install mise and language tools
   ansible.builtin.import_tasks: mise.yml
@@ -74,6 +75,7 @@
     - file: .profile
       block: |
         export NPM_CONFIG_PREFIX="$HOME/.local"
+        export T3CODE_HOME="{{ t3code_data_dir }}"
         eval "$(/usr/bin/mise activate bash --shims)"
     - file: .bashrc
       block: |

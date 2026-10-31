@@ -16,7 +16,7 @@
           - browser
           - setup
           - --base-dir
-          - "{{ t3code_home }}/.t3"
+          - "{{ t3code_data_dir }}"
 
     # Browser setup runs as root and may write runtime state under the T3 home.
     # Worktrees are skipped: they can be large and hold files owned by containers.
@@ -26,9 +26,9 @@
       ansible.builtin.command:
         argv:
           - find
-          - "{{ t3code_home }}/.t3"
+          - "{{ t3code_data_dir }}"
           - -path
-          - "{{ t3code_home }}/.t3/worktrees"
+          - "{{ t3code_data_dir }}/worktrees"
           - -prune
           - -o
           - -user
