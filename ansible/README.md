@@ -16,7 +16,8 @@ The playbook applies three roles in order:
   Ubuntu's Docker, containerd, or runc packages, or `podman-docker`, are
   already installed.
 - `t3code`: creates the `t3code` user and its workspace, installs mise and the
-  language tools, installs T3, and runs it as `t3code.service`.
+  language tools, installs T3, and installs its native systemd user service.
+  Lingering keeps it running after logout and starts it at boot.
 
 Kubernetes provisioning stays in the separate `saturn.yml` playbook.
 
@@ -104,39 +105,58 @@ playbook does not move existing data when they change.
 
 Reapplying keeps your tools, credentials, and T3 state, but it is not a no-op.
 The base role upgrades every APT package, including Docker, and changes to the
-service file restart T3. Both interrupt running work, so apply when the VM is
-idle.
+service environment restart T3. Both interrupt running work, so apply when the
+VM is idle.
+
+## Migrate the previous system service
+
+Remove the previous system service manually before applying the updated
+playbook. Run these commands as your administrator account on the VM while T3
+is idle:
+
+```bash
+sudo systemctl disable --now t3code.service
+sudo rm /etc/systemd/system/t3code.service
+sudo systemctl daemon-reload
+```
+
+Remove only this system unit. Keep `/home/t3code/.local/share/t3`, which contains
+T3 state and credentials. Do not run `t3 uninstall`.
+The native service uses the same data directory and LAN address.
+
+Then apply the updated playbook from your workstation:
+
+```bash
+./ansible/run.sh t3code
+```
 
 ## Connect T3
 
-Switch to the development account and link it to T3 Connect:
+Switch to the development account. When using `sudo -iu`, explicitly select its
+user service bus because sudo does not create a full login session:
 
 ```bash
 sudo -iu t3code
-t3 connect link --headless
+export XDG_RUNTIME_DIR="/run/user/$(id -u)"
+export DBUS_SESSION_BUS_ADDRESS="unix:path=$XDG_RUNTIME_DIR/bus"
+t3 status
+t3 pair
 ```
 
-Open the printed URL on your laptop and approve the code. Then leave the
-development shell and restart the service:
+Paste the printed pairing URL into **Settings > Environments > Add environment**
+in the desktop app. The playbook configures the native service's LAN address
+and port in `$T3CODE_HOME/service.env`. Pairing URLs contain access tokens, so
+treat them as secrets.
 
-```bash
-exit
-sudo systemctl restart t3code
-```
+For T3 Connect, run `t3 up --connect` as `t3code`, open the printed URL on your
+laptop, and approve the code. Sign in to the same T3 Connect account on your
+client and select this environment.
 
-Sign in to the same T3 Connect account on your client and select this
-environment. Do not run `t3 service install`. Ansible owns the service, and a
-second one would fight over the same T3 home and port.
-
-To connect without T3 Connect, open a tunnel from your Mac:
+An SSH tunnel is another option when your Mac cannot reach port 3773 directly:
 
 ```bash
 ssh -N -L 3773:192.0.2.20:3773 igalarzab@192.0.2.20
 ```
-
-In another SSH session, run `sudo -iu t3code` and `t3 pair`, then paste the
-pairing URL into the desktop app. Pairing URLs and service logs can contain
-access tokens, so treat them as secrets.
 
 Inside T3, use **Connect with ChatGPT** in the provider settings for Codex, and
 set provider permissions there. Authenticate GitHub from a T3 terminal:
@@ -156,17 +176,15 @@ mise is installed from its APT repository through `extrepo`. Language tools are
 installed in the development user's home. Login shells get the mise shims,
 interactive shells run `mise activate bash`, and `npm install -g` writes to
 `~/.local`. T3 keeps its state in `~/.local/share/t3` instead of `~/.t3`.
-Login shells, interactive shells, and the service set `T3CODE_HOME`. Interactive shells
-also add `~/.local/bin` to `PATH`. The service sets its own `PATH`,
-which includes the mise shims.
+Login shells, interactive shells, and the native service set `T3CODE_HOME`.
+Interactive shells also add `~/.local/bin` to `PATH`. The native service captures
+the installation task's `PATH`, which includes the mise shims.
 Ubuntu's `python3` stays in place for Ansible. `gh` comes from GitHub's APT
 repository, so it stays current with OS upgrades.
 
-The home and workspace are `0755`; only the T3 data directory is private. T3
-still runs with `UMask=0077`, so files created by agents can only be read by
-`t3code`. Containers that run as a different
-non-root user cannot read bind-mounted project files. Run them as `t3code`'s UID
-or relax permissions for that project.
+The home and workspace are `0755`; the T3 data directory is private. The native
+service uses the user manager's default umask. Containers must have permission
+to read bind-mounted project files; run them as `t3code`'s UID when needed.
 
 The `t3code` user is in the `docker` group, which gives it root access inside
 the VM. Treat the whole VM as the agent's sandbox. Its network access and stored
@@ -188,25 +206,26 @@ run the setup again:
 ./ansible/run.sh t3code -e t3code_browser_setup=true
 ```
 
-Restart `t3code` afterwards if it installed fonts.
+Run `t3 service restart` as `t3code` afterwards if it installed fonts.
 
 ## Updates
 
-The service runs `t3 serve` from the installed launcher. Restarts never update
-T3, and the playbook reinstalls it only when `t3 --version` fails, for example
-after an interrupted install. To update it, finish active work, then run the
-official installer as the development user:
+The playbook installs T3 only when `t3 --version` fails, for example after an
+interrupted install. Use T3's native update and service commands for maintenance.
+After finishing active work, run as the development user:
 
 ```bash
-sudo systemctl stop t3code
 sudo -iu t3code
-curl -fsSL https://t3.codes/install.sh -o ~/.cache/t3-install.sh
-T3CODE_CHANNEL=stable T3CODE_INSTALL_BIN_DIR="$HOME/.local/bin" sh ~/.cache/t3-install.sh
-rm ~/.cache/t3-install.sh
-exit
-sudo systemctl start t3code
-sudo journalctl -u t3code -n 50
+export XDG_RUNTIME_DIR="/run/user/$(id -u)"
+export DBUS_SESSION_BUS_ADDRESS="unix:path=$XDG_RUNTIME_DIR/bus"
+t3 update
+t3 service status
 ```
+
+Use `t3 service restart` to restart without updating. `t3 service status` prints
+the service log location. Edit the Ansible-managed values in the inventory,
+and keep any additional environment variables outside the managed block in
+`$T3CODE_HOME/service.env`.
 
 Other components:
 
@@ -234,6 +253,7 @@ the VM for unpushed work.
 ## References
 
 - [T3 installation](https://github.com/pingdotgg/t3code/blob/main/docs/user/install.md)
+- [T3 native background service](https://github.com/pingdotgg/t3code/blob/main/docs/user/background-service.md)
 - [T3 remote access and browser setup](https://github.com/pingdotgg/t3code/blob/main/docs/user/remote-access.md)
 - [Docker Engine on Ubuntu](https://docs.docker.com/engine/install/ubuntu/)
 - [mise installation](https://mise.jdx.dev/installing-mise.html)

@@ -8,6 +8,7 @@
     name:
       - acl
       - build-essential
+      - dbus-user-session
       - pkg-config
       - python3-debian
 
@@ -32,6 +33,7 @@
 
 - name: Create the development user with Docker access
   become: true
+  register: t3code_account
   ansible.builtin.user:
     name: "{{ t3code_user }}"
     group: users

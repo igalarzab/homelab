@@ -35,7 +35,6 @@
 
     - name: Install T3 Code
       changed_when: true
-      notify: t3code_restart
       ansible.builtin.command:
         argv:
           - timeout
@@ -58,23 +57,61 @@
 - name: Configure Chrome dependencies and sandbox
   ansible.builtin.import_tasks: chrome.yml
 
-- name: Install the T3 Code system service
+- name: Enable startup at boot for the development user's services
   become: true
-  notify: t3code_restart
-  ansible.builtin.template:
-    src: t3code.service.j2
-    dest: /etc/systemd/system/t3code.service
-    mode: "0644"
+  ansible.builtin.command:
+    argv:
+      - loginctl
+      - enable-linger
+      - "{{ t3code_user }}"
+    creates: "/var/lib/systemd/linger/{{ t3code_user }}"
+
+- name: Start the development user's service manager
+  become: true
+  ansible.builtin.systemd_service:
+    name: "user@{{ t3code_account.uid }}.service"
+    state: started
+
+- name: Configure and start the native T3 Code service
+  become: true
+  become_user: "{{ t3code_user }}"
+  environment:
+    HOME: "{{ t3code_home }}"
+    T3CODE_HOME: "{{ t3code_data_dir }}"
+    PATH: "{{ t3code_home }}/.local/bin:{{ t3code_home }}/.local/share/mise/shims:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"
+    XDG_RUNTIME_DIR: "/run/user/{{ t3code_account.uid }}"
+    DBUS_SESSION_BUS_ADDRESS: "unix:path=/run/user/{{ t3code_account.uid }}/bus"
+  block:
+    - name: Configure the native service environment
+      notify: t3code_restart
+      ansible.builtin.blockinfile:
+        path: "{{ t3code_data_dir }}/service.env"
+        create: true
+        mode: "0600"
+        marker: "# {mark} ANSIBLE T3 CODE ENVIRONMENT"
+        block: |
+          T3CODE_HOST={{ t3code_host }}
+          T3CODE_PORT={{ t3code_port }}
+          NPM_CONFIG_PREFIX={{ t3code_home }}/.local
+          SHELL=/bin/bash
+
+    - name: Install the native T3 Code user service
+      ansible.builtin.command:
+        argv:
+          - "{{ t3code_home }}/.local/bin/t3"
+          - service
+          - install
+        creates: "{{ t3code_home }}/.config/systemd/user/t3code.service"
+
+    - name: Enable and start the native T3 Code user service
+      ansible.builtin.systemd_service:
+        name: t3code
+        scope: user
+        enabled: true
+        state: started
 
 - name: Apply service changes before checking readiness
   ansible.builtin.meta: flush_handlers
-
-- name: Enable and start T3 Code
-  become: true
-  ansible.builtin.systemd_service:
-    name: t3code
-    enabled: true
-    state: started
 
 - name: Wait for T3 Code to serve requests
   register: t3code_health

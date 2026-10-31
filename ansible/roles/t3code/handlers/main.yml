@@ -2,7 +2,11 @@
 - name: Restart T3 Code
   listen: t3code_restart
   become: true
+  become_user: "{{ t3code_user }}"
+  environment:
+    XDG_RUNTIME_DIR: "/run/user/{{ t3code_account.uid }}"
+    DBUS_SESSION_BUS_ADDRESS: "unix:path=/run/user/{{ t3code_account.uid }}/bus"
   ansible.builtin.systemd_service:
     name: t3code
-    daemon_reload: true
+    scope: user
     state: restarted
