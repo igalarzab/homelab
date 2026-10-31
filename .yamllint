@@ -1,9 +1,6 @@
 ---
 ignore: |
   .venv/
-  # Zigbee2MQTT rewrites these files at runtime
-  config/zigbee2mqtt/configuration.yaml
-  config/zigbee2mqtt/devices.yaml
 
 rules:
   document-start:

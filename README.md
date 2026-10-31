@@ -219,6 +219,3 @@ uv run ruff format --check .
 git ls-files -z '*.sh' | xargs -0 uv run shellcheck
 uv run actionlint
 ```
-
-Zigbee2MQTT rewrites its `configuration.yaml` and `devices.yaml`, so yamllint
-skips them.
