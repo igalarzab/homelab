@@ -155,8 +155,9 @@ live under `/home/t3code`, never in the inventory.
 mise is installed from its APT repository through `extrepo`. Language tools are
 installed in the development user's home. Login shells get the mise shims,
 interactive shells run `mise activate bash`, and `npm install -g` writes to
-`~/.local`. T3 keeps its state in `~/.local/share/t3` instead of `~/.t3`: login
-shells and the service both set `T3CODE_HOME`. The service sets its own `PATH`,
+`~/.local`. T3 keeps its state in `~/.local/share/t3` instead of `~/.t3`.
+Login shells, interactive shells, and the service set `T3CODE_HOME`. Interactive shells
+also add `~/.local/bin` to `PATH`. The service sets its own `PATH`,
 which includes the mise shims.
 Ubuntu's `python3` stays in place for Ansible. `gh` comes from GitHub's APT
 repository, so it stays current with OS upgrades.
