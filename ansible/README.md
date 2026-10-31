@@ -13,7 +13,8 @@ The playbook applies three roles in order:
   disabled for Kubernetes. This playbook sets `disable_swap: false` so builds
   can use swap.
 - `docker`: installs Docker from the official repository. It refuses to run if
-  distribution Docker, Podman, or containerd packages are already installed.
+  Ubuntu's Docker, containerd, or runc packages, or `podman-docker`, are
+  already installed.
 - `t3code`: creates the `t3code` user and its workspace, installs mise and the
   language tools, installs T3, and runs it as `t3code.service`.
 
