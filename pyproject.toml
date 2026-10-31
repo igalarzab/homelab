@@ -9,3 +9,8 @@ dependencies = [
 
 [tool.ruff]
 line-length = 100
+
+[dependency-groups]
+dev = [
+  "ansible-lint>=26.10.1",
+]

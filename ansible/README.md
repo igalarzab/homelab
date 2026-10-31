@@ -70,6 +70,9 @@ Add `--ask-become-pass` if sudo needs a password. Run from the repository root:
 `run.sh`. The first run downloads the tools and T3 and takes a few minutes. It
 ends by waiting up to three minutes for T3 to answer HTTP requests.
 
+GitHub Actions runs `ansible-lint` on changes under `ansible/`. Run the same
+check locally with `uv run ansible-lint ansible`.
+
 ### Variables
 
 Override these in the inventory or with `--extra-vars`:
