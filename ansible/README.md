@@ -1,200 +1,212 @@
 # T3 Code development VM
 
-Configure an existing Ubuntu 24.04 VM on Proxmox as a persistent, single-user
-development machine. T3 and its agents run directly in the VM. Docker Engine,
-Compose, and Buildx are available for project services and builds.
+`t3code.yml` turns an existing Ubuntu 24.04 VM on Proxmox into a persistent,
+single-user development machine. T3 and its agents run directly in the VM, and
+Docker Engine with Compose and Buildx is available for project services.
 
-The playbook creates a `t3code` user and `/home/t3code/workspace`, installs
-development and browser dependencies, and starts `t3code.service` on boot. Node 24, pnpm 10,
-Python 3, and uv are bootstrapped through mise in the development user's home.
-Mise itself is installed through its APT repository using `extrepo`; language
-runtimes remain user-owned. Interactive Bash uses `mise activate bash`; login
-profiles use `mise activate bash --shims`. The service has its own explicit
-`PATH`, independent of shell startup files. The
-account uses `users` as its primary group and joins `docker` for container access.
+The playbook applies three roles in order:
 
-Development Python uses mise. Base keeps Ubuntu-managed `python3` for Ansible.
-Base also provides Git and ripgrep. The Docker role installs `python3-debian`
-for APT repository configuration. T3 installs `acl` for switching to the
-development user.
+- `base`: upgrades APT packages, installs common tools (Git, ripgrep, jq, tmux),
+  configures locales, fail2ban, and SSH hardening, and disables swap. It also
+  changes your administrator account's primary group to `users` and starts the
+  QEMU guest agent when Proxmox provides its channel. Saturn uses this role too.
+- `docker`: installs Docker from the official repository. It refuses to run if
+  distribution Docker, Podman, or containerd packages are already installed.
+- `t3code`: creates the `t3code` user and its workspace, installs mise and the
+  language tools, installs T3, and runs it as `t3code.service`.
 
-After installing T3, Ansible runs `t3 browser setup` as root, pointing it at the
-development user's T3 home. T3 manages the browser's AppArmor profile, missing
-libraries, and system fonts. Chrome's sandbox stays enabled.
-
-Browser setup reports changed whenever it runs because T3 does not expose
-structured change status. It does not trigger a service restart. If it installs
-fonts while T3 is already running, restart T3 manually to refresh browser tabs.
-
-T3 downloads Chrome when the first browser tab opens. Its setup command can only
-detect missing browser libraries after that download. If the first preview reports
-missing libraries, rerun this playbook or run:
-
-```bash
-sudo /home/t3code/.local/bin/t3 browser setup --base-dir /home/t3code/.t3
-```
-
-The playbook runs `base`, `docker`, and `t3code` in that order. Base installs common
-system packages, upgrades APT packages, configures locales and SSH hardening,
-disables swap, and changes the SSH login account's primary group to `users`.
-It also enables the guest agent on QEMU guests. The Docker role installs Engine,
-Compose, and Buildx. T3 adds development tools, browser dependencies, and the
-workspace service. Kubernetes provisioning remains
-in the separate `saturn.yml` playbook.
+Kubernetes provisioning stays in the separate `saturn.yml` playbook.
 
 ## Prepare the VM
 
-Create the VM in Proxmox first. A reasonable starting allocation is 4 vCPU,
-16 GiB RAM, and a 100 GiB SSD-backed disk. Use Ubuntu Server 24.04, enable the
-QEMU guest agent in Proxmox, and configure a stable DHCP lease or address.
-Both amd64 and arm64 Ubuntu guests are accepted by the role.
+Create the VM in Proxmox. 4 vCPU, 16 GiB RAM, and a 100 GiB SSD-backed disk are a
+reasonable start. Install Ubuntu Server 24.04 (amd64 or arm64), enable the QEMU
+guest agent in the VM options, and give it a stable address.
 
-Use the Ubuntu installer or your VM provisioning tool to create your administrator
-account with an SSH public key and sudo access. Python 3 must be installed for
-Ansible. This recipe assumes a fresh VM without a competing
-Docker or containerd installation.
+During installation, create an administrator account with your SSH public key
+and sudo access. Start from a fresh VM: the Docker role stops on existing
+container runtimes.
 
-Allow SSH from your workstation or private network. The T3 server listens only
-on `127.0.0.1:3773`, and the recipe does not open firewall ports. Use T3 Connect
-or an SSH tunnel for access. Proxmox firewall rules should also cover any ports
-published by project containers; Docker-published ports can bypass UFW rules.
+## Network access
+
+The playbook does not enable a host firewall: UFW stays off unless you set
+`enable_ufw: true`, which also opens ports 80 and 443. Filter traffic with the
+Proxmox firewall instead. Allow SSH from your workstation or LAN and block
+everything else.
+
+T3 listens on `127.0.0.1:3773` and is reached through T3 Connect or an SSH tunnel.
+Ports published by project containers listen on all interfaces by default, so
+either bind them to `127.0.0.1` in Compose or cover them in the Proxmox firewall.
 
 ## Configure and apply
 
-Run these commands from the repository root:
+From the repository root:
 
 ```bash
 uv sync
 cp ansible/hosts.ini.example ansible/hosts.ini
 ```
 
-Edit the ignored `ansible/hosts.ini` with the VM address and your existing
-administrator username. Keep it in the `t3code` inventory group. Verify the VM's
-SSH host key on the first connection:
+Edit `ansible/hosts.ini` (ignored by Git) and set the VM address and your
+administrator username in the `t3code` group:
+
+```ini
+[t3code]
+192.0.2.20 ansible_user=igalarzab
+```
+
+Connect once over SSH to verify and accept the host key, then apply:
 
 ```bash
 ssh igalarzab@192.0.2.20
-```
-
-Then validate and configure it:
-
-```bash
-uv run ansible-playbook -i ansible/hosts.ini ansible/t3code.yml --syntax-check
 uv run ansible-playbook -i ansible/hosts.ini ansible/t3code.yml
 ```
 
-Add `--ask-become-pass` if your administrator account needs a sudo password.
-Running from the repository root avoids the legacy `ansible/ansible.cfg`, which
-disables SSH host-key checking. First installation downloads tools and T3 and can
-take several minutes. A successful play ends with an HTTP readiness check.
+Add `--ask-become-pass` if sudo needs a password. Run from the repository root:
+`ansible/ansible.cfg` disables host-key checking and is only meant for the legacy
+`run.sh`. The first run downloads the tools and T3 and takes a few minutes. It
+ends by waiting for T3 to answer HTTP requests.
 
-The role exposes these defaults in `roles/t3code/defaults/main.yml`:
+### Variables
 
-```yaml
-t3code_user: t3code
-t3code_workspace: "/home/{{ t3code_user }}/workspace"
-t3code_channel: stable
-```
+Override these in the inventory or with `--extra-vars`:
 
-The mise tool list is configured through `t3code_tools` in the same defaults file.
-Each entry has a `tool` version request, such as `node@24`, and its shim `command`,
-such as `node`. Change the list to select your development tools; an empty list
-skips runtime bootstrapping. Existing shims are preserved on reapplication.
+| Variable | Default | Purpose |
+| --- | --- | --- |
+| `t3code_user` | `t3code` | Development account |
+| `t3code_home` | `/home/{{ t3code_user }}` | Its home directory and T3 state |
+| `t3code_workspace` | `{{ t3code_home }}/workspace` | Directory for repositories |
+| `t3code_channel` | `stable` | `stable` or `nightly`, used for the first install only |
+| `t3code_port` | `3773` | Loopback port for `t3 serve` |
+| `t3code_tools` | Node 24, pnpm 10, Python 3, uv | mise tools to bootstrap |
+| `t3code_browser_setup` | `false` | Rerun T3's browser setup on an existing install |
 
-Override these defaults in inventory or with `--extra-vars`. Choose `stable` or `nightly`
-for the initial T3 installation. Ansible installs T3 only when the launcher is
-absent; changing the channel does not replace an existing installation.
+Each `t3code_tools` entry has a mise `tool` request, such as `node@24`, and the
+`command` its shim provides, such as `node`. A tool is skipped once its shim
+exists, so later version changes made with mise are kept. Use `[]` to skip the
+bootstrap.
 
-Reapplying preserves user tool selections. Changed
-service settings restart T3, interrupting active work. Keep the
-user and workspace path unchanged once projects and worktrees exist. This recipe
-does not migrate data when those values change.
+Choose the user, home, and workspace before the first run. The playbook does
+not move existing data when they change.
 
-## Connect T3 and Codex
+Reapplying is safe. Changes to the service file restart T3 and interrupt
+running sessions.
 
-SSH into the VM as your administrator and switch to the development account:
+## Connect T3
+
+Switch to the development account and link it to T3 Connect:
 
 ```bash
 sudo -iu t3code
 t3 connect link --headless
 ```
 
-Open the printed sign-in URL on your laptop and approve the matching code. Exit
-the development shell and restart the Ansible-managed service:
+Open the printed URL on your laptop and approve the code. Then leave the
+development shell and restart the service:
 
 ```bash
 exit
 sudo systemctl restart t3code
 ```
 
-Sign into the same T3 Connect account on your client and select this environment.
-Do not run `t3 service install`: Ansible owns the system service, and a second
-service would compete for the same T3 home and port.
+Sign in to the same T3 Connect account on your client and select this
+environment. Do not run `t3 service install`. Ansible owns the service, and a
+second one would fight over the same T3 home and port.
 
-For a desktop connection without T3 Connect, keep this tunnel open on your Mac:
+To connect without T3 Connect, open a tunnel from your Mac:
 
 ```bash
 ssh -N -L 3773:127.0.0.1:3773 igalarzab@192.0.2.20
 ```
 
-In another SSH session, run `sudo -iu t3code` and `t3 pair`. Paste the pairing URL
-into the desktop app. The tunnel's local port must be free. Pairing links and
-service logs can contain access tokens; keep them private.
+In another SSH session, run `sudo -iu t3code` and `t3 pair`, then paste the
+pairing URL into the desktop app. Pairing URLs and service logs can contain
+access tokens, so treat them as secrets.
 
-In the remote environment's provider settings, use **Connect with ChatGPT** for
-T3-managed Codex. Authenticate GitHub and clone repositories from a T3 terminal:
+Inside T3, use **Connect with ChatGPT** in the provider settings for Codex, and
+set provider permissions there. Authenticate GitHub from a T3 terminal:
 
 ```bash
 gh auth login --hostname github.com --git-protocol https --web
 gh auth setup-git
-git clone https://github.com/igalarzab/homelab.git /home/t3code/workspace/homelab
+git clone https://github.com/igalarzab/homelab.git ~/workspace/homelab
 ```
 
-Set your Git name and email, then add each checkout as a project. Credentials are
-entered interactively and stored under `/home/t3code`; none belong in inventory.
+Set your Git name and email, then add each checkout as a project. Credentials
+live under `/home/t3code`, never in the inventory.
 
-Configure provider permissions and authentication through T3 after provisioning.
+## Development environment
 
-The development user belongs to `docker`, which effectively grants root access
-inside this VM. Treat the entire VM as the agent's execution boundary. Its network
-access and credentials still determine which outside systems it can reach.
+mise is installed from its APT repository through `extrepo`. Language tools are
+installed in the development user's home. Login shells get the mise shims,
+interactive shells run `mise activate bash`, and `npm install -g` writes to
+`~/.local`. The service sets its own `PATH`, which includes the mise shims.
+Ubuntu's `python3` stays in place for Ansible.
 
-## Updates and recovery
+T3 runs with `UMask=0077`, and the home and workspace are `0700`. Files created
+by agents can only be read by `t3code`. Containers that run as a different
+non-root user cannot read bind-mounted project files. Run them as `t3code`'s UID
+or relax permissions for that project.
 
-Systemd runs `t3 serve` directly. Service restarts use the installed version;
-they do not download updates or create pre-upgrade snapshots.
+The `t3code` user is in the `docker` group, which gives it root access inside
+the VM. Treat the whole VM as the agent's sandbox. Its network access and stored
+credentials decide what else it can reach.
 
-To update T3, finish active work and stop the service. Run the official installer
-as the development user, choosing your release channel:
+## Browser previews
+
+On a fresh install, the playbook runs `t3 browser setup` as root. This command
+installs the Chrome sandbox AppArmor profile, missing libraries, and fonts, and
+leaves the sandbox enabled. Afterwards the playbook gives the T3 home back to
+`t3code`.
+
+T3 downloads Chrome when the first browser tab opens, so some missing libraries
+can only be detected after that. If the first preview reports missing libraries,
+run the setup again:
+
+```bash
+uv run ansible-playbook -i ansible/hosts.ini ansible/t3code.yml -e t3code_browser_setup=true
+```
+
+Restart `t3code` afterwards if it installed fonts.
+
+## Updates
+
+The service runs `t3 serve` from the installed launcher. Restarts never update
+T3. To update it, finish active work, then run the official installer as the
+development user:
 
 ```bash
 sudo systemctl stop t3code
 sudo -iu t3code
 curl -fsSL https://t3.codes/install.sh -o ~/.cache/t3-install.sh
 T3CODE_CHANNEL=stable T3CODE_INSTALL_BIN_DIR="$HOME/.local/bin" sh ~/.cache/t3-install.sh
+rm ~/.cache/t3-install.sh
 exit
 sudo systemctl start t3code
-sudo systemctl status t3code
 sudo journalctl -u t3code -n 50
-curl -fsS -o /dev/null http://127.0.0.1:3773/
 ```
 
-Update T3-managed Codex through provider settings. To update language tools, run
-`mise upgrade` as `t3code` when builds are idle. Update mise itself through APT. Project
-configuration can select different runtime versions. The shared base role upgrades
-OS packages on reapplication; the Docker role installs missing packages and leaves
-existing versions alone.
+Other components:
 
-Back up the VM through Proxmox, including `/home/t3code` and
-`/var/lib/docker`. Enable the guest agent in the VM configuration for filesystem
-freeze support. Stop T3 and project databases before an offline backup, or use
-their application-consistent backup procedures. Protect backups as credentials.
-Restoring an older T3 runtime alone does not undo database migrations; restore
-compatible application state with it.
+- Codex: update it from T3's provider settings.
+- Language tools: run `mise upgrade` as `t3code` while builds are idle.
+  Projects can pin their own versions in their mise config.
+- mise and Docker: updated through APT. Reapplying the playbook upgrades OS
+  packages through the base role. The Docker role only installs missing packages.
 
-Reboots and service restarts interrupt running processes. Files and saved T3
-history survive, but background commands may need to be restarted. Test restore
-procedures before relying on the VM for unpushed work.
+## Backups and recovery
+
+Back up the VM through Proxmox, including `/home/t3code` and `/var/lib/docker`.
+The guest agent lets Proxmox freeze the filesystem during snapshots. For a
+consistent copy, stop T3 and project databases first, or use their own backup
+tools. Backups contain credentials, so protect them accordingly.
+
+Restoring an older T3 version does not undo its database migrations. Restore
+the T3 state from the same backup.
+
+Reboots and restarts stop running processes. Files and T3 history survive, but
+background commands need to be started again. Test a restore before relying on
+the VM for unpushed work.
 
 ## References
 

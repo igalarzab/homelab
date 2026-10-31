@@ -1,7 +1,10 @@
 ---
 t3code_user: t3code
-t3code_workspace: "/home/{{ t3code_user }}/workspace"
+t3code_home: "/home/{{ t3code_user }}"
+t3code_workspace: "{{ t3code_home }}/workspace"
 t3code_channel: stable
+t3code_port: 3773
+t3code_browser_setup: false
 t3code_tools:
   - tool: "node@24"
     command: node

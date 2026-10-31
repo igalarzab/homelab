@@ -202,4 +202,5 @@ and redeploy the application when needed.
 
 The [T3 Code VM playbook](ansible/README.md) configures a dedicated Ubuntu VM on
 Proxmox with T3, user-owned development tools, and Docker Compose. Create the VM
-first, then apply the playbook using its separate inventory.
+first, add it to the `t3code` group in `ansible/hosts.ini`, then apply the
+playbook.

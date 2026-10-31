@@ -55,13 +55,18 @@
       - vim
       - zip
 
+- name: Check for the QEMU guest agent channel
+  ansible.builtin.stat:
+    path: /dev/virtio-ports/org.qemu.guest_agent.0
+  register: base_guest_agent_channel
+
 - name: Enable the guest agent on Proxmox QEMU guests
   become: true
   ansible.builtin.systemd_service:
     name: qemu-guest-agent
     enabled: true
     state: started
-  when: ansible_facts['virtualization_type'] in ['kvm', 'qemu']
+  when: base_guest_agent_channel.stat.exists
 
 - name: Install locales
   become: true

@@ -1,25 +1,29 @@
 ---
+- name: Check whether T3 Code is installed
+  become: true
+  ansible.builtin.stat:
+    path: "{{ t3code_home }}/.local/bin/t3"
+  register: t3code_launcher
+
 - name: Install T3 Code as the development user
   become: true
   become_user: "{{ t3code_user }}"
   environment:
-    HOME: "/home/{{ t3code_user }}"
-    PATH: "/home/{{ t3code_user }}/.local/bin:/usr/local/bin:/usr/bin:/bin"
+    HOME: "{{ t3code_home }}"
+    PATH: "{{ t3code_home }}/.local/bin:/usr/local/bin:/usr/bin:/bin"
+  when: not t3code_launcher.stat.exists
   block:
-    - name: Check whether T3 Code is installed
-      register: t3code_launcher
-      ansible.builtin.stat:
-        path: "/home/{{ t3code_user }}/.local/bin/t3"
-
     - name: Download the official T3 Code installer
-      when: not t3code_launcher.stat.exists
       ansible.builtin.get_url:
         url: https://t3.codes/install.sh
-        dest: "/home/{{ t3code_user }}/.cache/t3-install.sh"
+        dest: "{{ t3code_home }}/.cache/t3-install.sh"
         mode: "0600"
+        force: true
         timeout: 30
 
     - name: Install T3 Code
+      register: t3code_install
+      changed_when: true
       notify: t3code_restart
       ansible.builtin.command:
         argv:
@@ -27,13 +31,18 @@
           - --kill-after=5s
           - 180s
           - sh
-          - "/home/{{ t3code_user }}/.cache/t3-install.sh"
-        chdir: "/home/{{ t3code_user }}"
-        creates: "/home/{{ t3code_user }}/.local/bin/t3"
+          - "{{ t3code_home }}/.cache/t3-install.sh"
+        chdir: "{{ t3code_home }}"
       environment:
-        T3CODE_HOME: "/home/{{ t3code_user }}/.t3"
+        T3CODE_HOME: "{{ t3code_home }}/.t3"
         T3CODE_CHANNEL: "{{ t3code_channel }}"
-        T3CODE_INSTALL_BIN_DIR: "/home/{{ t3code_user }}/.local/bin"
+        T3CODE_INSTALL_BIN_DIR: "{{ t3code_home }}/.local/bin"
+
+  always:
+    - name: Remove the T3 Code installer
+      ansible.builtin.file:
+        path: "{{ t3code_home }}/.cache/t3-install.sh"
+        state: absent
 
 - name: Configure Chrome dependencies and sandbox
   ansible.builtin.import_tasks: chrome.yml
@@ -53,7 +62,6 @@
   become: true
   ansible.builtin.systemd_service:
     name: t3code
-    daemon_reload: true
     enabled: true
     state: started
 
@@ -64,6 +72,6 @@
   delay: 5
   when: not ansible_check_mode
   ansible.builtin.uri:
-    url: http://127.0.0.1:3773/
+    url: "http://127.0.0.1:{{ t3code_port }}/"
     status_code: 200
     use_proxy: false

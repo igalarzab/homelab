@@ -25,34 +25,19 @@
     update_cache: true
     cache_valid_time: "{{ 0 if t3code_mise_repository.changed else 3600 }}"
 
-- name: Set up mise as the development user
+- name: Bootstrap language tools without replacing existing selections
   become: true
   become_user: "{{ t3code_user }}"
   environment:
-    HOME: "/home/{{ t3code_user }}"
-    PATH: "/home/{{ t3code_user }}/.local/bin:/usr/local/bin:/usr/bin:/bin"
-  block:
-    - name: Bootstrap language tools without replacing existing selections
-      ansible.builtin.command:
-        argv:
-          - /usr/bin/mise
-          - use
-          - --global
-          - --yes
-          - "{{ item.tool }}"
-        chdir: "/home/{{ t3code_user }}"
-        creates: "/home/{{ t3code_user }}/.local/share/mise/shims/{{ item.command }}"
-      loop: "{{ t3code_tools }}"
-
-    - name: Activate mise in login and interactive shells
-      ansible.builtin.blockinfile:
-        path: "/home/{{ t3code_user }}/{{ item.file }}"
-        create: true
-        mode: "0644"
-        marker: "# {mark} ANSIBLE T3 CODE TOOLS"
-        block: '{{ item.activation }}'
-      loop:
-        - file: .profile
-          activation: 'eval "$(/usr/bin/mise activate bash --shims)"'
-        - file: .bashrc
-          activation: 'eval "$(/usr/bin/mise activate bash)"'
+    HOME: "{{ t3code_home }}"
+    PATH: "{{ t3code_home }}/.local/bin:/usr/local/bin:/usr/bin:/bin"
+  ansible.builtin.command:
+    argv:
+      - /usr/bin/mise
+      - use
+      - --global
+      - --yes
+      - "{{ item.tool }}"
+    chdir: "{{ t3code_home }}"
+    creates: "{{ t3code_home }}/.local/share/mise/shims/{{ item.command }}"
+  loop: "{{ t3code_tools }}"

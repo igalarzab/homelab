@@ -18,7 +18,7 @@
     group: users
     groups: docker
     append: true
-    home: "/home/{{ t3code_user }}"
+    home: "{{ t3code_home }}"
     shell: /bin/bash
     create_home: true
 
@@ -32,29 +32,33 @@
     mode: "0700"
   loop:
     - "{{ t3code_workspace }}"
-    - "/home/{{ t3code_user }}"
-    - "/home/{{ t3code_user }}/.local/bin"
-    - "/home/{{ t3code_user }}/.cache"
-    - "/home/{{ t3code_user }}/.config"
-    - "/home/{{ t3code_user }}/.t3"
-
-- name: Configure local executables and npm installations for the development user
-  become: true
-  become_user: "{{ t3code_user }}"
-  ansible.builtin.blockinfile:
-    path: "/home/{{ t3code_user }}/{{ item }}"
-    create: true
-    mode: "0644"
-    marker: "# {mark} ANSIBLE T3 CODE ENVIRONMENT"
-    block: |
-      export PATH="$HOME/.local/bin:$PATH"
-      export NPM_CONFIG_PREFIX="$HOME/.local"
-  loop:
-    - .profile
-    - .bashrc
+    - "{{ t3code_home }}"
+    - "{{ t3code_home }}/.local/bin"
+    - "{{ t3code_home }}/.cache"
+    - "{{ t3code_home }}/.config"
+    - "{{ t3code_home }}/.t3"
 
 - name: Install mise and language tools
   ansible.builtin.import_tasks: mise.yml
+
+# Ubuntu's skeleton .profile already adds ~/.local/bin to PATH and sources .bashrc
+- name: Configure login and interactive shells for the development user
+  become: true
+  become_user: "{{ t3code_user }}"
+  ansible.builtin.blockinfile:
+    path: "{{ t3code_home }}/{{ item.file }}"
+    create: true
+    mode: "0644"
+    marker: "# {mark} ANSIBLE T3 CODE ENVIRONMENT"
+    block: "{{ item.block }}"
+  loop:
+    - file: .profile
+      block: |
+        export NPM_CONFIG_PREFIX="$HOME/.local"
+        eval "$(/usr/bin/mise activate bash --shims)"
+    - file: .bashrc
+      block: |
+        eval "$(/usr/bin/mise activate bash)"
 
 - name: Install and configure T3 Code
   ansible.builtin.import_tasks: t3code.yml

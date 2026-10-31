@@ -2,4 +2,4 @@
 HOSTNAME.lan
 
 [t3code]
-HOSTNAME.lan
+HOSTNAME.lan ansible_user=USERNAME

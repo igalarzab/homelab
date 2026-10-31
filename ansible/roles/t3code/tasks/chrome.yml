@@ -1,11 +1,23 @@
 ---
 - name: Set up the browser using T3 Code
   become: true
-  changed_when: true
-  ansible.builtin.command:
-    argv:
-      - "/home/{{ t3code_user }}/.local/bin/t3"
-      - browser
-      - setup
-      - --base-dir
-      - "/home/{{ t3code_user }}/.t3"
+  when: t3code_install is changed or t3code_browser_setup | bool
+  block:
+    - name: Install browser libraries, fonts, and the sandbox profile
+      changed_when: true
+      ansible.builtin.command:
+        argv:
+          - "{{ t3code_home }}/.local/bin/t3"
+          - browser
+          - setup
+          - --base-dir
+          - "{{ t3code_home }}/.t3"
+
+    # Browser setup runs as root and may write runtime state under the T3 home
+    - name: Return T3 state to the development user
+      ansible.builtin.file:
+        path: "{{ t3code_home }}/.t3"
+        state: directory
+        recurse: true
+        owner: "{{ t3code_user }}"
+        group: users
