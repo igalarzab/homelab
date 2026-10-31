@@ -1,0 +1,67 @@
+---
+- name: Read installed packages before configuring Docker
+  ansible.builtin.package_facts:
+    manager: apt
+
+- name: Reject conflicting container runtimes
+  ansible.builtin.assert:
+    fail_msg: Use a fresh VM or remove conflicting Docker/containerd packages before applying this recipe.
+    that:
+      - >-
+        ['docker.io', 'docker-compose', 'docker-compose-v2', 'docker-doc',
+         'docker-buildx', 'podman-docker', 'containerd', 'runc']
+        | intersect(ansible_facts['packages'].keys() | list) | length == 0
+
+- name: Create the APT keyring directory
+  become: true
+  ansible.builtin.file:
+    path: /etc/apt/keyrings
+    state: directory
+    mode: "0755"
+
+- name: Install the Docker APT signing key
+  become: true
+  ansible.builtin.get_url:
+    url: "https://download.docker.com/linux/{{ ansible_facts['distribution'] | lower }}/gpg"
+    dest: /etc/apt/keyrings/docker.asc
+    mode: "0644"
+
+- name: Install APT repository dependencies
+  become: true
+  ansible.builtin.apt:
+    name: python3-debian
+    state: present
+    update_cache: true
+    cache_valid_time: 3600
+
+- name: Configure the official Docker repository
+  become: true
+  register: docker_repository
+  ansible.builtin.deb822_repository:
+    name: docker
+    types: deb
+    uris: "https://download.docker.com/linux/{{ ansible_facts['distribution'] | lower }}"
+    suites: "{{ ansible_facts['distribution_release'] }}"
+    components: stable
+    architectures: "{{ {'x86_64': 'amd64', 'aarch64': 'arm64'}[ansible_facts['architecture']] }}"
+    signed_by: /etc/apt/keyrings/docker.asc
+
+- name: Install Docker and its CLI plugins
+  become: true
+  ansible.builtin.apt:
+    update_cache: true
+    cache_valid_time: "{{ 0 if docker_repository.changed else 3600 }}"
+    state: present
+    name:
+      - docker-ce
+      - docker-ce-cli
+      - containerd.io
+      - docker-buildx-plugin
+      - docker-compose-plugin
+
+- name: Enable and start Docker
+  become: true
+  ansible.builtin.systemd_service:
+    name: docker
+    enabled: true
+    state: started

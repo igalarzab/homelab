@@ -1,17 +1,20 @@
 ---
-- name: restart ssh
+- name: Restart SSH
+  listen: base_restart_ssh
   become: true
   service:
     name: ssh
     state: restarted
 
-- name: restart fail2ban
+- name: Restart fail2ban
+  listen: base_restart_fail2ban
   become: true
   service:
     name: fail2ban
     state: restarted
 
-- name: reload ufw
+- name: Reload base firewall
+  listen: base_reload_ufw
   become: true
   community.general.ufw:
     state: reloaded

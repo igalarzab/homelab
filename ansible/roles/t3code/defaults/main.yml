@@ -1,0 +1,13 @@
+---
+t3code_user: t3code
+t3code_workspace: "/home/{{ t3code_user }}/workspace"
+t3code_channel: stable
+t3code_tools:
+  - tool: "node@24"
+    command: node
+  - tool: "pnpm@10"
+    command: pnpm
+  - tool: "python@3"
+    command: python
+  - tool: "uv@latest"
+    command: uv

@@ -24,7 +24,7 @@
 
 - name: Install k8s packages
   become: true
-  notify: restart kubelet
+  notify: kubeadm_restart_kubelet
   package:
     state: latest
     name:

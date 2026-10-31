@@ -1,0 +1,11 @@
+---
+- name: Set up the browser using T3 Code
+  become: true
+  changed_when: true
+  ansible.builtin.command:
+    argv:
+      - "/home/{{ t3code_user }}/.local/bin/t3"
+      - browser
+      - setup
+      - --base-dir
+      - "/home/{{ t3code_user }}/.t3"

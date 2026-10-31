@@ -1,11 +1,13 @@
 ---
-- name: restart kubelet
+- name: Restart kubelet
+  listen: kubeadm_restart_kubelet
   become: true
   service:
     name: kubelet
     state: restarted
 
-- name: reload ufw
+- name: Reload Kubernetes firewall
+  listen: kubeadm_reload_ufw
   become: true
   community.general.ufw:
     state: reloaded

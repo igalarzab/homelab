@@ -16,7 +16,7 @@
     owner: root
     group: root
     mode: "0644"
-  notify: restart containerd
+  notify: containerd_restart
 
 - name: Allow to run pods on control plane
   command: kubectl taint nodes --all node-role.kubernetes.io/control-plane-

@@ -17,7 +17,7 @@
     group: root
     mode: "0644"
   notify:
-    - restart kubelet
+    - kubeadm_restart_kubelet
 
 - name: Check if the cluster has been already initialised
   become: true

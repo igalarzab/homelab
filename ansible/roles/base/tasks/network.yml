@@ -16,7 +16,7 @@
 
 - name: Configure fail2ban for SSH
   become: true
-  notify: restart fail2ban
+  notify: base_restart_fail2ban
   copy:
     dest: /etc/fail2ban/jail.local
     content: |

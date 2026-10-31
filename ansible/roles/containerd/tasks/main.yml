@@ -15,7 +15,7 @@
 
 - name: Install containerd packages
   become: true
-  notify: restart containerd
+  notify: containerd_restart
   package:
     state: latest
     name:
@@ -23,7 +23,7 @@
 
 - name: Store containerd config
   become: true
-  notify: restart containerd
+  notify: containerd_restart
   template:
     src: templates/containerd-config.toml.j2
     dest: /etc/containerd/config.toml
@@ -33,7 +33,7 @@
 
 - name: Store crictl config
   become: true
-  notify: restart containerd
+  notify: containerd_restart
   template:
     src: templates/crictl.yaml.j2
     dest: /etc/crictl.yaml

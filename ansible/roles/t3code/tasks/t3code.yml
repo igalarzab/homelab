@@ -1,0 +1,69 @@
+---
+- name: Install T3 Code as the development user
+  become: true
+  become_user: "{{ t3code_user }}"
+  environment:
+    HOME: "/home/{{ t3code_user }}"
+    PATH: "/home/{{ t3code_user }}/.local/bin:/usr/local/bin:/usr/bin:/bin"
+  block:
+    - name: Check whether T3 Code is installed
+      register: t3code_launcher
+      ansible.builtin.stat:
+        path: "/home/{{ t3code_user }}/.local/bin/t3"
+
+    - name: Download the official T3 Code installer
+      when: not t3code_launcher.stat.exists
+      ansible.builtin.get_url:
+        url: https://t3.codes/install.sh
+        dest: "/home/{{ t3code_user }}/.cache/t3-install.sh"
+        mode: "0600"
+        timeout: 30
+
+    - name: Install T3 Code
+      notify: t3code_restart
+      ansible.builtin.command:
+        argv:
+          - timeout
+          - --kill-after=5s
+          - 180s
+          - sh
+          - "/home/{{ t3code_user }}/.cache/t3-install.sh"
+        chdir: "/home/{{ t3code_user }}"
+        creates: "/home/{{ t3code_user }}/.local/bin/t3"
+      environment:
+        T3CODE_HOME: "/home/{{ t3code_user }}/.t3"
+        T3CODE_CHANNEL: "{{ t3code_channel }}"
+        T3CODE_INSTALL_BIN_DIR: "/home/{{ t3code_user }}/.local/bin"
+
+- name: Configure Chrome dependencies and sandbox
+  ansible.builtin.import_tasks: chrome.yml
+
+- name: Install the T3 Code system service
+  become: true
+  notify: t3code_restart
+  ansible.builtin.template:
+    src: t3code.service.j2
+    dest: /etc/systemd/system/t3code.service
+    mode: "0644"
+
+- name: Apply service changes before checking readiness
+  ansible.builtin.meta: flush_handlers
+
+- name: Enable and start T3 Code
+  become: true
+  ansible.builtin.systemd_service:
+    name: t3code
+    daemon_reload: true
+    enabled: true
+    state: started
+
+- name: Wait for T3 Code to serve requests
+  register: t3code_health
+  until: t3code_health.status == 200
+  retries: 120
+  delay: 5
+  when: not ansible_check_mode
+  ansible.builtin.uri:
+    url: http://127.0.0.1:3773/
+    status_code: 200
+    use_proxy: false

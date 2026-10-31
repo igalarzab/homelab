@@ -1,0 +1,27 @@
+[Unit]
+Description=T3 Code development workspace
+Wants=network-online.target
+After=network-online.target docker.service
+StartLimitIntervalSec=600
+StartLimitBurst=3
+
+[Service]
+Type=simple
+User={{ t3code_user }}
+Group=users
+WorkingDirectory={{ t3code_workspace }}
+Environment="HOME=/home/{{ t3code_user }}"
+Environment="SHELL=/bin/bash"
+Environment="T3CODE_HOME=/home/{{ t3code_user }}/.t3"
+Environment="T3CODE_CHANNEL={{ t3code_channel }}"
+Environment="NPM_CONFIG_PREFIX=/home/{{ t3code_user }}/.local"
+Environment="PATH=/home/{{ t3code_user }}/.local/bin:/home/{{ t3code_user }}/.local/share/mise/shims:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"
+ExecStart=/home/{{ t3code_user }}/.local/bin/t3 serve --host 127.0.0.1 --port 3773 {{ t3code_workspace }}
+Restart=on-failure
+RestartSec=10
+TimeoutStopSec=60
+KillMode=control-group
+UMask=0077
+
+[Install]
+WantedBy=multi-user.target

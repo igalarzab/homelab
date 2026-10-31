@@ -34,18 +34,34 @@
       - apt-transport-https
       - ca-certificates
       - curl
+      - git
       - gpg
+      - jq
       - libseccomp2
       - lm-sensors
       - locales
+      - openssh-client
       - pigz
+      - python3
       - qemu-guest-agent
+      - ripgrep
+      - rsync
       - tar
+      - tmux
       - tree
       - unattended-upgrades
       - unzip
       - util-linux
       - vim
+      - zip
+
+- name: Enable the guest agent on Proxmox QEMU guests
+  become: true
+  ansible.builtin.systemd_service:
+    name: qemu-guest-agent
+    enabled: true
+    state: started
+  when: ansible_facts['virtualization_type'] in ['kvm', 'qemu']
 
 - name: Install locales
   become: true

@@ -1,0 +1,60 @@
+---
+- name: Install development tools
+  become: true
+  ansible.builtin.apt:
+    update_cache: true
+    cache_valid_time: 3600
+    state: present
+    name:
+      - acl
+      - build-essential
+      - gh
+      - pkg-config
+
+- name: Create the development user with Docker access
+  become: true
+  ansible.builtin.user:
+    name: "{{ t3code_user }}"
+    group: users
+    groups: docker
+    append: true
+    home: "/home/{{ t3code_user }}"
+    shell: /bin/bash
+    create_home: true
+
+- name: Create the workspace and private tool directories
+  become: true
+  ansible.builtin.file:
+    path: "{{ item }}"
+    state: directory
+    owner: "{{ t3code_user }}"
+    group: users
+    mode: "0700"
+  loop:
+    - "{{ t3code_workspace }}"
+    - "/home/{{ t3code_user }}"
+    - "/home/{{ t3code_user }}/.local/bin"
+    - "/home/{{ t3code_user }}/.cache"
+    - "/home/{{ t3code_user }}/.config"
+    - "/home/{{ t3code_user }}/.t3"
+
+- name: Configure local executables and npm installations for the development user
+  become: true
+  become_user: "{{ t3code_user }}"
+  ansible.builtin.blockinfile:
+    path: "/home/{{ t3code_user }}/{{ item }}"
+    create: true
+    mode: "0644"
+    marker: "# {mark} ANSIBLE T3 CODE ENVIRONMENT"
+    block: |
+      export PATH="$HOME/.local/bin:$PATH"
+      export NPM_CONFIG_PREFIX="$HOME/.local"
+  loop:
+    - .profile
+    - .bashrc
+
+- name: Install mise and language tools
+  ansible.builtin.import_tasks: mise.yml
+
+- name: Install and configure T3 Code
+  ansible.builtin.import_tasks: t3code.yml
