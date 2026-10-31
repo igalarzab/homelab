@@ -157,8 +157,9 @@ which includes the mise shims.
 Ubuntu's `python3` stays in place for Ansible. `gh` comes from GitHub's APT
 repository, so it stays current with OS upgrades.
 
-T3 runs with `UMask=0077`, and the home and workspace are `0700`. Files created
-by agents can only be read by `t3code`. Containers that run as a different
+The home and workspace are `0755`; only the T3 data directory is private. T3
+still runs with `UMask=0077`, so files created by agents can only be read by
+`t3code`. Containers that run as a different
 non-root user cannot read bind-mounted project files. Run them as `t3code`'s UID
 or relax permissions for that project.
 
