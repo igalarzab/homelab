@@ -1,5 +1,5 @@
 ---
-t3code_user: t3code
+t3code_user: "{{ ansible_facts['user_id'] }}"
 t3code_home: "/home/{{ t3code_user }}"
 t3code_workspace: "{{ t3code_home }}/workspace"
 t3code_data_dir: "{{ t3code_home }}/.local/share/t3"

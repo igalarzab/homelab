@@ -15,10 +15,10 @@ The playbook applies three roles in order:
 - `docker`: installs Docker from the official repository. It refuses to run if
   Ubuntu's Docker, containerd, or runc packages, or `podman-docker`, are
   already installed.
-- `t3code`: creates the `t3code` user and its workspace, installs mise and the
-  language tools, Codex CLI, Claude Code, and T3, and installs T3's native
-  systemd user service.
-  Lingering keeps it running after logout and starts it at boot.
+- `t3code`: uses your administrator account, creates its workspace, installs
+  mise and the language tools, Codex CLI, Claude Code, and T3, and installs
+  T3's native systemd user service. Lingering keeps it running after logout
+  and starts it at boot.
 
 Kubernetes provisioning stays in the separate `saturn.yml` playbook.
 
@@ -86,7 +86,7 @@ Override these in the inventory or with `--extra-vars`:
 
 | Variable | Default | Purpose |
 | --- | --- | --- |
-| `t3code_user` | `t3code` | Development account |
+| `t3code_user` | Ansible login account | Development account, normally `igalarzab` |
 | `t3code_home` | `/home/{{ t3code_user }}` | Its home directory |
 | `t3code_workspace` | `{{ t3code_home }}/workspace` | Directory for repositories |
 | `t3code_data_dir` | `{{ t3code_home }}/.local/share/t3` | T3 state, exported as `T3CODE_HOME` |
@@ -109,6 +109,19 @@ The base role upgrades every APT package, including Docker, and changes to the
 service environment restart T3. Both interrupt running work, so apply when the
 VM is idle.
 
+## Existing installations under the `t3code` account
+
+Changing `t3code_user` does not migrate an existing installation. Its state,
+provider credentials, repositories, and worktrees remain under `/home/t3code`.
+Keep `t3code_user=t3code` in the inventory until those have been migrated to
+your administrator account. Otherwise, reapplying creates a separate installation
+in your administrator account and the old service can still occupy port 3773.
+
+Migrating accounts requires stopping the old service, backing up its home,
+moving the required data and correcting ownership and stored absolute paths,
+then installing the service under the destination account. Keep the old home
+until projects, history, and provider authentication work under the new account.
+
 ## Migrate the previous system service
 
 Remove the previous system service manually before applying the updated
@@ -121,7 +134,10 @@ sudo rm /etc/systemd/system/t3code.service
 sudo systemctl daemon-reload
 ```
 
-Remove only this system unit. Keep `/home/t3code/.local/share/t3`, which contains
+For an installation under the old `t3code` account, keep `t3code_user=t3code`
+in the inventory during this service migration. Migrate accounts separately.
+
+Remove only this system unit. Keep the existing `t3code_data_dir`, which contains
 T3 state and credentials. Do not run `t3 uninstall`.
 The native service uses the same data directory and LAN address.
 
@@ -133,13 +149,10 @@ Then apply the updated playbook from your workstation:
 
 ## Connect T3
 
-Switch to the development account. When using `sudo -iu`, explicitly select its
-user service bus because sudo does not create a full login session:
+Log in over SSH as your administrator account, normally `igalarzab`. T3 and its
+tools use that same account:
 
 ```bash
-sudo -iu t3code
-export XDG_RUNTIME_DIR="/run/user/$(id -u)"
-export DBUS_SESSION_BUS_ADDRESS="unix:path=$XDG_RUNTIME_DIR/bus"
 t3 status
 t3 pair
 ```
@@ -149,9 +162,9 @@ in the desktop app. The playbook configures the native service's LAN address
 and port in `$T3CODE_HOME/service.env`. Pairing URLs contain access tokens, so
 treat them as secrets.
 
-For T3 Connect, run `t3 up --connect` as `t3code`, open the printed URL on your
-laptop, and approve the code. Sign in to the same T3 Connect account on your
-client and select this environment.
+For T3 Connect, run `t3 up --connect` as your administrator account, open the
+printed URL on your laptop, and approve the code. Sign in to the same T3
+Connect account on your client and select this environment.
 
 An SSH tunnel is another option when your Mac cannot reach port 3773 directly:
 
@@ -163,7 +176,7 @@ The playbook installs Codex CLI and Claude Code in `~/.local/bin` using their
 native installers. It skips working installations and reinstalls missing or
 broken binaries. It does not sign in or manage provider credentials.
 
-As `t3code`, sign in to each CLI and follow its browser instructions:
+In the same account, sign in to each CLI and follow its browser instructions:
 
 ```bash
 codex login --device-auth
@@ -181,7 +194,7 @@ git clone https://github.com/igalarzab/homelab.git ~/workspace/homelab
 ```
 
 Set your Git name and email, then add each checkout as a project. Credentials
-live under `/home/t3code`, never in the inventory.
+live under your home directory, never in the inventory.
 
 ## Development environment
 
@@ -197,11 +210,12 @@ repository, so it stays current with OS upgrades.
 
 The home and workspace are `0755`; the T3 data directory is private. The native
 service uses the user manager's default umask. Containers must have permission
-to read bind-mounted project files; run them as `t3code`'s UID when needed.
+to read bind-mounted project files; run them as your development account's UID
+when needed.
 
-The `t3code` user is in the `docker` group, which gives it root access inside
-the VM. Treat the whole VM as the agent's sandbox. Its network access and stored
-credentials decide what else it can reach.
+The development account is in the `docker` group, which gives it root access
+inside the VM. Treat the whole VM as the agent's sandbox. Its network access
+and stored credentials decide what else it can reach.
 
 ## Browser previews
 
@@ -209,7 +223,7 @@ The playbook runs `t3 browser setup` as root until it succeeds once, then
 records that in `/var/lib/t3code-browser-setup.done`. The command installs the
 Chrome sandbox AppArmor profile, missing libraries, and fonts, and leaves the
 sandbox enabled. Afterwards the playbook gives any root-owned files in the T3
-data directory back to `t3code`.
+data directory back to the development account.
 
 T3 downloads Chrome when the first browser tab opens, so some missing libraries
 can only be detected after that. If the first preview reports missing libraries,
@@ -219,7 +233,8 @@ run the setup again:
 ./ansible/run.sh t3code -e t3code_browser_setup=true
 ```
 
-Run `t3 service restart` as `t3code` afterwards if it installed fonts.
+Run `t3 service restart` as your development account afterwards if it installed
+fonts.
 
 ## Updates
 
@@ -228,9 +243,6 @@ interrupted install. Use T3's native update and service commands for maintenance
 After finishing active work, run as the development user:
 
 ```bash
-sudo -iu t3code
-export XDG_RUNTIME_DIR="/run/user/$(id -u)"
-export DBUS_SESSION_BUS_ADDRESS="unix:path=$XDG_RUNTIME_DIR/bus"
 t3 update
 t3 service status
 ```
@@ -244,15 +256,16 @@ Other components:
 
 - Codex and Claude Code: update them from T3's provider settings. Reapplying
   Ansible keeps working versions.
-- Language tools: run `mise upgrade` as `t3code` while builds are idle.
-  Projects can pin their own versions in their mise config.
+- Language tools: run `mise upgrade` as your development account while builds
+  are idle. Projects can pin their own versions in their mise config.
 - mise, Docker, and OS packages: updated through APT, either by hand or by
   reapplying the playbook. A Docker upgrade restarts the daemon, which stops
   containers that have no restart policy.
 
 ## Backups and recovery
 
-Back up the VM through Proxmox, including `/home/t3code` and `/var/lib/docker`.
+Back up the VM through Proxmox, including your development account's home and
+`/var/lib/docker`.
 The guest agent lets Proxmox freeze the filesystem during snapshots. For a
 consistent copy, stop T3 and project databases first, or use their own backup
 tools. Backups contain credentials, so protect them accordingly.

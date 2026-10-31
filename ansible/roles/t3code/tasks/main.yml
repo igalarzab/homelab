@@ -31,7 +31,7 @@
     update_cache: true
     cache_valid_time: "{{ 0 if t3code_gh_repository.changed else 3600 }}"
 
-- name: Create the development user with Docker access
+- name: Configure the development user with Docker access
   become: true
   register: t3code_account
   ansible.builtin.user:
