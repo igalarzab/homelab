@@ -1,7 +1,12 @@
 ---
+- name: Check whether browser setup has completed
+  ansible.builtin.stat:
+    path: /var/lib/t3code-browser-setup.done
+  register: t3code_browser_stamp
+
 - name: Set up the browser using T3 Code
   become: true
-  when: t3code_install is changed or t3code_browser_setup | bool
+  when: not t3code_browser_stamp.stat.exists or t3code_browser_setup | bool
   block:
     - name: Install browser libraries, fonts, and the sandbox profile
       changed_when: true
@@ -13,11 +18,31 @@
           - --base-dir
           - "{{ t3code_home }}/.t3"
 
-    # Browser setup runs as root and may write runtime state under the T3 home
-    - name: Return T3 state to the development user
-      ansible.builtin.file:
-        path: "{{ t3code_home }}/.t3"
-        state: directory
-        recurse: true
-        owner: "{{ t3code_user }}"
-        group: users
+    # Browser setup runs as root and may write runtime state under the T3 home.
+    # Worktrees are skipped: they can be large and hold files owned by containers.
+    - name: Return root-owned T3 state to the development user
+      register: t3code_state_owner
+      changed_when: t3code_state_owner.stdout | length > 0
+      ansible.builtin.command:
+        argv:
+          - find
+          - "{{ t3code_home }}/.t3"
+          - -path
+          - "{{ t3code_home }}/.t3/worktrees"
+          - -prune
+          - -o
+          - -user
+          - root
+          - -print
+          - -exec
+          - chown
+          - -h
+          - "{{ t3code_user }}:users"
+          - "{}"
+          - +
+
+    - name: Record completed browser setup
+      ansible.builtin.copy:
+        dest: /var/lib/t3code-browser-setup.done
+        content: ""
+        mode: "0644"

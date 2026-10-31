@@ -89,8 +89,10 @@ bootstrap.
 Choose the user, home, and workspace before the first run. The playbook does
 not move existing data when they change.
 
-Reapplying is safe. Changes to the service file restart T3 and interrupt
-running sessions.
+Reapplying keeps your tools, credentials, and T3 state, but it is not a no-op.
+The base role upgrades every APT package, including Docker, and changes to the
+service file restart T3. Both interrupt running work, so apply when the VM is
+idle.
 
 ## Connect T3
 
@@ -154,10 +156,11 @@ credentials decide what else it can reach.
 
 ## Browser previews
 
-On a fresh install, the playbook runs `t3 browser setup` as root. This command
-installs the Chrome sandbox AppArmor profile, missing libraries, and fonts, and
-leaves the sandbox enabled. Afterwards the playbook gives the T3 home back to
-`t3code`.
+The playbook runs `t3 browser setup` as root until it succeeds once, then
+records that in `/var/lib/t3code-browser-setup.done`. The command installs the
+Chrome sandbox AppArmor profile, missing libraries, and fonts, and leaves the
+sandbox enabled. Afterwards the playbook gives any root-owned files in `~/.t3`
+back to `t3code`.
 
 T3 downloads Chrome when the first browser tab opens, so some missing libraries
 can only be detected after that. If the first preview reports missing libraries,
@@ -191,8 +194,9 @@ Other components:
 - Codex: update it from T3's provider settings.
 - Language tools: run `mise upgrade` as `t3code` while builds are idle.
   Projects can pin their own versions in their mise config.
-- mise and Docker: updated through APT. Reapplying the playbook upgrades OS
-  packages through the base role. The Docker role only installs missing packages.
+- mise, Docker, and OS packages: updated through APT, either by hand or by
+  reapplying the playbook. A Docker upgrade restarts the daemon, which stops
+  containers that have no restart policy.
 
 ## Backups and recovery
 

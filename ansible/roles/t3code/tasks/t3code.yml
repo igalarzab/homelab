@@ -22,7 +22,6 @@
         timeout: 30
 
     - name: Install T3 Code
-      register: t3code_install
       changed_when: true
       notify: t3code_restart
       ansible.builtin.command:
