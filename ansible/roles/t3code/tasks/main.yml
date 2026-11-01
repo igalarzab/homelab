@@ -66,31 +66,33 @@
   loop_control:
     label: "{{ item.path }}"
 
-- name: Install mise
-  ansible.builtin.import_tasks: mise.yml
-
-# Ubuntu's skeleton .profile already adds ~/.local/bin to PATH and sources .bashrc
-- name: Configure login and interactive shells for the development user
+- name: Configure the machine-local environment
   become: true
   become_user: "{{ t3code_user }}"
   ansible.builtin.blockinfile:
-    path: "{{ t3code_home }}/{{ item.file }}"
+    path: "{{ t3code_home }}/.config/local.sh"
+    create: true
+    mode: "0600"
+    marker: "# {mark} ANSIBLE T3 CODE ENVIRONMENT"
+    block: |
+      export T3CODE_HOME={{ t3code_data_dir | quote }}
+
+- name: Load the machine-local environment in Bash
+  become: true
+  become_user: "{{ t3code_user }}"
+  ansible.builtin.blockinfile:
+    path: "{{ t3code_home }}/{{ item }}"
     create: true
     mode: "0644"
     marker: "# {mark} ANSIBLE T3 CODE ENVIRONMENT"
-    block: "{{ item.block }}"
+    block: |
+      . "$HOME/.config/local.sh"
   loop:
-    - file: .profile
-      block: |
-        export NPM_CONFIG_PREFIX="$HOME/.local"
-        export T3CODE_HOME="{{ t3code_data_dir }}"
-        eval "$(/usr/bin/mise activate bash --shims)"
-    - file: .bashrc
-      block: |
-        export PATH="$HOME/.local/bin:$PATH"
-        export NPM_CONFIG_PREFIX="$HOME/.local"
-        export T3CODE_HOME="{{ t3code_data_dir }}"
-        eval "$(/usr/bin/mise activate bash)"
+    - .profile
+    - .bashrc
+
+- name: Install personal tools and configuration
+  ansible.builtin.import_tasks: dotfiles.yml
 
 - name: Install coding agent CLIs
   ansible.builtin.include_tasks: provider.yml

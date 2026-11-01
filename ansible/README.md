@@ -16,7 +16,7 @@ The playbook applies three roles in order:
   Ubuntu's Docker, containerd, or runc packages, or `podman-docker`, are
   already installed.
 - `t3code`: uses your administrator account, creates its workspace, installs
-  mise, Codex CLI, Claude Code, and T3, and installs
+  your dotfiles, Codex CLI, Claude Code, and T3, and installs
   T3's native systemd user service. Lingering keeps it running after logout
   and starts it at boot.
 
@@ -93,6 +93,8 @@ Override these in the inventory or with `--extra-vars`:
 | `t3code_channel` | `stable` | `stable` or `nightly`, used for the first install only |
 | `t3code_host` | Primary IPv4 address detected by Ansible | LAN address for `t3 serve` |
 | `t3code_port` | `3773` | Listening port for `t3 serve` |
+| `t3code_dotfiles_dir` | `~/.config/dotfiles` under the development account | Permanent dotfiles checkout |
+| `t3code_dotfiles_version` | `main` | Dotfiles branch, tag, or commit to install |
 | `t3code_browser_setup` | `false` | Rerun T3's browser setup on an existing install |
 
 Choose the user, home, workspace, and data directory before the first run. The
@@ -192,17 +194,20 @@ live under your home directory, never in the inventory.
 
 ## Development environment
 
-mise is installed from its APT repository through `extrepo`.
-[Dotfiles](https://github.com/igalarzab/dotfiles) manages personal tools, runtime
-versions, and the login shell; this playbook preserves those selections.
-Bash login shells get the mise shims, interactive Bash shells run
-`mise activate bash`, and `npm install -g` writes to
-`~/.local`. T3 keeps its state in `~/.local/share/t3` instead of `~/.t3`.
-Bash shells and the native service set `T3CODE_HOME`.
-Interactive shells also add `~/.local/bin` to `PATH`. The native service captures
-the installation task's `PATH`, which includes the mise shims.
-Ubuntu's `python3` stays in place for Ansible. `gh` comes from GitHub's APT
-repository, so it stays current with OS upgrades.
+The playbook clones [dotfiles](https://github.com/igalarzab/dotfiles) into
+`~/.config/dotfiles` and runs `./install` as the development user. Dotfiles owns
+personal packages, mise and its runtime versions, npm's `~/.local` prefix, and
+the login shell. Merge the companion dotfiles changes before applying this role,
+or set `t3code_dotfiles_version` to the branch or commit you want to review.
+
+Merge existing configuration directories manually before the first install.
+The checkout is updated and the installer runs on each playbook apply; local
+tracked edits are not forcibly overwritten.
+
+`T3CODE_HOME` is set in `~/.config/local.sh`, loaded by dotfiles' xonsh/zsh setup
+and sourced by Bash. T3's native service keeps its own explicit environment and
+mise-shim PATH. Ubuntu's Python stays in place for Ansible, and `gh` comes from
+GitHub's APT repository.
 
 The home and workspace are `0755`; the T3 data directory is private. The native
 service uses the user manager's default umask. Containers must have permission
