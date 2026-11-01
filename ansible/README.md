@@ -210,7 +210,8 @@ The two repositories meet in two places:
 - `~/.config/local.sh`: the playbook manages one block in it, which exports
   `T3CODE_HOME`. Dotfiles' xonsh and zsh setups load this file. Keep your own
   machine-local settings outside the block.
-- T3's shell: `service.env` sets `SHELL=/usr/bin/zsh`. T3 runs
+- T3's shell: `service.env` sets `SHELL=/usr/bin/zsh`, even if you switch your
+  login shell to xonsh. T3 runs
   `$SHELL -ilc` to read `PATH`, so agents find the tools that dotfiles' zsh
   setup activates, such as mise runtimes. Until dotfiles is installed, agents
   get only the system `PATH`.
