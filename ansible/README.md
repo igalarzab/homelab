@@ -16,7 +16,7 @@ The playbook applies three roles in order:
   Ubuntu's Docker, containerd, or runc packages, or `podman-docker`, are
   already installed.
 - `t3code`: uses your administrator account, creates its workspace, installs
-  mise and the language tools, Codex CLI, Claude Code, and T3, and installs
+  mise, Codex CLI, Claude Code, and T3, and installs
   T3's native systemd user service. Lingering keeps it running after logout
   and starts it at boot.
 
@@ -93,13 +93,7 @@ Override these in the inventory or with `--extra-vars`:
 | `t3code_channel` | `stable` | `stable` or `nightly`, used for the first install only |
 | `t3code_host` | Primary IPv4 address detected by Ansible | LAN address for `t3 serve` |
 | `t3code_port` | `3773` | Listening port for `t3 serve` |
-| `t3code_tools` | Latest Node LTS, pnpm, Python, and uv | mise tools to bootstrap |
 | `t3code_browser_setup` | `false` | Rerun T3's browser setup on an existing install |
-
-Each `t3code_tools` entry has a mise `tool` request, such as `node@lts`, and the
-`command` its shim provides, such as `node`. A tool is skipped once its shim
-exists, so later version changes made with mise are kept. Use `[]` to skip the
-bootstrap.
 
 Choose the user, home, workspace, and data directory before the first run. The
 playbook does not move existing data when they change.
@@ -198,11 +192,13 @@ live under your home directory, never in the inventory.
 
 ## Development environment
 
-mise is installed from its APT repository through `extrepo`. Language tools are
-installed in the development user's home. Login shells get the mise shims,
-interactive shells run `mise activate bash`, and `npm install -g` writes to
+mise is installed from its APT repository through `extrepo`.
+[Dotfiles](https://github.com/igalarzab/dotfiles) manages personal tools, runtime
+versions, and the login shell; this playbook preserves those selections.
+Bash login shells get the mise shims, interactive Bash shells run
+`mise activate bash`, and `npm install -g` writes to
 `~/.local`. T3 keeps its state in `~/.local/share/t3` instead of `~/.t3`.
-Login shells, interactive shells, and the native service set `T3CODE_HOME`.
+Bash shells and the native service set `T3CODE_HOME`.
 Interactive shells also add `~/.local/bin` to `PATH`. The native service captures
 the installation task's `PATH`, which includes the mise shims.
 Ubuntu's `python3` stays in place for Ansible. `gh` comes from GitHub's APT
