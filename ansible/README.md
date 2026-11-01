@@ -1,50 +1,43 @@
 # T3 Code development VM
 
-`t3code.yml` turns an existing Ubuntu 24.04 VM on Proxmox into a persistent,
-single-user development machine. T3 and its agents run directly in the VM, and
-Docker Engine with Compose and Buildx is available for project services.
+`t3code.yml` turns an Ubuntu 24.04 or later VM on Proxmox into a single-user development
+machine. T3 and its agents run directly in the VM, with Docker Engine, Compose and Buildx
+for project services. `saturn.yml` is the separate kubeadm playbook.
 
 The playbook applies three roles in order:
 
-- `base`: upgrades APT packages, installs common tools (Git, ripgrep, jq, tmux),
-  and configures locales, fail2ban, and SSH hardening. It also changes your
-  administrator account's primary group to `users` and starts the QEMU guest
-  agent when Proxmox provides its channel. Saturn uses this role too, with
-  swap disabled for Kubernetes. This playbook sets `base_disable_swap: false`
-  so builds can use swap.
-- `docker`: installs Docker from the official repository. It refuses to run if
-  Ubuntu's Docker, containerd, or runc packages, or `podman-docker`, are
-  already installed.
-- `t3code`: uses your administrator account, creates its workspace, installs
-  Codex CLI, Claude Code, and T3, and installs
-  T3's native systemd user service. Lingering keeps it running after logout
-  and starts it at boot.
-
-Kubernetes provisioning stays in the separate `saturn.yml` playbook.
+- `base` upgrades APT packages, installs common tools such as Git, ripgrep, jq and tmux,
+  and configures locales, fail2ban and SSH. SSH logins then need a key, and root can't log
+  in. It changes your account's primary group to `users` and starts the QEMU guest agent
+  when Proxmox provides its channel. Saturn uses this role too. This playbook sets
+  `base_disable_swap: false` so builds can use swap.
+- `docker` installs Docker from its official repository. It stops if Ubuntu's Docker,
+  containerd or runc packages, or `podman-docker`, are already installed.
+- `t3code` creates the workspace, installs Codex CLI, Claude Code and T3, and installs T3's
+  systemd user service. Lingering keeps the service running after logout and starts it at
+  boot. Everything runs under your administrator account.
 
 ## Prepare the VM
 
-Create the VM in Proxmox. 4 vCPU, 16 GiB RAM, and a 100 GiB SSD-backed disk are a
-reasonable start. Install Ubuntu Server 24.04 (amd64 or arm64), enable the QEMU
-guest agent in the VM options, and give it a stable address.
+Create the VM in Proxmox. 4 vCPU, 16 GiB RAM and a 100 GiB SSD-backed disk are a reasonable
+start. Install Ubuntu Server, enable the QEMU guest agent in the VM options and give the VM
+a stable address.
 
-During installation, create an administrator account with your SSH public key
-and sudo access. Start from a fresh VM: the Docker role stops on existing
-container runtimes.
+During installation, create an administrator account with your SSH public key and sudo
+access. Start from a fresh VM, because the Docker role stops on existing container runtimes.
 
 ## Network access
 
-The playbook does not enable a host firewall: UFW stays off unless you set
-`base_enable_ufw: true`, which also opens ports 80 and 443. Filter traffic with
-the Proxmox firewall instead. Allow SSH and TCP port 3773 from your workstation
-or LAN and block everything else.
+The playbook doesn't enable a host firewall. UFW stays off unless you set
+`base_enable_ufw: true`, which also opens ports 80 and 443. Use the Proxmox firewall
+instead, and allow SSH and TCP port 3773 only from your workstation or LAN.
 
-T3 listens on `t3code_host:3773`, with `t3code_host` defaulting to the VM's
-primary IPv4 address detected by Ansible. This assumes the default route uses
-the LAN interface. Override it with the LAN address if another interface owns
-the default route. You can also use T3 Connect or an SSH tunnel.
-Ports published by project containers listen on all interfaces by default, so
-either bind them to `127.0.0.1` in Compose or cover them in the Proxmox firewall.
+T3 listens on `t3code_host:3773`. `t3code_host` defaults to the VM's primary IPv4 address,
+so set it yourself if the default route doesn't use the LAN interface. You can also reach T3
+through T3 Connect or an SSH tunnel.
+
+Ports published by project containers listen on all interfaces by default. Bind them to
+`127.0.0.1` in Compose or cover them in the Proxmox firewall.
 
 ## Configure and apply
 
@@ -55,30 +48,32 @@ uv sync
 cp ansible/hosts.ini.example ansible/hosts.ini
 ```
 
-Edit `ansible/hosts.ini` (ignored by Git) and set the VM address and your
-administrator username in the `t3code` group:
+Set the VM address and your administrator username in the `t3code` group of
+`ansible/hosts.ini`, which Git ignores:
 
 ```ini
 [t3code]
-192.0.2.20 ansible_user=igalarzab ansible_become_exe=sudo.ws
+192.0.2.20 ansible_user=USERNAME ansible_become_exe=sudo.ws
 ```
 
-Ubuntu 25.10 and later use sudo-rs, whose password prompt Ansible does not
-recognize. `ansible_become_exe=sudo.ws` switches to the original sudo, which is
-still installed. Leave it out on 24.04.
+Ubuntu 25.10 and later use sudo-rs, and Ansible doesn't recognize its password prompt.
+`ansible_become_exe=sudo.ws` switches to the original sudo. Leave it out on 24.04.
 
 Connect once over SSH to verify and accept the host key, then apply:
 
 ```bash
-ssh igalarzab@192.0.2.20
+ssh USERNAME@192.0.2.20
 ./ansible/run.sh t3code
 ```
 
-Arguments after the playbook name go to `ansible-playbook`, so add
-`--ask-become-pass` if sudo needs a password. `ansible/ansible.cfg` disables
-host-key checking for Saturn, but `run.sh` turns it back on for this playbook.
-The first run downloads the tools and T3 and takes a few minutes. It
-ends by waiting up to three minutes for T3 to answer HTTP requests.
+Arguments after the playbook name go to `ansible-playbook`, so add `--ask-become-pass` if
+sudo needs a password. `ansible/ansible.cfg` disables host-key checking for Saturn, and
+`run.sh` turns it back on for this playbook. The last task waits up to three minutes for T3
+to answer HTTP requests.
+
+Apply when the VM is idle. Every run upgrades all APT packages, including Docker, and a
+change to the service environment restarts T3. Both interrupt running work. Your tools,
+credentials and T3 state are kept.
 
 ### Variables
 
@@ -86,210 +81,126 @@ Override these in the inventory or with `--extra-vars`:
 
 | Variable | Default | Purpose |
 | --- | --- | --- |
-| `t3code_user` | Ansible login account | Development account, normally `igalarzab` |
+| `t3code_user` | Ansible login account | Development account |
 | `t3code_home` | `/home/{{ t3code_user }}` | Its home directory |
 | `t3code_workspace` | `{{ t3code_home }}/workspace` | Directory for repositories |
 | `t3code_data_dir` | `{{ t3code_home }}/.local/share/t3` | T3 state, exported as `T3CODE_HOME` |
 | `t3code_channel` | `stable` | `stable` or `nightly`, used for the first install only |
-| `t3code_host` | Primary IPv4 address detected by Ansible | LAN address for `t3 serve` |
+| `t3code_host` | Primary IPv4 address | LAN address for `t3 serve` |
 | `t3code_port` | `3773` | Listening port for `t3 serve` |
 | `t3code_browser_setup` | `false` | Rerun T3's browser setup on an existing install |
 
-Choose the user, home, workspace, and data directory before the first run. The
-playbook does not move existing data when they change.
-
-Reapplying keeps your tools, credentials, and T3 state, but it is not a no-op.
-The base role upgrades every APT package, including Docker, and changes to the
-service environment restart T3. Both interrupt running work, so apply when the
-VM is idle.
-
-## Existing installations under the `t3code` account
-
-Changing `t3code_user` does not migrate an existing installation. Its state,
-provider credentials, repositories, and worktrees remain under `/home/t3code`.
-Keep `t3code_user=t3code` in the inventory until those have been migrated to
-your administrator account. Otherwise, reapplying creates a separate installation
-in your administrator account and the old service can still occupy port 3773.
-
-Migrating accounts requires stopping the old service, backing up its home,
-moving the required data and correcting ownership and stored absolute paths,
-then installing the service under the destination account. Keep the old home
-until projects, history, and provider authentication work under the new account.
-
-## Migrate the previous system service
-
-Remove the previous system service manually before applying the updated
-playbook. Run these commands as your administrator account on the VM while T3
-is idle:
-
-```bash
-sudo systemctl disable --now t3code.service
-sudo rm /etc/systemd/system/t3code.service
-sudo systemctl daemon-reload
-```
-
-For an installation under the old `t3code` account, keep `t3code_user=t3code`
-in the inventory during this service migration. Migrate accounts separately.
-
-Remove only this system unit. Keep the existing `t3code_data_dir`, which contains
-T3 state and credentials. Do not run `t3 uninstall`.
-The native service uses the same data directory and LAN address.
-
-Then apply the updated playbook from your workstation:
-
-```bash
-./ansible/run.sh t3code
-```
+Choose the user, home, workspace and data directory before the first run. The playbook
+doesn't move existing data when they change.
 
 ## Connect T3
 
-Log in over SSH as your administrator account, normally `igalarzab`. T3 and its
-tools use that same account:
+Log in over SSH as your administrator account, then pair:
 
 ```bash
 t3 status
 t3 pair
 ```
 
-Paste the printed pairing URL into **Settings > Environments > Add environment**
-in the desktop app. The playbook configures the native service's LAN address
-and port in `$T3CODE_HOME/service.env`. Pairing URLs contain access tokens, so
-treat them as secrets.
+Paste the printed URL into **Settings > Environments > Add environment** in the desktop app.
+Pairing URLs contain access tokens, so treat them as secrets.
 
-For T3 Connect, run `t3 up --connect` as your administrator account, open the
-printed URL on your laptop, and approve the code. Sign in to the same T3
-Connect account on your client and select this environment.
+For T3 Connect, run `t3 up --connect`, open the printed URL on your laptop and approve the
+code. Then sign in to the same T3 Connect account on your client and select this environment.
 
-An SSH tunnel is another option when your Mac cannot reach port 3773 directly:
+If your laptop can't reach port 3773, use an SSH tunnel:
 
 ```bash
-ssh -N -L 3773:192.0.2.20:3773 igalarzab@192.0.2.20
+ssh -N -L 3773:192.0.2.20:3773 USERNAME@192.0.2.20
 ```
 
-The playbook installs Codex CLI and Claude Code in `~/.local/bin` using their
-native installers. It skips working installations and reinstalls missing or
-broken binaries. It does not sign in or manage provider credentials.
+## Sign in to the tools
 
-In the same account, sign in to each CLI and follow its browser instructions:
+The playbook installs Codex CLI and Claude Code in `~/.local/bin`, and reinstalls them only
+if they're missing or broken. It doesn't handle credentials, which stay in your home
+directory. Sign in on the VM:
 
 ```bash
 codex login --device-auth
 claude auth login
-```
-
-Alternatively, use **Connect with ChatGPT** in T3's provider settings for Codex.
-Enable the providers and set their permissions there. Authenticate GitHub from
-a T3 terminal:
-
-```bash
 gh auth login --hostname github.com --git-protocol https --web
 gh auth setup-git
-git clone https://github.com/igalarzab/homelab.git ~/workspace/homelab
 ```
 
-Set your Git name and email, then add each checkout as a project. Credentials
-live under your home directory, never in the inventory.
+Enable the providers and set their permissions in T3's provider settings. Clone your
+repositories into `~/workspace` and add each one as a project.
 
 ## Development environment
 
-The playbook sets up the machine and T3, not your personal environment.
-[Dotfiles](https://github.com/igalarzab/dotfiles) owns packages, mise and its
-runtime versions, the shell configuration, and the login shell. Install it once
-as the development user after the first apply; its installer asks for sudo:
+The playbook sets up the machine and T3. Your shell config, language runtimes and personal
+tools are yours to install afterwards. Two things connect them to T3:
 
-```bash
-git clone --recursive https://github.com/igalarzab/dotfiles.git ~/.config/dotfiles
-~/.config/dotfiles/install
-```
+- T3 reads `PATH` for its agents by running `$SHELL -ilc`, so agents find whatever your login
+  shell's startup files activate. The service gets `$SHELL` from the user service manager,
+  which only reads your login shell when it starts. Reboot after changing it.
+- The playbook manages one block in `~/.config/local.sh`, which exports `T3CODE_HOME`. Load
+  that file from your shell so the `t3` command finds its data. Keep your own settings
+  outside the block.
 
-Update it later with `git pull` and `./install` in that checkout. The playbook
-never touches it.
+The account is in the `docker` group, which gives it root access inside the VM. Treat the
+whole VM as the agent's sandbox. Its network access and stored credentials decide what else
+it can reach.
 
-The two repositories meet in two places:
-
-- `~/.config/local.sh`: the playbook manages one block in it, which exports
-  `T3CODE_HOME`. Dotfiles' xonsh and zsh setups load this file. Keep your own
-  machine-local settings outside the block.
-- T3's shell: the service uses your login shell, which dotfiles sets. T3 runs
-  `$SHELL -ilc` to read `PATH`, so agents find the tools that shell's startup
-  files activate, such as mise runtimes. The user service manager only reads the
-  login shell when it starts, so reboot after changing it.
-
-Ubuntu's Python stays in place for Ansible, and `gh` comes from GitHub's APT
-repository.
-
-The home and workspace are `0755`; the T3 data directory is private. The native
-service uses the user manager's default umask. Containers must have permission
-to read bind-mounted project files; run them as your development account's UID
-when needed.
-
-The development account is in the `docker` group, which gives it root access
-inside the VM. Treat the whole VM as the agent's sandbox. Its network access
-and stored credentials decide what else it can reach.
+The home and workspace are `0755`, and the T3 data directory is private. Containers need
+permission to read bind-mounted project files, so run them as your account's UID when needed.
 
 ## Browser previews
 
-The playbook runs `t3 browser setup` as root until it succeeds once, then
-records that in `/var/lib/t3code-browser-setup.done`. The command installs the
-Chrome sandbox AppArmor profile, missing libraries, and fonts, and leaves the
-sandbox enabled. Afterwards the playbook gives any root-owned files in the T3
-data directory back to the development account.
+The playbook runs `t3 browser setup` as root until it succeeds once, and records that in
+`/var/lib/t3code-browser-setup.done`. This installs the Chrome sandbox AppArmor profile,
+missing libraries and fonts, and leaves the sandbox on. The playbook then gives any root-owned
+files in the T3 data directory back to your account.
 
-T3 downloads Chrome when the first browser tab opens, so some missing libraries
-can only be detected after that. If the first preview reports missing libraries,
-run the setup again:
+T3 downloads Chrome when the first browser tab opens, so some missing libraries only show up
+then. If the first preview reports any, run the setup again:
 
 ```bash
 ./ansible/run.sh t3code -e t3code_browser_setup=true
 ```
 
-Run `t3 service restart` as your development account afterwards if it installed
-fonts.
+If it installed fonts, run `t3 service restart` on the VM afterwards.
 
 ## Updates
 
-The playbook installs T3 only when `t3 --version` fails, for example after an
-interrupted install. Use T3's native update and service commands for maintenance.
-After finishing active work, run as the development user:
+The playbook only installs T3 when `t3 --version` fails, so update it yourself once work has
+finished:
 
 ```bash
 t3 update
 t3 service status
 ```
 
-Use `t3 service restart` to restart without updating. `t3 service status` prints
-the service log location. Edit the Ansible-managed values in the inventory,
-and keep any additional environment variables outside the managed block in
-`$T3CODE_HOME/service.env`.
+`t3 service restart` restarts without updating, and `t3 service status` prints the log
+location. Set the managed values in the inventory, and keep any other environment variables
+outside the managed block in `$T3CODE_HOME/service.env`.
 
-Other components:
+Update Codex and Claude Code from T3's provider settings. Reapplying the playbook keeps
+working versions.
 
-- Codex and Claude Code: update them from T3's provider settings. Reapplying
-  Ansible keeps working versions.
-- Personal tools and language runtimes: managed by dotfiles. Run
-  `mise upgrade` as your development account while builds are idle.
-- Docker and OS packages: updated through APT, either by hand or by
-  reapplying the playbook. A Docker upgrade restarts the daemon, which stops
-  containers that have no restart policy.
+APT updates Docker and the OS packages, either by hand or when you reapply the playbook. A
+Docker upgrade restarts the daemon, which stops containers that have no restart policy.
 
 ## Backups and recovery
 
-Back up the VM through Proxmox, including your development account's home and
-`/var/lib/docker`.
-The guest agent lets Proxmox freeze the filesystem during snapshots. For a
-consistent copy, stop T3 and project databases first, or use their own backup
-tools. Backups contain credentials, so protect them accordingly.
+Back up the VM through Proxmox, including your home directory and `/var/lib/docker`. The
+guest agent lets Proxmox freeze the filesystem during snapshots. For a consistent copy, stop
+T3 and project databases first, or use their own backup tools. Backups contain credentials,
+so protect them.
 
-Restoring an older T3 version does not undo its database migrations. Restore
-the T3 state from the same backup.
+Restoring an older T3 version doesn't undo its database migrations, so restore the T3 state
+from the same backup.
 
-Reboots and restarts stop running processes. Files and T3 history survive, but
-background commands need to be started again. Test a restore before relying on
-the VM for unpushed work.
+Reboots stop running processes. Files and T3 history survive, but background commands need
+starting again. Test a restore before relying on the VM for unpushed work.
 
 ## References
 
 - [T3 installation](https://github.com/pingdotgg/t3code/blob/main/docs/user/install.md)
-- [T3 native background service](https://github.com/pingdotgg/t3code/blob/main/docs/user/background-service.md)
+- [T3 background service](https://github.com/pingdotgg/t3code/blob/main/docs/user/background-service.md)
 - [T3 remote access and browser setup](https://github.com/pingdotgg/t3code/blob/main/docs/user/remote-access.md)
 - [Docker Engine on Ubuntu](https://docs.docker.com/engine/install/ubuntu/)

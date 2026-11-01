@@ -1,3 +1,3 @@
-# Home Assistant Config
+# Home Assistant
 
-My Own Home Assistant Configuration
+My Home Assistant configuration.
