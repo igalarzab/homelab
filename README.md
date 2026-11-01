@@ -1,8 +1,8 @@
 # Homelab
 
-Kubernetes infrastructure, development VMs, home automation, and media services.
-Talos manages Kubernetes nodes, Helmsman manages cluster applications, and Ansible
-configures dedicated development VMs.
+Kubernetes clusters, a development VM, home automation and media services. Talos runs
+the Kubernetes nodes, Helmsman deploys the cluster applications and Ansible configures
+the VM.
 
 ## Architecture
 
@@ -17,9 +17,9 @@ configures dedicated development VMs.
 | Home automation                 | Home Assistant, ESPHome, Node-RED, Zigbee2MQTT, and Mosquitto |
 | Media and downloads             | Plex and JDownloader                                          |
 
-Each cluster has its own Talos inputs, credentials, and Helm release manifest.
-Storage drivers and applications are selected in that cluster's manifest. Servers
-and VMs are provisioned outside this repository.
+Each cluster has its own Talos inputs, credentials and Helm release manifest, and that
+manifest picks its storage drivers and applications. Servers and VMs are created outside
+this repository.
 
 ## Project structure
 
@@ -57,10 +57,9 @@ homelab/
 
 ## Set up a new workstation
 
-These steps restore access to an existing cluster after cloning the repository.
-Run commands from the repository root. Replace `your-cluster-name` with a directory
-name under `talos/`, set your node's IP and Kubernetes API domain, and use the same
-shell for the following commands. The addresses below are examples:
+These steps restore access to an existing cluster. Run them from the repository root, all
+in the same shell. `CLUSTER` is a directory name under `talos/`, and the addresses below are
+examples:
 
 ```bash
 CLUSTER=your-cluster-name
@@ -101,8 +100,8 @@ talosctl kubeconfig --force-context-name "$CLUSTER"
 kubectl --context "$CLUSTER" get nodes
 ```
 
-This merges the context into `~/.kube/config`. There is no need to apply machine
-configuration or bootstrap an existing cluster when setting up a workstation.
+This merges the context into `~/.kube/config`. A new workstation doesn't need to apply
+machine configuration or bootstrap the cluster.
 
 ### Restore application settings
 
@@ -134,30 +133,25 @@ uv run python run.py "$CLUSTER" apply -n home-assistant
 uv run python run.py "$CLUSTER" outdated
 ```
 
-The runner exits with Helmsman's error status if a command fails.
-
 ### Restart workloads with restarted pods
-
-The script requires a cluster argument and scans every namespace in that Kubernetes context. For pods with
-a container `restartCount` greater than zero, it restarts their owning Deployment,
-StatefulSet, or DaemonSet. Each affected workload is restarted once per run.
 
 From `kubernetes/`:
 
 ```bash
-# Restart affected workloads across the selected cluster
-uv run python restart-pods.py saturn
+uv run python restart-pods.py "$CLUSTER"
 ```
 
-This rolls out all pods in each affected workload, including those with no restarts.
-The script submits the restarts without waiting for the rollouts to finish.
+The script scans every namespace in that context. If a pod has a container with a
+`restartCount` above zero, it restarts the owning Deployment, StatefulSet or DaemonSet
+once. That rolls out every pod in the workload, and the script doesn't wait for the
+rollouts to finish.
 
 ## Change Talos configuration
 
-Edit the selected cluster's inputs or patches, regenerate the configuration, and
-review the diff before applying it. Use the cluster's generated client configuration
-explicitly so both commands target its endpoint and node regardless of the active
-context in your default Talos configuration. Run from the repository root:
+Edit the cluster's inputs or patches, regenerate the configuration and review the diff
+before applying it. These commands pass the generated client configuration explicitly, so
+they target this cluster whatever your active Talos context is. Run them from the
+repository root:
 
 ```bash
 ./talos/generate.sh "$CLUSTER" "$NODE_IP" "$API_DOMAIN"
@@ -172,15 +166,14 @@ talosctl --talosconfig "talos/$CLUSTER/generated/talosconfig" --context "$CLUSTE
   apply-config --file "talos/$CLUSTER/generated/controlplane.yaml"
 ```
 
-To add another cluster, create a directory under `talos/` with its own `cluster.env`,
-schematic, and patches, and keep its secrets local. Supply its IP and domain when
-generating configuration. Add the Helm manifest and application environment file
-under `kubernetes/`. The generator currently supports one
-control-plane node per cluster; provisioning and initial bootstrap are separate steps.
+To add a cluster, create a directory under `talos/` with its own `cluster.env`, schematic
+and patches. Add its Helm manifest and environment file under `kubernetes/`. The generator
+supports one control-plane node per cluster, and doesn't provision servers or bootstrap
+the cluster.
 
-Talos and Kubernetes upgrades are separate lifecycle operations. Recovering a lost
-server also requires infrastructure provisioning and backups of Kubernetes state
-and application data; generating machine configuration does not restore that data.
+Generating machine configuration doesn't restore data. Recovering a lost server also needs
+a new server and backups of Kubernetes state and application data. Talos and Kubernetes
+upgrades are separate operations too.
 
 ## Customize services
 
@@ -190,26 +183,22 @@ To add an application:
 2. Add a release to `kubernetes/helmsman.<cluster>.yml`.
 3. Review and apply it with `run.py`, using `-n <release-name>` to select the release.
 
-Keep application and provider configuration in their values files. Use small
-Helmsman overrides for settings that need a cluster-specific choice, such as
-storage classes and volume access modes. Keep network definitions and hardware
-configuration together with the service that uses them.
+Application and provider configuration goes in the values files. Use small Helmsman
+overrides for settings that differ per cluster, such as storage classes and volume access
+modes. Network definitions and hardware configuration stay with the service that uses them.
 
-Application settings live in `config/`. Home Assistant includes dashboards,
-automations, scripts, and device definitions. ESPHome includes Mitsubishi AC
-controller configurations and shared templates. Update the relevant configuration
-and redeploy the application when needed.
+Application settings live in `config/`. After changing them, redeploy the application if
+it needs it.
 
-The [T3 Code VM playbook](ansible/README.md) configures a dedicated Ubuntu VM on
-Proxmox with T3, user-owned development tools, and Docker Compose. Create the VM
-first, add it to the `t3code` group in `ansible/hosts.ini`, then apply the
-playbook.
+## Development VM
+
+[`ansible/README.md`](ansible/README.md) covers the playbook that sets up an Ubuntu VM on
+Proxmox with T3 and Docker.
 
 ## Lint
 
-GitHub Actions runs these checks on every pull request and on pushes to `main`.
-`uv sync` installs the same pinned versions, so you can run them locally from
-the repository root:
+GitHub Actions runs these checks on every pull request and on pushes to `main`. `uv sync`
+installs the same versions, so you can run them from the repository root:
 
 ```bash
 uv run yamllint --strict .
