@@ -16,7 +16,7 @@ The playbook applies three roles in order:
   Ubuntu's Docker, containerd, or runc packages, or `podman-docker`, are
   already installed.
 - `t3code`: uses your administrator account, creates its workspace, installs
-  zsh, Codex CLI, Claude Code, and T3, and installs
+  Codex CLI, Claude Code, and T3, and installs
   T3's native systemd user service. Lingering keeps it running after logout
   and starts it at boot.
 
@@ -210,11 +210,10 @@ The two repositories meet in two places:
 - `~/.config/local.sh`: the playbook manages one block in it, which exports
   `T3CODE_HOME`. Dotfiles' xonsh and zsh setups load this file. Keep your own
   machine-local settings outside the block.
-- T3's shell: `service.env` sets `SHELL=/usr/bin/zsh`, even if you switch your
-  login shell to xonsh. T3 runs
-  `$SHELL -ilc` to read `PATH`, so agents find the tools that dotfiles' zsh
-  setup activates, such as mise runtimes. Until dotfiles is installed, agents
-  get only the system `PATH`.
+- T3's shell: the service uses your login shell, which dotfiles sets. T3 runs
+  `$SHELL -ilc` to read `PATH`, so agents find the tools that shell's startup
+  files activate, such as mise runtimes. The user service manager only reads the
+  login shell when it starts, so reboot after changing it.
 
 Ubuntu's Python stays in place for Ansible, and `gh` comes from GitHub's APT
 repository.
