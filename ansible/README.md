@@ -16,7 +16,7 @@ The playbook applies three roles in order:
   Ubuntu's Docker, containerd, or runc packages, or `podman-docker`, are
   already installed.
 - `t3code`: uses your administrator account, creates its workspace, installs
-  mise, Codex CLI, Claude Code, and T3, and installs
+  zsh, Codex CLI, Claude Code, and T3, and installs
   T3's native systemd user service. Lingering keeps it running after logout
   and starts it at boot.
 
@@ -192,17 +192,32 @@ live under your home directory, never in the inventory.
 
 ## Development environment
 
-mise is installed from its APT repository through `extrepo`.
-[Dotfiles](https://github.com/igalarzab/dotfiles) manages personal tools, runtime
-versions, and the login shell; this playbook preserves those selections.
-Bash login shells get the mise shims, interactive Bash shells run
-`mise activate bash`, and `npm install -g` writes to
-`~/.local`. T3 keeps its state in `~/.local/share/t3` instead of `~/.t3`.
-Bash shells and the native service set `T3CODE_HOME`.
-Interactive shells also add `~/.local/bin` to `PATH`. The native service captures
-the installation task's `PATH`, which includes the mise shims.
-Ubuntu's `python3` stays in place for Ansible. `gh` comes from GitHub's APT
-repository, so it stays current with OS upgrades.
+The playbook sets up the machine and T3, not your personal environment.
+[Dotfiles](https://github.com/igalarzab/dotfiles) owns packages, mise and its
+runtime versions, the shell configuration, and the login shell. Install it once
+as the development user after the first apply; its installer asks for sudo:
+
+```bash
+git clone --recursive https://github.com/igalarzab/dotfiles.git ~/.config/dotfiles
+~/.config/dotfiles/install
+```
+
+Update it later with `git pull` and `./install` in that checkout. The playbook
+never touches it.
+
+The two repositories meet in two places:
+
+- `~/.config/local.sh`: the playbook manages one block in it, which exports
+  `T3CODE_HOME`. Dotfiles' xonsh and zsh setups load this file. Keep your own
+  machine-local settings outside the block.
+- T3's shell: `service.env` sets `SHELL=/usr/bin/zsh`, even if you switch your
+  login shell to xonsh. T3 runs
+  `$SHELL -ilc` to read `PATH`, so agents find the tools that dotfiles' zsh
+  setup activates, such as mise runtimes. Until dotfiles is installed, agents
+  get only the system `PATH`.
+
+Ubuntu's Python stays in place for Ansible, and `gh` comes from GitHub's APT
+repository.
 
 The home and workspace are `0755`; the T3 data directory is private. The native
 service uses the user manager's default umask. Containers must have permission
@@ -252,9 +267,9 @@ Other components:
 
 - Codex and Claude Code: update them from T3's provider settings. Reapplying
   Ansible keeps working versions.
-- Language tools: run `mise upgrade` as your development account while builds
-  are idle. Projects can pin their own versions in their mise config.
-- mise, Docker, and OS packages: updated through APT, either by hand or by
+- Personal tools and language runtimes: managed by dotfiles. Run
+  `mise upgrade` as your development account while builds are idle.
+- Docker and OS packages: updated through APT, either by hand or by
   reapplying the playbook. A Docker upgrade restarts the daemon, which stops
   containers that have no restart policy.
 
@@ -279,4 +294,3 @@ the VM for unpushed work.
 - [T3 native background service](https://github.com/pingdotgg/t3code/blob/main/docs/user/background-service.md)
 - [T3 remote access and browser setup](https://github.com/pingdotgg/t3code/blob/main/docs/user/remote-access.md)
 - [Docker Engine on Ubuntu](https://docs.docker.com/engine/install/ubuntu/)
-- [mise installation](https://mise.jdx.dev/installing-mise.html)

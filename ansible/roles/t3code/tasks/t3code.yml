@@ -78,7 +78,6 @@
   environment:
     HOME: "{{ t3code_home }}"
     T3CODE_HOME: "{{ t3code_data_dir }}"
-    PATH: "{{ t3code_home }}/.local/bin:{{ t3code_home }}/.local/share/mise/shims:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"
     XDG_RUNTIME_DIR: "/run/user/{{ t3code_account.uid }}"
     DBUS_SESSION_BUS_ADDRESS: "unix:path=/run/user/{{ t3code_account.uid }}/bus"
   block:
@@ -92,8 +91,7 @@
         block: |
           T3CODE_HOST={{ t3code_host }}
           T3CODE_PORT={{ t3code_port }}
-          NPM_CONFIG_PREFIX={{ t3code_home }}/.local
-          SHELL=/bin/bash
+          SHELL=/usr/bin/zsh
 
     - name: Install the native T3 Code user service
       ansible.builtin.command:
