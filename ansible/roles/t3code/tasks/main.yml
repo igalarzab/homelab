@@ -11,7 +11,6 @@
       - dbus-user-session
       - pkg-config
       - python3-debian
-      # T3's shell for agents and its PATH lookup
       - zsh
 
 - name: Configure the GitHub CLI repository
@@ -68,7 +67,6 @@
   loop_control:
     label: "{{ item.path }}"
 
-# Dotfiles' shells load this file; homelab owns only this block
 - name: Configure the machine-local environment
   become: true
   become_user: "{{ t3code_user }}"

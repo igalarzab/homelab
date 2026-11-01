@@ -91,7 +91,6 @@
         block: |
           T3CODE_HOST={{ t3code_host }}
           T3CODE_PORT={{ t3code_port }}
-          # T3 reads PATH from `$SHELL -ilc`; dotfiles configures zsh
           SHELL=/usr/bin/zsh
 
     - name: Install the native T3 Code user service
