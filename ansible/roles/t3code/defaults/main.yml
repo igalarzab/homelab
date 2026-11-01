@@ -7,5 +7,3 @@ t3code_channel: stable
 t3code_host: "{{ ansible_facts['default_ipv4']['address'] }}"
 t3code_port: 3773
 t3code_browser_setup: false
-t3code_dotfiles_dir: "{{ t3code_home }}/.config/dotfiles"
-t3code_dotfiles_version: main

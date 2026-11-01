@@ -16,7 +16,7 @@ The playbook applies three roles in order:
   Ubuntu's Docker, containerd, or runc packages, or `podman-docker`, are
   already installed.
 - `t3code`: uses your administrator account, creates its workspace, installs
-  your dotfiles, Codex CLI, Claude Code, and T3, and installs
+  zsh, Codex CLI, Claude Code, and T3, and installs
   T3's native systemd user service. Lingering keeps it running after logout
   and starts it at boot.
 
@@ -93,8 +93,6 @@ Override these in the inventory or with `--extra-vars`:
 | `t3code_channel` | `stable` | `stable` or `nightly`, used for the first install only |
 | `t3code_host` | Primary IPv4 address detected by Ansible | LAN address for `t3 serve` |
 | `t3code_port` | `3773` | Listening port for `t3 serve` |
-| `t3code_dotfiles_dir` | `~/.config/dotfiles` under the development account | Permanent dotfiles checkout |
-| `t3code_dotfiles_version` | `main` | Dotfiles branch, tag, or commit to install |
 | `t3code_browser_setup` | `false` | Rerun T3's browser setup on an existing install |
 
 Choose the user, home, workspace, and data directory before the first run. The
@@ -194,20 +192,31 @@ live under your home directory, never in the inventory.
 
 ## Development environment
 
-The playbook clones [dotfiles](https://github.com/igalarzab/dotfiles) into
-`~/.config/dotfiles` and runs `./install` as the development user. Dotfiles owns
-personal packages, mise and its runtime versions, npm's `~/.local` prefix, and
-the login shell. Merge the companion dotfiles changes before applying this role,
-or set `t3code_dotfiles_version` to the branch or commit you want to review.
+The playbook sets up the machine and T3, not your personal environment.
+[Dotfiles](https://github.com/igalarzab/dotfiles) owns packages, mise and its
+runtime versions, the shell configuration, and the login shell. Install it once
+as the development user after the first apply; its installer asks for sudo:
 
-Merge existing configuration directories manually before the first install.
-The checkout is updated and the installer runs on each playbook apply; local
-tracked edits are not forcibly overwritten.
+```bash
+git clone --recursive https://github.com/igalarzab/dotfiles.git ~/.config/dotfiles
+~/.config/dotfiles/install
+```
 
-`T3CODE_HOME` is set in `~/.config/local.sh`, loaded by dotfiles' xonsh/zsh setup
-and sourced by Bash. T3's native service keeps its own explicit environment and
-mise-shim PATH. Ubuntu's Python stays in place for Ansible, and `gh` comes from
-GitHub's APT repository.
+Update it later with `git pull` and `./install` in that checkout. The playbook
+never touches it.
+
+The two repositories meet in two places:
+
+- `~/.config/local.sh`: the playbook manages one block in it, which exports
+  `T3CODE_HOME`. Dotfiles' xonsh and zsh setups load this file. Keep your own
+  machine-local settings outside the block.
+- T3's shell: `service.env` sets `SHELL=/usr/bin/zsh`. T3 runs
+  `$SHELL -ilc` to read `PATH`, so agents find the tools that dotfiles' zsh
+  setup activates, such as mise runtimes. Until dotfiles is installed, agents
+  get only the system `PATH`.
+
+Ubuntu's Python stays in place for Ansible, and `gh` comes from GitHub's APT
+repository.
 
 The home and workspace are `0755`; the T3 data directory is private. The native
 service uses the user manager's default umask. Containers must have permission
@@ -257,9 +266,9 @@ Other components:
 
 - Codex and Claude Code: update them from T3's provider settings. Reapplying
   Ansible keeps working versions.
-- Language tools: run `mise upgrade` as your development account while builds
-  are idle. Projects can pin their own versions in their mise config.
-- mise, Docker, and OS packages: updated through APT, either by hand or by
+- Personal tools and language runtimes: managed by dotfiles. Run
+  `mise upgrade` as your development account while builds are idle.
+- Docker and OS packages: updated through APT, either by hand or by
   reapplying the playbook. A Docker upgrade restarts the daemon, which stops
   containers that have no restart policy.
 
@@ -284,4 +293,3 @@ the VM for unpushed work.
 - [T3 native background service](https://github.com/pingdotgg/t3code/blob/main/docs/user/background-service.md)
 - [T3 remote access and browser setup](https://github.com/pingdotgg/t3code/blob/main/docs/user/remote-access.md)
 - [Docker Engine on Ubuntu](https://docs.docker.com/engine/install/ubuntu/)
-- [mise installation](https://mise.jdx.dev/installing-mise.html)
