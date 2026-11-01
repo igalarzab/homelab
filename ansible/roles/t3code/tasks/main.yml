@@ -40,7 +40,6 @@
     groups: docker
     append: true
     home: "{{ t3code_home }}"
-    shell: /bin/bash
     create_home: true
 
 - name: Create the workspace and tool directories
@@ -67,7 +66,7 @@
   loop_control:
     label: "{{ item.path }}"
 
-- name: Install mise and language tools
+- name: Install mise
   ansible.builtin.import_tasks: mise.yml
 
 # Ubuntu's skeleton .profile already adds ~/.local/bin to PATH and sources .bashrc

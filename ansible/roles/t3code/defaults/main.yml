@@ -7,12 +7,3 @@ t3code_channel: stable
 t3code_host: "{{ ansible_facts['default_ipv4']['address'] }}"
 t3code_port: 3773
 t3code_browser_setup: false
-t3code_tools:
-  - tool: "node@lts"
-    command: node
-  - tool: "pnpm@latest"
-    command: pnpm
-  - tool: "python@latest"
-    command: python
-  - tool: "uv@latest"
-    command: uv
